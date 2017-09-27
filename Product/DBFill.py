@@ -1,6 +1,7 @@
 from Product.DBConn import UserTest
 from Product.DBConn import session
 
+# The below is an example
 # Create new objects
 new_user = UserTest(name='marten', password='bolin')
 new_user2 = UserTest(name='ariyan', password='abdulla')

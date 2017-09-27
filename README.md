@@ -6,6 +6,7 @@
 **Master:** Ongoing
 
 ## Documents
+* [Google Drive with all docuuments](https://drive.google.com/drive/folders/0B0-_5NZyjrIgOS1hN0hldGlIckE)
 
 ### How we work at Coogl3
 
@@ -19,5 +20,7 @@
 * [GitLab](https://drive.google.com/open?id=0B0-_5NZyjrIgNnNJb3FqOW5XVTQ)
 
 * [LightFM](https://docs.google.com/document/d/1lThbge6BgZpE9xuhVv50D8TxVLCFZnQ4T0exulv_70o/edit)
+
+
 
 > **Note:** To be able to read the documents permission is required.

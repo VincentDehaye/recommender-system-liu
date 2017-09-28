@@ -16,13 +16,13 @@ print('this is the data in the dataset. (userid, movieid) rating')
 print(data['train'])
 
 # Evaluate the trained model by comparing it with the original data
-# It evaluates the precision for the top 5 movies from the algorithm )
-
+# It evaluates the precision for the top k=5 movies from the algorithm
 test_precision = precision_at_k(model, data['test'], k=5).mean()
 
 # this prints the test precision
+# the precision is in percentage.
 
-print(test_precision)
+print('precision: %s' % test_precision)
 
 
 def sample_recommendation(model, data, user_ids):
@@ -46,4 +46,7 @@ def sample_recommendation(model, data, user_ids):
             print("        %s" % x)
 
 
+# this method prints the recommended and known positives for the first three users
+# known positives are movies that users have watched and rated highly
+# recommended are the movies that lightfm recommends.
 sample_recommendation(model, data, range(0,3))

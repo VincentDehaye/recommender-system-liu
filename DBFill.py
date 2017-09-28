@@ -1,5 +1,5 @@
-from Product.DBConn import UserTest
-from Product.DBConn import session
+from DBConn import UserTest
+from DBConn import session
 
 # The below is an example
 # Create new objects

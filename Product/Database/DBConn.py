@@ -34,6 +34,28 @@ class UserTest(Base):
 
 #### RECOMMENDATIONS TEAM BELOW ####
 
+# This Model is for Genres
+class Genre(Base):
+    __tablename__ = 'genres'
+
+    name = Column(String, primary_key=True)
+
+    def __repr__(self):
+        return "<Genre(name='%s')>" % (
+            self.name)
+
+# This Model is for movies
+class Movie(Base):
+
+    __tablename__ = 'movies'
+    id = Column(Integer, primary_key=True)
+    title = Column(String)
+    year = Column(Integer)
+
+    def __repr__(self):
+        return "<Movie(id='%s', title='%s', year='%s')>" % (
+            self.name, self.title, self.year)
+
 #### VISUALIZATION TEAM BELOW ####
 
 

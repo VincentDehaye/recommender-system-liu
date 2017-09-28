@@ -234,3 +234,6 @@ testem.log
 
 #System Files
 .DS_Store
+
+#datasets
+*.zip

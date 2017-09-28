@@ -1,16 +1,26 @@
-Getting Started
+# **Coogl3**
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.....
+[Company website](Coogl3-company-website.firebaseapp.com) with information about the members of Coogl3.
 
-Deployment
+## Build Status
+**Master:** Ongoing
 
-details about deployment of sytem....
+## Documents
+* [Google Drive with all docuuments](https://drive.google.com/drive/folders/0B0-_5NZyjrIgOS1hN0hldGlIckE)
 
-Versioning
+### How we work at Coogl3
 
-Gitlab is used for version control.....
+* [Analysts](https://drive.google.com/drive/folders/0B80SCkOGLcS_OXBDYXlmUEp1VlE)
+* [Data Scientists](https://docs.google.com/document/d/1ONr7hf4925CmxvLJ4MW15VxhN-WPeMCLOU74t1Se1fY/edit)
+* [Developers](https://drive.google.com/drive/folders/0B0-_5NZyjrIgZXFPMDl5NUpmbm8 )
+* [Testers](https://drive.google.com/drive/folders/0B0-_5NZyjrIgMkdtOFRqR0NEckk)
+* [Backlog/Scrumboard](https://trello.com/devs323 )
 
-Authors
+### Guidelines to set up enviroment
+* [GitLab](https://drive.google.com/open?id=0B0-_5NZyjrIgNnNJb3FqOW5XVTQ)
 
-License
+* [LightFM](https://docs.google.com/document/d/1lThbge6BgZpE9xuhVv50D8TxVLCFZnQ4T0exulv_70o/edit)
 
+
+
+> **Note:** To be able to read the documents permission is required.

@@ -1,6 +1,6 @@
 # **Coogl3**
 
-[Company website](Coogl3-company-website.firebaseapp.com) with information about the members of Coogl3.
+[Company website](https://coogl3-company-website.firebaseapp.com/) with information about the members of Coogl3.
 
 ## Build Status
 **Master:** Ongoing

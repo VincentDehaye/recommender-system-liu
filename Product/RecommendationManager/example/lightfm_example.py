@@ -4,7 +4,7 @@ from lightfm import LightFM
 from lightfm.datasets import fetch_movielens
 from lightfm.evaluation import precision_at_k
 
-# this example will get you started on how
+# this example will get you started on how lightfm works.
 
 # Load the MovieLens 100k dataset.
 data = fetch_movielens()
@@ -16,7 +16,7 @@ print('this is the data in the dataset. (userid, movieid) rating')
 print(data['train'])
 
 # Evaluate the trained model by comparing it with the original data
-# It evaluates the top 5 movies (k=5)
+# It evaluates the precision for the top 5 movies from the algorithm )
 
 test_precision = precision_at_k(model, data['test'], k=5).mean()
 

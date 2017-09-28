@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 import os
 
-#More info about database is in educational folder on drive
+# More info about database is in educational folder on drive
 # Get the path and create the sqlite engine. Echo false means that we do not see generated SQL.
 basedir = os.path.abspath(os.path.dirname(__file__))
 engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), echo=True)
@@ -17,6 +17,8 @@ Base = declarative_base()
 # Do not forget to import type if you want to use other than integer or string
 # The __repr__ returns a string that describes the object
 
+#### EXAMPLE BELOW ####
+
 class UserTest(Base):
     __tablename__ = 'users'
 
@@ -27,6 +29,15 @@ class UserTest(Base):
     def __repr__(self):
         return "<User(name='%s', password='%s')>" % (
             self.name, self.password)
+
+#### TRENDING TEAM BELOW ####
+
+#### RECOMMENDATIONS TEAM BELOW ####
+
+#### VISUALIZATION TEAM BELOW ####
+
+
+#### DO NOT CHANGE BELOW ####
 
 # Creates the tables in the database
 Base.metadata.create_all(engine)

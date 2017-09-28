@@ -13,14 +13,16 @@ Please follow the git-guidelines available at [Google Drive](https://drive.googl
 
 Especially 
 
-* Never Push to Master or Development directly, only push to your personal branch or the
-branch for your cross-functional team. When you want to add something to the Development Branch do a merge request. 
+* Never Push to Master directly, only push to your personal branch or the
+Development branch when functionality is finished. 
+
+* Be Careful when merging, don't destroy the work of someone else. 
 
 * To make sure your code works with all the other work done in the project, pull changes from
 the development branch as often as possible. 
 
 * Write good commit messages that clearly describes what changes has been made. Also
-remember to write them in English
+remember to write them in English.
 
 * Don’t push code that doesn’t work to any other branch than your own personal one. We
 don’t want any code in development that makes other developers work crash

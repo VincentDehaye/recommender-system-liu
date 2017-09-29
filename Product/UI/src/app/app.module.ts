@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { ChartComponent } from './chart/chart.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 @NgModule({
   declarations: [

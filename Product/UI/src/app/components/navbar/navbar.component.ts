@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  output:string ='coogbaafaopsdpasokdpl3'
-  movies=[]
+  output:string;
+  movies:string[];
   constructor() { }
 
   ngOnInit() {

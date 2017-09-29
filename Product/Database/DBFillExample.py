@@ -1,4 +1,4 @@
-from Product.Database.DBConn import UserTest
+from Product.Database.DBConn import UserTest, User, Movie, Rated
 from Product.Database.DBConn import session
 
 # The below is an example
@@ -15,7 +15,5 @@ session.commit()
 
 # Get Ariyan out of db
 slim_shady = session.query(UserTest).filter_by(id='1').first()
-
-
 
 print(slim_shady)

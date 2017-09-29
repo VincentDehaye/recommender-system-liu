@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 import os
 
 # More info about database is in educational folder on drive
@@ -20,7 +20,7 @@ Base = declarative_base()
 #### EXAMPLE BELOW ####
 
 class UserTest(Base):
-    __tablename__ = 'users'
+    __tablename__ = 'testusers'
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -33,6 +33,61 @@ class UserTest(Base):
 #### TRENDING TEAM BELOW ####
 
 #### RECOMMENDATIONS TEAM BELOW ####
+
+# This Model is for Genres
+class Genre(Base):
+    __tablename__ = 'genres'
+
+    name = Column(String, primary_key=True)
+
+    def __repr__(self):
+        return "<Genre(name='%s')>" % (
+            self.name)
+
+# This Model is for movies
+class Movie(Base):
+
+    __tablename__ = 'movies'
+    id = Column(Integer, primary_key=True)
+    title = Column(String)
+    year = Column(Integer)
+
+    def __repr__(self):
+        return "<Movie(id='%s', title='%s', year='%s')>" % (
+            self.name, self.title, self.year)
+
+# Model for the user, only storing, this model i consistent with the lastest movielens dataset.
+class User(Base):
+
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+
+    def __repr__(self):
+        return "<User(id='%s')>" % (
+            self.id)
+
+# Model for the relation between Movies and Users, in this case ratings.Foreign key to User table and Movie table
+class Rated(Base):
+
+    __tablename__ = 'ratings'
+    user = Column(Integer, ForeignKey(User.id), primary_key = True)
+    movie = Column(Integer, ForeignKey(Movie.id), primary_key = True)
+
+    def __repr__(self):
+        return "<Rated(user='%s', rated='%s')>" % (
+            self.user, self.movie)
+
+# Model for movies in genres. Foreign key references to Movie and Genre.
+class MovieInGenre(Base):
+
+    __tablename__ = 'movieingenre'
+    movie = Column(Integer, ForeignKey(Movie.id), primary_key = True)
+    genre = Column(String, ForeignKey(Genre.name), primary_key = True)
+
+    def __repr__(self):
+        return "<Genre(movie='%s', genre='%s')>" % (
+            self.movie, self.genre)
+
 
 #### VISUALIZATION TEAM BELOW ####
 

@@ -1,5 +1,5 @@
 from Product.Database.DBConn import session
-from Product.Database.DBConn import Genre
+from Product.Database.DBConn import Genre, Movie, MovieInGenre
 #!/bin/bash
 import csv
 import re
@@ -18,16 +18,30 @@ import re
 with open('movies.csv', 'rt') as f:
     reader = csv.reader(f)
 
+    # Iterates through each row in the file
     for row in reader:
+
+        # Iterates through each column
         for counter, column in enumerate(row):
 
+
             if counter == 0:
+                movie_id = column
                 print("Id")
             if counter == 1:
+                new_movie = Movie(id = movie_id, title = column)
+                session.add(new_movie)
                 print("Title & Year")
+
             if counter == 2:
                 genres = column.split("|")
-                for genre in genres:
-                    print(genre)
+
+                # loop through all genres for the movie
+                for new_genre in genres:
+                    new_genre = MovieInGenre(movie=movie_id, genre=new_genre)
+                    session.add(new_genre)
+                    print(new_genre)
+
+            session.commit()
 
 

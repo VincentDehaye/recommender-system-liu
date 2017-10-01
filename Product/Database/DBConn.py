@@ -50,11 +50,10 @@ class Movie(Base):
     __tablename__ = 'movies'
     id = Column(Integer, primary_key=True)
     title = Column(String)
-    year = Column(Integer)
 
     def __repr__(self):
-        return "<Movie(id='%s', title='%s', year='%s')>" % (
-            self.name, self.title, self.year)
+        return "<Movie(id='%s', title='%s')>" % (
+            self.name, self.title)
 
 # Model for the user, only storing, this model i consistent with the lastest movielens dataset.
 class User(Base):

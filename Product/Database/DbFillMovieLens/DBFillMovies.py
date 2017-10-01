@@ -16,6 +16,8 @@ with open('movies.csv', 'rt') as f:
 
             if counter == 0:
                 movie_id = column
+                print("movie id:")
+                print(movie_id)
 
             if counter == 1:
                 new_movie = Movie(id = movie_id, title = column)

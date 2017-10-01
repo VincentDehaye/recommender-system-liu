@@ -66,12 +66,12 @@ class User(Base):
             self.id)
 
 # Model for the relation between Movies and Users, in this case ratings.Foreign key to User table and Movie table
-class Rated(Base):
+class Rating(Base):
 
     __tablename__ = 'ratings'
     user = Column(Integer, ForeignKey(User.id), primary_key = True)
     movie = Column(Integer, ForeignKey(Movie.id), primary_key = True)
-    rated = Column(Float)
+    rating = Column(Float)
 
     def __repr__(self):
         return "<Rated(user='%s', rated='%s')>" % (

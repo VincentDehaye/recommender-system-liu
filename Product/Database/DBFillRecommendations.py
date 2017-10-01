@@ -27,11 +27,10 @@ with open('movies.csv', 'rt') as f:
 
             if counter == 0:
                 movie_id = column
-                print("Id")
+
             if counter == 1:
                 new_movie = Movie(id = movie_id, title = column)
                 session.add(new_movie)
-                print("Title & Year")
 
             if counter == 2:
                 genres = column.split("|")
@@ -40,8 +39,9 @@ with open('movies.csv', 'rt') as f:
                 for new_genre in genres:
                     new_genre = MovieInGenre(movie=movie_id, genre=new_genre)
                     session.add(new_genre)
-                    print(new_genre)
 
             session.commit()
 
+#Close the csv file
+f.close()
 

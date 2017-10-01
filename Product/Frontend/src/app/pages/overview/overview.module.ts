@@ -10,7 +10,7 @@ import { ContentListsComponent } from './content-lists/content-lists.component';
 import { ViewsComponent } from './views/views.component';
 import { ViewsChartComponent } from './views/views-chart/views-chart.component';
 import { SubscribersComponent } from './subscribers/subscribers.component';
-import { RecommendationsPerformanceComponent } from './recommendations-performance/recommendations-performance.component';
+import {RecommendationsPerformanceComponent} from './recommendations-performance/recommendations-performance.component';
 import { TrendingScoreComponent } from './trending-score/trending-score.component';
 import { TrendingScoreChartComponent } from './trending-score/trending-score-chart.component';
 

@@ -24,7 +24,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Recommendations',
     icon: 'ion-heart',
-    link: '/pages/recommended'
+    link: '/pages/recommended',
   },
   {
     title: 'Content',

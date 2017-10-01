@@ -6,12 +6,12 @@ import { ChartModule } from 'angular2-chartjs';
 import { ThemeModule } from '../../@theme/theme.module';
 
 import { RecommendedRoutingModule, routedComponents } from './recommended-routing.module';
-import { RecommendedChartjsBarComponent } from './recommended-components/recommended-chartjs-bar.component';
-import { RecommendedChartjsLineComponent } from './recommended-components/recommended-chartjs-line.component';
-import { RecommendedChartjsPieComponent } from './recommended-components/recommended-chartjs-pie.component';
-import { RecommendedChartjsMultipleXaxisComponent } from './recommended-components/recommended-chartjs-multiple-xaxis.component';
-import { RecommendedChartjsBarHorizontalComponent } from './recommended-components/recommended-chartjs-bar-horizontal.component';
-import { RecommendedChartjsRadarComponent } from './recommended-components/recommended-chartjs-radar.component';
+import { RecommendedChartjsBarComponent } from './recommended-components/rec-chartjs-bar.component';
+import { RecommendedChartjsLineComponent } from './recommended-components/rec-chartjs-line.component';
+import { RecommendedChartjsPieComponent } from './recommended-components/rec-chartjs-pie.component';
+import { RecommendedChartjsMultipleXaxisComponent} from './recommended-components/rec-chartjs-multiple-xaxis.component';
+import { RecommendedChartjsBarHorizontalComponent} from './recommended-components/rec-chartjs-bar-horizontal.component';
+import { RecommendedChartjsRadarComponent } from './recommended-components/rec-chartjs-radar.component';
 
 const components = [
   RecommendedChartjsBarComponent,

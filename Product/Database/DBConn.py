@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, ForeignKey
 import os
 
 # More info about database is in educational folder on drive
@@ -71,6 +71,7 @@ class Rated(Base):
     __tablename__ = 'ratings'
     user = Column(Integer, ForeignKey(User.id), primary_key = True)
     movie = Column(Integer, ForeignKey(Movie.id), primary_key = True)
+    rated = Column(Float)
 
     def __repr__(self):
         return "<Rated(user='%s', rated='%s')>" % (

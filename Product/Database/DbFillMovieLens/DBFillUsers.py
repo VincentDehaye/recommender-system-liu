@@ -6,4 +6,5 @@ from Product.Database.DBConn import User
 for i in range(699):
     new_user = User()
     session.add(new_user)
-    session.commit()
+
+session.commit()

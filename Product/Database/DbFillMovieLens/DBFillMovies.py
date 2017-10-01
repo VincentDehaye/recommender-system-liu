@@ -1,6 +1,5 @@
 from Product.Database.DBConn import session
 from Product.Database.DBConn import Movie, MovieInGenre
-#!/bin/bash
 import csv
 
 # To see how to read from csv files
@@ -16,8 +15,6 @@ with open('movies.csv', 'rt') as f:
 
             if counter == 0:
                 movie_id = column
-                print("movie id:")
-                print(movie_id)
 
             if counter == 1:
                 new_movie = Movie(id = movie_id, title = column)
@@ -31,8 +28,8 @@ with open('movies.csv', 'rt') as f:
                     new_genre = MovieInGenre(movie=movie_id, genre=new_genre)
                     session.add(new_genre)
 
-            session.commit()
 
+session.commit()
 # Close the csv file
 f.close()
 

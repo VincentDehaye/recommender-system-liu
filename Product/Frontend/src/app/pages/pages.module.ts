@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { OverviewModule } from './overview/overview.module';
 import { UsersModule } from './users/users.module';
 import { UserModule } from './user/user.module';
@@ -18,7 +17,6 @@ const PAGES_COMPONENTS = [
   imports: [
     PagesRoutingModule,
     ThemeModule,
-    DashboardModule,
     OverviewModule,
     UsersModule,
     TrendingModule,

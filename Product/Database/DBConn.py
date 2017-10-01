@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, ForeignKey
 import os
 
 # More info about database is in educational folder on drive
@@ -50,11 +50,10 @@ class Movie(Base):
     __tablename__ = 'movies'
     id = Column(Integer, primary_key=True)
     title = Column(String)
-    year = Column(Integer)
 
     def __repr__(self):
-        return "<Movie(id='%s', title='%s', year='%s')>" % (
-            self.name, self.title, self.year)
+        return "<Movie(id='%s', title='%s')>" % (
+            self.name, self.title)
 
 # Model for the user, only storing, this model i consistent with the lastest movielens dataset.
 class User(Base):
@@ -67,11 +66,12 @@ class User(Base):
             self.id)
 
 # Model for the relation between Movies and Users, in this case ratings.Foreign key to User table and Movie table
-class Rated(Base):
+class Rating(Base):
 
     __tablename__ = 'ratings'
     user = Column(Integer, ForeignKey(User.id), primary_key = True)
     movie = Column(Integer, ForeignKey(Movie.id), primary_key = True)
+    rating = Column(Float)
 
     def __repr__(self):
         return "<Rated(user='%s', rated='%s')>" % (

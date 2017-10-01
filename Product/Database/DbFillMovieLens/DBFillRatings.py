@@ -2,7 +2,8 @@ from Product.Database.DBConn import session
 from Product.Database.DBConn import Rating
 import csv
 
-# Read from the csv file. Columns in the ratings.csv: userId,movieId,rating,timestamp
+# Read the movie.csv file to add data into database.
+# Columns in the ratings.csv: userId, movieId, rating, timestamp
 with open('ratings.csv', 'rt') as f:
     reader = csv.reader(f)
 
@@ -22,6 +23,7 @@ with open('ratings.csv', 'rt') as f:
                 rating = column
                 new_rating = Rating(movie=movie_id, user=user_id, rating=rating)
                 session.add(new_rating)
+                # There is also a timestamp in the dataset which is not used
 
 # Commit the added ratings
 session.commit()

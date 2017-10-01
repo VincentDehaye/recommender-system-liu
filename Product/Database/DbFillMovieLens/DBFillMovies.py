@@ -1,8 +1,7 @@
 from Product.Database.DBConn import session
-from Product.Database.DBConn import Genre, Movie, MovieInGenre
+from Product.Database.DBConn import Movie, MovieInGenre
 #!/bin/bash
 import csv
-import re
 
 # To see how to read from csv files
 with open('movies.csv', 'rt') as f:

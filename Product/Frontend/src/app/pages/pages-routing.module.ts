@@ -3,6 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { OverviewComponent } from './overview/overview.component';
+import { UsersComponent } from './users/users.component';
+import { UserComponent } from './user/user.component';
+import { TrendingComponent} from './trending/trending.component';
+import { RecommendedComponent } from './recommended/recommended.component';
 
 const routes: Routes = [{
   path: '',
@@ -10,6 +15,9 @@ const routes: Routes = [{
   children: [{
     path: 'dashboard',
     component: DashboardComponent,
+  }, {
+    path: 'overview',
+    component: OverviewComponent,
   }, {
     path: 'ui-features',
     loadChildren: './ui-features/ui-features.module#UiFeaturesModule',
@@ -24,10 +32,16 @@ const routes: Routes = [{
     loadChildren: './charts/charts.module#ChartsModule',
   }, {
     path: 'users',
-    loadChildren: './users/users.module#UsersModule',
+    component: UsersComponent,
+  }, {
+    path: 'user',
+    component: UserComponent,
+  }, {
+    path: 'recommended',
+    component: RecommendedComponent,
   }, {
     path: 'trending',
-    loadChildren: './trending/trending.module#TrendingModule',
+    component: TrendingComponent,
   }, {
     path: 'editors',
     loadChildren: './editors/editors.module#EditorsModule',
@@ -38,8 +52,11 @@ const routes: Routes = [{
     path: 'tables',
     loadChildren: './tables/tables.module#TablesModule',
   }, {
+    path: 'content',
+    loadChildren: './content/content.module#ContentModule',
+  }, {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'overview',
     pathMatch: 'full',
   }],
 }];

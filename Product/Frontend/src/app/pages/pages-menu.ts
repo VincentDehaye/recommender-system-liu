@@ -4,13 +4,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Overview',
     icon: 'ion-android-search',
-    link: '/pages/dashboard',
+    link: '/pages/overview',
     home: true,
-  },
-  {
-    title: 'How To Use',
-    icon: 'ion-information-circled',
-    link: '/pages/ui-features/buttons',
   },
   {
     title: 'ANALYTICS',
@@ -19,53 +14,22 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Users',
     icon: 'ion-person-stalker',
-    children: [
-      {
-        title: 'Random User',
-        link: '/pages/users/single-user',
-      },
-      {
-        title: 'All Users',
-        link: '/pages/users/all-users',
-      },
-    ],
+    link: '/pages/users',
   },
   {
     title: 'Trending',
     icon: 'ion-arrow-graph-up-right',
-    children: [
-      {
-        title: 'Trending Library',
-        link: '/pages/trending/trending-library',
-      },
-      {
-        title: 'Trending World',
-        link: '/pages/trending/trending-world',
-      },
-    ],
+    link: '/pages/trending',
   },
   {
     title: 'Recommendations',
     icon: 'ion-heart',
-    children: [
-      {
-        title: 'Echarts',
-        link: '/pages/charts/echarts',
-      },
-      {
-        title: 'Charts.js',
-        link: '/pages/charts/chartjs',
-      },
-      {
-        title: 'D3',
-        link: '/pages/charts/d3',
-      },
-    ],
+    link: '/pages/recommended'
   },
   {
     title: 'Content',
     icon: 'ion-android-list',
-    link: '/pages/tables/smart-table',
+    link: '/pages/content/content-table',
   },
  /* {
     title: 'Editors',
@@ -190,7 +154,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'User',
     icon: 'ion-android-person',
-    link: '/pages/ui-features/typography',
-    home: true,
+    link: '/pages/user',
   },
 ];

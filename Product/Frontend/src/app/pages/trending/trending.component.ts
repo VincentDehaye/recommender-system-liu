@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'ngx-trending',
-  template: `
-    <router-outlet></router-outlet>
-  `,
+  styleUrls: ['./trending.component.scss'],
+  templateUrl: './trending.component.html',
 })
-export class TrendingComponent {
-}
+export class TrendingComponent {}

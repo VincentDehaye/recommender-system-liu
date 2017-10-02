@@ -30,12 +30,3 @@ session.commit()
 
 # Close the csv file
 f.close()
-
-rating = session.query(MovieLinks).filter_by(movie_id=1).all()
-rated = session.query(MovieLinks).filter_by(movie_id=164979).all()
-
-for rate in rating:
-    print(rate)
-
-for rate in rated:
-    print(rate)

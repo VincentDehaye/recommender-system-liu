@@ -19,9 +19,10 @@ def youtube_search(options):
     developerKey=DEVELOPER_KEY)
 
   #Setting date for the last 30 days
-  d = datetime.datetime.utcnow() - datetime.timedelta(days=30)
-  d_with_timezone = d.replace(tzinfo=pytz.UTC)
-  d_with_timezone.isoformat()
+  def get_date():
+      d = datetime.datetime.utcnow() - datetime.timedelta(days=30)
+      d_with_timezone = d.replace(tzinfo=pytz.UTC)
+      return d_with_timezone.isoformat()
 
 
   # Call the search.list method to retrieve results matching the specified
@@ -32,7 +33,7 @@ def youtube_search(options):
     type = options.type,
     videoCategoryId=options.video_category_id,
     maxResults=options.max_results,
-    publishedAfter=d_with_timezone.isoformat()
+    publishedAfter=get_date()
   ).execute()
 
 

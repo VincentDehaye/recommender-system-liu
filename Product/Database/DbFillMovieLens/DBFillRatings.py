@@ -21,7 +21,7 @@ with open('ratings.csv', 'rt') as f:
 
             if counter == 2:
                 rating = column
-                new_rating = Rating(movie=movie_id, user=user_id, rating=rating)
+                new_rating = Rating(movie_id=movie_id, user_id=user_id, rating=rating)
                 session.add(new_rating)
                 # There is also a timestamp in the dataset which is not used
 

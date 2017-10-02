@@ -2,7 +2,7 @@ from Product.Database.DBConn import session
 from Product.Database.DBConn import MovieLinks
 import csv
 
-# Read the movie.csv file to add data into database.
+# Read the movie_id.csv file to add data into database.
 # Columns in the ratings.csv: movieId, imdbID, tmdbID
 with open('links.csv', 'rt') as f:
     reader = csv.reader(f)

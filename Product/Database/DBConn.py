@@ -82,13 +82,13 @@ class User(Base):
 class Rating(Base):
 
     __tablename__ = 'ratings'
-    user = Column(Integer, ForeignKey(User.id), primary_key=True)
-    movie = Column(Integer, ForeignKey(Movie.id), primary_key=True)
+    user_id = Column(Integer, ForeignKey(User.id), primary_key=True)
+    movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
     rating = Column(Float)
 
     def __repr__(self):
         return "<Rated(user='%s', rated='%s')>" % (
-            self.user, self.movie)
+            self.user, self.movie_id)
 
 
 # Model for movies in genres. Foreign key references to Movie and Genre.

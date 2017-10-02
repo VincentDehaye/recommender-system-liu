@@ -1,4 +1,4 @@
-from Product.Database.DBConn import User, Movie, Genre, MovieInGenre
+from Product.Database.DBConn import User, Movie, Genre, MovieInGenre, Rating, MovieLinks
 from Product.Database.DBConn import session
 
 
@@ -34,6 +34,27 @@ def test_DBFillMovies():
         if counter == 4:
             assert res.genre == "Fantasy"
 
+
+    result = session.query(MovieInGenre).filter_by(movie_id=164979).first()
+    assert result.genre == "Documentary"
+
+
+def test_DBFillRatings():
+    result = session.query(Rating).filter_by(user_id=1, movie_id=31).first()
+    assert result.rating == 2.5
+
+    result = session.query(Rating).filter_by(user_id=671, movie_id=6565).first()
+    assert result.rating == 3.5
+
+
+def test_DBFillLinks():
+    result = session.query(MovieLinks).filter_by(movie_id=1).first()
+    assert result.imdb_id == 114709
+    assert result.tmdb_id == 862
+
+    result = session.query(MovieLinks).filter_by(movie_id=164979).first()
+    assert result.imdb_id == 3447228
+    assert result.tmdb_id == 410803
 
 
 

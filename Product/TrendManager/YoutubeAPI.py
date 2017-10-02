@@ -1,3 +1,6 @@
+import datetime
+
+import pytz as pytz
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from oauth2client.tools import argparser
@@ -15,6 +18,12 @@ def youtube_search(options):
   youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
     developerKey=DEVELOPER_KEY)
 
+  #Setting date for the last 30 days
+  d = datetime.datetime.utcnow() - datetime.timedelta(days=30)
+  d_with_timezone = d.replace(tzinfo=pytz.UTC)
+  d_with_timezone.isoformat()
+
+
   # Call the search.list method to retrieve results matching the specified
   # query term.
   search_response = youtube.search().list(
@@ -22,8 +31,11 @@ def youtube_search(options):
     part="snippet",
     type = options.type,
     videoCategoryId=options.video_category_id,
-    maxResults=options.max_results
+    maxResults=options.max_results,
+    publishedAfter=d_with_timezone.isoformat()
   ).execute()
+
+
 
 
   videos = []
@@ -32,7 +44,8 @@ def youtube_search(options):
   # matching videos, channels, and playlists.
   for search_result in search_response.get("items", []):
     if (search_result["id"]["kind"] == "youtube#video"):
-        videos.append("%s" % (search_result["snippet"]["title"]))
+        videos.append("%s published: %s" % (search_result["snippet"]["title"],
+                                    search_result["snippet"]["publishedAt"]))
 
     print("Videos:\n", "\n".join(videos), "\n")
 
@@ -41,7 +54,8 @@ if __name__ == "__main__":
   argparser.add_argument("--q", help="Search term", default="frozen")
   argparser.add_argument("--type", help="Type", default="video")
   argparser.add_argument("--video-category-id", help="Video Category Id", default=30)
-  argparser.add_argument("--max-results", help="Max results", default=25)
+  argparser.add_argument("--max-results", help="Max results", default=10)
+  argparser.add_argument("--publishedAfter", help="Date condition", default="")
   args = argparser.parse_args()
 
   try:

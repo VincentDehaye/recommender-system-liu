@@ -1,10 +1,10 @@
 from Product.Database.DBConn import session
-from Product.Database.DBConn import Rating
+from Product.Database.DBConn import MovieLinks
 import csv
 
 # Read the movie.csv file to add data into database.
-# Columns in the ratings.csv: userId, movieId, rating, timestamp
-with open('ratings.csv', 'rt') as f:
+# Columns in the ratings.csv: movieId, imdbID, tmdbID
+with open('links.csv', 'rt') as f:
     reader = csv.reader(f)
 
     # Iterates through each row in the file
@@ -14,16 +14,16 @@ with open('ratings.csv', 'rt') as f:
         for counter, column in enumerate(row):
 
             if counter == 0:
-                user_id = column
+                new_movie_id = column
 
             if counter == 1:
-                movie_id = column
+                new_imdb_id = column
 
             if counter == 2:
-                rating = column
-                new_rating = Rating(movie=movie_id, user=user_id, rating=rating)
-                session.add(new_rating)
-                # There is also a timestamp in the dataset which is not used
+                new_tmdb_id = column
+                new_linking = MovieLinks(movie_id=new_movie_id, imdb_id=new_imdb_id, tmdb_id=new_tmdb_id)
+                session.add(new_linking)
+
 
 # Commit the added ratings
 session.commit()

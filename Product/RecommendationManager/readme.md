@@ -12,3 +12,8 @@ Explain how to run the tests here
 * example - Some examples to get started
 * tests - Tests here
 * scripts - Scripts for creating a database here
+
+
+## lightfm determinism
+lightm is not deterministic when fitting a new model. However if the model has already been
+fitted and the precision@k is checked on the same model it will produce the same results.

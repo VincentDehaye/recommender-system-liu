@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine
+from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, Float, String, ForeignKey
@@ -8,6 +9,14 @@ import os
 # Get the path and create the sqlite engine. Echo false means that we do not see generated SQL.
 basedir = os.path.abspath(os.path.dirname(__file__))
 engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), echo=True)
+
+
+# Used to turn foreign keys on in SQLite since this is by default
+@event.listens_for(engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
 
 # Used for the declarative part where we create the model
 Base = declarative_base()
@@ -55,7 +64,7 @@ class Movie(Base):
 
     def __repr__(self):
         return "<Movie(id='%s', title='%s')>" % (
-            self.name, self.title)
+            self.id, self.title)
 
 
 # Model for the user, only storing, this model i consistent with the lastest movielens dataset.

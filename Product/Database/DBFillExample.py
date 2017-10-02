@@ -1,4 +1,4 @@
-from Product.Database.DBConn import UserTest, User, Movie, Rated
+from Product.Database.DBConn import UserTest
 from Product.Database.DBConn import session
 
 # The below is an example

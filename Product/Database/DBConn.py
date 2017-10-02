@@ -34,6 +34,7 @@ class UserTest(Base):
 
 #### RECOMMENDATIONS TEAM BELOW ####
 
+
 # This Model is for Genres
 class Genre(Base):
     __tablename__ = 'genres'
@@ -43,6 +44,7 @@ class Genre(Base):
     def __repr__(self):
         return "<Genre(name='%s')>" % (
             self.name)
+
 
 # This Model is for movies
 class Movie(Base):
@@ -55,6 +57,7 @@ class Movie(Base):
         return "<Movie(id='%s', title='%s')>" % (
             self.name, self.title)
 
+
 # Model for the user, only storing, this model i consistent with the lastest movielens dataset.
 class User(Base):
 
@@ -65,28 +68,44 @@ class User(Base):
         return "<User(id='%s')>" % (
             self.id)
 
+
 # Model for the relation between Movies and Users, in this case ratings.Foreign key to User table and Movie table
 class Rating(Base):
 
     __tablename__ = 'ratings'
-    user = Column(Integer, ForeignKey(User.id), primary_key = True)
-    movie = Column(Integer, ForeignKey(Movie.id), primary_key = True)
+    user = Column(Integer, ForeignKey(User.id), primary_key=True)
+    movie = Column(Integer, ForeignKey(Movie.id), primary_key=True)
     rating = Column(Float)
 
     def __repr__(self):
         return "<Rated(user='%s', rated='%s')>" % (
             self.user, self.movie)
 
+
 # Model for movies in genres. Foreign key references to Movie and Genre.
 class MovieInGenre(Base):
 
     __tablename__ = 'movieingenre'
-    movie = Column(Integer, ForeignKey(Movie.id), primary_key = True)
-    genre = Column(String, ForeignKey(Genre.name), primary_key = True)
+    movie = Column(Integer, ForeignKey(Movie.id), primary_key=True)
+    genre = Column(String, ForeignKey(Genre.name), primary_key=True)
 
     def __repr__(self):
         return "<Genre(movie='%s', genre='%s')>" % (
             self.movie, self.genre)
+
+
+# Model for link between different online movie databases and the movies in the movielens db.First column is movie id
+# second column is imdb id and last column is tmdb id.
+class MovieLinks(Base):
+
+    __tablename__ = 'movielinks'
+    movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
+    imdb_id = Column(Integer)
+    tmdb_id = Column(Integer)
+
+    def __repr__(self):
+        return "<Genre(movie id='%s', imdb id='%s', tmdb id='%s')>" % (
+            self.movie_id, self.imdb_id, self.tmdb_id)
 
 
 #### VISUALIZATION TEAM BELOW ####

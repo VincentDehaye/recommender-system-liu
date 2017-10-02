@@ -4,15 +4,15 @@ import csv
 
 # This part handles adding the different genres to the database
 # List of all genres that can be seen in the movie lens dataset
-genreList = ["Action", "Adventure", "Animation", "Children's", "Comedy", "Crime", "Documentary",
-             "Drama", "Fantasy", "Film-Noir", "Horror", "Musical", "Mystery", "Romance", "Sci-Fi",
-             "Thriller", "War", "Western", "no genres listed"]
+genreList = ["Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary",
+             "Drama", "Fantasy", "Film-Noir", "Horror","IMAX", "Musical", "Mystery", "Romance", "Sci-Fi",
+             "Thriller", "War", "Western", "(no genres listed)"]
+
 
 # Add the genres to the db
 for genre in genreList:
     new_genre = Genre(name=genre)
     session.add(new_genre)
-
 
 # This part handles adding the movies of the dataset into the database
 # Read the movie.csv file to add data into database
@@ -20,33 +20,33 @@ for genre in genreList:
 with open('movies.csv', 'rt') as f:
     reader = csv.reader(f)
 
-    # Iterates through each row in the file
+    # Iterates through each row in the file and take column one (id) and column 2 (title)
     for row in reader:
+        new_movie=Movie(id=row[0], title=row[1])
+        session.add(new_movie)
 
-        # Iterates through each column
+    # Need to commit before filling with movies-genre due to foreign key
+    session.commit()
+
+    for row in reader:
         for counter, column in enumerate(row):
-
             if counter == 0:
                 movie_id = column
 
-            if counter == 1:
-                new_movie = Movie(id = movie_id, title = column)
-                session.add(new_movie)
+        if counter == 2:
+            genres = column.split("|")
 
-            if counter == 2:
-                genres = column.split("|")
+            # loop through all genres for the movie
+            for new_genre in genres:
+                new_movie_genre = MovieInGenre(movie=movie_id, genre=new_genre)
+                session.add(new_movie_genre)
 
-                # loop through all genres for the movie
-                for new_genre in genres:
-                    new_genre = MovieInGenre(movie=movie_id, genre=new_genre)
-                    session.add(new_genre)
 
-# Commit the added movies and their genres
+# Commit the added link between movies and their genres
 session.commit()
 
 # Close the csv file
 f.close()
-
 
 
 

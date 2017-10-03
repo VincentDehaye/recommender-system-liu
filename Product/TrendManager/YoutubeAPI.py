@@ -1,3 +1,6 @@
+"""
+Search module for the YouTube API
+"""
 import datetime
 
 import pytz as pytz
@@ -14,52 +17,60 @@ DEVELOPER_KEY = "AIzaSyAncPk0ysVz0IO4S0fQLaG-0_NP42mgucU"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
+
 def youtube_search(options):
-  youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
-    developerKey=DEVELOPER_KEY)
+    """
+    Performs a YouTube search and creates a list of results
+    :param options:
+    :return:
+    """
+    youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
+                    developerKey=DEVELOPER_KEY)
 
-  #Setting date for the last 30 days
-  def get_date():
-      d = datetime.datetime.utcnow() - datetime.timedelta(days=30)
-      d_with_timezone = d.replace(tzinfo=pytz.UTC)
-      return d_with_timezone.isoformat()
+    def get_date():
+        """
+        Setting date for the last 30 days
+        :return date:
+        """
+        date = datetime.datetime.utcnow() - datetime.timedelta(days=30)
+        date_with_timezone = date.replace(tzinfo=pytz.UTC)
+        return date_with_timezone.isoformat()
 
+    # Call the search.list method to retrieve results matching the specified
+    #  query term.
+    search_response = youtube.search().list(
+        q=options.q,
+        part="snippet",
+        type=options.type,
+        videoCategoryId=options.video_category_id,
+        maxResults=options.max_results,
+        publishedAfter=get_date()
+    ).execute()
 
-  # Call the search.list method to retrieve results matching the specified
-  # query term.
-  search_response = youtube.search().list(
-    q=options.q,
-    part="snippet",
-    type = options.type,
-    videoCategoryId=options.video_category_id,
-    maxResults=options.max_results,
-    publishedAfter=get_date()
-  ).execute()
+    videos = []
 
-
-
-
-  videos = []
-
-  # Add each result to the appropriate list, and then display the lists of
-  # matching videos, channels, and playlists.
-  for search_result in search_response.get("items", []):
-    if (search_result["id"]["kind"] == "youtube#video"):
-        videos.append("%s published: %s" % (search_result["snippet"]["title"],
-                                    search_result["snippet"]["publishedAt"]))
+    # Add each result to the appropriate list, and then display the lists of
+    # matching videos, channels, and playlists.
+    for search_result in search_response.get("items", []):
+        if search_result["id"]["kind"] == "youtube#video":
+            videos.append("%s published: %s" %
+                          (search_result["snippet"]["title"],
+                           search_result["snippet"]["publishedAt"]))
 
     print("Videos:\n", "\n".join(videos), "\n")
 
 
 if __name__ == "__main__":
-  argparser.add_argument("--q", help="Search term", default="frozen")
-  argparser.add_argument("--type", help="Type", default="video")
-  argparser.add_argument("--video-category-id", help="Video Category Id", default=30)
-  argparser.add_argument("--max-results", help="Max results", default=10)
-  argparser.add_argument("--publishedAfter", help="Date condition", default="")
-  args = argparser.parse_args()
+    argparser.add_argument("--q", help="Search term", default="frozen")
+    argparser.add_argument("--type", help="Type", default="video")
+    argparser.add_argument("--video-category-id",
+                           help="Video Category Id", default=30)
+    argparser.add_argument("--max-results", help="Max results", default=10)
+    argparser.add_argument("--publishedAfter",
+                           help="Date condition", default="")
+    ARGUMENTS = argparser.parse_args()
 
-  try:
-    youtube_search(args)
-  except HttpError as e:
-    print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+    try:
+        youtube_search(ARGUMENTS)
+    except HttpError as error:
+        print("An HTTP error %d occurred:\n%s" % (error.resp.status, error.content))

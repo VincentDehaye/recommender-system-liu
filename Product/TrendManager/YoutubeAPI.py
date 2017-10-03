@@ -68,9 +68,6 @@ def youtube_search(options):
             search_result["statistics"]["viewCount"]
         return search_response
 
-    get_youtube_count("frozen")
-
-
 if __name__ == "__main__":
     argparser.add_argument("--q", help="Search term", default="Frozen")
     argparser.add_argument("--type", help="Type", default="video")

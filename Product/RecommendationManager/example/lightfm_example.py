@@ -4,6 +4,9 @@ from lightfm import LightFM
 # TODO Instead of getting the dataset from movielens, we should get it from our own DB.
 from lightfm.datasets import fetch_movielens
 from lightfm.evaluation import precision_at_k
+from Product.Database.DBConn import session, User, Movie, Rating
+
+print(session.query(User))
 
 # this example will get you started on how lightfm works.
 
@@ -25,7 +28,6 @@ test_precision = precision_at_k(model, data['test'], k=5).mean()
 # this prints the test precision
 # the precision is in percentage.
 print('precision: %s' % test_precision)
-
 
 def sample_recommendation(model, data, user_ids):
     n_users, n_items = data['train'].shape

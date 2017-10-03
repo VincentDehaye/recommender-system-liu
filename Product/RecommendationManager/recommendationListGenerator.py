@@ -7,6 +7,11 @@ from lightfm.evaluation import precision_at_k
 from Product.Database.DBConn import session, User, Movie, Rating
 from scipy.sparse import coo_matrix
 
+
+#This file in contrast to lightfm_example will try to use our own database to create a recommendation list.
+
+
+
 # Load the MovieLens 100k dataset.
 data = fetch_movielens()
 

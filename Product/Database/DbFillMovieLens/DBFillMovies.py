@@ -47,6 +47,3 @@ session.commit()
 
 # Close the csv file
 f.close()
-
-
-

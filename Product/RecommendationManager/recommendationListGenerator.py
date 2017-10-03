@@ -1,7 +1,7 @@
 import numpy as np
 
 from lightfm import LightFM
-from lightfm.datasets import fetch_movielens
+#from lightfm.datasets import fetch_movielens
 from lightfm.evaluation import precision_at_k
 
 from Product.Database.DBConn import session, User, Movie, Rating
@@ -13,20 +13,20 @@ from scipy.sparse import coo_matrix
 
 
 # Load the MovieLens 100k dataset.
-data = fetch_movielens()
+#data = fetch_movielens()
 
 #As we can see when printing, data['train'] is a "sparse matrix"
-print('this is the train data in the dataset. (userid, movieid) rating')
-print(data['train'])
+#print('this is the train data in the dataset. (userid, movieid) rating')
+#print(data['train'])
 #As we can see when printing, data['test'] is a "sparse matrix"
-print('this is the test data in the dataset')
-print(data['test'])
+#print('this is the test data in the dataset')
+#print(data['test'])
 #As we can see when printing, data['item_labels'] is an array?,
-print('this is the movies in the dataset')
-print(data['item_labels'])
+#print('this is the movies in the dataset')
+#print(data['item_labels'])
 
 print('-------------------------------')
-print(data['item_features'])
+#print(data['item_features'])
 
 #TODO Save this information in the same format as data['train'] and data['test'], e.g. sparse matrix
 Ratings = session.query(Rating).all()
@@ -79,7 +79,7 @@ test_precision = precision_at_k(model, TestMatrix, k=5).mean()
 # the precision is in percentage.
 print('precision: %s' % test_precision)
 
-def sample_recommendation(model, data, user_ids):
+def sample_recommendation(model, TestMatrix, TrainMatrix, newMovieList, user_ids):
     n_users, n_items = TrainMatrix.shape
 
     for user_id in user_ids:
@@ -106,4 +106,4 @@ def sample_recommendation(model, data, user_ids):
 # observe that the user id is +1 and movie_id +1 in the dataset compared to the method output
 # That is because arrays start at 0 in python and.
 # TODO The output from this function should be a list of length 10 with ID:s that corresponds to the predicted movies.
-sample_recommendation(model, data, range(1, 4))
+sample_recommendation(model, TestMatrix, TrainMatrix, newMovieList, range(1, 4))

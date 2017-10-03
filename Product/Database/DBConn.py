@@ -87,8 +87,8 @@ class Rating(Base):
     rating = Column(Float)
 
     def __repr__(self):
-        return "<Rated(user='%s', rated='%s')>" % (
-            self.user, self.movie_id)
+        return "<Rated(user='%s', rated='%s', rating='%s')>" % (
+            self.user_id, self.movie_id, self.rating)
 
 
 # Model for movies in genres. Foreign key references to Movie and Genre.

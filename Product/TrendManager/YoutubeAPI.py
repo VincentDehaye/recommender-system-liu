@@ -29,28 +29,36 @@ def youtube_search(options):
 
     # Call the search.list method to retrieve results matching the specified
     #  query term.
-    search_response = youtube.search().list(
-        q=options.q,
-        part="snippet",
-        type=options.type,
-        videoCategoryId=options.video_category_id,
-        maxResults=options.max_results,
-        publishedAfter=get_date(30)
-    ).execute()
 
-    videos = []
+    def get_youtube_data(keyword):
+        search_response = youtube.search().list(
+            q=keyword,
+            part="snippet",
+            type=options.type,
+            videoCategoryId=options.video_category_id,
+            maxResults=options.max_results,
+            publishedAfter=get_date()
+        ).execute()
+        return search_response
 
-    # Add each result to the appropriate list, and then display the lists of
-    # matching videos, channels, and playlists.
+    def get_youtube_count(keyword):
+        search_response = youtube.videos().list(
+            part="statistics, snippet",
+            id=get_video_id(keyword)
+        ).execute()
+        for search_result in search_response.get("items", []):
+            search_result["statistics"]["viewCount"]
+        return search_response
 
-    for search_result in search_response.get("items", []):
-        if search_result["id"]["kind"] == "youtube#video":
-            videos.append("%s published: %s" %
-                          (search_result["snippet"]["title"],
-                           search_result["snippet"]["publishedAt"]))
+    def get_video_id(keyword):
+        id = ""
+        idList = ""
+        for search_result in get_youtube_data(keyword).get("items", []):
+            id = search_result["id"]["videoId"]
+            idList = id + ", " + idList
+            print(idList)
+        return idList
 
-    print("Videos:\n", "\n".join(videos), "\n")
-    return search_response
 
 
 def get_date(days):

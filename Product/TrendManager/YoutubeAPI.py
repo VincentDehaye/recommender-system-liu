@@ -1,3 +1,6 @@
+"""
+Search module for the YouTube API
+"""
 import datetime
 
 import pytz as pytz
@@ -16,14 +19,22 @@ YOUTUBE_API_VERSION = "v3"
 
 
 def youtube_search(options):
+    """
+    Performs a YouTube search and creates a list of results
+    :param options:
+    :return:
+    """
     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
                     developerKey=DEVELOPER_KEY)
 
-    # Setting date for the last 30 days
     def get_date():
-        d = datetime.datetime.utcnow() - datetime.timedelta(days=30)
-        d_with_timezone = d.replace(tzinfo=pytz.UTC)
-        return d_with_timezone.isoformat()
+        """
+        Setting date for the last 30 days
+        :return date:
+        """
+        date = datetime.datetime.utcnow() - datetime.timedelta(days=30)
+        date_with_timezone = date.replace(tzinfo=pytz.UTC)
+        return date_with_timezone.isoformat()
 
     # Call the search.list method to retrieve results matching the specified
     #  query term.
@@ -57,9 +68,9 @@ if __name__ == "__main__":
     argparser.add_argument("--max-results", help="Max results", default=10)
     argparser.add_argument("--publishedAfter",
                            help="Date condition", default="")
-    arguments = argparser.parse_args()
+    ARGUMENTS = argparser.parse_args()
 
     try:
-        youtube_search(arguments)
+        youtube_search(ARGUMENTS)
     except HttpError as error:
         print("An HTTP error %d occurred:\n%s" % (error.resp.status, error.content))

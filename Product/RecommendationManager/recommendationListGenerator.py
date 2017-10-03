@@ -41,11 +41,11 @@ print(movieList)
 
 
 #Trying to understand how "sparse matrix" works.
-#m = coo_matrix([[1,2,3],[4,5,6]])
-#m1 = m.tocsr()
-#print(m)
-#print(m1)
-#print(m1[1,2])
+m = coo_matrix([[1,2,3],[4,5,6]])
+m1 = m.tocsr()
+print(m)
+print(m1)
+print(m1[1,2])
 
 
 # Instantiate and train the model

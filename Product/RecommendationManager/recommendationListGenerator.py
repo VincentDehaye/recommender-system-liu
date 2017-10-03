@@ -22,52 +22,63 @@ print(data['train'])
 print('this is the movies in the dataset')
 print(data['item_labels'])
 
+print(data['test'])
+
 #TODO Save this information in the same format as data['train'], e.g. sparse matrix
 Ratings = session.query(Rating).all()
-#print(Ratings)
+UserList = []
+MovieList = []
+RatingList = []
+TestUserList = []
+TestMovieList = []
+TestRatingList = []
 
-#count=Ratings.__len__()
-#while count != 0:
-    #count=count-1
-    #print(Ratings[count])
+for counter,row in enumerate(session.query(Rating.user_id,Rating.movie_id,Rating.rating)):
+
+    if(counter % 5 == 0):
+        TestUserList.append(row[0])
+        TestMovieList.append(row[1])
+        TestRatingList.append(row[2])
+    else:
+        UserList.append(row[0])
+        MovieList.append(row[1])
+        RatingList.append(row[2])
+
+TrainMatrix = coo_matrix((RatingList,(UserList,MovieList)))
+TestMatrix = coo_matrix((TestRatingList,(TestUserList,TestMovieList)))
+#print(TrainMatrix)
+#print(TestMatrix)
+
+
 
 #TODO Save this information in the same format as data['item_labels'], e.g. array?
 movieList=[]
 Movies = session.query(Movie).all()
-print(Movies)
 for row in session.query(Movie.title):
-    movieList.append(row)
-print(movieList)
-
-
-#Trying to understand how "sparse matrix" works.
-m = coo_matrix([[1,2,3],[4,5,6]])
-m1 = m.tocsr()
-print(m)
-print(m1)
-print(m1[1,2])
+    movieList.append(row[0])
+newMovieList=np.transpose(movieList)
 
 
 # Instantiate and train the model
 model = LightFM(loss='warp')
-model.fit(data['train'], epochs=30, num_threads=2)
+model.fit(TrainMatrix, epochs=30, num_threads=2)
 
 # Evaluate the trained model by comparing it with the original data
 # It evaluates the precision for the top k=5 movies from the algorithm
-test_precision = precision_at_k(model, data['test'], k=5).mean()
+test_precision = precision_at_k(model, TestMatrix, k=5).mean()
 
 # this prints the test precision
 # the precision is in percentage.
 print('precision: %s' % test_precision)
 
 def sample_recommendation(model, data, user_ids):
-    n_users, n_items = data['train'].shape
+    n_users, n_items = TrainMatrix.shape
 
     for user_id in user_ids:
-        known_positives = data['item_labels'][data['train'].tocsr()[user_id].indices]
+        known_positives = newMovieList[TrainMatrix.tocsr()[user_id].indices]
 
         scores = model.predict(user_id, np.arange(n_items))
-        top_items = data['item_labels'][np.argsort(-scores)]
+        top_items = newMovieList[np.argsort(-scores)]
 
         print("User %s" % user_id)
         print("     Known positives:")

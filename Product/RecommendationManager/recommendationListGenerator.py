@@ -67,25 +67,34 @@ newMovieList=np.transpose(movieList)
 print('                 this is OUR labels')
 print(newMovieList)
 
-# Instantiate and train the model
+# Instantiate and train the model, change epochs to improve precision.
 model = LightFM(loss='warp')
-model.fit(TrainMatrix, epochs=30, num_threads=2)
+model.fit(TrainMatrix, epochs=20, num_threads=2)
 
 # Evaluate the trained model by comparing it with the original data
 # It evaluates the precision for the top k=5 movies from the algorithm
-test_precision = precision_at_k(model, TestMatrix, k=5).mean()
+test_precision = precision_at_k(model, TrainMatrix).mean()
 
 # this prints the test precision
 # the precision is in percentage.
 print('precision: %s' % test_precision)
 
-def sample_recommendation(model, TestMatrix, TrainMatrix, newMovieList, user_ids):
-    n_users, n_items = TrainMatrix.shape
 
+# TODO This part is not working, it tries to fetch fro newMovieList by using np.argsort(-scores). Problem is that movie
+# TODO id is not from 0 and movies are missint to 156 000. This means that newMovieList only has 9000 indexes. Will try
+# TODO rearreange database
+def sample_recommendation(model, testmatrix, newMovieList, user_ids):
+    n_users, n_items = testmatrix.shape
+    print("Our testmatrix shape: ")
+    print(testmatrix.shape)
+    print("Our newMovieList shape: ")
+    print(newMovieList.shape)
     for user_id in user_ids:
-        known_positives = newMovieList[TrainMatrix.tocsr()[user_id].indices]
+        known_positives = newMovieList[testmatrix.tocsr()[user_id].indices]
 
         scores = model.predict(user_id, np.arange(n_items))
+        print("This is the ng.arg")
+        print(np.argsort(-scores))
         top_items = newMovieList[np.argsort(-scores)]
 
         print("User %s" % user_id)
@@ -106,4 +115,4 @@ def sample_recommendation(model, TestMatrix, TrainMatrix, newMovieList, user_ids
 # observe that the user id is +1 and movie_id +1 in the dataset compared to the method output
 # That is because arrays start at 0 in python and.
 # TODO The output from this function should be a list of length 10 with ID:s that corresponds to the predicted movies.
-sample_recommendation(model, TestMatrix, TrainMatrix, newMovieList, range(1, 4))
+sample_recommendation(model, TestMatrix, newMovieList, range(1, 4))

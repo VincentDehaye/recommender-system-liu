@@ -8,6 +8,16 @@
 ## Documents
 * [Google Drive with all docuuments](https://drive.google.com/drive/folders/0B0-_5NZyjrIgOS1hN0hldGlIckE)
 
+### Directory structure
+The directory structure is highly correlated to the high-level architecture described in chapter 5 of the architecture [notebook](https://drive.google.com/file/d/0B6ULgKdUSXuKdW5Damhxa3JEZjA/view?usp=sharing). Under the directory [Product](https://gitlab.ida.liu.se/PUM-Company3/Software/tree/master/Product) there are six subdirectories:
+
+* [APIManager](https://gitlab.ida.liu.se/PUM-Company3/Software/tree/development/Product/APIManager)
+* [DataManger](https://gitlab.ida.liu.se/PUM-Company3/Software/tree/development/Product/DataManager)
+* [DataBase](https://gitlab.ida.liu.se/PUM-Company3/Software/tree/development/Product/Database)
+* [RecomendationManager](https://gitlab.ida.liu.se/PUM-Company3/Software/tree/development/Product/RecommendationManager)
+* [TrendManager](https://gitlab.ida.liu.se/PUM-Company3/Software/tree/development/Product/TrendManager)
+* [UI](https://gitlab.ida.liu.se/PUM-Company3/Software/tree/development/Product/UI) 
+
 ### How we work at Coogl3
 
 * [Analysts](https://drive.google.com/drive/folders/0B80SCkOGLcS_OXBDYXlmUEp1VlE)

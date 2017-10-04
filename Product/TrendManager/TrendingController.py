@@ -1,25 +1,36 @@
-# Author: Martin Lundberg,
+# Author: Martin Lundberg, Albin Bergvall
 # Date: 2017-09-28
+# Updated: 2017-10-03
 # Purpose: Controller class for the trending module. Gets data, calculates a score
 # and sends it to the database API.
 
-# from .YoutubeAPI import YoutubeAPI
-from .ScoredMovie import ScoredMovie
-
-# This is just a suggestion of how the TrendingController could look like.
-# We don't know what the data from the youtubeApi will look like yet.
+from Product.TrendManager import YoutubeAPI
+from Product.TrendManager.ScoredMovie import ScoredMovie
 
 
 class TrendingController:
-    scoredMovie = ScoredMovie()
+    # scoredMovie = ScoredMovie()
 
     def __init__(self):
-        # self.youtubeData = YoutubeAPI.getData("Keyword")
-        # scoredMovie.id = self.youtubeData[id]
+        searchterm = "frozen"  # Quick test of class, change searchterm for different searches
+        scoredmovie = ScoredMovie(1,
+                                  self.total_score_calc(searchterm))  # temp id, use id from database/imdb id?
+        print("Search term: " + searchterm + ", Score: " + scoredmovie.score)
         # scoredMovie.score = YoutubeScoreCalc(self.youtubeData[views], other...)
         # SendToDatabase(scoredMovie)
-        print ("placeholder")
 
-    # def YoutubeScoreCalc(self, views, other...):
+    def total_score_calc(self, keyword):
+        totalscore = 0
+        youtubescore = self.youtube_score_calc(keyword)
+        # add more scoreres as needed
+        totalscore += youtubescore
+        return totalscore
 
-    # def SendToDatabase(self, scoredMovie):
+    def youtube_score_calc(self, keyword):
+        youtubedata = YoutubeAPI.get_youtube_count(keyword)
+        totalviews = 0
+        for video in youtubedata.get("items", []):
+            totalviews += video["statistics"]["viewCount"]
+        return totalviews
+
+        # def SendToDatabase(self, scoredMovie):

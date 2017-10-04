@@ -35,12 +35,16 @@ export class TrendingEchartsBarComponent implements AfterViewInit, OnDestroy {
           bottom: '3%',
           containLabel: true,
         },
+
         xAxis: [
           {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: ['Bullar', 'Trump', 'CHL', 'Zlatan', 'Nobel', 'Vegas', 'CNN'],
             axisTick: {
               alignWithLabel: true,
+            },
+            ticks: {
+              autoSkip: false,
             },
             axisLine: {
               lineStyle: {

@@ -29,7 +29,7 @@ export class TrendingEchartsLineComponent implements AfterViewInit, OnDestroy {
         },
         legend: {
           left: 'left',
-          data: ['Line 1', 'Line 2', 'Line 3'],
+          data: ['Bullar', 'Trump', 'CHL', 'Zlatan', 'Nobel', 'Vegas', 'CNN'],
           textStyle: {
             color: echarts.textColor,
           },

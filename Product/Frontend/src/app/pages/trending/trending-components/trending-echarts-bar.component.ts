@@ -44,7 +44,7 @@ export class TrendingEchartsBarComponent implements AfterViewInit, OnDestroy {
               alignWithLabel: true,
             },
             ticks: {
-              autoSkip: false
+              autoSkip: false,
             },
             axisLine: {
               lineStyle: {

@@ -2,8 +2,9 @@
   <div class="col-lg-6">
     <nb-card>
       <nb-card-header>Recommendations</nb-card-header>
-      <nb-card-body>
-      </nb-card-body>
+      <nb-card-header *ngFor="let movie of movies">
+          <h1>{{movie}}</h1>
+      </nb-card-header>
     </nb-card>
   </div>
   <div class="col-lg-6">

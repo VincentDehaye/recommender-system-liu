@@ -13,16 +13,16 @@ import { NbThemeService } from '@nebular/theme';
 export class UsersD3AdvancedPieComponent implements OnDestroy {
   single = [
     {
-      name: 'Germany',
-      value: 8940000,
+      name: 'Likely to be recommended',
+      value: 200,
     },
     {
-      name: 'USA',
-      value: 5000000,
+      name: 'Rarely recommended',
+      value: 160,
     },
     {
-      name: 'France',
-      value: 7200000,
+      name: 'Not recommended',
+      value: 300,
     },
   ];
   colorScheme: any;
@@ -32,7 +32,7 @@ export class UsersD3AdvancedPieComponent implements OnDestroy {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       this.colorScheme = {
-        domain: [colors.primaryLight, colors.infoLight, colors.successLight, colors.warningLight, colors.dangerLight],
+        domain: [colors.primaryLight, colors.infoLight, colors.dangerLight, colors.warningLight, colors.dangerLight],
       };
     });
   }

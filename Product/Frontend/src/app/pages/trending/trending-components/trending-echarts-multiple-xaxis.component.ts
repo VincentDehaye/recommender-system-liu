@@ -30,7 +30,7 @@ export class TrendingEchartsMultipleXaxisComponent implements AfterViewInit, OnD
           },
         },
         legend: {
-          data: ['Bullar', 'Trump', 'CHL', 'Zlatan', 'Nobel', 'Vegas', 'CNN'],
+          data: ['2015 Precipitation', '2016 Precipitation'],
           textStyle: {
             color: echarts.textColor,
           },
@@ -141,16 +141,16 @@ export class TrendingEchartsMultipleXaxisComponent implements AfterViewInit, OnD
             },
           },
         ],
-        series: [ // ['Bullar', 'Trump', 'CHL', 'Zlatan', 'Nobel', 'Vegas', 'CNN'],
+        series: [
           {
-            name: 'Precipitation 2015',
+            name: '2015 Precipitation',
             type: 'line',
             xAxisIndex: 1,
             smooth: true,
-            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
           },
           {
-            name: 'Precipitation 2016',
+            name: '2016 Precipitation',
             type: 'line',
             smooth: true,
             data: [3.9, 5.9, 11.1, 18.7, 48.3, 69.2, 231.6, 46.6, 55.4, 18.4, 10.3, 0.7],

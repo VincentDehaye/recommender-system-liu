@@ -18,15 +18,15 @@ import { NbThemeService } from '@nebular/theme';
 export class UsersD3BarComponent implements OnDestroy {
 
   results = [
-    { name: 'Germany', value: 8940 },
-    { name: 'USA', value: 5000 },
-    { name: 'France', value: 7200 },
+    { name: 'Batman', value: 8940 },
+    { name: 'Frozen', value: 5000 },
+    { name: 'The Room', value: 2000 },
   ];
   showLegend = true;
   showXAxis = true;
   showYAxis = true;
-  xAxisLabel = 'Country';
-  yAxisLabel = 'Population';
+  xAxisLabel = 'movies';
+  yAxisLabel = 'recomended';
   colorScheme: any;
   themeSubscription: any;
 

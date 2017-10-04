@@ -27,50 +27,80 @@ def youtube_search(options):
     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
                     developerKey=DEVELOPER_KEY)
 
-    def get_date():
-        """
-        Setting date for the last 30 days
-        :return date:
-        """
-        date = datetime.datetime.utcnow() - datetime.timedelta(days=30)
-        date_with_timezone = date.replace(tzinfo=pytz.UTC)
-        return date_with_timezone.isoformat()
-
     # Call the search.list method to retrieve results matching the specified
     #  query term.
-    search_response = youtube.search().list(
-        q=options.q,
-        part="snippet",
-        type=options.type,
-        videoCategoryId=options.video_category_id,
-        maxResults=options.max_results,
-        publishedAfter=get_date()
-    ).execute()
 
-    videos = []
+    def get_youtube_data(keyword):
+        search_response = youtube.search().list(
+            q=keyword,
+            part="snippet",
+            type=options.type,
+            videoCategoryId=options.video_category_id,
+            maxResults=options.max_results,
+            publishedAfter=get_date()
+        ).execute()
+        return search_response
 
-    # Add each result to the appropriate list, and then display the lists of
-    # matching videos, channels, and playlists.
-    for search_result in search_response.get("items", []):
-        if search_result["id"]["kind"] == "youtube#video":
-            videos.append("%s published: %s" %
-                          (search_result["snippet"]["title"],
-                           search_result["snippet"]["publishedAt"]))
+    def get_youtube_count(keyword):
+        search_response = youtube.videos().list(
+            part="statistics, snippet",
+            id=get_video_id(keyword)
+        ).execute()
+        for search_result in search_response.get("items", []):
+            search_result["statistics"]["viewCount"]
+        return search_response
 
-    print("Videos:\n", "\n".join(videos), "\n")
+    def get_video_id(keyword):
+        id = ""
+        idList = ""
+        for search_result in get_youtube_data(keyword).get("items", []):
+            id = search_result["id"]["videoId"]
+            idList = id + ", " + idList
+            print(idList)
+        return idList
 
 
-if __name__ == "__main__":
+
+def get_date(days):
+    """
+    Getting the date for the inputted number of days ago
+    :param days: number of days ago
+    :return:
+    """
+    date = datetime.datetime.utcnow() - datetime.timedelta(days=days)
+    date_with_timezone = date.replace(tzinfo=pytz.UTC)
+    return date_with_timezone.isoformat()
+
+
+def get_arguments(category_id, max_results):
+    """
+    Gets arguments (currently hard coded)
+    :param category_id:
+    :param max_results:
+    :return:
+    """
     argparser.add_argument("--q", help="Search term", default="frozen")
     argparser.add_argument("--type", help="Type", default="video")
     argparser.add_argument("--video-category-id",
-                           help="Video Category Id", default=30)
-    argparser.add_argument("--max-results", help="Max results", default=10)
+                           help="Video Category Id", default=category_id)
+    argparser.add_argument("--max-results", help="Max results", default=max_results)
     argparser.add_argument("--publishedAfter",
                            help="Date condition", default="")
-    ARGUMENTS = argparser.parse_args()
+    return argparser.parse_args()
+
+
+def main():
+    """
+    Main method.
+    :return:
+    """
+    arguments = get_arguments(30, 10)
 
     try:
-        youtube_search(ARGUMENTS)
+        youtube_search(arguments)
     except HttpError as error:
         print("An HTTP error %d occurred:\n%s" % (error.resp.status, error.content))
+
+
+if __name__ == "__main__":
+    main()

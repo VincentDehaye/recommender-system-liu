@@ -91,9 +91,9 @@ def sample_recommendation(model, trainmatrix, newMovieList, user_ids):
         scores = model.predict(user_id, np.arange(n_items))
         # print("This is the ng.arg")
         # print(np.argsort(-scores))
-        top_items = np.argsort(-scores)[:10]
+        top_items = np.argsort(-scores)
         print("This is the recommended movie_ids for user:" + str(user_id))
-        for movie_id in top_items[:10]:
+        for movie_id in top_items[:100]:
             print(movie_id)
 
         # top_items = newMovieList[np.argsort(-scores)]
@@ -116,4 +116,4 @@ def sample_recommendation(model, trainmatrix, newMovieList, user_ids):
 # observe that the user id is +1 and movie_id +1 in the dataset compared to the method output
 # That is because arrays start at 0 in python and.
 # TODO The output from this function should be a list of length 10 with ID:s that corresponds to the predicted movies.
-sample_recommendation(model, TrainMatrix, newMovieList, range(1, 4))
+sample_recommendation(model, TrainMatrix, newMovieList, range(56, 57))

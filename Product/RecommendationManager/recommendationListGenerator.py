@@ -39,7 +39,7 @@ TestRatingList = []
 
 for counter,row in enumerate(session.query(Rating.user_id,Rating.movie_id,Rating.rating)):
 
-    if(counter % 5 == 0):
+    if counter % 5 == 0:
         TestUserList.append(row[0])
         TestMovieList.append(row[1])
         TestRatingList.append(row[2])
@@ -56,8 +56,7 @@ print('                 this is OUR test data')
 print(TestMatrix)
 
 
-
-#TODO Save this information in the same format as data['item_labels'], e.g. array?
+# Saves the data in the same format as the data[labels] list in lightfm example
 movieList=[]
 Movies = session.query(Movie).all()
 for row in session.query(Movie.title):
@@ -72,41 +71,43 @@ model = LightFM(loss='warp')
 model.fit(TrainMatrix, epochs=20, num_threads=2)
 
 # Evaluate the trained model by comparing it with the original data
-# It evaluates the precision for the top k=5 movies from the algorithm
-test_precision = precision_at_k(model, TrainMatrix).mean()
-
+# It evaluates the precision for the top k=10 movies from the algorithm
+test_precision = precision_at_k(model, TrainMatrix, k=10).mean()
 # this prints the test precision
 # the precision is in percentage.
-print('precision: %s' % test_precision)
+print('precision at train: %s' % test_precision)
 
 
-# TODO This part is not working, it tries to fetch fro newMovieList by using np.argsort(-scores). Problem is that movie
-# TODO id is not from 0 and movies are missint to 156 000. This means that newMovieList only has 9000 indexes. Will try
-# TODO rearreange database
-def sample_recommendation(model, testmatrix, newMovieList, user_ids):
-    n_users, n_items = testmatrix.shape
+# Sends in our testmatrix and the user_ids for the users to present recommendations
+def sample_recommendation(model, trainmatrix, newMovieList, user_ids):
+    n_users, n_items = trainmatrix.shape
     print("Our testmatrix shape: ")
-    print(testmatrix.shape)
+    print(trainmatrix.shape)
     print("Our newMovieList shape: ")
     print(newMovieList.shape)
     for user_id in user_ids:
-        known_positives = newMovieList[testmatrix.tocsr()[user_id].indices]
+        # known_positives = newMovieList[testmatrix.tocsr()[user_id].indices]
 
         scores = model.predict(user_id, np.arange(n_items))
-        print("This is the ng.arg")
-        print(np.argsort(-scores))
-        top_items = newMovieList[np.argsort(-scores)]
+        # print("This is the ng.arg")
+        # print(np.argsort(-scores))
+        top_items = np.argsort(-scores)[:10]
+        print("This is the recommended movie_ids for user:" + str(user_id))
+        for movie_id in top_items[:10]:
+            print(movie_id)
 
-        print("User %s" % user_id)
-        print("     Known positives:")
+        # top_items = newMovieList[np.argsort(-scores)]
 
-        for x in known_positives[:3]:
-            print("        %s" % x)
+        # print("User %s" % user_id)
+        # print("     Known positives:")
 
-        print("     Recommended:")
+        # for x in known_positives[:3]:
+            # print("        %s" % x)
 
-        for x in top_items[:10]:
-            print("        %s" % x)
+        # print("     Recommended:")
+
+        # for x in top_items[:10]:
+        #    print("        %s" % x)
 
 
 # this method prints the recommended and known positives for the first three users
@@ -115,4 +116,4 @@ def sample_recommendation(model, testmatrix, newMovieList, user_ids):
 # observe that the user id is +1 and movie_id +1 in the dataset compared to the method output
 # That is because arrays start at 0 in python and.
 # TODO The output from this function should be a list of length 10 with ID:s that corresponds to the predicted movies.
-sample_recommendation(model, TestMatrix, newMovieList, range(1, 4))
+sample_recommendation(model, TrainMatrix, newMovieList, range(1, 4))

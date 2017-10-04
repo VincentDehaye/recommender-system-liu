@@ -68,4 +68,4 @@ def sample_recommendation(model, trainmatrix, user_ids):
 # observe that the user id is +1 and movie_id +1 in the dataset compared to the method output
 # That is because arrays start at 0 in python and.
 # TODO The output from this function should be a list of length 10 with ID:s that corresponds to the predicted movies.
-sample_recommendation(model, TrainMatrix, newMovieList, range(56, 57))
+sample_recommendation(model, TrainMatrix, range(56, 57))

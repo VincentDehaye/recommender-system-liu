@@ -9,13 +9,11 @@ from Product.TrendManager.ScoredMovie import ScoredMovie
 
 
 class TrendingController:
-    # scoredMovie = ScoredMovie()
 
-    def __init__(self):
-        searchterm = "frozen"  # Quick test of class, change searchterm for different searches
+    def __init__(self, searchterm):
         scoredmovie = ScoredMovie(1,
                                   self.total_score_calc(searchterm))  # temp id, use id from database/imdb id?
-        print("Search term: " + searchterm + ", Score: " + scoredmovie.score)
+        print("Search term: " + searchterm + ", Score: ", scoredmovie.score)
         # scoredMovie.score = YoutubeScoreCalc(self.youtubeData[views], other...)
         # SendToDatabase(scoredMovie)
 
@@ -30,7 +28,9 @@ class TrendingController:
         youtubedata = YoutubeAPI.get_youtube_count(keyword)
         totalviews = 0
         for video in youtubedata.get("items", []):
-            totalviews += video["statistics"]["viewCount"]
+            totalviews += int(video["statistics"]["viewCount"])
         return totalviews
 
-        # def SendToDatabase(self, scoredMovie):
+        # def SnabbaSendToDatabase(self, scoredMovie):
+
+TrendingController = TrendingController("Wonderwoman")

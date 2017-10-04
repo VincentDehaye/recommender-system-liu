@@ -4,20 +4,21 @@
 # Purpose: Controller class for the trending module. Gets data, calculates a score
 # and sends it to the database API.
 
-from Product.TrendManager import YoutubeAPI
-from Product.TrendManager.ScoredMovie import ScoredMovie
 
+import YoutubeAPI
+from ScoredMovie import ScoredMovie
+from oauth2client.tools import argparser
+import sys  # To be able to run from comandpropt
 
 class TrendingController:
-    # scoredMovie = ScoredMovie()
 
-    def __init__(self):
-        searchterm = "frozen"  # Quick test of class, change searchterm for different searches
+    #def __init__(self, searchterm):
+        # SendToDatabase(scoredMovie)
+
+    def get_trending_content(self, searchterm):
         scoredmovie = ScoredMovie(1,
                                   self.total_score_calc(searchterm))  # temp id, use id from database/imdb id?
-        print("Search term: " + searchterm + ", Score: " + scoredmovie.score)
-        # scoredMovie.score = YoutubeScoreCalc(self.youtubeData[views], other...)
-        # SendToDatabase(scoredMovie)
+        return scoredmovie
 
     def total_score_calc(self, keyword):
         totalscore = 0
@@ -30,7 +31,27 @@ class TrendingController:
         youtubedata = YoutubeAPI.get_youtube_count(keyword)
         totalviews = 0
         for video in youtubedata.get("items", []):
-            totalviews += video["statistics"]["viewCount"]
+            totalviews += int(video["statistics"]["viewCount"])
         return totalviews
 
-        # def SendToDatabase(self, scoredMovie):
+    # def SendToDatabase(self, scoredMovie):
+
+
+"""
+Argparser to send title as argument when running script, --c "title"
+"""
+# argparser.add_argument("--c", help="Content title", default="")
+# argparser.parse_args()
+# if __name__ == "__main__":
+   # searchterm = str(sys.argv[2])
+   # trendingcontroller = TrendingController()
+   # scoredmovie = TrendingController.get_trending_content(trendingcontroller, searchterm)
+   # print(scoredmovie.score)
+
+"""
+Ask user for input after script is run
+"""
+searchterm = input("Enter content title: ")
+trendingcontroller = TrendingController()
+scoredmovie = TrendingController.get_trending_content(trendingcontroller, searchterm)
+print(scoredmovie.score)

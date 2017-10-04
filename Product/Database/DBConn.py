@@ -82,28 +82,28 @@ class User(Base):
 class Rating(Base):
 
     __tablename__ = 'ratings'
-    user = Column(Integer, ForeignKey(User.id), primary_key=True)
-    movie = Column(Integer, ForeignKey(Movie.id), primary_key=True)
+    user_id = Column(Integer, ForeignKey(User.id), primary_key=True)
+    movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
     rating = Column(Float)
 
     def __repr__(self):
-        return "<Rated(user='%s', rated='%s')>" % (
-            self.user, self.movie)
+        return "<Rated(user='%s', rated='%s', rating='%s')>" % (
+            self.user_id, self.movie_id, self.rating)
 
 
 # Model for movies in genres. Foreign key references to Movie and Genre.
 class MovieInGenre(Base):
 
     __tablename__ = 'movieingenre'
-    movie = Column(Integer, ForeignKey(Movie.id), primary_key=True)
+    movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
     genre = Column(String, ForeignKey(Genre.name), primary_key=True)
 
     def __repr__(self):
-        return "<Genre(movie='%s', genre='%s')>" % (
-            self.movie, self.genre)
+        return "<Genre(movie_id='%s', genre='%s')>" % (
+            self.movie_id, self.genre)
 
 
-# Model for link between different online movie databases and the movies in the movielens db.First column is movie id
+# Model for link between different online movie_id databases and the movies in the movielens db.First column is movie_id id
 # second column is imdb id and last column is tmdb id.
 class MovieLinks(Base):
 
@@ -113,7 +113,7 @@ class MovieLinks(Base):
     tmdb_id = Column(Integer)
 
     def __repr__(self):
-        return "<Genre(movie id='%s', imdb id='%s', tmdb id='%s')>" % (
+        return "<Genre(movie_id id='%s', imdb id='%s', tmdb id='%s')>" % (
             self.movie_id, self.imdb_id, self.tmdb_id)
 
 

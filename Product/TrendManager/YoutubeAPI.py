@@ -31,17 +31,27 @@ def youtube_search(options):
     #  query term.
 
     def get_youtube_data(keyword):
+        """
+        Getting the the result from the search with keyword
+        :param keyword: keyword, e.g. movie-title
+        :return:
+        """
         search_response = youtube.search().list(
             q=keyword,
             part="snippet",
             type=options.type,
             videoCategoryId=options.video_category_id,
             maxResults=options.max_results,
-            publishedAfter=get_date()
+            publishedAfter=get_date(30)
         ).execute()
         return search_response
 
     def get_youtube_count(keyword):
+        """
+        Getting the viewCount for the selected videoId´s
+        :param keyword: keyword, e.g. movie-title
+        :return:
+        """
         search_response = youtube.videos().list(
             part="statistics, snippet",
             id=get_video_id(keyword)
@@ -51,15 +61,17 @@ def youtube_search(options):
         return search_response
 
     def get_video_id(keyword):
+        """
+        Getting the videoId´s from the query
+        :param keyword: keyword, e.g. movie-title
+        :return:
+        """
         id = ""
         idList = ""
         for search_result in get_youtube_data(keyword).get("items", []):
             id = search_result["id"]["videoId"]
             idList = id + ", " + idList
-            print(idList)
         return idList
-
-
 
 def get_date(days):
     """
@@ -79,7 +91,7 @@ def get_arguments(category_id, max_results):
     :param max_results:
     :return:
     """
-    argparser.add_argument("--q", help="Search term", default="frozen")
+    argparser.add_argument("--q", help="Search term", default="")
     argparser.add_argument("--type", help="Type", default="video")
     argparser.add_argument("--video-category-id",
                            help="Video Category Id", default=category_id)

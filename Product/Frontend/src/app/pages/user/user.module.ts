@@ -15,4 +15,7 @@ const components = [
   imports: [ThemeModule, UserRoutingModule, AngularEchartsModule, NgxChartsModule, ChartModule],
   declarations: [...routedComponents, ...components],
 })
-export class UserModule {}
+export class UserModule {
+  movies: string[] = ['Batman', 'Superman', 'Justice Leauge', 'The Flash', 'Wonderwoman',
+   'Cyborg', 'Game of thrones', 'True detective', 'House of chaos', 'My little pony'];
+}

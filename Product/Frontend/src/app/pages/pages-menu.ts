@@ -1,12 +1,12 @@
 import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
-  {
+  /*{
     title: 'Overview',
     icon: 'ion-android-search',
     link: '/pages/overview',
     home: true,
-  },
+  },*/
   {
     title: 'ANALYTICS',
     group: true,
@@ -26,11 +26,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'ion-heart',
     link: '/pages/recommended',
   },
-  {
+  /*{
     title: 'Content',
     icon: 'ion-android-list',
     link: '/pages/content/content-table',
-  },
+  },*/
   /*{
     title: 'Auth',
     icon: 'nb-locked',

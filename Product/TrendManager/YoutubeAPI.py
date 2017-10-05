@@ -73,6 +73,7 @@ def youtube_search(options):
             idList = id + ", " + idList
         return idList
 
+
 def get_date(days):
     """
     Getting the date for the inputted number of days ago

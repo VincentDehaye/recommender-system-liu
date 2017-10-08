@@ -18,60 +18,65 @@ YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
 
-def youtube_search(options):
+def youtube_search(options):  # Redundant?
     """
     Performs a YouTube search and creates a list of results
     :param options:
     :return:
     """
-    youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
-                    developerKey=DEVELOPER_KEY)
+
 
     # Call the search.list method to retrieve results matching the specified
     #  query term.
 
-    def get_youtube_data(keyword):
-        """
-        Getting the the result from the search with keyword
-        :param keyword: keyword, e.g. movie-title
-        :return:
-        """
-        search_response = youtube.search().list(
-            q=keyword,
-            part="snippet",
-            type=options.type,
-            videoCategoryId=options.video_category_id,
-            maxResults=options.max_results,
-            publishedAfter=get_date(30)
-        ).execute()
-        return search_response
+def get_youtube_data(keyword):
+    """
+    Getting the the result from the search with keyword
+    :param keyword: keyword, e.g. movie-title
+    :return:
+    """
+    options = get_arguments(30,10)
+    youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
+                    developerKey=DEVELOPER_KEY)
+    search_response = youtube.search().list(
+        q=keyword,
+        part="snippet",
+        type=options.type,
+        videoCategoryId=options.video_category_id,
+        maxResults=options.max_results,
+        publishedAfter=get_date(30)
+    ).execute()
+    return search_response
 
-    def get_youtube_count(keyword):
-        """
-        Getting the viewCount for the selected videoId´s
-        :param keyword: keyword, e.g. movie-title
-        :return:
-        """
-        search_response = youtube.videos().list(
-            part="statistics, snippet",
-            id=get_video_id(keyword)
-        ).execute()
-        for search_result in search_response.get("items", []):
-            search_result["statistics"]["viewCount"]
-        return search_response
 
-    def get_video_id(keyword):
-        """
-        Getting the videoId´s from the query
-        :param keyword: keyword, e.g. movie-title
-        :return:
-        """
-        id = ""
-        idList = ""
-        for search_result in get_youtube_data(keyword).get("items", []):
-            id = search_result["id"]["videoId"]
-            idList = id + ", " + idList
-        return idList
+def get_youtube_count(keyword):
+    """
+    Getting the viewCount for the selected videoId´s
+    :param keyword: keyword, e.g. movie-title
+    :return:
+    """
+    youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
+                    developerKey=DEVELOPER_KEY)
+    search_response = youtube.videos().list(
+        part="statistics, snippet",
+        id=get_video_id(keyword)
+    ).execute()
+    return search_response
+
+
+def get_video_id(keyword):
+    """
+    Getting the videoId´s from the query
+    :param keyword: keyword, e.g. movie-title
+    :return:
+    """
+    id = ""
+    idList = ""
+    for search_result in get_youtube_data(keyword).get("items", []):
+        id = search_result["id"]["videoId"]
+        idList = id + ", " + idList
+    return idList
+
 
 
 def get_date(days):

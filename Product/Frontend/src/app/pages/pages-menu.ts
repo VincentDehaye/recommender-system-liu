@@ -12,7 +12,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Users',
+    title: 'Overview',
     icon: 'ion-person-stalker',
     link: '/pages/users',
   },

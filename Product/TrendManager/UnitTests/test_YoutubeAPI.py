@@ -1,29 +1,76 @@
-from ..YoutubeAPI import youtube_search
-from oauth2client.tools import argparser
+import datetime
+import pytz
+from tweepy.streaming import json
+
+from ..YoutubeAPI import YoutubeAPI
 
 
-def test_youtube_search_standard_case(self):
+def test_get_youtube_data():
     """
-    Author: Martin Lundberg
-    Date: 2017-10-03
-    Purpose: Assert that we're getting what we want from Youtube
+    Author: Karl Lundvall
+    Date: 2017-10-09
+    Purpose: Assert that the get_youtube_data returns a search response
     """
-
     # Pre-conditions
-    argparser.add_argument("--q", help="Search term", default="frozen")
-    argparser.add_argument("--type", help="Type", default="video")
-    argparser.add_argument("--video-category-id",
-                           help="Video Category Id", default=30)
-    argparser.add_argument("--max-results", help="Max results", default=10)
-    argparser.add_argument("--publishedAfter",
-                           help="Date condition", default="")
-    arguments = argparser.parse_args()
+    youtube = YoutubeAPI()
+    # Observed output
+    observed = youtube.get_youtube_data("IT")
 
-    # Expected outputs
-    # Insert what to check for here
+    assert observed is not None
 
-    # Observed outputs
-    youtube_search(arguments) # This should return outputs
 
-    # Compare
-    self.asssertEqual(True, True)
+def test_get_date():
+    """
+    Author: Karl Lundvall
+    Date: 2017-10-09
+    Purpose: Assert that the get_date method in YoutubeAPI returns the correct format.
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    # Expected output
+    expected = ('%Y-%m-%dT%H:%M:%S.%f%z')
+    # Observed output
+    output = youtube.get_date(30)
+
+    assert output is output.format(expected)
+
+def test_get_video_id():
+    """
+    Author: Karl Lundvall
+    Date: 2017-10-09
+    Purpose: Assert that get_video_id method in YoutubeAPI returns id´s.
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    # Observed output
+    output1 = youtube.get_video_id("IT")
+    # Observed output
+    output2 = youtube.get_video_id("laskdaslkjdaslkjdaslkdjaslkjdaslkjasdkljadslkdj alkdjaslkjddslak alksdjj")
+
+    assert output1 is not None
+
+    assert output2 is ""
+
+def test_get_youtube_count():
+    """
+    Author: Karl Lundvall
+    Date: 2017-10-09
+    Purpose: Assert that get_youtube_count returns a integer with a value.
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    # Observed output
+    output1 = youtube.get_youtube_count("IT")
+
+    assert output1 is int(output1) and output1 > 0
+
+
+
+
+
+
+
+
+
+
+

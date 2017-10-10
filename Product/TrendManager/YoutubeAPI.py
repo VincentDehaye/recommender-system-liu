@@ -56,6 +56,41 @@ class YoutubeAPI:
             totalviews += int(video["statistics"]["viewCount"])
         return totalviews
 
+    def get_youtube_likes(self, keyword):
+        """
+        Getting the likeCount and dislikeCount for the selected videoId´s
+        and calculating the ratio
+        :param keyword: keyword, e.g. movie-title
+        :return:
+        """
+        youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
+                        developerKey=DEVELOPER_KEY)
+        search_response = self.youtube.videos().list(
+            part="statistics, snippet",
+            id=self.get_video_id(keyword)
+        ).execute()
+        likes = 0
+        dislikes = 0
+        for video in search_response.get("items", []):
+            likes = 10
+            dislikes = 5
+            #likes += int(video["statistics"]["likeCount"])
+            #dislikes += int(video["statistics"]["dislikeCount"])
+        ratio = dislikes / likes
+        print(ratio)
+        return ratio
+
+    def get_trending_score(self, keyword):
+        """
+        Calculating the total trending score based on viewCount and the video like ratio
+        :param keyword: Keyword
+        :return: total trending score
+        """
+        view_score = self.get_youtube_count(keyword)
+        like_score = self.get_youtube_likes(keyword)
+        total_score = view_score * like_score
+        return total_score
+
     def get_video_id(self, keyword):
         """
         Getting the videoId´s from the query

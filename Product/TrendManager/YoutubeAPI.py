@@ -72,10 +72,13 @@ class YoutubeAPI:
         likes = 0
         dislikes = 0
         for video in search_response.get("items", []):
-            likes = 10
-            dislikes = 5
-            #likes += int(video["statistics"]["likeCount"])
-            #dislikes += int(video["statistics"]["dislikeCount"])
+            get_likes = video.get("statistics").get("likeCount")
+            if not get_likes is None:
+                likes = int(get_likes)
+
+            get_dislikes = video.get("statistics").get("dislikeCount")
+            if not get_dislikes is None:
+                dislikes = int(get_dislikes)
         ratio = dislikes / likes
         print(ratio)
         return ratio

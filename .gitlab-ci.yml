@@ -1,0 +1,14 @@
+stages:
+  - test
+  
+before_script:
+    - pwd
+    - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
+    - python /home/sebbe953/testvenv.py
+    - python --version
+test_script:
+  script:
+    - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
+    - ./test_script
+  stage: test
+  

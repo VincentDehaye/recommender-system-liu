@@ -27,19 +27,24 @@ with open('movies.csv', 'rt') as f:
 
     # Need to commit before filling with movies-genre due to foreign key
     session.commit()
+    f.close()
+
+with open('movies.csv', 'rt') as f:
+    reader = csv.reader(f)
 
     for row in reader:
         for counter, column in enumerate(row):
             if counter == 0:
                 movie_id = column
 
-        if counter == 2:
-            genres = column.split("|")
+            if counter == 2:
+                genres = column.split("|")
 
-            # loop through all genres for the movie
-            for new_genre in genres:
-                new_movie_genre = MovieInGenre(movie=movie_id, genre=new_genre)
-                session.add(new_movie_genre)
+                # loop through all genres for the movie
+                for new_genre in genres:
+                    new_movie_genre = MovieInGenre(movie_id=movie_id, genre=new_genre)
+                    print("ADDED NEW MOVIEINGENRE")
+                    session.add(new_movie_genre)
 
 
 # Commit the added link between movies and their genres

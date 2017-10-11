@@ -237,3 +237,6 @@ testem.log
 
 #datasets
 *.zip
+
+#pickles
+.sav

@@ -28,16 +28,7 @@ export class UsersD3AreaStackComponent implements OnDestroy {
         name: '2011',
         value: 8940000,
       }],
-  }, {
-    name: 'USA',
-    series: [{
-        name: '2010',
-        value: 7870000,
-      }, {
-        name: '2011',
-        value: 8270000,
-      }],
-  }, {
+  },  {
     name: 'France',
     series: [{
         name: '2010',

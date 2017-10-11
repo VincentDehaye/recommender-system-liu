@@ -7,3 +7,7 @@ class ScoredMovie:
     def __init__(self, id, score):
         self.id = id  # int?
         self.score = score
+        self.title = ""
+
+    def set_title(self, title):
+        self.title = title

@@ -1,5 +1,5 @@
-from Product.Database.DBConn import session
-from Product.Database.DBConn import MovieLinks
+from DBConn import session
+from DBConn import MovieLinks
 import csv
 
 # Read the movie_id.csv file to add data into database.

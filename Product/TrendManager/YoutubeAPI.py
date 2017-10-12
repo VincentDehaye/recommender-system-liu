@@ -73,8 +73,10 @@ class YoutubeAPI:
         :param video: search result from API response
         :return: number of views
         """
-        views = int(video.get("statistics").get("viewCount"))
-        return views
+        views = video.get("statistics").get("viewCount")
+        if views is None:
+            return 0
+        return int(views)
 
 
     def get_like_count(self, video):

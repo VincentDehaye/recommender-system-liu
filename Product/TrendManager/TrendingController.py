@@ -22,8 +22,9 @@ class TrendingController:
 
     def total_score_calc(self, keyword):
         totalscore = 0
-        youtubescore = self.youtubeapi.get_trending_score(keyword)
+        youtubescore = self.youtubeapi.get_youtube_count(keyword)
         # add more scoreres as needed
+        print(youtubescore)
         totalscore += youtubescore
         return totalscore
 

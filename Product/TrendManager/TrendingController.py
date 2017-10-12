@@ -5,8 +5,8 @@
 # and sends it to the database API.
 
 
-from .YoutubeAPI import YoutubeAPI
-from .ScoredMovie import ScoredMovie
+from YoutubeAPI import YoutubeAPI
+from ScoredMovie import ScoredMovie
 
 
 class TrendingController:
@@ -22,7 +22,7 @@ class TrendingController:
 
     def total_score_calc(self, keyword):
         totalscore = 0
-        youtubescore = self.youtubeapi.get_youtube_count(keyword)
+        youtubescore = self.youtubeapi.get_youtube_score(keyword)
         # add more scoreres as needed
         totalscore += youtubescore
         return totalscore

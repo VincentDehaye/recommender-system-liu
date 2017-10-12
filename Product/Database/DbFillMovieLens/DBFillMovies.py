@@ -43,7 +43,6 @@ with open('movies.csv', 'rt') as f:
                 # loop through all genres for the movie
                 for new_genre in genres:
                     new_movie_genre = MovieInGenre(movie_id=movie_id, genre=new_genre)
-                    print("ADDED NEW MOVIEINGENRE")
                     session.add(new_movie_genre)
 
 

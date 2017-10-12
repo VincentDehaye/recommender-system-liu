@@ -6,9 +6,12 @@ before_script:
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
     - python /home/sebbe953/testvenv.py
     - python --version
+    
 test_script:
   script:
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
+    - python ./Product/Database/DBConn.py
+    - python ./Product/Database/DbFillMovieLens/DBFillMovieLens.py
     - ./test_script
   stage: test
   

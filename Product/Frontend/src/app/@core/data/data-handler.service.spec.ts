@@ -5,7 +5,7 @@ import { DataHandlerService } from './data-handler.service';
 describe('DataHandlerService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DataHandlerService]
+      providers: [DataHandlerService],
     });
   });
 

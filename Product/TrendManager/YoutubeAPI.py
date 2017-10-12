@@ -43,56 +43,45 @@ class YoutubeAPI:
 
     def get_youtube_count(self, keyword):
         """
-        Getting the viewCount for the selected videoId´s
+        Getting the viewCount, likeCount and dislikeCount for the selected videoId´s
+        calculating total trending score
         :param keyword: keyword, e.g. movie-title
-        :return:
+        :return: the total trending score for keyword
         """
         search_response = self.youtube.videos().list(
             part="statistics, snippet",
             id=self.get_video_id(keyword)
         ).execute()
-        totalviews = 0
+        total_score = 0
         for video in search_response.get("items", []):
-            totalviews += int(video["statistics"]["viewCount"])
-        return totalviews
+            views = int(video.get("statistics").get("viewCount"))
 
-    def get_youtube_likes(self, keyword):
-        """
-        Getting the likeCount and dislikeCount for the selected videoId´s
-        and calculating the ratio
-        :param keyword: keyword, e.g. movie-title
-        :return:
-        """
-        youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
-                        developerKey=DEVELOPER_KEY)
-        search_response = self.youtube.videos().list(
-            part="statistics, snippet",
-            id=self.get_video_id(keyword)
-        ).execute()
-        likes = 0
-        dislikes = 0
-        for video in search_response.get("items", []):
+            likes = 0
             get_likes = video.get("statistics").get("likeCount")
             if not get_likes is None:
                 likes = int(get_likes)
 
+            dislikes = 0
             get_dislikes = video.get("statistics").get("dislikeCount")
             if not get_dislikes is None:
                 dislikes = int(get_dislikes)
-        ratio = dislikes / likes
-        print(ratio)
-        return ratio
 
-    def get_trending_score(self, keyword):
-        """
-        Calculating the total trending score based on viewCount and the video like ratio
-        :param keyword: Keyword
-        :return: total trending score
-        """
-        view_score = self.get_youtube_count(keyword)
-        like_score = self.get_youtube_likes(keyword)
-        total_score = view_score * like_score
+            if likes != 0 and dislikes != 0:
+                ratio = dislikes / likes
+                total_score += views * ratio
+            elif likes != 0:
+                # if video has 100% likes ratio = 1
+                total_score += views
+            elif dislikes != 0:
+                # if video has 100% dislikes no score is given
+                total_score += 0
+            else:
+                # if movie is not rated the score is 0
+                total_score += 0
+
+        total_score = int(round(total_score))
         return total_score
+
 
     def get_video_id(self, keyword):
         """

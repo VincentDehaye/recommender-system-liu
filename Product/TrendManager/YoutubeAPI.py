@@ -82,7 +82,6 @@ class YoutubeAPI:
         total_score = int(round(total_score))
         return total_score
 
-
     def get_video_id(self, keyword):
         """
         Getting the videoId´s from the query

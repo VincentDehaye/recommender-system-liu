@@ -39,7 +39,7 @@ def test_get_youtube_data_bad_input():
     assert observed['pageInfo']['totalResults'] == expected
 
 
-def test_get_date():
+def test_get_date_standard_case():
     """
     Author: Karl Lundvall
     Date: 2017-10-09
@@ -76,20 +76,6 @@ def test_get_video_id():
     assert output2 is ""
 
 
-def test_get_youtube_count():
-    """
-    Author: Karl Lundvall
-    Date: 2017-10-09
-    Purpose: Assert that get_youtube_count returns a integer with a value.
-    """
-    # Pre-conditions
-    youtube = YoutubeAPI()
-    # Observed output
-    output1 = youtube.get_youtube_count("IT")
-
-    assert output1 is int(output1) and output1 > 0
-
-
 def test_get_youtube_count_standard_case():
     """
     Author: Linn Pettersson
@@ -106,7 +92,7 @@ def test_get_youtube_count_standard_case():
     # Observed output
     observed = youtube.get_youtube_count("It")
 
-    assert observed >= 0
+    assert observed is int(observed) and observed >= 0
 
 
 def test_get_youtube_count_unexisting_keyword():
@@ -126,9 +112,3 @@ def test_get_youtube_count_unexisting_keyword():
     observed = youtube.get_youtube_count("hdjsksjfkald")
 
     assert observed == expected
-
-
-
-
-
-

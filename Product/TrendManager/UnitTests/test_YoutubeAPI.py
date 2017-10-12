@@ -75,6 +75,7 @@ def test_get_video_id():
 
     assert output2 is ""
 
+
 def test_get_youtube_count():
     """
     Author: Karl Lundvall
@@ -87,6 +88,7 @@ def test_get_youtube_count():
     output1 = youtube.get_youtube_count("IT")
 
     assert output1 is int(output1) and output1 > 0
+
 
 def test_get_youtube_count_standard_case():
     """
@@ -104,8 +106,8 @@ def test_get_youtube_count_standard_case():
     # Observed output
     observed = youtube.get_youtube_count("It")
 
-    print(observed)
     assert observed >= 0
+
 
 def test_get_youtube_count_unexisting_keyword():
     """
@@ -123,8 +125,7 @@ def test_get_youtube_count_unexisting_keyword():
     # Observed output
     observed = youtube.get_youtube_count("hdjsksjfkald")
 
-    print(observed)
-    assert observed == 0
+    assert observed == expected
 
 
 

@@ -75,6 +75,8 @@ class TrendingScore(Base):
     youtube_score = Column(Float)
     twitter_score = Column(Float)
 
+    def __eq__(self, other):
+        return self == other
 
 # Model for the user, only storing, this model i consistent with the lastest movielens dataset.
 class User(Base):

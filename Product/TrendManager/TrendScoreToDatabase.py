@@ -10,16 +10,16 @@ from Product.Database.DBConn import Movie, MovieInGenre, Genre, TrendingScore
 trendController = TrendingController()
 
 resMovie = session.query(Movie).all()
-resScore = session.query(TrendingScore.movie_id).all()
-print("This is resscore:")
-for score in resScore:
-    print(score.movie_id)
+test = session.query(TrendingScore).all()
 
 for movie in resMovie:
 
+    resScore = session.query(TrendingScore).filter_by(movie_id=movie.id).first()
     newTotScore = trendController.get_trending_content(movie.title) #gets new score
+    print("THis is movie id:")
+    print(movie.id)
 
-    if movie.id in resScore:
+    if False:
         print(resScore.total_score)
         if newTotScore != resScore.total_score:
             print("NOT THE SAME SCORES - UPDATE")

@@ -6,7 +6,12 @@ before_script:
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
     - python /home/sebbe953/testvenv.py
     - python --version
-    - python /home/sebbe953/Software/Product/Database/DbFillMovieLens/DBFillMovieLens.py
+   # - python /home/sebbe953/Software/Product/Database/DbFillMovieLens/DBFillMovieLens.py
+    - python /home/sebbe953/Software/Product/Database/DBConn.py
+    - python /home/sebbe953/Software/Product/Database/DbFillMovieLens/DBFillLinks.py
+    - python /home/sebbe953/Software/Product/Database/DbFillMovieLens/DBFillMovies.py
+    - python /home/sebbe953/Software/Product/Database/DbFillMovieLens/DBFillRatings.py
+    - python /home/sebbe953/Software/Product/Database/DbFillMovieLens/DBFillUsers.py
 test_script:
   script:
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate

@@ -7,25 +7,31 @@ from Product.Database.DBConn import Movie, MovieInGenre, Genre, TrendingScore
 # 3. If current trend score is different from the newly fetched score - Update score in database, else go to step 1
 # 4. Goto step 1
 
-
-resMovie = session.query(Movie).filter_by(id=1).first()
-
 trendController = TrendingController()
-newTotScore = trendController.get_trending_content(resMovie.title) #gets new score
 
-resScore = session.query(TrendingScore).filter_by(movie_id=1).first()
-if resScore:
-    print(resScore.total_score)
-    if newTotScore != resScore.total_score:
-        print("NOT THE SAME SCORES - UPDATE")
-        resScore.total_score = newTotScore
+resMovie = session.query(Movie).all()
+resScore = session.query(TrendingScore.movie_id).all()
+print("This is resscore:")
+for score in resScore:
+    print(score.movie_id)
+
+for movie in resMovie:
+
+    newTotScore = trendController.get_trending_content(movie.title) #gets new score
+
+    if movie.id in resScore:
+        print(resScore.total_score)
+        if newTotScore != resScore.total_score:
+            print("NOT THE SAME SCORES - UPDATE")
+            resScore.total_score = newTotScore
+        else:
+            print("SAME SCORES - DO NOTHING")
     else:
-        print("SAME SCORES - DO NOTHING")
-else:
-    print("No such id in TrendingScore table")
-    movie = TrendingScore(movie_id=resMovie.id, total_score=newTotScore, youtube_score=0, twitter_score=0)
-    session.add(movie)
+        print("No such id in TrendingScore table")
+        movie = TrendingScore(movie_id=movie.id, total_score=newTotScore, youtube_score=0, twitter_score=0)
+        session.add(movie)
 
 session.commit()
+
 
 

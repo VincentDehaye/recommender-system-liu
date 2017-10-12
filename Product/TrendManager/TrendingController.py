@@ -5,8 +5,8 @@
 # and sends it to the database API.
 
 
-from YoutubeAPI import YoutubeAPI
-from ScoredMovie import ScoredMovie
+from .YoutubeAPI import YoutubeAPI
+from .ScoredMovie import ScoredMovie
 
 
 class TrendingController:
@@ -24,11 +24,13 @@ class TrendingController:
         totalscore = 0
         youtubescore = self.youtubeapi.get_youtube_count(keyword)
         # add more scoreres as needed
-        print(youtubescore)
         totalscore += youtubescore
         return totalscore
 
     # def SendToDatabase(self, scoredMovie):
 
-tc = TrendingController()
-tc.get_trending_content("It")
+
+if __name__ == "__main__":
+    keyword = input()
+    tc = TrendingController()
+    print(tc.get_trending_content(keyword).score)

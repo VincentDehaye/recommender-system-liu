@@ -1,4 +1,5 @@
 import os
+import Product
 
 # The imports are grayed out, but they will run anyway.
 

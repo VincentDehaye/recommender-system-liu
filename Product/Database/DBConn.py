@@ -26,8 +26,7 @@ Base = declarative_base()
 # Do not forget to import type if you want to use other than integer or string
 # The __repr__ returns a string that describes the object
 
-#### EXAMPLE BELOW ####
-
+# EXAMPLE BELOW
 class UserTest(Base):
     __tablename__ = 'testusers'
 
@@ -39,11 +38,20 @@ class UserTest(Base):
         return "<User(name='%s', password='%s')>" % (
             self.name, self.password)
 
-#### TRENDING TEAM BELOW ####
 
-#### RECOMMENDATIONS TEAM BELOW ####
+# TRENDING TEAM BELOW
+# This class contains the trending scores of the movies. movie_id is a foreign key referencing the Movie table
+# total_score is a float that represents the total trending score. youtube_score and twitter_score are floats that
+# represent the trending scores of these seperate factors
+class TrendingScore(Base):
+    __tablename__ = 'trendingscores'
 
+    movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
+    total_score = Column(Float)
+    youtube_score = Column(Float)
+    twitter_score = Column(Float)
 
+# RECOMMENDATIONS TEAM BELOW
 # This Model is for Genres
 class Genre(Base):
     __tablename__ = 'genres'
@@ -117,10 +125,10 @@ class MovieLinks(Base):
             self.movie_id, self.imdb_id, self.tmdb_id)
 
 
-#### VISUALIZATION TEAM BELOW ####
+# VISUALIZATION TEAM BELOW
 
 
-#### DO NOT CHANGE BELOW ####
+# DO NOT CHANGE BELOW
 
 # Creates the tables in the database
 Base.metadata.create_all(engine)

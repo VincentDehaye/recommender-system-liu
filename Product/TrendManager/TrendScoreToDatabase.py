@@ -19,7 +19,7 @@ for movie in resMovie:
     print("THis is movie id:")
     print(movie.id)
 
-    if False:
+    if resScore:
         print(resScore.total_score)
         if newTotScore != resScore.total_score:
             print("NOT THE SAME SCORES - UPDATE")

@@ -21,13 +21,15 @@ class TrendingController:
 
     def total_score_calc(self, keyword):
         totalscore = 0
-        youtubescore = self.youtubeapi.get_youtube_count(keyword)
+        youtubescore = self.youtubeapi.get_youtube_score(keyword)
         # add more scoreres as needed
-        print("Total Score: ", youtubescore)
         totalscore += youtubescore
         return totalscore
 
     # def SendToDatabase(self, scoredMovie):
 
-tc = TrendingController()
-tc.get_trending_content("Toy Story (1995)")
+
+if __name__ == "__main__":
+    keyword = input()
+    tc = TrendingController()
+    print(tc.get_trending_content(keyword).score)

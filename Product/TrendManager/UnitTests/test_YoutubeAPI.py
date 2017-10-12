@@ -88,10 +88,43 @@ def test_get_youtube_count():
 
     assert output1 is int(output1) and output1 > 0
 
+def test_get_youtube_count_standard_case():
+    """
+    Author: Linn Pettersson
+    Date: 2017-10-12
+    Purpose: Assert that get_youtube_count returns an integer with a total trending score
+    given a valid keyword
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
 
+    # Expected output
+    # >= 0
 
+    # Observed output
+    observed = youtube.get_youtube_count("It")
 
+    print(observed)
+    assert observed >= 0
 
+def test_get_youtube_count_unexisting_keyword():
+    """
+    Author: Linn Pettersson
+    Date: 2017-10-12
+    Purpose: Assert that get_youtube_count returns 0 as total trending score
+    for movie title that does not exist
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+
+    # Expected output
+    expected = 0
+
+    # Observed output
+    observed = youtube.get_youtube_count("hdjsksjfkald")
+
+    print(observed)
+    assert observed == 0
 
 
 

@@ -8,9 +8,24 @@ from Product.Database.DBConn import Movie, MovieInGenre, Genre, TrendingScore
 # 4. Goto step 1
 
 
+resMovie = session.query(Movie).filter_by(id=1).first()
+
 trendController = TrendingController()
-scoredMovie = trendController.get_trending_content("pirates")
+newTotScore = trendController.get_trending_content(resMovie.title) #gets new score
 
-new = TrendingScore(movie_id=scoredMovie.id, total_score=scoredMovie.score, youtube_score=, twitter_score=)
+resScore = session.query(TrendingScore).filter_by(movie_id=1).first()
+if resScore:
+    print(resScore.total_score)
+    if newTotScore != resScore.total_score:
+        print("NOT THE SAME SCORES - UPDATE")
+        resScore.total_score = newTotScore
+    else:
+        print("SAME SCORES - DO NOTHING")
+else:
+    print("No such id in TrendingScore table")
+    movie = TrendingScore(movie_id=resMovie.id, total_score=newTotScore, youtube_score=0, twitter_score=0)
+    session.add(movie)
 
-session.add()
+session.commit()
+
+

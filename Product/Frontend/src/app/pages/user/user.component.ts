@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataHandlerService} from '../../@core/data/data-handler.service';
 
 @Component({
   selector: 'ngx-user',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit {
-  movies: string[] = ['Batman', 'Superman', 'Justice Leauge', 'The Flash', 'Wonderwoman',
-   'Cyborg', 'Game of thrones', 'True detective', 'House of chaos', 'My little pony'];
-  constructor() { }
+  data: any;
+  movies: string[];
+  obj: any;
+  constructor(private dataHandlerService: DataHandlerService) {
+   }
 
   ngOnInit() {
+    this.data = this.dataHandlerService.getData();
+    this.dataHandlerService.getData().subscribe(data => this.data = data);
   }
 }

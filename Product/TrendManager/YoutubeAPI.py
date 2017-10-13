@@ -17,6 +17,7 @@ YOUTUBE_API_VERSION = "v3"
 
 class YoutubeAPI:
 
+
     def __init__(self):
         # self.options = self.get_arguments(30,10)
         self.maxresults = 10
@@ -24,6 +25,7 @@ class YoutubeAPI:
         self.type = "video"
         self.youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
                              developerKey=DEVELOPER_KEY)
+
 
     def get_youtube_data(self, keyword):
         """
@@ -41,10 +43,11 @@ class YoutubeAPI:
         ).execute()
         return search_response
 
-    def get_youtube_count(self, keyword):
+
+    def get_youtube_score(self, keyword):
         """
-        Getting the viewCount, likeCount and dislikeCount for the selected videoId´s
-        calculating total trending score
+        Getting video statistics for the selected videoId´s
+        and calculating total trending score
         :param keyword: keyword, e.g. movie-title
         :return: the total trending score for keyword
         """
@@ -52,35 +55,54 @@ class YoutubeAPI:
             part="statistics, snippet",
             id=self.get_video_id(keyword)
         ).execute()
+
         total_score = 0
         for video in search_response.get("items", []):
-            views = int(video.get("statistics").get("viewCount"))
+            view_count = self.get_view_count(video)
+            like_ratio = self.get_like_count(video)
 
-            likes = 0
-            get_likes = video.get("statistics").get("likeCount")
-            if not get_likes is None:
-                likes = int(get_likes)
-
-            dislikes = 0
-            get_dislikes = video.get("statistics").get("dislikeCount")
-            if not get_dislikes is None:
-                dislikes = int(get_dislikes)
-
-            if likes != 0 and dislikes != 0:
-                ratio = dislikes / likes
-                total_score += views * ratio
-            elif likes != 0:
-                # if video has 100% likes ratio = 1
-                total_score += views
-            elif dislikes != 0:
-                # if video has 100% dislikes no score is given
-                total_score += 0
-            else:
-                # if movie is not rated the score is 0
-                total_score += 0
+            total_score += view_count * like_ratio
 
         total_score = int(round(total_score))
         return total_score
+
+
+    def get_view_count(self, video):
+        """
+        Getting view count
+        :param video: search result from API response
+        :return: number of views
+        """
+        views = video.get("statistics").get("viewCount")
+        if views is None:
+            return 0
+        return int(views)
+
+
+    def get_like_count(self, video):
+        """
+        Getting like and dislike count and calculates the ratio
+        :param video: search result from API response
+        :return: ratio of dislikes/likes
+        """
+        likes = 0
+        get_likes = video.get("statistics").get("likeCount")
+        if not get_likes is None:
+            likes = int(get_likes)
+
+        dislikes = 0
+        get_dislikes = video.get("statistics").get("dislikeCount")
+        if not get_dislikes is None:
+            dislikes = int(get_dislikes)
+
+        if likes != 0 and dislikes != 0:
+            ratio = dislikes / likes
+        elif likes != 0:
+            ratio = 1
+        else:
+            ratio = 0
+
+        return ratio
 
 
     def get_video_id(self, keyword):
@@ -95,6 +117,7 @@ class YoutubeAPI:
             id = search_result["id"]["videoId"]
             idList = id + ", " + idList
         return idList
+
 
     def get_date(self, days):
         """

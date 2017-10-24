@@ -5,5 +5,5 @@ def index(request):
     return HttpResponse("Hello, world!")
 
 def recommendations(request):
-    recs = {"movies":["batman","dasd"]}
+    recs = {"id":5,"name":"Batman"}
     return JsonResponse(recs)

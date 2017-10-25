@@ -8,13 +8,16 @@ genreList = ["Action", "Adventure", "Animation", "Children", "Comedy", "Crime", 
              "Drama", "Fantasy", "Film-Noir", "Horror","IMAX", "Musical", "Mystery", "Romance", "Sci-Fi",
              "Thriller", "War", "Western", "(no genres listed)"]
 
-test = "hej (1998) halloh (2004)"
+test = "hej (1998) halloh (2004) wallabrur (hiii)"
 searchForYear = re.search(r"\(([0-9][0-9][0-9][0-9])+\)", test)
 #print (searchForYear.group(1))
+searchForYearSplit = re.split(r"\(([0-9][0-9][0-9][0-9])+\)", test)
+print("The first place",searchForYearSplit[0])
+print("The second place", searchForYearSplit[4])
 
 for year in searchForYearSplit:
     print (year)
-"""
+
 # Add the genres to the db
 for genre in genreList:
     new_genre = Genre(name=genre)
@@ -28,8 +31,15 @@ with open('movies.csv', 'rt') as f:
 
     # Iterates through each row in the file and take column one (id) and column 2 (title)
     for row in reader:
-        searchForYearSplit = re.split(r"\(([0-9][0-9][0-9][0-9])+\)", test)
-        new_movie=Movie(id=row[0], title=row[1])
+        searchForYear = re.split(r" \(([0-9][0-9][0-9][0-9])+\)", row[1])
+        searchForYearSeries = re.split(r"\(([0-9][0-9][0-9][0-9]-)+\)", row[1])
+        print("This is the split:", searchForYear)
+        if len(searchForYear)>1:
+            new_movie=Movie(id=row[0], title=searchForYear[0], year=searchForYear[1])
+        elif len(searchForYearSeries)>1:
+            new_movie=Movie(id=row[0], title=searchForYearSeries[0], year=searchForYearSeries[1])
+        else:
+            new_movie=Movie(id=row[0], title=row[1])
         session.add(new_movie)
 
     # Need to commit before filling with movies-genre due to foreign key
@@ -59,5 +69,5 @@ session.commit()
 # Close the csv file
 f.close()
 
-"""
+
 

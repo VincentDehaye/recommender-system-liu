@@ -57,10 +57,11 @@ class Movie(Base):
     __tablename__ = 'movies'
     id = Column(Integer, primary_key=True)
     title = Column(String)
+    year = Column(Integer)
 
     def __repr__(self):
-        return "<Movie(id='%s', title='%s')>" % (
-            self.id, self.title)
+        return "<Movie(id='%s', title='%s', year='%s)>" % (
+            self.id, self.title, self.year)
 
 
 # TRENDING TEAM BELOW

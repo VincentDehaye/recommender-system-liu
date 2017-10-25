@@ -10,9 +10,47 @@ from Product.Database.DBConn import Movie, MovieInGenre, Genre, TrendingScore
 trendController = TrendingController()
 
 resMovie = session.query(Movie).all()
-test = session.query(TrendingScore).all()
+resScore = session.query(TrendingScore).all()
 
+#for u in resScore:
+#    print (u.__dict__['movie_id'])
+
+#print("Resmovie", resMovie[0].id)
+
+#if any(u.__dict__['movie_id'] == resMovie[200].id for u in resScore):
+#    print("success")
+#else:
+#    print("unsuccess")
+
+# New solution
 for movie in resMovie:
+    in_db = False
+    newTotScore = trendController.get_trending_content(movie.title) #gets new score
+    print("THis is movie id:")
+    print(movie.id)
+
+    for scoredMovie in resScore:
+        if scoredMovie.movie_id == movie.id:
+            print(resScore.total_score)
+            if newTotScore != resScore.total_score:
+                print("NOT THE SAME SCORES - UPDATE")
+                resScore.total_score = newTotScore
+            else:
+                print("SAME SCORES - DO NOTHING")
+            in_db = True
+            break
+
+    if not in_db:
+        print("No such id in TrendingScore table")
+        movie = TrendingScore(movie_id=movie.id, total_score=newTotScore, youtube_score=0, twitter_score=0)
+        session.add(movie)
+
+session.commit()
+
+# Old solution
+"""
+for movie in resMovie:
+
 
     resScore = session.query(TrendingScore).filter_by(movie_id=movie.id).first()
     newTotScore = trendController.get_trending_content(movie.title) #gets new score
@@ -32,6 +70,6 @@ for movie in resMovie:
         session.add(movie)
 
     session.commit()
-
+"""
 
 

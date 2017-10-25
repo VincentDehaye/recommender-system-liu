@@ -31,7 +31,7 @@ for movie in resMovie:
         movie = TrendingScore(movie_id=movie.id, total_score=newTotScore, youtube_score=0, twitter_score=0)
         session.add(movie)
 
-session.commit()
+    session.commit()
 
 
 

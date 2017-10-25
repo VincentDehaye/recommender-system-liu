@@ -8,16 +8,6 @@ genreList = ["Action", "Adventure", "Animation", "Children", "Comedy", "Crime", 
              "Drama", "Fantasy", "Film-Noir", "Horror","IMAX", "Musical", "Mystery", "Romance", "Sci-Fi",
              "Thriller", "War", "Western", "(no genres listed)"]
 
-test = "hej (1998) halloh (2004) wallabrur (hiii)"
-searchForYear = re.search(r"\(([0-9][0-9][0-9][0-9])+\)", test)
-#print (searchForYear.group(1))
-searchForYearSplit = re.split(r"\(([0-9][0-9][0-9][0-9])+\)", test)
-print("The first place",searchForYearSplit[0])
-print("The second place", searchForYearSplit[4])
-
-for year in searchForYearSplit:
-    print (year)
-
 # Add the genres to the db
 for genre in genreList:
     new_genre = Genre(name=genre)
@@ -31,6 +21,10 @@ with open('movies.csv', 'rt') as f:
 
     # Iterates through each row in the file and take column one (id) and column 2 (title)
     for row in reader:
+
+        # Search the title string of row[1] of occurances for (yyyy) and (yyyy-) for series
+        # Then checks length if it was found and puts it in the new_movie if year is
+        # not found it goes into the else statement and no year is inputted to the creation
         searchForYear = re.split(r" \(([0-9][0-9][0-9][0-9])+\)", row[1])
         searchForYearSeries = re.split(r"\(([0-9][0-9][0-9][0-9]-)+\)", row[1])
         print("This is the split:", searchForYear)

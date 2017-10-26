@@ -39,7 +39,7 @@ def test_get_youtube_data_bad_input():
     assert observed['pageInfo']['totalResults'] == expected
 
 
-def test_get_date():
+def test_get_date_standard_case():
     """
     Author: Karl Lundvall
     Date: 2017-10-09
@@ -75,26 +75,40 @@ def test_get_video_id():
 
     assert output2 is ""
 
-def test_get_youtube_count():
+
+def test_get_youtube_count_standard_case():
     """
-    Author: Karl Lundvall
-    Date: 2017-10-09
-    Purpose: Assert that get_youtube_count returns a integer with a value.
+    Author: Linn Pettersson
+    Date: 2017-10-12
+    Purpose: Assert that get_youtube_count returns an integer with a total trending score
+    given a valid keyword
     """
     # Pre-conditions
     youtube = YoutubeAPI()
+
+    # Expected output
+    # >= 0
+
     # Observed output
-    output1 = youtube.get_youtube_count("IT")
+    observed = youtube.get_youtube_count("It")
 
-    assert output1 is int(output1) and output1 > 0
-
-
+    assert observed is int(observed) and observed >= 0
 
 
+def test_get_youtube_count_unexisting_keyword():
+    """
+    Author: Linn Pettersson
+    Date: 2017-10-12
+    Purpose: Assert that get_youtube_count returns 0 as total trending score
+    for movie title that does not exist
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
 
+    # Expected output
+    expected = 0
 
+    # Observed output
+    observed = youtube.get_youtube_count("hdjsksjfkald")
 
-
-
-
-
+    assert observed == expected

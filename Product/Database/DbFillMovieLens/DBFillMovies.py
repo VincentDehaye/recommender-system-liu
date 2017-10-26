@@ -1,13 +1,12 @@
 from Product.Database.DBConn import session
 from Product.Database.DBConn import Movie, MovieInGenre, Genre
-import csv
+import csv, re
 
-# This part handles adding the different genres to the database
+# This part handles adding the different genres to the databas
 # List of all genres that can be seen in the movie lens dataset
 genreList = ["Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary",
              "Drama", "Fantasy", "Film-Noir", "Horror","IMAX", "Musical", "Mystery", "Romance", "Sci-Fi",
              "Thriller", "War", "Western", "(no genres listed)"]
-
 
 # Add the genres to the db
 for genre in genreList:
@@ -22,7 +21,19 @@ with open('movies.csv', 'rt') as f:
 
     # Iterates through each row in the file and take column one (id) and column 2 (title)
     for row in reader:
-        new_movie=Movie(id=row[0], title=row[1])
+
+        # Search the title string of row[1] of occurances for (yyyy) and (yyyy-) for series
+        # Then checks length if it was found and puts it in the new_movie if year is
+        # not found it goes into the else statement and no year is inputted to the creation
+        searchForYear = re.split(r" \(([0-9][0-9][0-9][0-9])+\)", row[1])
+        searchForYearSeries = re.split(r"\(([0-9][0-9][0-9][0-9]-)+\)", row[1])
+        print("This is the split:", searchForYear)
+        if len(searchForYear)>1:
+            new_movie=Movie(id=row[0], title=searchForYear[0], year=searchForYear[1])
+        elif len(searchForYearSeries)>1:
+            new_movie=Movie(id=row[0], title=searchForYearSeries[0], year=searchForYearSeries[1])
+        else:
+            new_movie=Movie(id=row[0], title=row[1])
         session.add(new_movie)
 
     # Need to commit before filling with movies-genre due to foreign key

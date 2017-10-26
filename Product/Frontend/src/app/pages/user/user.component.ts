@@ -18,17 +18,15 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.getData();
     this.extractData();
-    // this.data = this.getData();
-    // this.movies = this.data['movies'];
+
   }
   getData() {
     this.dataHandlerService.getData().subscribe((data) => {
       this.data = data;
-      console.log(this.data);
-    });
+      // console.log(this.data); not allowed by lint ?
+    }); // Converts the data making it reachable in the htm file
   }
   extractData() {
-    //this.test = this.data.movies[1].name;
     return null;
   }
 

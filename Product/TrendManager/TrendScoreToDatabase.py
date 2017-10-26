@@ -24,8 +24,8 @@ resScore = session.query(TrendingScore).all()
 for movie in resMovie:
     in_db = False
     # try first with set totscore and then comment it away and try with fetching totscore
-    newTotScore = 100
-    #newTotScore = trendController.get_trending_content(movie.title) #gets new score
+    # newTotScore = 100
+    newTotScore = trendController.get_trending_content(movie.title) #gets new score
     print("THis is movie id:")
     print(movie.id)
 
@@ -50,7 +50,7 @@ for movie in resMovie:
 
 session.commit()
 
-# Old solution
+# Old solution (Suggested to use)
 """
 for movie in resMovie:
 
@@ -58,8 +58,8 @@ for movie in resMovie:
     resScore = session.query(TrendingScore).filter_by(movie_id=movie.id).first()
 
     # try first with set totscore and then comment it away and try with fetching totscore
-    newTotScore = 100
-    #newTotScore = trendController.get_trending_content(movie.title) #gets new score
+    # newTotScore = 100
+    newTotScore = trendController.get_trending_content(movie.title) #gets new score
     print("THis is movie id:")
     print(movie.id)
 

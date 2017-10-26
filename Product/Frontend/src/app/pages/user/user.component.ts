@@ -11,16 +11,25 @@ export class UserComponent implements OnInit {
   data: any;
   movies: string[];
   obj: any;
+  test: string= 'test';
   constructor(private dataHandlerService: DataHandlerService) {
    }
 
   ngOnInit() {
     this.getData();
+    this.extractData();
     // this.data = this.getData();
     // this.movies = this.data['movies'];
   }
   getData() {
-    this.data = this.dataHandlerService.getData()
+    this.dataHandlerService.getData().subscribe((data) => {
+      this.data = data;
+      console.log(this.data);
+    });
+  }
+  extractData() {
+    //this.test = this.data.movies[1].name;
+    return null;
   }
 
 }

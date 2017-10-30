@@ -29,10 +29,13 @@ test_precision = precision_at_k(model, data['test'], k=5).mean()
 print('precision: %s' % test_precision)
 
 def normalize_user_scores(scores):
-    normalized_scores = scores
+    min_score = np.amin(scores)
+    max_score = np.amax(scores)
 
+    for i in range(0, len(scores)):
+        scores[i] = (scores[i] - min_score)/(max_score-min_score)
 
-    return normalized_scores
+    return scores
 
 
 def sample_recommendation(model, data, user_ids):
@@ -72,58 +75,33 @@ def sample_output_to_visualisation(model, data):
     n_users, n_items = data['train'].shape
     dictionary = {}
 
-    min = 0
-    max = 0
-    moviemin = 0
-    moviemax = 0
-    savedUserIdMax = 0
-    savedUserIdMin = 0
     for user_id in range(0, n_users):
 
         scores = model.predict(user_id, np.arange(n_items))
-
-        print('prints the top 10 scores user %s' % user_id)
-        print(np.sort(-scores[:10]).tolist())
-
-        if np.amin(scores) < min:
-            min = np.amin(scores)
-            moviemin = np.where(scores == min)
-            savedUserIdMin = user_id
-        if np.amax(scores) > max:
-            max = np.amax(scores)
-            moviemax = np.where(scores == max)
-            savedUserIdMax = user_id
-        print("min ", min,"vs contender ", np.amin(scores))
-        print("Minimum value after: ", min)
-        print()
-        print("max ", max, "vs contender ", np.amax(scores))
-        print("Maximum value after: ", max)
-        print(moviemin)
-        print(savedUserIdMin)
-        print(moviemax)
-        print(savedUserIdMax)
+        scores = normalize_user_scores(scores)
+        print(scores)
 
         # np.argsort(-scores) outputs the indexes for the movie ids (sorted by score)
         # When we change the dataset we will instead output movie id.
         # there will be a database call to get the right movie_id
 
-        print('prints the top 10 scores corresponding index for user %s' % user_id)
-        print(np.argsort(-scores)[:10].tolist())
-        print(min, max)
+        #print('prints the top 10 scores corresponding index for user %s' % user_id)
+        #print(np.argsort(-scores)[:10].tolist())
+
         # adds to a dictionary
         # user_id is the dictionary key
         # the index and the scores are in an array
 
-        dictionary[user_id]=[np.argsort(-scores)[:10].tolist(), np.sort(-scores[:10]).tolist()]
+        #dictionary[user_id]=[np.argsort(-scores)[:10].tolist(), np.sort(-scores[:10]).tolist()]
 
     # prints the dictionary
-    print(dictionary)
+#    print(dictionary)
     # see if there is a difference when converted to json
-    print(json.dumps(dictionary))
+#    print(json.dumps(dictionary))
     # looks at the movie ids and scores for user_id=9
-    print(dictionary[9])
+#    print(dictionary[9])
     # same but in json to spot any differences
-    print(json.dumps(dictionary[9]))
+#    print(json.dumps(dictionary[9]))
 
 
 

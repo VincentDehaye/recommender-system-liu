@@ -2,7 +2,7 @@ from Product.TrendManager.TrendingController import TrendingController
 from Product.Database.DBConn import session
 from Product.Database.DBConn import Movie, TrendingScore
 import threading
-import time
+
 
 
 class TrendingToDB(object):
@@ -26,6 +26,7 @@ class TrendingToDB(object):
         # else go to step 1
         # 4. Go to step 1
         trend_controller = TrendingController()
+
         res_movie = session.query(Movie).all()
 
         for movie in res_movie:

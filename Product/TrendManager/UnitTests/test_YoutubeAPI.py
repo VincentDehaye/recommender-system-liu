@@ -76,39 +76,115 @@ def test_get_video_id():
     assert output2 is ""
 
 
-def test_get_youtube_count_standard_case():
+def test_get_youtube_score_standard_case():
     """
     Author: Linn Pettersson
-    Date: 2017-10-12
-    Purpose: Assert that get_youtube_count returns an integer with a total trending score
-    given a valid keyword
+    Date: 2017-10-30
+    Purpose: Assert that get_youtube_score calculates a total score based on view count and likes ratio
     """
     # Pre-conditions
     youtube = YoutubeAPI()
+    keyword = 'Thor'
 
     # Expected output
     # >= 0
 
     # Observed output
-    observed = youtube.get_youtube_count("It")
+    observed = youtube.get_youtube_score(keyword)
 
-    assert observed is int(observed) and observed >= 0
+    assert observed >= 0
 
 
-def test_get_youtube_count_unexisting_keyword():
+def test_get_youtube_score_non_existing_keyword():
     """
     Author: Linn Pettersson
-    Date: 2017-10-12
-    Purpose: Assert that get_youtube_count returns 0 as total trending score
-    for movie title that does not exist
+    Date: 2017-10-30
+    Purpose: Assert that get_youtube_score gets a total score of 0 when the keyword is non existing
     """
     # Pre-conditions
     youtube = YoutubeAPI()
+    keyword = '2jfklangjdlnf'
 
     # Expected output
     expected = 0
 
     # Observed output
-    observed = youtube.get_youtube_count("hdjsksjfkald")
+    observed = youtube.get_youtube_score(keyword)
+
+    assert observed == expected
+
+
+def test_get_view_count_standard_case():
+    """
+    Author: Linn Pettersson
+    Date: 2017-10-30
+    Purpose: Assert that get_view_count returns the view count for a given keyword
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    keyword = 'Thor'
+
+    # Expected output
+    # >= 0
+
+    # Observed output
+    observed = youtube.get_view_count(keyword)
+
+    assert observed >= 0
+
+
+def test_get_view_count_non_existing_keyword():
+    """
+    Author: Linn Pettersson
+    Date: 2017-10-30
+    Purpose: Assert that get_view_count gets a value of 0 when the keyword is non existing
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    keyword = '2jfklangjdlnf'
+
+    # Expected output
+    expected = 0
+
+    # Observed output
+    observed = youtube.get_view_count(keyword)
+
+    assert observed == expected
+
+
+def test_get_like_count_standard_case():
+    """
+    Author: Linn Pettersson
+    Date: 2017-10-30
+    Purpose: Assert that get_like_count calculates a ratio of dislikes/likes
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    keyword = 'Thor'
+
+    # Expected output
+    # >= 0
+
+    # Observed output
+    observed = youtube.get_like_count(keyword)
+
+    assert observed >= 0
+
+
+def test_get_like_count_non_existing_keyword():
+    """
+    Author: Linn Pettersson
+    Date: 2017-10-30
+    Purpose: Assert that get_like_count gets a ratio of 0 when the keyword is non existing
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    keyword = '2jfklangjdlnf'
+
+    # Expected output
+    expected = 0
+
+    # Observed output
+    observed = youtube.get_like_count(keyword)
 
     assert observed == expected

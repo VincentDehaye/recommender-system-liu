@@ -26,7 +26,6 @@ class YoutubeAPI:
         self.youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
                              developerKey=DEVELOPER_KEY)
 
-
     def get_youtube_data(self, keyword):
         """
         Getting the the result from the search with keyword
@@ -42,7 +41,6 @@ class YoutubeAPI:
             publishedAfter=self.get_date(30)
         ).execute()
         return search_response
-
 
     def get_youtube_score(self, keyword):
         """
@@ -66,7 +64,6 @@ class YoutubeAPI:
         total_score = int(round(total_score))
         return total_score
 
-
     def get_view_count(self, video):
         """
         Getting view count
@@ -77,7 +74,6 @@ class YoutubeAPI:
         if views is None:
             return 0
         return int(views)
-
 
     def get_like_count(self, video):
         """
@@ -104,7 +100,6 @@ class YoutubeAPI:
 
         return ratio
 
-
     def get_video_id(self, keyword):
         """
         Getting the videoId´s from the query
@@ -117,7 +112,6 @@ class YoutubeAPI:
             id = search_result["id"]["videoId"]
             idList = id + ", " + idList
         return idList
-
 
     def get_date(self, days):
         """

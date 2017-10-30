@@ -75,6 +75,6 @@ class TrendingToDB(object):
                 # total run time
                 session.commit()
 
-        # Used to stop the thread if background is false or for any other reason it needs to be stopped
+        # Used to stop the thread if background is false or for any other reason it needs to be stopped.
     def terminate(self):
         self.stop = True

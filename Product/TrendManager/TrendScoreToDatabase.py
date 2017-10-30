@@ -10,6 +10,7 @@ class TrendingToDB(object):
 
     def __init__(self, background=True, continuous=True):
         self.continous = continuous
+        self. stop = False
         # creates the thread that will make the method run parallel. Sets daemon to true so that it will allow
         # the app to be terminated and will terminate with it
         thread = threading.Thread(target=self.run, args=())
@@ -29,7 +30,8 @@ class TrendingToDB(object):
         res_movie = session.query(Movie).all()
 
         for movie in res_movie:
-
+            if self.stop:
+                break
             res_score = session.query(TrendingScore).filter_by(movie_id=movie.id).first()
 
             new_tot_score = trend_controller.get_trending_content(movie.title)  # gets new score
@@ -48,11 +50,13 @@ class TrendingToDB(object):
             session.commit()
 
         while self.continous:
-
+            if self.stop:
+                break
             res_movie = session.query(Movie).all()
 
             for movie in res_movie:
-
+                if self.stop:
+                    break
                 res_score = session.query(TrendingScore).filter_by(movie_id=movie.id).first()
 
                 new_tot_score = trend_controller.get_trending_content(movie.title)  # gets new score
@@ -70,3 +74,7 @@ class TrendingToDB(object):
                 # The commit is in the loop for now due to high waiting time but could be moved outside to lower
                 # total run time
                 session.commit()
+
+        # Used to stop the thread if background is false or for any other reason it needs to be stopped
+    def terminate(self):
+        self.stop = True

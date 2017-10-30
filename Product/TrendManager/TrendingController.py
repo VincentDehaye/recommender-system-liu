@@ -5,8 +5,8 @@
 # and sends it to the database API.
 
 
-from YoutubeAPI import YoutubeAPI
-from ScoredMovie import ScoredMovie
+from Product.TrendManager.YoutubeAPI import YoutubeAPI
+from Product.TrendManager.ScoredMovie import ScoredMovie
 
 
 class TrendingController:

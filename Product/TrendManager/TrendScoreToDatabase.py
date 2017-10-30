@@ -4,12 +4,11 @@ from Product.Database.DBConn import Movie, TrendingScore
 import threading
 
 
-
 class TrendingToDB(object):
     # Call the trending to db to start filling the trend table in the database. This will be ran in the background
     # as long as the application is running
 
-    def __init__(self, background = True, continuous = True):
+    def __init__(self, background=True, continuous=True):
         self.continous = continuous
         # creates the thread that will make the method run parallel. Sets daemon to true so that it will allow
         # the app to be terminated and will terminate with it

@@ -79,6 +79,7 @@ class TrendingScore(Base):
     def __eq__(self, other):
         return self == other
 
+
 # Model for the user, only storing, this model i consistent with the lastest movielens dataset.
 class User(Base):
 
@@ -115,7 +116,8 @@ class MovieInGenre(Base):
             self.movie_id, self.genre)
 
 
-# Model for link between different online movie_id databases and the movies in the movielens db.First column is movie_id id
+# Model for link between different online movie_id databases and the movies in the movielens db.
+# First column is movie_id id
 # second column is imdb id and last column is tmdb id.
 class MovieLinks(Base):
 

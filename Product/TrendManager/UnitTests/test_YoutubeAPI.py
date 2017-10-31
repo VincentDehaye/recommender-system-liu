@@ -124,13 +124,18 @@ def test_get_view_count_standard_case():
     youtube = YoutubeAPI()
     keyword = 'Thor'
 
+    search_response = youtube.youtube.videos().list(
+        part="statistics, snippet",
+        id=youtube.get_video_id(keyword)
+    ).execute()
+
     # Expected output
     # >= 0
 
     # Observed output
-    observed = youtube.get_view_count(keyword)
-
-    assert observed >= 0
+    for video in search_response.get("items", []):
+        observed = youtube.get_view_count(video)
+        assert observed >= 0
 
 
 def test_get_view_count_non_existing_keyword():
@@ -143,13 +148,18 @@ def test_get_view_count_non_existing_keyword():
     youtube = YoutubeAPI()
     keyword = '2jfklangjdlnf'
 
+    search_response = youtube.youtube.videos().list(
+        part="statistics, snippet",
+        id=youtube.get_video_id(keyword)
+    ).execute()
+
     # Expected output
     expected = 0
 
     # Observed output
-    observed = youtube.get_view_count(keyword)
-
-    assert observed == expected
+    for video in search_response.get("items", []):
+        observed = youtube.get_view_count(video)
+        assert observed == expected
 
 
 def test_get_like_count_standard_case():
@@ -162,13 +172,18 @@ def test_get_like_count_standard_case():
     youtube = YoutubeAPI()
     keyword = 'Thor'
 
+    search_response = youtube.youtube.videos().list(
+        part="statistics, snippet",
+        id=youtube.get_video_id(keyword)
+    ).execute()
+
     # Expected output
     # >= 0
 
     # Observed output
-    observed = youtube.get_like_count(keyword)
-
-    assert observed >= 0
+    for video in search_response.get("items", []):
+        observed = youtube.get_like_count(video)
+        assert observed >= 0
 
 
 def test_get_like_count_non_existing_keyword():
@@ -181,10 +196,15 @@ def test_get_like_count_non_existing_keyword():
     youtube = YoutubeAPI()
     keyword = '2jfklangjdlnf'
 
+    search_response = youtube.youtube.videos().list(
+        part="statistics, snippet",
+        id=youtube.get_video_id(keyword)
+    ).execute()
+
     # Expected output
     expected = 0
 
     # Observed output
-    observed = youtube.get_like_count(keyword)
-
-    assert observed == expected
+    for video in search_response.get("items", []):
+        observed = youtube.get_like_count(video)
+        assert observed == expected

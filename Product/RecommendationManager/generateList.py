@@ -28,6 +28,10 @@ test_precision = precision_at_k(model, data['test'], k=5).mean()
 # the precision is in percentage.
 print('precision: %s' % test_precision)
 
+# this function normalizes the user preference scores to a range between 0 and 1
+# input is all the scores for one user
+# output is the same scores but normalized
+
 def normalize_user_scores(scores):
     min_score = np.amin(scores)
     max_score = np.amax(scores)
@@ -70,7 +74,6 @@ def sample_recommendation(model, data, user_ids):
 
 
 
-# TODO find out what argsort is. read how numpy works.
 def sample_output_to_visualisation(model, data):
     n_users, n_items = data['train'].shape
     dictionary = {}

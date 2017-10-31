@@ -8,6 +8,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },*/
   {
+    title: 'ACCOUNT',
+    group: true,
+  },
+  {
+    title: 'Logout',
+    icon: 'ion-android-person',
+    link: '/pages/login',
+  },
+  {
     title: 'ANALYTICS',
     group: true,
   },

@@ -9,7 +9,7 @@ import { UserService } from '../authentication/_services/index';
   styleUrls: ['./overview.component.scss'],
   templateUrl: './overview.component.html',
 })
-export class OverviewComponent implements OnInit{
+export class OverviewComponent implements OnInit {
   users: User[] = [];
 
     constructor(private userService: UserService) { }

@@ -4,11 +4,11 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, Float, String, ForeignKey
 import os
-
+# Use ctrl+alt+u in PyCharm to see strutcture of db
 # More info about database is in educational folder on drive
 # Get the path and create the sqlite engine. Echo false means that we do not see generated SQL.
 basedir = os.path.abspath(os.path.dirname(__file__))
-engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), echo=True)
+engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), connect_args={'check_same_thread': False}, echo=True)
 
 
 # Used to turn foreign keys on in SQLite since this is by default
@@ -26,8 +26,7 @@ Base = declarative_base()
 # Do not forget to import type if you want to use other than integer or string
 # The __repr__ returns a string that describes the object
 
-#### EXAMPLE BELOW ####
-
+# EXAMPLE BELOW
 class UserTest(Base):
     __tablename__ = 'testusers'
 
@@ -39,11 +38,8 @@ class UserTest(Base):
         return "<User(name='%s', password='%s')>" % (
             self.name, self.password)
 
-#### TRENDING TEAM BELOW ####
 
-#### RECOMMENDATIONS TEAM BELOW ####
-
-
+# RECOMMENDATIONS TEAM BELOW
 # This Model is for Genres
 class Genre(Base):
     __tablename__ = 'genres'
@@ -61,10 +57,28 @@ class Movie(Base):
     __tablename__ = 'movies'
     id = Column(Integer, primary_key=True)
     title = Column(String)
+    year = Column(Integer)
 
     def __repr__(self):
-        return "<Movie(id='%s', title='%s')>" % (
-            self.id, self.title)
+        return "<Movie(id='%s', title='%s', year='%s)>" % (
+            self.id, self.title, self.year)
+
+
+# TRENDING TEAM BELOW
+# This class contains the trending scores of the movies. movie_id is a foreign key referencing the Movie table
+# total_score is a float that represents the total trending score. youtube_score and twitter_score are floats that
+# represent the trending scores of these seperate factors
+class TrendingScore(Base):
+    __tablename__ = 'trendingscores'
+
+    movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
+    normalized_score = Column(Float)
+    total_score = Column(Float)
+    youtube_score = Column(Float)
+    twitter_score = Column(Float)
+
+    def __eq__(self, other):
+        return self == other
 
 
 # Model for the user, only storing, this model i consistent with the lastest movielens dataset.
@@ -103,7 +117,8 @@ class MovieInGenre(Base):
             self.movie_id, self.genre)
 
 
-# Model for link between different online movie_id databases and the movies in the movielens db.First column is movie_id id
+# Model for link between different online movie_id databases and the movies in the movielens db.
+# First column is movie_id id
 # second column is imdb id and last column is tmdb id.
 class MovieLinks(Base):
 
@@ -117,10 +132,10 @@ class MovieLinks(Base):
             self.movie_id, self.imdb_id, self.tmdb_id)
 
 
-#### VISUALIZATION TEAM BELOW ####
+# VISUALIZATION TEAM BELOW
 
 
-#### DO NOT CHANGE BELOW ####
+# DO NOT CHANGE BELOW
 
 # Creates the tables in the database
 Base.metadata.create_all(engine)

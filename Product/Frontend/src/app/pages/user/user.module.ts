@@ -16,6 +16,5 @@ const components = [
   declarations: [...routedComponents, ...components],
 })
 export class UserModule {
-  movies: string[] = ['Batman', 'Superman', 'Justice Leauge', 'The Flash', 'Wonderwoman',
-   'Cyborg', 'Game of thrones', 'True detective', 'House of chaos', 'My little pony'];
+
 }

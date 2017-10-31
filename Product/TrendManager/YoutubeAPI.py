@@ -17,6 +17,7 @@ YOUTUBE_API_VERSION = "v3"
 
 class YoutubeAPI:
 
+
     def __init__(self):
         # self.options = self.get_arguments(30,10)
         self.maxresults = 10
@@ -41,58 +42,63 @@ class YoutubeAPI:
         ).execute()
         return search_response
 
-    def get_youtube_count(self, keyword):
+    def get_youtube_score(self, keyword):
         """
-        Getting the viewCount for the selected videoId´s
+        Getting video statistics for the selected videoId´s
+        and calculating total trending score
         :param keyword: keyword, e.g. movie-title
-        :return:
+        :return: the total trending score for keyword
         """
         search_response = self.youtube.videos().list(
             part="statistics, snippet",
             id=self.get_video_id(keyword)
         ).execute()
-        totalviews = 0
+
+        total_score = 0
         for video in search_response.get("items", []):
-            totalviews += int(video["statistics"]["viewCount"])
-        return totalviews
+            view_count = self.get_view_count(video)
+            like_ratio = self.get_like_count(video)
 
-    def get_youtube_likes(self, keyword):
-        """
-        Getting the likeCount and dislikeCount for the selected videoId´s
-        and calculating the ratio
-        :param keyword: keyword, e.g. movie-title
-        :return:
-        """
-        youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
-                        developerKey=DEVELOPER_KEY)
-        search_response = self.youtube.videos().list(
-            part="statistics, snippet",
-            id=self.get_video_id(keyword)
-        ).execute()
-        likes = 0
-        dislikes = 0
-        for video in search_response.get("items", []):
-            get_likes = video.get("statistics").get("likeCount")
-            if not get_likes is None:
-                likes = int(get_likes)
+            total_score += view_count * like_ratio
 
-            get_dislikes = video.get("statistics").get("dislikeCount")
-            if not get_dislikes is None:
-                dislikes = int(get_dislikes)
-        ratio = dislikes / likes
-        print(ratio)
-        return ratio
-
-    def get_trending_score(self, keyword):
-        """
-        Calculating the total trending score based on viewCount and the video like ratio
-        :param keyword: Keyword
-        :return: total trending score
-        """
-        view_score = self.get_youtube_count(keyword)
-        like_score = self.get_youtube_likes(keyword)
-        total_score = view_score * like_score
+        total_score = int(round(total_score))
         return total_score
+
+    def get_view_count(self, video):
+        """
+        Getting view count
+        :param video: search result from API response
+        :return: number of views
+        """
+        views = video.get("statistics").get("viewCount")
+        if views is None:
+            return 0
+        return int(views)
+
+    def get_like_count(self, video):
+        """
+        Getting like and dislike count and calculates the ratio
+        :param video: search result from API response
+        :return: ratio of dislikes/likes
+        """
+        likes = 0
+        get_likes = video.get("statistics").get("likeCount")
+        if not get_likes is None:
+            likes = int(get_likes)
+
+        dislikes = 0
+        get_dislikes = video.get("statistics").get("dislikeCount")
+        if not get_dislikes is None:
+            dislikes = int(get_dislikes)
+
+        if likes != 0 and dislikes != 0:
+            ratio = dislikes / likes
+        elif likes != 0:
+            ratio = 1
+        else:
+            ratio = 0
+
+        return ratio
 
     def get_video_id(self, keyword):
         """

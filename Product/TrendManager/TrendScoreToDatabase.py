@@ -27,6 +27,13 @@ class TrendingToDB(object):
         # 4. Go to step 1
         trend_controller = TrendingController()
 
+        result = session.query(TrendingScore).all()
+        maxScore = 1
+        for score in result:
+            if score.total_score > maxScore:
+                maxScore = score.total_score
+        print("The maxScore is: ", maxScore)
+
         res_movie = session.query(Movie).all()
 
         for movie in res_movie:
@@ -35,6 +42,10 @@ class TrendingToDB(object):
             res_score = session.query(TrendingScore).filter_by(movie_id=movie.id).first()
 
             new_tot_score = trend_controller.get_trending_content(movie.title)  # gets new score
+
+            #Update maxScore if its higher than current maxScore
+            if new_tot_score > maxScore:
+                maxScore = new_tot_score
 
             if res_score:
                 # if not the same

@@ -72,7 +72,7 @@ class TrendingScore(Base):
     __tablename__ = 'trendingscores'
 
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
-    normalized_scoer = Column(Float)
+    normalized_score = Column(Float)
     total_score = Column(Float)
     youtube_score = Column(Float)
     twitter_score = Column(Float)

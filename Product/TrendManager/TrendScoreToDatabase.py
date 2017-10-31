@@ -27,15 +27,13 @@ class TrendingToDB(object):
         # 4. Go to step 1
         trend_controller = TrendingController()
 
-        #Getting the maxScore from the DB to be able to normalize the values
+        # Getting the current maxScore from the DB to be able to normalize the values
         result = session.query(TrendingScore).all()
         maxScore = 1
         for score in result:
             if score.total_score > maxScore:
                 maxScore = score.total_score
         print("The maxScore is: ", maxScore)
-
-        res_movie = session.query(Movie).all()
 
         while True:
             if self.stop:
@@ -56,14 +54,15 @@ class TrendingToDB(object):
                 print("Movie ID:", movie.id)
                 print("MaxScore: ", maxScore)
 
+                normScore = new_tot_score/maxScore
+
                 if res_score:
-                    res_score.normalized_score = new_tot_score/maxScore
+                    res_score.normalized_score = normScore
                     if new_tot_score != res_score.total_score:
                         # If score is new
                         res_score.total_score = new_tot_score
                 else:
                     # If movie is not in TrendingScore table
-                    normScore = new_tot_score/maxScore
                     movie = TrendingScore(movie_id=movie.id, normalized_score=normScore, total_score=new_tot_score, youtube_score=0,
                                           twitter_score=0)
                     session.add(movie)

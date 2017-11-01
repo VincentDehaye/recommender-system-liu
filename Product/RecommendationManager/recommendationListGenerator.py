@@ -3,7 +3,7 @@ import numpy as np
 from lightfm import LightFM
 from lightfm.evaluation import precision_at_k
 
-from Product.Database.DBConn import session, User, Movie, Rating, TrendingScore
+from Product.Database.DBConn import session, TrendingScore, Movie
 from scipy.sparse import coo_matrix
 import generateModel as gen_model
 import getTrainMatrixFromDb as get_train_matrix
@@ -19,6 +19,16 @@ for row in enumerate(session.query(TrendingScore.movie_id, TrendingScore.normali
     #print(row[1][0])
     trending_scores[row[1][0]]=row[1][1]
 
+
+#def get_movie_title_from_db(id):
+   # for row in enumerate(session.query(Movie.title)).\
+   #         filter(Movie.id==id):
+   #     return row
+#
+def get_movie_title_from_db(id):
+    for movie in session.query(Movie.title).\
+             filter(Movie.id == id):
+        return movie
 #print(trending_scores)
 
 # Evaluate the trained model by comparing it with the original data
@@ -69,13 +79,18 @@ def sample_recommendation(model, trainmatrix, user_ids):
 
         for id in top5items:
             #TODO get the movie name from the id.
-            print(id)
-
+            print('\nid: %s '%id)
+            movie_title=get_movie_title_from_db(id)
+            print(movie_title[0])
+            print('with score')
             print(trending_and_user_pref_scores[id])
 
-model=gen_model.load_model('new_model.sav')
+model = gen_model.load_model('new_model.sav')
 
-trainmatrix=get_train_matrix.getTrainMatrix()
+#print(get_train_matrix.getMovieList())
+
+trainmatrix = get_train_matrix.getTrainMatrix()
 
 # Calls upon the sample_recommendation to create a recommendation list for user 56.
 sample_recommendation(model, trainmatrix, range(56, 57))
+

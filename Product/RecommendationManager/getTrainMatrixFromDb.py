@@ -17,7 +17,7 @@ TestRatingList = []
 # TODO Should only collect ratings over 3, otherwise even a one is treated as a positive rating. We should load
 # TODO the combination of every movie and user into the lists. If there is no rating by the user,
 # TODO this should be represented as a zero.
-
+# TODO should the creation of the testing matrix be here too?
 for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
 
     if counter % 5 == 0:
@@ -41,8 +41,15 @@ for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rat
 TrainMatrix = coo_matrix((RatingList, (UserList, MovieList)))
 TestMatrix = coo_matrix((TestRatingList,(TestUserList,TestMovieList)))
 
+
+
 def getTrainMatrix():
 
     return TrainMatrix
+
+
+def getMovieList():
+
+    return MovieList
 
 # TODO also create a function to get the test matrix

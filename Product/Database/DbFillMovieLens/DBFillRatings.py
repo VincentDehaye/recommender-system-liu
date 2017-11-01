@@ -1,7 +1,6 @@
+from Product.Database.DBConn import session
+from Product.Database.DBConn import Rating
 import csv
-
-from Product.Database.DbFillMovieLens.DBConn import Rating
-from Product.Database.DbFillMovieLens.DBConn import session
 
 # Read the movie_id.csv file to add data into database.
 # Columns in the ratings.csv: userId, movieId, rating, timestamp

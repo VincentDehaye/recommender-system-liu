@@ -1,9 +1,7 @@
-import time
-
-from Product.Database.DbFillMovieLens.DBConn import TrendingScore
-from Product.Database.DbFillMovieLens.DBConn import session
 from Product.TrendManager.TrendScoreToDatabase import TrendingToDB
-
+from Product.Database.DBConn import session
+from Product.Database.DBConn import TrendingScore
+import time
 
 def test_TrendingToDB():
     '''

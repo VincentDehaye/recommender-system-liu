@@ -1,9 +1,7 @@
-import csv
-import re
-
-from .DBConn import Movie, MovieInGenre, Genre
-from .DBConn import session
-
+from ..DBConn import session
+from ..DBConn import Movie, MovieInGenre, Genre
+import csv, re, sys
+sys.path.insert(0,'..')
 # This part handles adding the different genres to the databas
 # List of all genres that can be se en in the movie lens dataset
 genreList = ["Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary",

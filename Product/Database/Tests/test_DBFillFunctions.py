@@ -1,5 +1,5 @@
-from Product.Database.DbFillMovieLens.DBConn import User, Movie, Genre, MovieInGenre, Rating, MovieLinks
-from Product.Database.DbFillMovieLens.DBConn import session
+from Product.Database.DBConn import User, Movie, Genre, MovieInGenre, Rating, MovieLinks
+from Product.Database.DBConn import session
 
 # This is the file to unit test the four DBFill files (DBFillUsers, DBFillMovies, DBFillRatings, DBFillLinks)
 # Before the test is run the db should have been created and the four files runned (you can do this by running

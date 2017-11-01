@@ -4,7 +4,7 @@ import csv
 
 # Read the movie_id.csv file to add data into database.
 # Columns in the ratings.csv: userId, movieId, rating, timestamp
-with open('/Product/Database/DbFillMovieLens/ratings.csv', 'rt') as f:
+with open('Product/Database/DbFillMovieLens/ratings.csv', 'rt') as f:
     reader = csv.reader(f)
 
     # Iterates through each row in the file

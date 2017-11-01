@@ -8,9 +8,7 @@ before_script:
     - python /home/sebbe953/testvenv.py
     - python --version
     - python ./Product/Database/DBConn.py
-    - cd ./Product/Database/DbFillMovieLens/
-    - python ./DBFillMovies.py
-    - cd /home/gitlab-runner/builds/6b21c71b/0/PUM-Company3/Software
+    - python ./Product/Database/DbFillMovieLens/DBFillMovies.py
 test_script:
   script:
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate

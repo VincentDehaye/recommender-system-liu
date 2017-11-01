@@ -3,6 +3,7 @@ stages:
   
 before_script:
     - pwd
+    - export PYTHONPATH="${PYTHONPATH}:/home/gitlab-runner/builds/6b21c71b/0/PUM-Company3/Software/Product"
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
     - python /home/sebbe953/testvenv.py
     - python --version

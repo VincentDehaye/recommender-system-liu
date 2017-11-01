@@ -38,7 +38,7 @@ with open('Product/Database/DbFillMovieLens/movies.csv', 'rt', encoding="utf-8")
     session.commit()
     f.close()
 
-with open('movies.csv', 'rt', encoding="utf-8") as f:
+with open('Product/Database/DbFillMovieLens/movies.csv', 'rt', encoding="utf-8") as f:
     reader = csv.reader(f)
 
     for row in reader:

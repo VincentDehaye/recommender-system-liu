@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class DataHandlerService {
-  readonly ROOT_URL = 'http://localhost:8000/api/v1/recommendations';
+  readonly ROOT_URL = 'http://localhost/api/v1/recommendations';
   movies: Observable<Movie[]>;
   constructor(private http: HttpClient) {}
   getData(): any {

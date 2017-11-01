@@ -9,6 +9,15 @@ import { RecommendedModule } from './recommended/recommended.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
 
+import {LoginComponent} from './authentication/login/index';
+import { AuthGuard } from './authentication/_guards/index';
+import { AuthenticationService, UserService } from './authentication/_services/index';
+
+// used to create fake backend
+import { fakeBackendProvider } from './authentication/_helpers/fake-backend';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { BaseRequestOptions } from '@angular/http';
+
 const PAGES_COMPONENTS = [
   PagesComponent,
 ];
@@ -25,7 +34,17 @@ const PAGES_COMPONENTS = [
   ],
   declarations: [
     ...PAGES_COMPONENTS,
+    LoginComponent,
   ],
+  providers: [
+        AuthGuard,
+        AuthenticationService,
+        UserService,
+        // providers used to create fake backend
+        fakeBackendProvider,
+        MockBackend,
+        BaseRequestOptions,
+    ],
 })
 export class PagesModule {
 }

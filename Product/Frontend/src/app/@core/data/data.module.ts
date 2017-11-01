@@ -6,6 +6,7 @@ import { ElectricityService } from './electricity.service';
 import { StateService } from './state.service';
 import { SmartTableService } from './smart-table.service';
 import { ContentTableService } from './content-table.service';
+import { DataHandlerService } from './data-handler.service';
 
 const SERVICES = [
   UserService,
@@ -13,6 +14,7 @@ const SERVICES = [
   SmartTableService,
   ContentTableService,
   ElectricityService,
+  DataHandlerService,
 ];
 
 @NgModule({

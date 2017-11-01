@@ -8,25 +8,35 @@ import { UserComponent } from './user/user.component';
 import { TrendingComponent} from './trending/trending.component';
 import { RecommendedComponent } from './recommended/recommended.component';
 
+import { AuthGuard } from './authentication/_guards/index';
+import {LoginComponent} from './authentication/login/index';
+
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
-  children: [{
+    children: [{
     path: 'overview',
     component: OverviewComponent,
+    canActivate: [AuthGuard],
+  }, {
+    path: 'login', component: LoginComponent,
   }, {
     path: 'users',
     component: UsersComponent,
+    canActivate: [AuthGuard],
   }, {
     path: 'user',
     component: UserComponent,
+    canActivate: [AuthGuard],
   }, {
     path: 'recommended',
     component: RecommendedComponent,
+    canActivate: [AuthGuard],
   }, {
     path: 'trending',
     component: TrendingComponent,
-  }, {
+    canActivate: [AuthGuard],
+    }, {
     path: 'content',
     loadChildren: './content/content.module#ContentModule',
   }, {

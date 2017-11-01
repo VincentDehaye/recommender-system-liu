@@ -21,7 +21,8 @@ def test_DBFillMovies():
     assert result.name == 'Action'
 
     result = session.query(Movie).filter_by(id=1).first()
-    assert result.title == "Toy Story (1995)"
+    assert result.title == "Toy Story"
+    assert result.year == 1995
 
     result = session.query(Movie).filter_by(id=164979).first()
     print(result.title)

@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "../APIManager/static_angular",
+      "outDir": "dist",
       "assets": [
         "assets",
         "favicon.ico",

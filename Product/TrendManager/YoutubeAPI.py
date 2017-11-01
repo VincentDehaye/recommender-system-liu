@@ -109,8 +109,11 @@ class YoutubeAPI:
         id = ""
         idList = ""
         for search_result in self.get_youtube_data(keyword).get("items", []):
-            id = search_result["id"]["videoId"]
-            idList = id + ", " + idList
+            id = search_result.get("id").get("videoId") #["id"]["videoId"]
+            print("ID: ", id)
+            if id:
+                idList = id + ", " + idList
+
         return idList
 
     def get_date(self, days):

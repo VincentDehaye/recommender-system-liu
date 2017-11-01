@@ -1,5 +1,5 @@
 from Product.Database.DBConn import session, Movie, MovieInGenre, Genre
-
+import Product.Database.DbFillMovieLens.movies
 import csv, re, sys
 sys.path.insert(0,'..')
 # This part handles adding the different genres to the databas

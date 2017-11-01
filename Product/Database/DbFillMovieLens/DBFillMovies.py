@@ -22,7 +22,7 @@ for genre in genreList:
 # This part handles adding the movies of the dataset into the database
 # Read the movie.csv file to add data into database
 # Columns in the ratings.csv: movieID, titleAndYear, Genres
-with open("./movies.csv", 'rt', encoding="utf-8") as f:
+with open(path, 'rt', encoding="utf-8") as f:
     reader = csv.reader(f)
 
     # Iterates through each row in the file and take column one (id) and column 2 (title)
@@ -45,7 +45,7 @@ with open("./movies.csv", 'rt', encoding="utf-8") as f:
     session.commit()
     f.close()
 
-with open('./movies.csv', 'rt', encoding="utf-8") as f:
+with open(path, 'rt', encoding="utf-8") as f:
     reader = csv.reader(f)
 
     for row in reader:

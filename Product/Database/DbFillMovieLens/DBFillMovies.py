@@ -1,9 +1,9 @@
-from Product.Database.DBConn import session
-from Product.Database.DBConn import Movie, MovieInGenre, Genre
+from ..DBConn import session
+from ..DBConn import Movie, MovieInGenre, Genre
 import csv, re
 
 # This part handles adding the different genres to the databas
-# List of all genres that can be seen in the movie lens dataset
+# List of all genres that can be se en in the movie lens dataset
 genreList = ["Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary",
              "Drama", "Fantasy", "Film-Noir", "Horror","IMAX", "Musical", "Mystery", "Romance", "Sci-Fi",
              "Thriller", "War", "Western", "(no genres listed)"]

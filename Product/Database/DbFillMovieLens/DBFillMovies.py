@@ -26,7 +26,6 @@ with open('Product/Database/DbFillMovieLens/movies.csv', 'rt', encoding="utf-8")
         # not found it goes into the else statement and no year is inputted to the creation
         searchForYear = re.split(r" \(([0-9][0-9][0-9][0-9])+\)", row[1])
         searchForYearSeries = re.split(r"\(([0-9][0-9][0-9][0-9]-)+\)", row[1])
-        print("This is the split:", searchForYear)
         if len(searchForYear)>1:
             new_movie=Movie(id=row[0], title=searchForYear[0], year=searchForYear[1])
         elif len(searchForYearSeries)>1:

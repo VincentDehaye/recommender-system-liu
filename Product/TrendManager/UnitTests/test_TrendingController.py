@@ -19,7 +19,7 @@ def test_get_trending_content_standard_case():
     observed = trendingcontroller.get_trending_content(keyword)
 
     assert observed is not None
-    assert observed.score >= 0
+    assert observed >= 0
 
 
 def test_get_trending_content_bad_input():
@@ -40,7 +40,7 @@ def test_get_trending_content_bad_input():
     observed = trendingcontroller.get_trending_content(keyword)
 
     assert observed is not None
-    assert observed.score == 0
+    assert observed == 0
 
 
 def test_total_score_calc_standard_case():

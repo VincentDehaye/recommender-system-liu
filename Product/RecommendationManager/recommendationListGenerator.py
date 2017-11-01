@@ -52,6 +52,7 @@ def normalize_user_scores(scores):
 def sample_recommendation(model, trainmatrix, user_ids):
     n_users, n_items = trainmatrix.shape
     for user_id in user_ids:
+
         movie_scores={}
         scores = model.predict(user_id, np.arange(n_items))
         normalized_scores=normalize_user_scores(scores)
@@ -76,15 +77,18 @@ def sample_recommendation(model, trainmatrix, user_ids):
         #print(sorted(trending_and_user_pref_scores, key=trending_and_user_pref_scores.get, reverse=True)[:5])
         top5items = sorted(trending_and_user_pref_scores, key=trending_and_user_pref_scores.get, reverse=True)[:5]
         #print(top5items)
-
+        top5itemlist=[]
         for id in top5items:
             #TODO get the movie name from the id.
             print('\nid: %s '%id)
+
             movie_title=get_movie_title_from_db(id)
             print(movie_title[0])
             print('with score')
             print(trending_and_user_pref_scores[id])
-
+            top5itemlist.append([movie_title[0], trending_and_user_pref_scores[id]])
+        print(top5itemlist)
+        return top5itemlist
 model = gen_model.load_model('new_model.sav')
 
 #print(get_train_matrix.getMovieList())

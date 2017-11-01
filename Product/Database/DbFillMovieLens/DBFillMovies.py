@@ -1,5 +1,5 @@
-from ..DBConn import session
-from ..DBConn import Movie, MovieInGenre, Genre
+from Product.Database.DBConn import session, Movie, MovieInGenre, Genre
+
 import csv, re, sys
 sys.path.insert(0,'..')
 # This part handles adding the different genres to the databas

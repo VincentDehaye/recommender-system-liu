@@ -8,7 +8,7 @@ def generate_random_trending_scores():
     a,b = __file__.split('Product')
 
     # Add to the path generated above the end of the path to get to the csv file
-    path_to_movie_set = a + 'Product/Database/DbFillMovieLens/movies.csv'
+    path_to_movie_set = a + 'Product/Database/DbFillMovieLensGitLab/movies.csv'
 
     # Count the number of items
     with open(path_to_movie_set, 'rt') as movies:

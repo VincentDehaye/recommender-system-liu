@@ -16,7 +16,7 @@ for genre in genreList:
 # This part handles adding the movies of the dataset into the database
 # Read the movie.csv file to add data into database
 # Columns in the ratings.csv: movieID, titleAndYear, Genres
-with open('Product/Database/DbFillMovieLens/movies.csv', 'rt') as f:
+with open('movies.csv', 'rt') as f:
     reader = csv.reader(f)
 
     # Iterates through each row in the file and take column one (id) and column 2 (title)

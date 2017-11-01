@@ -9,15 +9,6 @@ import generateModel as gen_model
 import getTrainMatrixFromDb as get_train_matrix
 
 
-trending_scores={}
-
-# gets the normalized scores from the database
-# adds the scores to a dictionary. {id: score}
-for row in enumerate(session.query(TrendingScore.movie_id, TrendingScore.normalized_score)):
-    # row[1][0] is movie_id
-    # row[1][1] is normalized trending score
-    #print(row[1][0])
-    trending_scores[row[1][0]]=row[1][1]
 
 
 #def get_movie_title_from_db(id):
@@ -51,6 +42,17 @@ def normalize_user_scores(scores):
 # Sends in our testmatrix and the user_ids for the users to present recommendations
 def sample_recommendation(model, trainmatrix, user_ids):
     n_users, n_items = trainmatrix.shape
+    trending_scores = {}
+
+    # gets the normalized scores from the database
+    # adds the scores to a dictionary. {id: score}
+    for row in enumerate(session.query(TrendingScore.movie_id, TrendingScore.normalized_score)):
+        # row[1][0] is movie_id
+        # row[1][1] is normalized trending score
+        # print(row[1][0])
+        trending_scores[row[1][0]] = row[1][1]
+
+    # for each user:
     for user_id in user_ids:
 
         movie_scores={}
@@ -64,7 +66,7 @@ def sample_recommendation(model, trainmatrix, user_ids):
 
             movie_scores[movie_id]=normalized_scores[movie_id]
 
-        #trending score weight.
+        # trending score weight.
         w = 1.5
 
         trending_and_user_pref_scores={}

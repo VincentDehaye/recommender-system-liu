@@ -40,7 +40,7 @@ def normalize_user_scores(scores):
     return scores
 
 # Sends in our testmatrix and the user_ids for the users to present recommendations
-def sample_recommendation(model, trainmatrix, user_ids):
+def sample_recommendation(model, trainmatrix, user_ids, trending_weight):
     n_users, n_items = trainmatrix.shape
     trending_scores = {}
 
@@ -66,14 +66,11 @@ def sample_recommendation(model, trainmatrix, user_ids):
 
             movie_scores[movie_id]=normalized_scores[movie_id]
 
-        # trending score weight.
-        w = 1.5
-
         trending_and_user_pref_scores={}
 
         # adds the movie scores to the trending scores to create an aggregated dictionary
         for id in trending_scores:
-            trending_and_user_pref_scores[id] = movie_scores[id]+w*trending_scores[id]
+            trending_and_user_pref_scores[id] = movie_scores[id]+trending_weight*trending_scores[id]
 
         print(trending_and_user_pref_scores[2])
         #print(sorted(trending_and_user_pref_scores, key=trending_and_user_pref_scores.get, reverse=True)[:5])
@@ -82,14 +79,14 @@ def sample_recommendation(model, trainmatrix, user_ids):
         top5itemlist=[]
         for id in top5items:
             #TODO get the movie name from the id.
-            print('\nid: %s '%id)
+            print('\nmovie id: %s '%id)
 
             movie_title=get_movie_title_from_db(id)
             print(movie_title[0])
             print('with score')
             print(trending_and_user_pref_scores[id])
             top5itemlist.append([movie_title[0], trending_and_user_pref_scores[id]])
-        print(top5itemlist)
+        #print(top5itemlist)
         return top5itemlist
 model = gen_model.load_model('new_model.sav')
 
@@ -98,5 +95,14 @@ model = gen_model.load_model('new_model.sav')
 trainmatrix = get_train_matrix.getTrainMatrix()
 
 # Calls upon the sample_recommendation to create a recommendation list for user 56.
-sample_recommendation(model, trainmatrix, range(56, 57))
+trending_weight=1.5
+#sample_recommendation(model, trainmatrix, range(56, 57), trending_weight)
 
+user_id=0
+continue_flag='y'
+while(continue_flag=='y'):
+    user_id=int(input('Which user do you want to check (between 0 and 671): '))
+    trending_weight = float(input('What trending weight do you want: '))
+
+    sample_recommendation(model, trainmatrix, range(user_id, user_id+1), trending_weight)
+    continue_flag=input('Do you want to check another user? (y/n): ')

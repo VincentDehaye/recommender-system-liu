@@ -1,6 +1,13 @@
 from Product.Database.DBConn import session, Movie, MovieInGenre, Genre
 
 import csv, re
+
+import os.path
+fullpath = 'Product/Database/DbFillMovieLens/movies.csv'
+path = os.path.abspath(fullpath)
+print(path)
+
+
 # This part handles adding the different genres to the databas
 # List of all genres that can be se en in the movie lens dataset
 genreList = ["Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary",
@@ -15,7 +22,7 @@ for genre in genreList:
 # This part handles adding the movies of the dataset into the database
 # Read the movie.csv file to add data into database
 # Columns in the ratings.csv: movieID, titleAndYear, Genres
-with open('Product/Database/DbFillMovieLens/movies.csv', 'rt', encoding="utf-8") as f:
+with open("movies.csv", 'rt', encoding="utf-8") as f:
     reader = csv.reader(f)
 
     # Iterates through each row in the file and take column one (id) and column 2 (title)
@@ -38,7 +45,7 @@ with open('Product/Database/DbFillMovieLens/movies.csv', 'rt', encoding="utf-8")
     session.commit()
     f.close()
 
-with open('Product/Database/DbFillMovieLens/movies.csv', 'rt', encoding="utf-8") as f:
+with open('movies.csv', 'rt', encoding="utf-8") as f:
     reader = csv.reader(f)
 
     for row in reader:

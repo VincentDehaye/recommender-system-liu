@@ -7,7 +7,7 @@ import csv, re
 genreList = ["Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary",
              "Drama", "Fantasy", "Film-Noir", "Horror","IMAX", "Musical", "Mystery", "Romance", "Sci-Fi",
              "Thriller", "War", "Western", "(no genres listed)"]
-
+#
 # Add the genres to the db
 for genre in genreList:
     new_genre = Genre(name=genre)

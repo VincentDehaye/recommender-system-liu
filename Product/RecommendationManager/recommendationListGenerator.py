@@ -1,10 +1,8 @@
 import numpy as np
-
 from lightfm import LightFM
-from lightfm.evaluation import precision_at_k
-
-from Product.Database.DBConn import session, User, Movie, Rating, TrendingScore
 from scipy.sparse import coo_matrix
+
+from Product.Database.DbFillMovieLens.DBConn import session, Rating, TrendingScore
 
 # This file in contrast to lightfm_example will try to use our own database to create a recommendation list.
 

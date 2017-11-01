@@ -1,7 +1,8 @@
-from Product.TrendManager.TrendingController import TrendingController
-from Product.Database.DBConn import session
-from Product.Database.DBConn import Movie, TrendingScore
 import threading
+
+from Product.Database.DbFillMovieLens.DBConn import Movie, TrendingScore
+from Product.Database.DbFillMovieLens.DBConn import session
+from Product.TrendManager.TrendingController import TrendingController
 
 
 class TrendingToDB(object):

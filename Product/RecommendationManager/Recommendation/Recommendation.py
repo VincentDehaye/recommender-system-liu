@@ -1,6 +1,7 @@
 from Product.RecommendationManager import generateModel as generate_model
 from Product.Database.DBConn import session, TrendingScore, Rating
 import numpy as np
+from Product.RecommendationManager.Recommendation.RecommendationList import RecommendationList
 
 #At this point we assume that there is a file namned new_model.sav
 class Recommendation(object):
@@ -9,9 +10,7 @@ class Recommendation(object):
         self.user_id = user_id
         self.lim = lim
         self.size = size
-
-    def set_trend(self):
-        self.Trending_Content_Meta = session.query(TrendingScore.movie_id, TrendingScore.normalized_score).order_by(TrendingScore.normalized_score.desc()).limit(self.lim).all()
+        self.Trending_Content_Meta = session.query(TrendingScore.movie_id, TrendingScore.normalized_score).order_by(TrendingScore.normalized_score.desc()).limit(lim).all()
 
     @staticmethod
     def normalize_user_scores(scores):
@@ -31,8 +30,4 @@ class Recommendation(object):
         final_recommendation_list_score = [rec+1.5*trend for rec, trend in zip(norm_recommendation_list_score,trending_score)]
         full_recommendation_list = list(map(list,zip(trending_id,final_recommendation_list_score)))
         sorted_full_recommendation_list = sorted(full_recommendation_list,key=lambda x: x[1], reverse=True)
-        print(sorted_full_recommendation_list[:self.size])
-
-rec = Recommendation(5, 30, 10)
-rec.set_trend()
-rec.generate_recommendation_list()
+        return RecommendationList(self.user_id, sorted_full_recommendation_list[:self.size])

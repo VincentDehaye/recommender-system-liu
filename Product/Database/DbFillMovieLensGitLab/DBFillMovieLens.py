@@ -12,8 +12,8 @@ import Product
 import Product.Database.DBConn
 
 # 2. Fill it with the data from the data set (by running DBFillUsers, DBFillMovies, DBFillRatings and DBFillLinks)
-import Product.Database.DbFillMovieLens.DBFillUsers
-import Product.Database.DbFillMovieLens.DBFillMovies
-import Product.Database.DbFillMovieLens.DBFillRatings
-import Product.Database.DbFillMovieLens.DBFillLinks
+import Product.Database.DbFillMovieLensGitLab.DBFillUsers
+import Product.Database.DbFillMovieLensGitLab.DBFillMovies
+import Product.Database.DbFillMovieLensGitLab.DBFillRatings
+import Product.Database.DbFillMovieLensGitLab.DBFillLinks
 

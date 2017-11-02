@@ -1,6 +1,6 @@
 from lightfm import LightFM
 from lightfm.datasets import fetch_movielens
-import getTrainMatrixFromDb as get_train_matrix
+from Product.RecommendationManager import getTrainMatrixFromDb as get_train_matrix
 from scipy.sparse import coo_matrix
 
 import pickle

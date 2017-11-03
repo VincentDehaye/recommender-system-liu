@@ -11,7 +11,7 @@ before_script:
 
 
 build_script:
-  Script:
+  script:
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
     - python ./Product/Database/DBConn.py
     - python ./Product/Database/DbFillMovieLensGitLab/DBFillMovieLens.py
@@ -20,7 +20,6 @@ build_script:
 test_script:
   script:
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
-
     - ./test_script
   stage: test
   

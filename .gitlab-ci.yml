@@ -1,4 +1,5 @@
 stages:
+  - build
   - test
   
 before_script:
@@ -7,8 +8,15 @@ before_script:
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
     - python /home/sebbe953/testvenv.py
     - python --version
+
+
+build_script:
+  Script:
+    - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
     - python ./Product/Database/DBConn.py
     - python ./Product/Database/DbFillMovieLensGitLab/DBFillMovieLens.py
+  Stage: build
+
 test_script:
   script:
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate

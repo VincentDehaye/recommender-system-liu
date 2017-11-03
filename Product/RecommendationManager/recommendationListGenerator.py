@@ -87,21 +87,24 @@ def sample_recommendation(model, trainmatrix, user_ids, trending_weight):
             top5itemlist.append([movie_title[0], trending_and_user_pref_scores[id]])
         #print(top5itemlist)
         return top5itemlist
-model = gen_model.load_model('new_model.sav')
 
-#print(get_train_matrix.getMovieList())
+        model = gen_model.load_model('new_model.sav')
+        print("2")
+        #print(get_train_matrix.getMovieList())
 
-trainmatrix = get_train_matrix.getTrainMatrix()
+        trainmatrix = get_train_matrix.getTrainMatrix()
+        print("3")
+        # Calls upon the sample_recommendation to create a recommendation list for user 56.
 
-# Calls upon the sample_recommendation to create a recommendation list for user 56.
-trending_weight=1.5
-#sample_recommendation(model, trainmatrix, range(56, 57), trending_weight)
+        trending_weight=1.5
+        #sample_recommendation(model, trainmatrix, range(56, 57), trending_weight)
 
-user_id=0
-continue_flag='y'
-while(continue_flag=='y'):
-    user_id=int(input('Which user do you want to check (between 0 and 671): '))
-    trending_weight = float(input('What trending weight do you want: '))
+        user_id=0
+        continue_flag='y'
+        while(continue_flag=='y'):
+            user_id=int(input('Which user do you want to check (between 0 and 671): '))
+            trending_weight = float(input('What trending weight do you want: '))
 
-    sample_recommendation(model, trainmatrix, range(user_id, user_id+1), trending_weight)
-    continue_flag=input('Do you want to check another user? (y/n): ')
+        sample_recommendation(model, trainmatrix, range(user_id, user_id+1), trending_weight)
+        continue_flag=input('Do you want to check another user? (y/n): ')
+

@@ -1,7 +1,6 @@
 from lightfm import LightFM
 from lightfm.evaluation import precision_at_k
-
-import getTrainMatrixFromDb as get_train_matrix
+from Product.RecommendationManager import getTrainMatrixFromDb as get_train_matrix
 from scipy.sparse import coo_matrix
 
 import pickle

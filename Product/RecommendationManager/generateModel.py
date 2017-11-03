@@ -1,5 +1,6 @@
 from lightfm import LightFM
-from lightfm.datasets import fetch_movielens
+from lightfm.evaluation import precision_at_k
+
 import getTrainMatrixFromDb as get_train_matrix
 from scipy.sparse import coo_matrix
 
@@ -37,3 +38,6 @@ def load_model(filename):
     return pickle.load(open(filename, 'rb'))
 
 
+# returns a test precision for the model at k value.
+def test_precision(model, trainmatrix, k):
+    return precision_at_k(model, trainmatrix, k).mean()

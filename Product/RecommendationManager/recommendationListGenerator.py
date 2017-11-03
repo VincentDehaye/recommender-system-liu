@@ -1,7 +1,6 @@
 import numpy as np
 
 from lightfm import LightFM
-from lightfm.evaluation import precision_at_k
 
 from Product.Database.DBConn import session, TrendingScore, Movie
 from scipy.sparse import coo_matrix
@@ -26,7 +25,6 @@ def get_movie_title_from_db(id):
 # It evaluates the precision for the top k movies from the algorithm
 # Could be a good idea to move this to another file since it takes a lot of time to run
 # TODO move this to generate model.
-#test_precision = precision_at_k(model, TrainMatrix, k=5).mean()
 
 # this prints the test precision
 #print('precision at train: %s' % test_precision)

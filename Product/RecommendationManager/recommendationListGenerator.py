@@ -85,12 +85,13 @@ def sample_recommendation(model, trainmatrix, user_ids):
             print('with score')
             print(trending_and_user_pref_scores[id])
 
+print("1")
 model = gen_model.load_model('new_model.sav')
-
+print("2")
 #print(get_train_matrix.getMovieList())
 
 trainmatrix = get_train_matrix.getTrainMatrix()
-
+print("3")
 # Calls upon the sample_recommendation to create a recommendation list for user 56.
 sample_recommendation(model, trainmatrix, range(56, 57))
-
+print("4")

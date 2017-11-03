@@ -15,7 +15,7 @@ build_script:
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
     - python ./Product/Database/DBConn.py
     - python ./Product/Database/DbFillMovieLensGitLab/DBFillMovieLens.py
-  Stage: build
+  stage: build
 
 test_script:
   script:

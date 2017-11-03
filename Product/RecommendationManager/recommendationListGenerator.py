@@ -15,7 +15,7 @@ import getTrainMatrixFromDb as get_train_matrix
    # for row in enumerate(session.query(Movie.title)).\
    #         filter(Movie.id==id):
    #     return row
-#
+# TODO move to db file also fix for loop
 def get_movie_title_from_db(id):
     for movie in session.query(Movie.title).\
              filter(Movie.id == id):
@@ -25,7 +25,7 @@ def get_movie_title_from_db(id):
 # Evaluate the trained model by comparing it with the original data
 # It evaluates the precision for the top k movies from the algorithm
 # Could be a good idea to move this to another file since it takes a lot of time to run
-# TODO move this to another file.
+# TODO move this to generate model.
 #test_precision = precision_at_k(model, TrainMatrix, k=5).mean()
 
 # this prints the test precision
@@ -46,6 +46,7 @@ def sample_recommendation(model, trainmatrix, user_ids, trending_weight):
 
     # gets the normalized scores from the database
     # adds the scores to a dictionary. {id: score}
+    # TODO move to db queries file
     for row in enumerate(session.query(TrendingScore.movie_id, TrendingScore.normalized_score)):
         # row[1][0] is movie_id
         # row[1][1] is normalized trending score

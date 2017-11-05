@@ -24,7 +24,7 @@ import pickle
 def train_model(filename):
 # Sets up all the lists that will be needed.
     #TestMatrix = coo_matrix((TestRatingList,(TestUserList,TestMovieList)))
-    trainmatrix=get_train_matrix.getTrainMatrix()
+    trainmatrix=get_train_matrix.get_train_matrix()
     # Instantiate and train the model, epochs is number of iterations of training done on the trainmatrix.
     # TODO save model to file after having been generated.
     model = LightFM(loss='warp')

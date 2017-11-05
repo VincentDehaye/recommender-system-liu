@@ -1,15 +1,9 @@
 
 from scipy.sparse import coo_matrix
 
-from Product.Database.DBConn import session, User, Movie, Rating, TrendingScore
+from Product.Database.DBConn import session, Rating
 
-Ratings = session.query(Rating).all()
-UserList = []
-MovieList = []
-RatingList = []
-TestUserList = []
-TestMovieList = []
-TestRatingList = []
+
 # This file in contrast to lightfm_example will try to use our own database to create a recommendation list.
 
 # Filling the lists with data from the database
@@ -18,16 +12,7 @@ TestRatingList = []
 # TODO the combination of every movie and user into the lists. If there is no rating by the user,
 # TODO this should be represented as a zero.
 # TODO should the creation of the testing matrix be here too?
-for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
 
-    if counter % 5 == 0:
-        TestUserList.append(row[0])
-        TestMovieList.append(row[1])
-        TestRatingList.append(row[2])
-    else:
-        UserList.append(row[0])
-        MovieList.append(row[1])
-        RatingList.append(row[2])
 
 # trending_scores={}
 # for row in enumerate(session.query(TrendingScore.movie_id, TrendingScore.normalized_score)):
@@ -38,18 +23,39 @@ for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rat
 
 # print(trending_scores)
 # Creates two sparse matrixes, to make the data compatable with LightFM
-TrainMatrix = coo_matrix((RatingList, (UserList, MovieList)))
-TestMatrix = coo_matrix((TestRatingList,(TestUserList,TestMovieList)))
 
 
 
-def getTrainMatrix():
+# returns the train matrix. The matrix is 80% (4/5) of the user ratings at the moment
 
-    return TrainMatrix
+def get_train_matrix():
+    user_list = []
+    movie_list = []
+    rating_list = []
+    for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
+        if counter % 5 != 0:
+            user_list.append(row[0])
+            movie_list.append(row[1])
+            rating_list.append(row[2])
+
+    train_matrix = coo_matrix((rating_list, (user_list, movie_list)))
+
+    return train_matrix
+
+# returns the test matrix. The matrix is 20% (1/5) of the user ratings at the moment
 
 
-def getMovieList():
+def get_test_matrix():
+    test_user_list = []
+    test_movie_list = []
+    test_rating_list = []
 
-    return MovieList
+    for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
+        if counter % 5 == 0:
+            test_user_list.append(row[0])
+            test_movie_list.append(row[1])
+            test_rating_list.append(row[2])
 
-# TODO also create a function to get the test matrix
+    test_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)))
+
+    return test_matrix

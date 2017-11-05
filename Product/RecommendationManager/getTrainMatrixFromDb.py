@@ -1,11 +1,9 @@
 
 from scipy.sparse import coo_matrix
 
-from Product.Database.DBConn import session, Rating
+from Product.Database.DBConn import session, Rating, TrendingScore, Movie
 
-
-# This file in contrast to lightfm_example will try to use our own database to create a recommendation list.
-
+### old TODOS, ok to delete?
 # Filling the lists with data from the database
 # This way of doing a testmatrix is wrong it will result in a different size matrix then the Trainmatrix.
 # TODO Should only collect ratings over 3, otherwise even a one is treated as a positive rating. We should load
@@ -14,20 +12,17 @@ from Product.Database.DBConn import session, Rating
 # TODO should the creation of the testing matrix be here too?
 
 
-# trending_scores={}
-# for row in enumerate(session.query(TrendingScore.movie_id, TrendingScore.normalized_score)):
-#     # row[1][0] is movie_id
-#     # row[1][1] is normalized trending score
-#     print(row[1][0])
-#     trending_scores[row[1][0]]=row[1][1]
+# fills a dictionary with trending scores. Movie id is the key and normalized score is the value.
+def get_trending_scores():
+    trending_scores = {}
 
-# print(trending_scores)
-# Creates two sparse matrixes, to make the data compatable with LightFM
+    for row in (session.query(TrendingScore).all()):
+        trending_scores[row.movie_id] = row.normalized_score
 
+    return trending_scores
 
 
 # returns the train matrix. The matrix is 80% (4/5) of the user ratings at the moment
-
 def get_train_matrix():
     user_list = []
     movie_list = []
@@ -42,9 +37,8 @@ def get_train_matrix():
 
     return train_matrix
 
+
 # returns the test matrix. The matrix is 20% (1/5) of the user ratings at the moment
-
-
 def get_test_matrix():
     test_user_list = []
     test_movie_list = []
@@ -59,3 +53,9 @@ def get_test_matrix():
     test_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)))
 
     return test_matrix
+
+
+# returns the movie title from a movie id input
+def get_movie_title(movie_id):
+    return session.query(Movie.title).filter(Movie.id == movie_id).one()[0]
+

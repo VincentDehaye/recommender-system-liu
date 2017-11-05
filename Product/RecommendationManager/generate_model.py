@@ -7,12 +7,12 @@ Testing the precision@k for a lightFM model
 import pickle
 from lightfm import LightFM
 from lightfm.evaluation import precision_at_k
-from Product.RecommendationManager import getTrainMatrixFromDb as get_train_matrix
+from Product.RecommendationManager import gets_from_database as get_train_matrix
 
 
 def train_model(filename):
     """
-
+    Trains and saves a lightFM model
     :param filename:
     :type filename: string
     """
@@ -26,23 +26,23 @@ def train_model(filename):
     pickle.dump(model, open(filename, 'wb'))
 
 
-# loads trained model
+
 def load_model(filename):
     """
-
+    loads trained model
     :param filename:
     :return: lightFM model
     """
     return pickle.load(open(filename, 'rb'))
 
 
-# returns a test precision for the model at k value.
 def test_precision(model, train_matrix, k):
     """
+    returns a test precision for the model at k value.
 
     :param model: lightFM model
     :param train_matrix: Matrix from database
     :param k: precision@k
-    :return:
+    :return: float
     """
     return precision_at_k(model, train_matrix, k).mean()

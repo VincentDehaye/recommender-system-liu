@@ -3,7 +3,7 @@ import numpy as np
 from lightfm import LightFM
 
 import generate_model as gen_model
-import getTrainMatrixFromDb as get_train_matrix
+import gets_from_database as get_train_matrix
 
 
 def normalize_user_scores(scores):

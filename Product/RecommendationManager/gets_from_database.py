@@ -1,4 +1,17 @@
+"""
+Handles the connections to the database
+get_trending_scores puts the trending_scores from the
+database in a dictionary
 
+get_train_matrix fetches data from the database and puts
+it into a training matrix for the lightFM model
+
+get_test_matrix fetches data from the database and puts
+it into a test matrix from the lightFM model
+
+get_movie_title returns the movie title for one movie id
+
+"""
 from scipy.sparse import coo_matrix
 
 from Product.Database.DBConn import session, Rating, TrendingScore, Movie
@@ -12,18 +25,26 @@ from Product.Database.DBConn import session, Rating, TrendingScore, Movie
 # TODO should the creation of the testing matrix be here too?
 
 
-# fills a dictionary with trending scores. Movie id is the key and normalized score is the value.
 def get_trending_scores():
+    """
+    fills a dictionary with trending scores. Movie id is the key and normalized score is the value.
+
+    :return: trending_scores in the form a of a dictionary
+    """
     trending_scores = {}
 
-    for row in (session.query(TrendingScore).all()):
+    for row in session.query(TrendingScore).all():
         trending_scores[row.movie_id] = row.normalized_score
 
     return trending_scores
 
 
-# returns the train matrix. The matrix is 80% (4/5) of the user ratings at the moment
 def get_train_matrix():
+    """
+    returns the train matrix. The matrix is 80% (4/5) of the user ratings at the moment
+
+    :return: training matrix in the form of a numpy matrix
+    """
     user_list = []
     movie_list = []
     rating_list = []
@@ -38,8 +59,12 @@ def get_train_matrix():
     return train_matrix
 
 
-# returns the test matrix. The matrix is 20% (1/5) of the user ratings at the moment
 def get_test_matrix():
+    """
+    returns the test matrix. The matrix is 20% (1/5) of the user ratings at the moment
+
+    :return: test matrix in the form of a numpy matrix
+    """
     test_user_list = []
     test_movie_list = []
     test_rating_list = []
@@ -55,7 +80,11 @@ def get_test_matrix():
     return test_matrix
 
 
-# returns the movie title from a movie id input
 def get_movie_title(movie_id):
-    return session.query(Movie.title).filter(Movie.id == movie_id).one()[0]
+    """
+    returns the movie title from a movie id input
 
+    :param movie_id:
+    :return: movie name as string
+    """
+    return session.query(Movie.title).filter(Movie.id == movie_id).one()[0]

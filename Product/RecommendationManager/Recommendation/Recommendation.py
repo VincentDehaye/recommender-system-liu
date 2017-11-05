@@ -31,3 +31,4 @@ class Recommendation(object):
         full_recommendation_list = list(map(list,zip(trending_id,final_recommendation_list_score)))
         sorted_full_recommendation_list = sorted(full_recommendation_list,key=lambda x: x[1], reverse=True)
         return RecommendationList(self.user_id, sorted_full_recommendation_list[:self.size])
+

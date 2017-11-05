@@ -1,4 +1,4 @@
-from Product.RecommendationManager import generateModel as generate_model
+from Product.RecommendationManager import generate_model as generate_model
 from Product.Database.DBConn import session, TrendingScore, Rating
 import numpy as np
 from Product.RecommendationManager.Recommendation.RecommendationList import RecommendationList

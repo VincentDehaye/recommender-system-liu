@@ -2,7 +2,7 @@ import numpy as np
 
 from lightfm import LightFM
 
-import generateModel as gen_model
+import generate_model as gen_model
 import getTrainMatrixFromDb as get_train_matrix
 
 

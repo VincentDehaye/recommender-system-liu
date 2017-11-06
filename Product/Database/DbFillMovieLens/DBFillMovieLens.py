@@ -2,6 +2,8 @@ import os
 import Product
 from Product.Database.DbFillMovieLens.DBFillMovies import FillMovies
 from Product.Database.DbFillMovieLens.DBFillRatings import FillRatings
+from Product.Database.DbFillMovieLens.DBFillUsers import FillUsers
+from Product.Database.DbFillMovieLens.DBFillLinks import FillLinks
 
 
 
@@ -15,10 +17,13 @@ from Product.Database.DbFillMovieLens.DBFillRatings import FillRatings
 import Product.Database.DBConn
 
 # 2. Fill it with the data from the data set (by running DBFillUsers, DBFillMovies, DBFillRatings and DBFillLinks)
-import Product.Database.DbFillMovieLens.DBFillUsers
-#import Product.Database.DbFillMovieLens.DBFillMovies
+u = FillUsers()
 f = FillMovies(True)
-#import Product.Database.DbFillMovieLens.DBFillRatings
 r = FillRatings(True)
+#l = FillLinks
+
+#import Product.Database.DbFillMovieLens.DBFillUsers
+#import Product.Database.DbFillMovieLens.DBFillMovies
+#import Product.Database.DbFillMovieLens.DBFillRatings
 #import Product.Database.DbFillMovieLens.DBFillLinks
 

@@ -57,6 +57,26 @@ def test_get_date_standard_case():
 
     assert output is output.format(expected)
 
+def test_get_date_bad_input():
+    """
+    Author: Karl Lundvall
+    Date: 2017-11-06
+    Purpose: Assert that the get_date method in YoutubeAPI does not returns the incorrect format.
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    days = 30
+
+    # Expected output
+    expected1 = '%Y-%m-%dT%H:%M:%S.%f%z'
+
+    # Bad output
+    expected2 = 'Saturday, June 9th, 2007, 5:46:21 PM'
+
+    # Observed output
+    output = youtube.get_date(days)
+
+    assert output.format(expected1) is not expected2
 
 def test_get_video_id():
     """

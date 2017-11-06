@@ -110,7 +110,6 @@ class YoutubeAPI:
         idList = ""
         for search_result in self.get_youtube_data(keyword).get("items", []):
             id = search_result.get("id").get("videoId") #["id"]["videoId"]
-            print("ID: ", id)
             if id:
                 idList = id + ", " + idList
 

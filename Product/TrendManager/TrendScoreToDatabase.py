@@ -1,6 +1,7 @@
 from Product.TrendManager.TrendingController import TrendingController
 from Product.Database.DBConn import session
 from Product.Database.DBConn import Movie, TrendingScore
+from apscheduler.schedulers.background import BackgroundScheduler
 import threading
 
 
@@ -8,14 +9,26 @@ class TrendingToDB(object):
     # Call the trending to db to start filling the trend table in the database. This will be ran in the background
     # as long as the application is running
 
-    def __init__(self, background=True, continuous=True):
+    def __init__(self, background=True, continuous=True, daily=False):
+        # Background=True means that the application will be ran in daemon mode and other things can be ran
+        # simultaneously.
+        # continous=True means that the application will not be shut down after the first iteration
+        # daily=True means that it will be ran every 24h
         self.continous = continuous
-        self. stop = False
-        # creates the thread that will make the method run parallel. Sets daemon to true so that it will allow
-        # the app to be terminated and will terminate with it
-        thread = threading.Thread(target=self.run, args=())
-        thread.daemon = background
-        thread.start()
+        self.stop = False
+        self.daily = daily
+
+        if daily:
+            # if set to daily, it creates a scheduler and sets the interval to 1 day
+            self.scheduled = BackgroundScheduler()
+            self.scheduled.add_job(self.run, 'interval', days=1)
+            self.scheduled.start()
+        else:
+            # creates the thread that will make the method run parallel. Sets daemon to true so that it will allow
+            # the app to be terminated and will terminate with it
+            thread = threading.Thread(target=self.run, args=())
+            thread.daemon = background
+            thread.start()
 
     def run(self):
         # This is the actual method that will run until the application is shut down, it is done in the
@@ -75,4 +88,8 @@ class TrendingToDB(object):
 
         # Used to stop the thread if background is false or for any other reason it needs to be stopped.
     def terminate(self):
+        # Stops the scheduler
         self.stop = True
+        if self.daily:
+            self.scheduled.shutdown()
+

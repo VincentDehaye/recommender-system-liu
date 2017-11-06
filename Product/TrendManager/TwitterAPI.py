@@ -7,12 +7,16 @@
 # Class was built using following guide: http://adilmoujahid.com/posts/2014/07/twitter-analytics/
 
 # Import the necessary methods from tweepy library
+import threading
+
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 import json
 import pandas as pd
 import re
+import time
+import pickle
 
 # Variables that contains the user credentials to access Twitter API
 access_token = "911929395799035905-m0LQX9L0N3C47hCWG9tCDrIVWT6o9To"
@@ -23,37 +27,6 @@ tweets_data_path = 'trendingdata/twitter_data.txt'
 
 
 class TwitterAPI:
-    # def __init__(self):
-    #    auth = OAuthHandler(consumer_key, consumer_secret)
-    #    auth.set_access_token(access_token, access_token_secret)
-
-    def process_data(self):
-        tweets_data = []
-        tweets_file = open(tweets_data_path, "r")
-        for line in tweets_file:
-            try:
-                tweet = json.loads(line)
-                tweets_data.append(tweet)
-            except:
-                continue
-
-        tweets = pd.DataFrame()
-        tweets['text'] = list(map(lambda tweet: tweet['text'], tweets_data))
-        tweets['frozen'] = tweets['text'].apply(lambda tweet: self.word_in_text('frozen', tweet))
-        tweets['wonder woman'] = tweets['text'].apply(lambda tweet: self.word_in_text('wonder woman', tweet))
-        tweets['titanic'] = tweets['text'].apply(lambda tweet: self.word_in_text('titanic', tweet))
-        tweets['relevant'] = tweets['text'].apply(lambda tweet: self.word_in_text('movie', tweet) or
-                                                                self.word_in_text('trailer', tweet) or
-                                                                self.word_in_text('scene', tweet) or
-                                                                self.word_in_text('cinema', tweet) or
-                                                                self.word_in_text('watch', tweet) or
-                                                                self.word_in_text('picture', tweet) or
-                                                                self.word_in_text('tv', tweet) or
-                                                                self.word_in_text('show', tweet) or
-                                                                self.word_in_text('award', tweet) or
-                                                                self.word_in_text('dvd', tweet) or
-                                                                self.word_in_text('stream', tweet))
-        return tweets
 
     def word_in_text(self, word, text):
         word = word.lower()
@@ -64,18 +37,59 @@ class TwitterAPI:
             return True
         return False
 
-    def print_counts(self):
-        tweets = self.process_data()
-        print(tweets[tweets['relevant'] == True]['frozen'].value_counts()[True])
-        print(tweets[tweets['relevant'] == True]['wonder woman'].value_counts()[True])
-        print(tweets[tweets['relevant'] == True]['titanic'].value_counts()[True])
 
+
+allwords = {}
+
+def format_word(word):
+    word = word.lower()
+    word = word.strip(" ")
+    regex = re.compile('[^a-z]')
+    word = regex.sub('', word)
+    if word == "":
+        return None
+    return word
+
+
+def update_count(word):
+    if word in allwords:
+        val = allwords.get(word)
+        val += 1
+        allwords[word] = val
+    else:
+        allwords[word] = 1
+
+
+def print_dict():
+    allwords_view = [(v, k) for k ,v in allwords.items()]
+    allwords_view.sort(reverse=True)
+    for v, k in allwords_view:
+        print(k, ": ", v)
+
+
+def store_dict():
+    with open(tweets_data_path, 'wb') as f:
+        pickle.dump(allwords, f, pickle.HIGHEST_PROTOCOL)
+    print("Dictionary saved to file! Path:", tweets_data_path)
+
+
+def load_dict():
+    with open(tweets_data_path, 'rb') as f:
+        return pickle.load(f)
 
 # This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
 
-    def on_data(self, data):
-        print(data)
+    def on_status(self, status):
+        #all_data = json.loads(data)
+        #lang = all_data['lang']
+        #if lang == 'en':
+        #tweet = all_data['text']
+        words = status.text.split()
+        for word in words:
+            word = format_word(word)
+            if word is not None:
+                update_count(word)
         return True
 
     def on_error(self, status):
@@ -92,4 +106,16 @@ if __name__ == '__main__':
     stream = Stream(auth, outputStream)
 
     # This line filter Twitter Streams to capture data by the keywords specified
-    stream.filter(track=['frozen', 'wonder woman', 'titanic'])
+    '''
+    try:
+        stream.filter(track=['trailer', 'movie', 'show'], languages=['en'], async=True)
+    except:
+        print("Stream stopped")
+    time.sleep(60)
+    store_dict()
+    '''
+    allwords = load_dict()
+    allwords_view = [(v, k) for k, v in allwords.items()]
+    allwords_view.sort(reverse=True)
+    for v, k in allwords_view:
+        print(k, ": ", v)

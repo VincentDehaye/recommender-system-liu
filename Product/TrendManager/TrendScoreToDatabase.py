@@ -2,7 +2,7 @@ from Product.TrendManager.TrendingController import TrendingController
 from Product.Database.DBConn import session
 from Product.Database.DBConn import Movie, TrendingScore
 from apscheduler.schedulers.background import BackgroundScheduler
-import threading, time
+import threading
 
 
 class TrendingToDB(object):

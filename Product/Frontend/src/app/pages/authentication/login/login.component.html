@@ -1,18 +1,13 @@
 <div class="col-md-6 col-md-offset-3">
-    <div class="alert alert-info">
-        Username: test<br />
-        Password: test
-    </div>
-    <h2>Login</h2>
-    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+    <div style="border: 1px black; border-radius: 3px; box-shadow: 0 0 0 1px black; text-align: center; ">
+      <h2>img...</h2>
+    <form  name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" required />
+            <input type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" required placeholder="Username" style="text-align: center"/>
             <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
         </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+            <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required placeholder="Password" style="text-align: center" />
             <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
         </div>
         <div class="form-group">
@@ -21,4 +16,5 @@
         </div>
         <div *ngIf="error" class="alert alert-danger">{{error}}</div>
     </form>
+    </div>
 </div>

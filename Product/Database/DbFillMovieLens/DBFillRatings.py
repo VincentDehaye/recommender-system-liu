@@ -4,29 +4,42 @@ import csv
 
 # Read the movie_id.csv file to add data into database.
 # Columns in the ratings.csv: userId, movieId, rating, timestamp
-with open('ratings.csv', 'rt') as f:
-    reader = csv.reader(f)
+class FillRatings:
+    def __init__(self, smallDataSet):
+        self.Fill(smallDataSet)
 
-    # Iterates through each row in the file
-    for row in reader:
+    def Fill(self, smallDataSet):
 
-        # Iterates through each column
-        for counter, column in enumerate(row):
+        if smallDataSet:
+            path = 'smallRatings.csv'
+            print("Filling ratings from small dataset")
+        else:
+            path = 'ratings.csv'
+            print("Filling ratings from BIG dataset")
 
-            if counter == 0:
-                user_id = column
+        with open(path, 'rt') as f:
+            reader = csv.reader(f)
 
-            if counter == 1:
-                movie_id = column
+            # Iterates through each row in the file
+            for row in reader:
 
-            if counter == 2:
-                rating = column
-                new_rating = Rating(movie_id=movie_id, user_id=user_id, rating=rating)
-                session.add(new_rating)
-                # There is also a timestamp in the dataset which is not used
+                # Iterates through each column
+                for counter, column in enumerate(row):
 
-# Commit the added ratings
-session.commit()
+                    if counter == 0:
+                        user_id = column
 
-# Close the csv file
-f.close()
+                    if counter == 1:
+                        movie_id = column
+
+                    if counter == 2:
+                        rating = column
+                        new_rating = Rating(movie_id=movie_id, user_id=user_id, rating=rating)
+                        session.add(new_rating)
+                        # There is also a timestamp in the dataset which is not used
+
+        # Commit the added ratings
+        session.commit()
+
+        # Close the csv file
+        f.close()

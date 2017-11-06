@@ -23,10 +23,10 @@ class FillMovies:
         # Columns in the ratings.csv: movieID, titleAndYear, Genres
         if smallDataSet:
             path = 'smallMovies.csv'
-            print("Filling with small dataset")
+            print("Filling movies from small dataset")
         else:
             path = 'movies.csv'
-            print("Filling with BIG dataset")
+            print("Filling movies from BIG dataset")
 
         with open(path, 'rt', encoding="utf-8") as f:
             reader = csv.reader(f)
@@ -68,8 +68,8 @@ class FillMovies:
                             session.add(new_movie_genre)
 
 
-                        # Commit the added link between movies and their genres
-                        session.commit()
+        # Commit the added link between movies and their genres
+        session.commit()
 
         # Close the csv file
         f.close()

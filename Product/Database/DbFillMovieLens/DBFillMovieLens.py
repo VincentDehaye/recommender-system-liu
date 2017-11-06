@@ -1,6 +1,7 @@
 import os
 import Product
 from Product.Database.DbFillMovieLens.DBFillMovies import FillMovies
+from Product.Database.DbFillMovieLens.DBFillRatings import FillRatings
 
 
 
@@ -17,6 +18,7 @@ import Product.Database.DBConn
 import Product.Database.DbFillMovieLens.DBFillUsers
 #import Product.Database.DbFillMovieLens.DBFillMovies
 f = FillMovies(True)
-import Product.Database.DbFillMovieLens.DBFillRatings
-import Product.Database.DbFillMovieLens.DBFillLinks
+#import Product.Database.DbFillMovieLens.DBFillRatings
+r = FillRatings(True)
+#import Product.Database.DbFillMovieLens.DBFillLinks
 

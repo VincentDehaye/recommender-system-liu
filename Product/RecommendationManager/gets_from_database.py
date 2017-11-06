@@ -48,6 +48,8 @@ def get_train_matrix():
     user_list = []
     movie_list = []
     rating_list = []
+
+    # Puts everything but every 5th row (1, 2, 3, 4, 6, 7, 8, 9, 11...) in train_matrix
     for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
         if counter % 5 != 0:
             user_list.append(row[0])
@@ -61,7 +63,7 @@ def get_train_matrix():
 
 def get_test_matrix():
     """
-    returns the test matrix. The matrix is 20% (1/5) of the user ratings at the moment
+    returns the test matrix. The matrix is 10% of the user ratings at the moment
 
     :return: test matrix in the form of a numpy matrix
     """
@@ -69,8 +71,9 @@ def get_test_matrix():
     test_movie_list = []
     test_rating_list = []
 
+    # Puts every 10th row (5, 15, 25...) in test_matrix
     for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
-        if counter % 5 == 0:
+        if counter % 5 == 0 and counter % 2 == 1:
             test_user_list.append(row[0])
             test_movie_list.append(row[1])
             test_rating_list.append(row[2])
@@ -78,6 +81,28 @@ def get_test_matrix():
     test_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)))
 
     return test_matrix
+
+
+def get_new_users_matrix():
+    """
+    returns the new users matrix. The matrix is 10 % of the user ratings. Is used for showing that model is evolving
+
+    :return: new users matrix in the form of a numpy matrix
+    """
+    user_list = []
+    movie_list = []
+    rating_list = []
+
+    #Puts every 10th row (10, 20, 30...) in new_users_matrix
+    for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
+        if counter % 5 == 0 and counter % 2 == 0:
+            user_list.append(row[0])
+            movie_list.append(row[1])
+            rating_list.append(row[2])
+
+    new_users_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)))
+
+    return new_users_matrix
 
 
 def get_movie_title(movie_id):
@@ -88,3 +113,4 @@ def get_movie_title(movie_id):
     :return: movie name as string
     """
     return session.query(Movie.title).filter(Movie.id == movie_id).one()[0]
+

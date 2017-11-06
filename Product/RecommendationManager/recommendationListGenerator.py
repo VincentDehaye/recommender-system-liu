@@ -40,9 +40,9 @@ def sample_recommendation(model, train_matrix, user_ids, trending_weight):
 
         # adds the movie scores to the trending scores to create an aggregated dictionary
         for id in trending_scores:
-            trending_and_user_pref_scores[id] = movie_scores[id]+trending_weight*trending_scores[id]
 
-        print(trending_and_user_pref_scores[2])
+            trending_and_user_pref_scores[id] = movie_scores[id]+trending_weight*trending_scores[id]
+       
         #print(sorted(trending_and_user_pref_scores, key=trending_and_user_pref_scores.get, reverse=True)[:5])
         top5items = sorted(trending_and_user_pref_scores, key=trending_and_user_pref_scores.get, reverse=True)[:5]
         #print(top5items)

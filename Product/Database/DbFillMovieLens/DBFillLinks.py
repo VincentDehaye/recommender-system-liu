@@ -1,6 +1,6 @@
 from Product.Database.DBConn import session
 from Product.Database.DBConn import MovieLinks
-import csv
+import csv, os
 
 # Read the movie_id.csv file to add data into database.
 # Columns in the ratings.csv: movieId, imdbID, tmdbID
@@ -10,7 +10,11 @@ class FillLinks():
 
     def Fill(self):
         print("Starting to fill links for the Big data set..")
-        with open('links.csv', 'rt') as f:
+
+        fullpath = 'DbFillMovieLens/links.csv'
+        path = os.path.abspath(fullpath)
+
+        with open(path, 'rt') as f:
             reader = csv.reader(f)
 
             # Iterates through each row in the file

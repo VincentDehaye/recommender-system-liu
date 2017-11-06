@@ -1,6 +1,6 @@
 from Product.Database.DBConn import session
 from Product.Database.DBConn import Rating
-import csv
+import csv, os.path
 
 # Read the movie_id.csv file to add data into database.
 # Columns in the ratings.csv: userId, movieId, rating, timestamp
@@ -11,10 +11,12 @@ class FillRatings:
     def Fill(self, smallDataSet):
 
         if smallDataSet:
-            path = 'smallRatings.csv'
+            fullpath = 'DbFillMovieLens/smallRatings.csv'
+            path = os.path.abspath(fullpath)
             print("Starting to fill ratings from small data set..")
         else:
-            path = 'ratings.csv'
+            fullpath = 'DbFillMovieLens/ratings.csv'
+            path = os.path.abspath(fullpath)
             print("Starting to fill ratings from BIG data set..")
 
         with open(path, 'rt') as f:

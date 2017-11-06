@@ -1,5 +1,5 @@
 from Product.Database.DBConn import session, Movie, MovieInGenre, Genre
-import csv, re
+import csv, re, os.path
 
 class FillMovies:
 
@@ -7,6 +7,7 @@ class FillMovies:
         self.fill(smallDataSet)
 
     def fill(self, smallDataSet):
+
         # This part handles adding the different genres to the databas
         # List of all genres that can be se en in the movie lens dataset
         genreList = ["Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary",
@@ -22,10 +23,13 @@ class FillMovies:
         # Read the movie.csv file to add data into database
         # Columns in the ratings.csv: movieID, titleAndYear, Genres
         if smallDataSet:
-            path = 'smallMovies.csv'
+            fullpath = 'DbFillMovieLens/smallMovies.csv'
+            path = os.path.abspath(fullpath)
+            # /home/marbo914/PycharmProjects/Software/Product/Database/DbFillMovieLens/smallMovies.csv
             print("Starting to fill movies from small data set..")
         else:
-            path = 'movies.csv'
+            fullpath = 'DbFillMovieLens/movies.csv'
+            path = os.path.abspath(fullpath)
             print("Starting to fill movies from BIG data set..")
 
         with open(path, 'rt', encoding="utf-8") as f:

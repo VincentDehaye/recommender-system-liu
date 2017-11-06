@@ -9,7 +9,9 @@ class FillUsers:
         self.Fill()
 
     def Fill(self):
+        print("Starting to fill 700 users, not based on big or small data set..")
         for i in range(1,701):
             new_user = User(id=i)
             session.add(new_user)
         session.commit()
+        print("DONE - Users added")

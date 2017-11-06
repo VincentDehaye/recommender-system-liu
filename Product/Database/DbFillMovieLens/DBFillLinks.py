@@ -9,6 +9,7 @@ class FillLinks():
         self.Fill()
 
     def Fill(self):
+        print("Starting to fill links for the Big data set..")
         with open('links.csv', 'rt') as f:
             reader = csv.reader(f)
 
@@ -32,6 +33,7 @@ class FillLinks():
 
         # Commit the added ratings
         session.commit()
+        print("DONE - Links added")
 
         # Close the csv file
         f.close()

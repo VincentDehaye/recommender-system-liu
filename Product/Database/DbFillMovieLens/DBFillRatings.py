@@ -12,10 +12,10 @@ class FillRatings:
 
         if smallDataSet:
             path = 'smallRatings.csv'
-            print("Filling ratings from small dataset")
+            print("Starting to fill ratings from small data set..")
         else:
             path = 'ratings.csv'
-            print("Filling ratings from BIG dataset")
+            print("Starting to fill ratings from BIG data set..")
 
         with open(path, 'rt') as f:
             reader = csv.reader(f)
@@ -40,6 +40,7 @@ class FillRatings:
 
         # Commit the added ratings
         session.commit()
+        print("DONE - Ratings added")
 
         # Close the csv file
         f.close()

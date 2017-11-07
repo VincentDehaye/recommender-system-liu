@@ -61,12 +61,45 @@ def sample_recommendation(model, train_matrix, user_ids, trending_weight):
         return top5itemlist
 
 model = gen_model.load_model('new_model.sav')
-print("2")
 #print(get_train_matrix.getMovieList())
 
 trainmatrix = get_train_matrix.get_train_matrix()
-print("3")
 # Calls upon the sample_recommendation to create a recommendation list for user 56.
+testmatrix = get_train_matrix.get_test_matrix()
+new_user_matrix = get_train_matrix.get_new_users_matrix()
+
+print("Before")
+
+model = LightFM(learning_rate=0.05, loss='warp')
+model.fit(trainmatrix, epochs=10)
+
+train_precision = precision_at_k(model, trainmatrix, k=10).mean()
+test_precision = precision_at_k(model, testmatrix, k=10).mean()
+
+train_auc = auc_score(model, trainmatrix).mean()
+test_auc = auc_score(model, testmatrix).mean()
+
+print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
+print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
+
+model.fit_partial(testmatrix, epochs=10)
+
+train_precision = precision_at_k(model, trainmatrix, k=10).mean()
+test_precision = precision_at_k(model, testmatrix, k=10).mean()
+
+train_auc = auc_score(model, trainmatrix).mean()
+test_auc = auc_score(model, testmatrix).mean()
+
+print("After fitpartial")
+print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
+print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
+
+
+
+
+
+
+
 
 trending_weight=1
 #sample_recommendation(model, trainmatrix, range(56, 57), trending_weight)

@@ -1,6 +1,8 @@
 import numpy as np
 
 from lightfm import LightFM
+from lightfm.evaluation import precision_at_k
+from lightfm.evaluation import auc_score
 
 import generate_model as gen_model
 import gets_from_database as get_train_matrix
@@ -66,7 +68,7 @@ trainmatrix = get_train_matrix.get_train_matrix()
 print("3")
 # Calls upon the sample_recommendation to create a recommendation list for user 56.
 
-trending_weight=1.5
+trending_weight=1
 #sample_recommendation(model, trainmatrix, range(56, 57), trending_weight)
 
 user_id=0

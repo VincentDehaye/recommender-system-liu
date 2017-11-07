@@ -95,7 +95,7 @@ def get_new_users_matrix():
 
     #Puts every 10th row (10, 20, 30...) in new_users_matrix
     for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
-        if counter % 5 == 0 and counter % 2 == 0:
+        if counter % 10 == 0:
             user_list.append(row[0])
             movie_list.append(row[1])
             rating_list.append(row[2])

@@ -18,5 +18,7 @@ useSmallDataSet = False
 u = FillUsers()
 f = FillMovies(useSmallDataSet)
 r = FillRatings(useSmallDataSet)
-l = FillLinks()
+
+# Not used at the moment and therefore 
+# l = FillLinks()
 

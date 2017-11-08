@@ -17,8 +17,24 @@ class DatabaseManager():
         session = Session()
         return session
 
-    def getTrending(self, numOfTitles):
+    def getTitlesAndScores(self, numOfTitles, query, session):
+        titlesAndScores = {}
+        for entry in query:
+            movieId = entry.movie_id
+            movie = session.query(Movie).filter_by(id=movieId).first()
+            title = movie.title
+            score = entry.total_score
+            titlesAndScores[title] = score
+
+        result = dict(sorted(titlesAndScores.items(), key=operator.itemgetter(1)))
+        return result
+
+    def getTrending(self, numOfTitles=None):
         session = self.createSession()
+
+        if numOfTitles is None:
+            return session.query(TrendingScore).all()
+
         query = session.query(TrendingScore).order_by(desc(TrendingScore.total_score)).limit(numOfTitles)
         return self.getTitlesAndScores(numOfTitles, query, session)
 
@@ -32,17 +48,13 @@ class DatabaseManager():
         query = session.query(TrendingScore).order_by(desc(TrendingScore.youtube_score)).limit(numOfTitles)
         return self.getTitlesAndScores(numOfTitles, query, session)
 
-    def getTitlesAndScores(self, numOfTitles, query, session):
-        titlesAndScores = {}
-        for entry in query:
-            movieId = entry.movie_id
-            movie = session.query(Movie).filter_by(id=movieId).first()
-            title = movie.title
-            score = entry.total_score
-            titlesAndScores[title] = score
+    def addTrendScore(self, movie_id, total_score, youtube_score, twitter_score):
+        session = self.createSession()
+        movie = TrendingScore(movie_id=movie_id, total_score=total_score, youtube_score=youtube_score,
+                                          twitter_score=twitter_score)
+        session.add(movie)
+        session.commit()
 
-        result = dict(sorted(titlesAndScores.items(), key=operator.itemgetter(1)))
-        return result
 
 d = DatabaseManager()
-print(d.getTrending(5))
+print(d.getTrending(4))

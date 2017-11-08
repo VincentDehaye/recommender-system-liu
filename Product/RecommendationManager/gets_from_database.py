@@ -79,10 +79,7 @@ def get_test_matrix():
             test_rating_list.append(row[2])
 
     test_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)))
-
     return test_matrix
-
-
 def get_new_users_matrix():
     """
     returns the new users matrix. The matrix is 10 % of the user ratings. Is used for showing that model is evolving
@@ -92,15 +89,14 @@ def get_new_users_matrix():
     user_list = []
     movie_list = []
     rating_list = []
-
     #Puts every 10th row (10, 20, 30...) in new_users_matrix
     for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
-        if counter % 5 == 0 and counter % 2 == 0:
+        if counter % 10 == 0:
             user_list.append(row[0])
             movie_list.append(row[1])
             rating_list.append(row[2])
 
-    new_users_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)))
+    new_users_matrix = coo_matrix((rating_list, (user_list, movie_list)))
 
     return new_users_matrix
 

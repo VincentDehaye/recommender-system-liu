@@ -13,12 +13,12 @@ class TrendingToDB(object):
         # Background=True means that the application will be ran in daemon mode and other things can be ran
         # simultaneously.
         # continous=True means that the application will not be shut down after the first iteration
-        # daily=True means that it will be ran every 24h
+        # daily=True means that it will be ran every 24h only works if cont is also True
         self.continous = continuous
         self.stop = False
         self.daily = daily
 
-        if daily:
+        if daily & continuous:
             # if set to daily, it creates a scheduler and sets the interval to 1 day
             self.scheduled = BackgroundScheduler()
             self.scheduled.add_job(self.run, 'interval', days=1)

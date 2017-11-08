@@ -27,6 +27,7 @@ tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword
 time_limit = 3600  # in seconds
 interval = 120  # in seconds
 
+
 class TwitterAPI:
 
     def __init__(self):
@@ -49,6 +50,7 @@ class TwitterAPI:
         score = None
         words = title.split()
         for word in words:
+            word = format_word(word)
             if word in self.all_words:
                 curr_score = self.all_words.get(word)
                 if score is None:
@@ -73,14 +75,25 @@ class TwitterAPI:
         for v, k in allwords_view:
             print(k, ": ", v)
 
-    def word_in_text(self, word, text):
-        word = word.lower()
-        text0 = str(text)
-        text0 = text0.lower()
-        match = re.search(word, text0)
-        if match:
-            return True
-        return False
+
+def word_in_text(word, text):
+    word = word.lower()
+    text0 = str(text)
+    text0 = text0.lower()
+    match = re.search(word, text0)
+    if match:
+        return True
+    return False
+
+
+def format_word(word):
+    word = word.lower()
+    word = word.strip(" ")
+    regex = re.compile('[^a-z0-9]')
+    word = regex.sub('', word)
+    if word == "":
+        return None
+    return word
 
 
 # This is a basic listener that runs
@@ -103,7 +116,7 @@ class StdOutListener(StreamListener):
         if(time.time() - self.start_time) < self.limit:
             words = status.text.split()
             for word in words:
-                word = self.format_word(word)
+                word = format_word(word)
                 if word is not None:
                     self.tweet_count += 1
                     self.update_count(word)
@@ -131,20 +144,11 @@ class StdOutListener(StreamListener):
             f.close()
         print("Dictionary saved to file! Path:", path)
 
-    def format_word(self, word):
-        word = word.lower()
-        word = word.strip(" ")
-        regex = re.compile('[^a-z0-9]')
-        word = regex.sub('', word)
-        if word == "":
-            return None
-        return word
 
 # For testing purposes
 if __name__ == '__main__':
     twAPI = TwitterAPI()
-    twAPI.open_twitter_stream()
-
+    # twAPI.open_twitter_stream()
     # twAPI.print_dict()
-    # print(twAPI.get_twitter_score("film"))
+    # print(twAPI.get_twitter_score("star wars"))
 

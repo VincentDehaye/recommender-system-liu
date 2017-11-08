@@ -7,6 +7,7 @@ before_script:
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
     - python /home/sebbe953/testvenv.py
     - python --version
+    - pip install -r requirements.txt
     - python ./Product/Database/DBConn.py
     - python ./Product/Database/DBFillMovieLens.py
 test_script:

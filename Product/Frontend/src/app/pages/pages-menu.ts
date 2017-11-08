@@ -20,8 +20,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'ANALYTICS',
     group: true,
   },
-  {
+   {
     title: 'Overview',
+    icon: 'ion-android-globe',
+    link: '/pages/overview',
+  },
+  {
+    title: 'Recommendations',
     icon: 'ion-person-stalker',
     link: '/pages/users',
   },

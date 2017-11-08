@@ -21,7 +21,7 @@ const routes: Routes = [{
   }, {
     path: 'login', component: LoginComponent,
   }, {
-    path: 'users',
+    path: 'recommendations',
     component: UsersComponent,
     canActivate: [AuthGuard],
   }, {
@@ -29,7 +29,7 @@ const routes: Routes = [{
     component: UserComponent,
     canActivate: [AuthGuard],
   }, {
-    path: 'recommended',
+    path: 'performance',
     component: RecommendedComponent,
     canActivate: [AuthGuard],
   }, {

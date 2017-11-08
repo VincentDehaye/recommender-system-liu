@@ -18,11 +18,11 @@ def test_TrendingToDB():
     time.sleep(3)
 
     # Expected output 1
-    expected_high = 99999
+    expected_high = 1
     expected_low = 0
 
     # Observed output 1
     result = session.query(TrendingScore).filter_by(movie_id=1).first()
-    observed = result.total_score
+    observed = result.normalized_score
 
     assert expected_low <= observed <= expected_high

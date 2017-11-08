@@ -14,6 +14,14 @@ class FillLinks():
         fullpath = 'DbFillMovieLens/links.csv'
         path = os.path.abspath(fullpath)
 
+        # If run in gitlab runner change to correct path
+        try:
+                f = open(path, 'rt', encoding="utf-8")
+                f.close()
+        except FileNotFoundError:
+                fullpath = 'Product/Database/DbFillMovieLens/smallRatings.csv'
+                path = os.path.abspath(fullpath)
+
         with open(path, 'rt') as f:
             reader = csv.reader(f)
 

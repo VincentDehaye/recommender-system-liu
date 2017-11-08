@@ -25,12 +25,26 @@ class FillMovies:
         if smallDataSet:
             fullpath = 'DbFillMovieLens/smallMovies.csv'
             path = os.path.abspath(fullpath)
-            # /home/marbo914/PycharmProjects/Software/Product/Database/DbFillMovieLens/smallMovies.csv
+            # If run in gitlab runner change to correct path
+            try:
+                f = open(path, 'rt', encoding="utf-8")
+                f.close()
+            except FileNotFoundError:
+                fullpath = 'Product/Database/DbFillMovieLens/smallMovies.csv'
+                path = os.path.abspath(fullpath)
             print("Starting to fill movies from small data set..")
         else:
             fullpath = 'DbFillMovieLens/movies.csv'
             path = os.path.abspath(fullpath)
+            # If run in gitlab runner change to correct path
+            try:
+                f = open(path, 'rt', encoding="utf-8")
+                f.close()
+            except FileNotFoundError:
+                fullpath = 'Product/Database/DbFillMovieLens/smallMovies.csv'
+                path = os.path.abspath(fullpath)
             print("Starting to fill movies from BIG data set..")
+
 
         with open(path, 'rt', encoding="utf-8") as f:
             reader = csv.reader(f)

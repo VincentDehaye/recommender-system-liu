@@ -13,10 +13,25 @@ class FillRatings:
         if smallDataSet:
             fullpath = 'DbFillMovieLens/smallRatings.csv'
             path = os.path.abspath(fullpath)
+            # If run in gitlab runner change to correct path
+            try:
+                f = open(path, 'rt', encoding="utf-8")
+                f.close()
+            except FileNotFoundError:
+                fullpath = 'Product/Database/DbFillMovieLens/smallRatings.csv'
+                path = os.path.abspath(fullpath)
             print("Starting to fill ratings from small data set..")
+
         else:
             fullpath = 'DbFillMovieLens/ratings.csv'
             path = os.path.abspath(fullpath)
+            # If run in gitlab runner change to correct path
+            try:
+                f = open(path, 'rt', encoding="utf-8")
+                f.close()
+            except FileNotFoundError:
+                fullpath = 'Product/Database/DbFillMovieLens/smallRatings.csv'
+                path = os.path.abspath(fullpath)
             print("Starting to fill ratings from BIG data set..")
 
         with open(path, 'rt') as f:

@@ -27,6 +27,7 @@ Base = declarative_base()
 # The __repr__ returns a string that describes the object
 
 # EXAMPLE BELOW
+
 class UserTest(Base):
     __tablename__ = 'testusers'
 
@@ -68,6 +69,8 @@ class Movie(Base):
 # This class contains the trending scores of the movies. movie_id is a foreign key referencing the Movie table
 # total_score is a float that represents the total trending score. youtube_score and twitter_score are floats that
 # represent the trending scores of these seperate factors
+
+
 class TrendingScore(Base):
     __tablename__ = 'trendingscores'
 
@@ -86,10 +89,13 @@ class User(Base):
 
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
+    age = Column(Integer, default=-1)
+    gender = Column(String, default="Unknown")
+    occupation = Column(String, default="Unknown")
 
     def __repr__(self):
-        return "<User(id='%s')>" % (
-            self.id)
+        return "<User(id='%s', age='%s', gender='%s', occupation='%s')>" % (
+            self.id, self.age, self.gender, self.occupation)
 
 
 # Model for the relation between Movies and Users, in this case ratings.Foreign key to User table and Movie table

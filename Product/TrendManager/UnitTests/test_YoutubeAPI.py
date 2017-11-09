@@ -228,3 +228,45 @@ def test_get_like_count_non_existing_keyword():
     for video in search_response.get("items", []):
         observed = youtube.get_like_count(video)
         assert observed == expected
+
+
+def test_add_search_word():
+    """
+    Author: Linn Pettersson
+    Date: 2017-11-08
+    Purpose: Assert that multiple words is added to the search keyword
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    keyword = "Thor"
+
+    # Expected output
+    expected = "Thor movie trailer"
+
+    # Observed output
+    observed = youtube.add_search_words(keyword)
+
+    assert observed == expected
+
+
+def test_get_total_search_result():
+    """
+    Author: Linn Pettersson
+    Date: 2017-11-08
+    Purpose: Assert that total search result is fetched and that it calculates a
+    result percentage (total hits / max possible hits) and returns a number between 0 and 1
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    keyword = "Thor"
+
+    # Expected output
+    # >= 0 and <= 1
+
+    # Observed output
+    observed = youtube.get_total_search_result(keyword)
+
+    assert (observed >= 0) and (observed <= 1)
+
+
+

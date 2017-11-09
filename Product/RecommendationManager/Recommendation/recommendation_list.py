@@ -1,8 +1,11 @@
-
+"""
+Class to get the correct output structure in the
+recommendation.generate_recommendation_list()
+"""
 class RecommendationList(object):
-    def __init__(self, user_id, list):
+    """
+    Constructor
+    """
+    def __init__(self, user_id, recommendation_list):
         self.user_id = user_id
-        self.recommendation_list = list
-
-
-#tmp = RecommendationList(2, [4, 4])
+        self.recommendation_list = recommendation_list

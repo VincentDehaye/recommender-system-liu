@@ -72,6 +72,7 @@ class Alter:
 
     def update_trend_score(self, movie_id, total_score=None, youtube_score=None, twitter_score=None):
         session = CreateSession.create()
+
 d = Retrieve()
 print(d.get_trending(4))
 print(d.get_trending_twitter(3))

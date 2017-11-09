@@ -10,7 +10,7 @@ import { OverviewRoutingModule, routedComponents } from './overview-routing.modu
 
 
 const components = [
-    OverviewChartjsPieComponent
+    OverviewChartjsPieComponent,
 ];
 
 @NgModule({

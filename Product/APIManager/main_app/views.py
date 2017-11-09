@@ -37,9 +37,9 @@ def trending(request):
     return JsonResponse(recs)
 
 
-def trending2(request):
+def youtubetrending(request):
     recs = {"movies":[
-        {"name":"Batmantredning2","id":1},
+        {"name":"Batmanyoutubetrending","id":1},
         {"name":"Horseman","id":2},
         {"name":"Birdperson","id":3},
         {"name":"Manman","id":4},

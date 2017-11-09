@@ -11,13 +11,13 @@ Top 10 most trending on Youtube (title + score)
 '''
 
 
-class Create_session:
-    def __init__(self):
+class CreateSession:
+    def create(self):
         session = Session()
         return session
 
-class Retrieve:
 
+class Retrieve:
     def __init__(self):
         print("created")
 
@@ -34,7 +34,7 @@ class Retrieve:
         return result
 
     def get_trending(self, numOfTitles=None):
-        session = self.create_session()
+        session = CreateSession.create()
 
         if numOfTitles is None:
             return session.query(TrendingScore).all()
@@ -43,12 +43,12 @@ class Retrieve:
         return self.get_titles_and_scores(query, session)
 
     def get_trending_twitter(self, numOfTitles):
-        session = self.create_session()
+        session = CreateSession.create()
         query = session.query(TrendingScore).order_by(desc(TrendingScore.twitter_score)).limit(numOfTitles)
         return self.get_titles_and_scores(query, session)
 
     def get_trending_youtube(self, numOfTitles):
-        session = self.create_session()
+        session = CreateSession.create()
         query = session.query(TrendingScore).order_by(desc(TrendingScore.youtube_score)).limit(numOfTitles)
         return self.get_titles_and_scores(query, session)
 
@@ -56,7 +56,7 @@ class Retrieve:
 class Insert:
 
     def add_trend_score(self, movie_id, total_score, youtube_score, twitter_score):
-        session = self.create_session()
+        session = CreateSession.create()
         movie = TrendingScore(movie_id=movie_id, total_score=total_score, youtube_score=youtube_score,
                               twitter_score=twitter_score)
         session.add(movie)
@@ -66,7 +66,7 @@ class Insert:
 class Alter:
 
     def update_trend_score(self, movie_id, total_score=None, youtube_score=None, twitter_score=None):
-        session = self.create_session()
+        session = CreateSession.create()
 d = Retrieve()
 print(d.get_trending(4))
 print(d.get_trending_twitter(3))

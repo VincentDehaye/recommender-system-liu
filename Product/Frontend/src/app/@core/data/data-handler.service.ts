@@ -5,11 +5,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Movie } from './movieClass';
 import 'rxjs/add/operator/map';
+import { environment } from '../../../environments/environment';
+
 
 
 @Injectable()
 export class DataHandlerService {
-readonly ROOT_URL = 'http://localhost/api/v1/recommendations';
+  apiUrl = environment.apiUrl;
+readonly ROOT_URL = this.apiUrl + '/v1/recommendations';
   movies: Observable<Movie[]>;
   constructor(private http: HttpClient) {}
   getData(): any {

@@ -18,11 +18,9 @@ const components = [
     ThemeModule,
     AngularEchartsModule,
     NgxChartsModule, ChartModule,
-    OverviewRoutingModule,
+    OverviewRoutingModule
   ],
   declarations: [
-    OverviewComponent, ...routedComponents, ...components,
-
-  ],
+    OverviewComponent, ...routedComponents, ...components],
 })
 export class OverviewModule {}

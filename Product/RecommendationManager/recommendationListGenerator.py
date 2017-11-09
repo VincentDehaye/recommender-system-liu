@@ -64,9 +64,9 @@ model = gen_model.load_model('new_model.sav')
 #print(get_train_matrix.getMovieList())
 
 trainmatrix = get_train_matrix.get_train_matrix()
-# Calls upon the sample_recommendation to create a recommendation list for user 56.
 testmatrix = get_train_matrix.get_test_matrix()
 new_user_matrix = get_train_matrix.get_new_users_matrix()
+#trainmatrix, testmatrix, new_user_matrix = get_train_matrix.get_matricies()
 
 print("Before")
 
@@ -82,12 +82,14 @@ test_auc = auc_score(model, testmatrix).mean()
 print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
 print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
 
-model.fit_partial(testmatrix, epochs=10)
+model.fit_partial(new_user_matrix, epochs=10)
 
-train_precision = precision_at_k(model, trainmatrix, k=10).mean()
+ninetypercent_matrix = trainmatrix + new_user_matrix
+
+train_precision = precision_at_k(model, ninetypercent_matrix, k=10).mean()
 test_precision = precision_at_k(model, testmatrix, k=10).mean()
 
-train_auc = auc_score(model, trainmatrix).mean()
+train_auc = auc_score(model, ninetypercent_matrix).mean()
 test_auc = auc_score(model, testmatrix).mean()
 
 print("After fitpartial")
@@ -95,7 +97,10 @@ print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
 print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
 
 
-
+print("Train")
+print(np.shape(trainmatrix))
+print(np.shape(testmatrix))
+print(np.shape(new_user_matrix))
 
 
 
@@ -107,7 +112,7 @@ trending_weight=1
 user_id=0
 continue_flag='y'
 while(continue_flag=='y'):
-    user_id=int(input('Which user do you want to check (between 0 and 671): '))
+    user_id=int(input('Which user do you want to check (between 0 and 99): '))
     trending_weight = float(input('What trending weight do you want: '))
 
     sample_recommendation(model, trainmatrix, range(user_id, user_id+1), trending_weight)

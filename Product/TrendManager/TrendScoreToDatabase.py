@@ -40,13 +40,7 @@ class TrendingToDB(object):
         # 4. Go to step 1
         trend_controller = TrendingController()
 
-        # Getting the current maxScore from the DB to be able to normalize the values
         result = session.query(TrendingScore).all()
-        maxScore = 1
-        for score in result:
-            if score.total_score > maxScore:
-                maxScore = score.total_score
-        print("The maxScore is: ", maxScore)
 
         while True:
             if self.stop:
@@ -60,24 +54,16 @@ class TrendingToDB(object):
 
                 new_tot_score = trend_controller.get_trending_content(movie.title)  # gets new score
 
-                #Update maxScore if its higher than current maxScore
-                if new_tot_score > maxScore:
-                    maxScore = new_tot_score
-
                 print("Movie ID:", movie.id)
-                print("MaxScore: ", maxScore)
-
-                normScore = new_tot_score/maxScore
 
                 if res_score:
-                    res_score.normalized_score = normScore
+
                     if new_tot_score != res_score.total_score:
                         # If score is new
                         res_score.total_score = new_tot_score
                 else:
                     # If movie is not in TrendingScore table
-                    movie = TrendingScore(movie_id=movie.id, normalized_score=normScore, total_score=new_tot_score, youtube_score=0,
-                                          twitter_score=0)
+                    movie = TrendingScore(movie_id=movie.id, total_score=new_tot_score, youtube_score=0, twitter_score=0)
                     session.add(movie)
                 # The commit is in the loop for now due to high waiting time but could be moved outside to lower
                 # total run time

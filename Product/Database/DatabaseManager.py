@@ -12,9 +12,9 @@ Top 10 most trending on Youtube (title + score)
 
 
 class CreateSession:
-    def create(self):
-        session = Session()
-        return session
+    @staticmethod
+    def create():
+        return Session()
 
 
 class Retrieve:
@@ -55,6 +55,9 @@ class Retrieve:
 
 class Insert:
 
+    def __init__(self):
+        print("created insert")
+
     def add_trend_score(self, movie_id, total_score, youtube_score, twitter_score):
         session = CreateSession.create()
         movie = TrendingScore(movie_id=movie_id, total_score=total_score, youtube_score=youtube_score,
@@ -64,6 +67,8 @@ class Insert:
 
 
 class Alter:
+    def __init__(self):
+        print("created alter")
 
     def update_trend_score(self, movie_id, total_score=None, youtube_score=None, twitter_score=None):
         session = CreateSession.create()

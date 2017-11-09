@@ -42,7 +42,7 @@ def get_trending_scores():
     return trending_scores
 
 
-def get_matricies():
+def get_matrices():
     """
     Returns train matrix, test matrix and new users matrix where all are randomly split into parts of 80 %, 10 % and
     10 % respectively
@@ -81,6 +81,7 @@ def get_matricies():
     test_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)))
     new_users_matrix = coo_matrix((new_users_rating_list, (new_users_user_list, new_users_movie_list)))
     return (train_matrix, test_matrix, new_users_matrix)
+
 
 def get_train_matrix():
     """
@@ -125,6 +126,8 @@ def get_test_matrix():
 
     test_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)))
     return test_matrix
+
+
 def get_new_users_matrix():
     """
     returns the new users matrix. The matrix is 10 % of the user ratings. Is used for showing that model is evolving
@@ -155,4 +158,4 @@ def get_movie_title(movie_id):
     """
     return session.query(Movie.title).filter(Movie.id == movie_id).one()[0]
 
-get_matricies()
+get_matrices()

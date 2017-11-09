@@ -15,6 +15,7 @@ import datetime
 from datetime import timedelta
 import pickle
 
+
 # Variables that contains the user credentials to access Twitter API
 access_token = "911929395799035905-m0LQX9L0N3C47hCWG9tCDrIVWT6o9To"
 access_token_secret = "gVdDlTqgqXx1JgjiaaGCLYmJV0vu3OkIKT7wMSAXniHyF"
@@ -24,14 +25,15 @@ tweets_data_path = 'trendingdata/twitter_data'
 
 # Variables for tracked keywords in search, time until the stream stops and interval for saving to file
 tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3' etc.
-time_limit = 3600  # in seconds
-interval = 120  # in seconds
+time_limit = 7200  # in seconds
+interval = 600  # in seconds
 
 
 class TwitterAPI:
 
     def __init__(self):
-        self.all_words = {}
+        self.all_words_new = {}
+        self.all_words_old = {}
 
     def open_twitter_stream(self):
         output_stream = StdOutListener(time_limit, interval)
@@ -44,33 +46,56 @@ class TwitterAPI:
             print("An error occurred. The twitter stream has been terminated.")
 
     def get_twitter_score(self, title):
-        if not self.all_words:
-            self.load_dict()
+        if not self.all_words_new:
+            self.load_new_dict()
+        if not self.all_words_old:
+            self.load_old_dict()
         title = title.lower()
-        score = None
+        score_new = None
+        score_old = None
         words = title.split()
         for word in words:
             word = format_word(word)
-            if word in self.all_words:
-                curr_score = self.all_words.get(word)
-                if score is None:
-                    score = curr_score
-                elif curr_score < score:
-                    score = curr_score
-            else:
-                score = 0
+            score_new = self.get_word_score(word, score_new, self.all_words_new)
+            score_old = self.get_word_score(word, score_old, self.all_words_old)
+        if score_new < 10:
+            score_new = 10
+        if score_old < 10:
+            score_old = 10
+        print("Old:", score_old, "New:", score_new)
+        score_ratio = self.chi_square(score_new, score_old)
+        return score_ratio
+
+    def chi_square(self, f_obs, f_exp):
+        return (f_obs - f_exp) ** 2 / f_exp
+
+    def get_word_score(self, word, score, word_dict):
+        if word in word_dict:
+            curr_score = word_dict.get(word)
+            if score is None:
+                score = curr_score
+            elif curr_score < score:
+                score = curr_score
+        else:
+            score = 0
         return score
 
-    def load_dict(self):
+    def load_new_dict(self):
         yesterday = datetime.datetime.today() - timedelta(1)
         path = tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
         with open(path, 'rb') as f:
-            self.all_words = pickle.load(f)
+            self.all_words_new = pickle.load(f)
+
+    def load_old_dict(self):
+        earlier_date = datetime.datetime.today() - timedelta(7)
+        path = tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
+        with open(path, 'rb') as f:
+            self.all_words_old = pickle.load(f)
 
     def print_dict(self):
-        if not self.all_words:
-            self.load_dict()
-        allwords_view = [(v, k) for k, v in self.all_words.items()]
+        if not self.all_words_new:
+            self.load_new_dict()
+        allwords_view = [(v, k) for k, v in self.all_words_new.items()]
         allwords_view.sort(reverse=True)
         for v, k in allwords_view:
             print(k, ": ", v)
@@ -91,7 +116,7 @@ def format_word(word):
     word = word.strip(" ")
     regex = re.compile('[^a-z0-9]')
     word = regex.sub('', word)
-    if word == "":
+    if word == "" or word.startswith("httpstco"):
         return None
     return word
 
@@ -99,12 +124,11 @@ def format_word(word):
 # This is a basic listener that runs
 class StdOutListener(StreamListener):
 
-    def __init__(self, time_limit, interval):
+    def __init__(self, limit, interval_time):
         self.start_time = time.time()
-        self.limit = time_limit
-        self.interval_time = interval
+        self.limit = limit
+        self.interval_time = interval_time
         self.interval = self.interval_time
-        self.tweet_count = 0
         self.all_words = {}
         super(StdOutListener, self).__init__()
 
@@ -114,13 +138,13 @@ class StdOutListener(StreamListener):
             print("Stored at interval time:", self.interval_time, "s")
             self.interval_time += self.interval
         if(time.time() - self.start_time) < self.limit:
+            word = status.text
             words = status.text.split()
             for word in words:
                 word = format_word(word)
                 if word is not None:
-                    self.tweet_count += 1
                     self.update_count(word)
-            return True
+                return True
         else:
             self.store_dict()
             return False
@@ -150,5 +174,5 @@ if __name__ == '__main__':
     twAPI = TwitterAPI()
     # twAPI.open_twitter_stream()
     # twAPI.print_dict()
-    # print(twAPI.get_twitter_score("star wars"))
+    print(twAPI.get_twitter_score("batman"))
 

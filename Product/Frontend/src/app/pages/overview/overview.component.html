@@ -2,31 +2,31 @@
   <div class="col-md-6 col-md-offset-3">
     <h1>Overview</h1>
     <p>You're logged in with Coogl3, to access dashboard click on the menu item you want to view</p>
-<!--    <div>
-        Users from secure api end point:
-        <ul>
-            <li *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</li>
-        </ul>
-    </div>-->
   </div>
 </div>
 <div class ="row">
-  <div style="background-color: white; border-radius: 3px; box-shadow: 0 0 0 2px grey" class="col-md-6">
-    <nb-card-body>
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-body>
         <h2 style="padding: 10px; box-shadow: 0 0 0 2px grey; border-radius: 3px"><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Top recommended content</h2>
-    </nb-card-body>
+      </nb-card-body>
+    </nb-card>
   </div>
   <div class="col-md-6">
-    <div style="background-color: white; border-radius: 3px; box-shadow: 0 0 0 2px grey" class="col-md-12">
-      <nb-card-body>
-       <h2 style="padding: 10px; box-shadow: 0 0 0 2px grey; border-radius: 3px "><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Top trending content</h2>
-      </nb-card-body>
+    <div class="col-md-12">
+      <nb-card>
+        <nb-card-body>
+          <h2 style="padding: 10px; box-shadow: 0 0 0 2px grey; border-radius: 3px "><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Top trending content</h2>
+        </nb-card-body>
+      </nb-card>
     </div>
-    <div style="background-color: white; border-radius: 3px; box-shadow: 0 0 0 2px grey" class="col-md-12">
-      <nb-card-body>
-        <h2 style="padding: 10px; box-shadow: 0 0 0 2px grey; border-radius: 3px"><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Success rate</h2>
-        <ngx-chartjs-pie></ngx-chartjs-pie>
-      </nb-card-body>
+    <div class="col-md-12">
+      <nb-card>
+        <nb-card-body>
+          <h2 style="padding: 10px; box-shadow: 0 0 0 2px grey; border-radius: 3px"><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Success rate</h2>
+            <ngx-chartjs-pie></ngx-chartjs-pie>
+        </nb-card-body>
+      </nb-card>
     </div>
   </div>
 </div>

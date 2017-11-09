@@ -5,6 +5,6 @@ from django.views.generic import RedirectView
 from . import views
 
 urlpatterns = [
-    url(r'^api/v1/recommendations', views.recommendations, name='recommendations'),
-    url(r'^v1/recommendations', views.recommendations, name='recommendations')
+    url(r'^api/v1/recommendations', views.RecommendationsView.as_view(), name='recommendations'),
+    url(r'^v1/recommendations', views.RecommendationsView.as_view(), name='recommendations')
 ]

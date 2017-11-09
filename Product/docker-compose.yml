@@ -4,7 +4,7 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: ng01
+    container_name: nginx
     ports:
       - "80:80"
     volumes:
@@ -15,15 +15,15 @@ services:
 
   web:
     build: .
-    container_name: dg01
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn project_config.wsgi -b 0.0.0.0:8000"
+    container_name: django
+    command: bash -c "cd APIManager && python manage.py makemigrations && python manage.py migrate && gunicorn project_config.wsgi -b 0.0.0.0:8000"
     depends_on:
       - db
     volumes:
-      - ./APIManager:/src
+      - .:/src
     expose:
       - "8000"
 
   db:
     image: postgres:latest
-    container_name: ps01
+    container_name: postgres

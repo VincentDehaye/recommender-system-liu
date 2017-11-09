@@ -122,12 +122,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 
-ANGULAR_APP_DIR = os.path.join(BASE_DIR, 'static_angular')
-
-
-STATICFILES_DIRS = [
-    ANGULAR_APP_DIR
-]
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

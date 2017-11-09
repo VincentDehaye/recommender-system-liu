@@ -21,7 +21,7 @@ const components = [
     OverviewRoutingModule,
   ],
   declarations: [
-    OverviewComponent,...routedComponents, ...components,
+    OverviewComponent, ...routedComponents, ...components,
 
   ],
 })

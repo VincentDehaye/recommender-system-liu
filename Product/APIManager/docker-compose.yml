@@ -1,7 +1,12 @@
 version: '3'
 services:
-  db:
+  frontend_db:
     image: postgres
+
+  trending_db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
 
   web:
     build: .
@@ -11,6 +16,7 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - frontend_db
+      - trending_db
     environment:
       - PYTHONUNBUFFERED=1

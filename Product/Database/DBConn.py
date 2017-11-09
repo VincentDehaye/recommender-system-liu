@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, Float, String, ForeignKey, types
+from sqlalchemy import Column, Integer, Float, String, ForeignKey
 import os
 # Use ctrl+alt+u in PyCharm to see strutcture of db
 # More info about database is in educational folder on drive
@@ -27,11 +27,6 @@ Base = declarative_base()
 # The __repr__ returns a string that describes the object
 
 # EXAMPLE BELOW
-# class GenderEnum(types.enumerate.Enum):
-#    Unknown = 0
-#    Other = 1
-#    Male = 2
-#    Female = 3
 
 class UserTest(Base):
     __tablename__ = 'testusers'
@@ -95,11 +90,12 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     age = Column(Integer, default=-1)
-#    gender = Column(GenderEnum, default=GenderEnum.Unknown)
+    gender = Column(String, default="Unknown")
+    occupation = Column(String, default="Unknown")
 
     def __repr__(self):
-        return "<User(id='%s', age='%s', gender='%s')>" % (
-            self.id, self.age, self.gender.name)
+        return "<User(id='%s', age='%s', gender='%s', occupation='%s')>" % (
+            self.id, self.age, self.gender, self.occupation)
 
 
 # Model for the relation between Movies and Users, in this case ratings.Foreign key to User table and Movie table

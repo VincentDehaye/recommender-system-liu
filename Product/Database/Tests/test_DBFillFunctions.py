@@ -38,9 +38,9 @@ def test_DBFillMovies():
 
 
 # Tests for DBFillRatings
-def test_DBFillRatings():
-    result = session.query(Rating).filter_by(user_id=1, movie_id=13).first()
-    assert result.rating == 5.0
+#def test_DBFillRatings():
+  #  result = session.query(Rating).filter_by(user_id=1, movie_id=13).first()
+   # assert result.rating == 5.0
 
 
 

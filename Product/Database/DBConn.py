@@ -122,10 +122,11 @@ class MovieLinks(Base):
 
 # DO NOT CHANGE BELOW
 
-# Creates the tables in the database
-Base.metadata.create_all(engine)
+def create_session():
+    # Creates the tables in the database
+    Base.metadata.create_all(engine)
 
-# Creating a session binded to the engine. The sessions is used for queries and inserts to db. Remember to import it
-# to the file in which you want to do such
-Session = sessionmaker(bind=engine)
-session = Session()
+    # Creating a session binded to the engine. The sessions is used for queries and inserts to db. Remember to import it
+    # to the file in which you want to do such
+    Session = sessionmaker(bind=engine)
+    return Session()

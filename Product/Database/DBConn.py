@@ -27,11 +27,11 @@ Base = declarative_base()
 # The __repr__ returns a string that describes the object
 
 # EXAMPLE BELOW
-class GenderEnum(types.enumerate.Enum):
-    Unknown = 0
-    Other = 1
-    Male = 2
-    Female = 3
+# class GenderEnum(types.enumerate.Enum):
+#    Unknown = 0
+#    Other = 1
+#    Male = 2
+#    Female = 3
 
 class UserTest(Base):
     __tablename__ = 'testusers'
@@ -95,7 +95,7 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     age = Column(Integer, default=-1)
-    gender = Column(GenderEnum, default=GenderEnum.Unknown)
+#    gender = Column(GenderEnum, default=GenderEnum.Unknown)
 
     def __repr__(self):
         return "<User(id='%s', age='%s', gender='%s')>" % (

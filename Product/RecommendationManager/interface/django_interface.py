@@ -72,11 +72,11 @@ def get_aggregated_recommendation_for_a_user(user_id):
 
     return sample_recommendation(model, train_matrix, user_id, trending_weight)
 
-# rec_dict =(get_aggregated_recommendation_for_a_user(55))
+rec_dict =(get_aggregated_recommendation_for_a_user(55))
 
 # prints just the user_id
 # print(rec_dict['user_id', 'recommendation_list'][0])
 # prints the recommendation_list
 # print(rec_dict['user_id', 'recommendation_list'][1])
 # prints entire dict
-# print(rec_dict)
+print(rec_dict)

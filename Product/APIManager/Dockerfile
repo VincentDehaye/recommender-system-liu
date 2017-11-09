@@ -1,6 +1,6 @@
 FROM python:3.4.3
 ENV PYTHONUNBUFFERED 1
-RUN mkdir /code
-WORKDIR /code
-ADD . /code
+RUN mkdir /src
+WORKDIR /src
+COPY . /src
 RUN pip install -r requirements.txt

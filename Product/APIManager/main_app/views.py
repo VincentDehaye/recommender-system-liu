@@ -1,16 +1,22 @@
-from django.http import HttpResponse, JsonResponse
-from rest_framework.renderers import BrowsableAPIRenderer
+
+"""
+This module contains classes that handle the API requests
+"""
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-
-def index(request):
-    return HttpResponse("Hello, world!")
-
-
 class RecommendationsView(APIView):
+    """
+    This class is used to return the top 10 recommendations.
+    """
 
     def get(self, request):
+        """
+        This function handles get requests to the server and returns a browsable API if gone
+        directly to in the browser.
+        """
+
         recs = {"movies":[
             {"name":"Batman", "id":1},
             {"name":"Horseman", "id":2},
@@ -23,5 +29,4 @@ class RecommendationsView(APIView):
             {"name":"Wonderman the movie", "id":9},
             {"name":"Manbat", "id":10},
             ]}
-        #recs= {"name":"Batman","id":1}
         return Response(recs)

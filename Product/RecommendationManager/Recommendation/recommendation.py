@@ -53,7 +53,7 @@ class Recommendation(object):
         sorted_complete_recommendation_list=[]
         for item in sorted_recommendation_list[:self.size]:
             # creates an inner dictionary to get the correct output structure
-            innerdict['id', 'title', 'score'] = item[0], item[1], item[2]
+            innerdict = {'id': item[0], 'title': item[1], 'score': item[2]}
             #print(innerdict)
             # has to do a copy otherwise it references the original dictionary
             # we only want the last generated dict and not all of it.

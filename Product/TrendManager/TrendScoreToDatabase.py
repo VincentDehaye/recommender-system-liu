@@ -18,6 +18,9 @@ class TrendingToDB(object):
         self.continous = continuous
         self.stop = False
         self.daily = daily
+        self.insert = Insert()
+        self.retrieve = Retrieve()
+        self.alter = Alter()
 
         if daily & continuous:
             # if set to daily, it creates a scheduler and sets the interval to 1 day
@@ -65,7 +68,7 @@ class TrendingToDB(object):
                         Alter.update_trend_score()
                 else:
                     # If movie is not in TrendingScore table
-                    Insert.add_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=0, twitter_score=0)
+                    self.insert.add_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=0, twitter_score=0)
 
                 # The commit is in the loop for now due to high waiting time but could be moved outside to lower
                 # total run time

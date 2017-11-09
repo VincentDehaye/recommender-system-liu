@@ -1,40 +1,47 @@
+import csv
+import os.path
 from Product.Database.DBConn import session
 from Product.Database.DBConn import Rating
-import csv, os.path
 
-# Read the movie_id.csv file to add data into database.
-# Columns in the ratings.csv: userId, movieId, rating, timestamp
+'''
+Author: John Andree Lidquist, Marten Bolin
+Date: 12/10/2017
+Last update: 9/11/2017
+Purpose: Read the ratings.csv/smallRatings.csv file and loads it into the database.
+Columns in the are rating csv files are: userId, movieId, rating, timestamp
+'''
+
+
 class FillRatings:
-    def __init__(self, smallDataSet):
-        self.Fill(smallDataSet)
+    def __init__(self, small_data_set):
+        self.fill(small_data_set)
 
-    def Fill(self, smallDataSet):
-
-        if smallDataSet:
-            fullpath = 'DbFillMovieLens/smallRatings.csv'
-            path = os.path.abspath(fullpath)
+    def fill(self, small_data_set):
+        if small_data_set:
+            path = 'DbFillMovieLens/smallRatings.csv'
+            abspath = os.path.abspath(path)
             # If run in gitlab runner change to correct path
             try:
-                f = open(path, 'rt', encoding="utf-8")
+                f = open(abspath, 'rt', encoding="utf-8")
                 f.close()
             except FileNotFoundError:
-                fullpath = 'Product/Database/DbFillMovieLens/smallRatings.csv'
-                path = os.path.abspath(fullpath)
+                path = 'Product/Database/DbFillMovieLens/smallRatings.csv'
+                abspath = os.path.abspath(path)
             print("Starting to fill ratings from small data set..")
 
         else:
-            fullpath = 'DbFillMovieLens/ratings.csv'
-            path = os.path.abspath(fullpath)
+            path = 'DbFillMovieLens/ratings.csv'
+            abspath = os.path.abspath(path)
             # If run in gitlab runner change to correct path
             try:
-                f = open(path, 'rt', encoding="utf-8")
+                f = open(abspath, 'rt', encoding="utf-8")
                 f.close()
             except FileNotFoundError:
-                fullpath = 'Product/Database/DbFillMovieLens/smallRatings.csv'
-                path = os.path.abspath(fullpath)
+                path = 'Product/Database/DbFillMovieLens/smallRatings.csv'
+                abspath = os.path.abspath(path)
             print("Starting to fill ratings from BIG data set..")
 
-        with open(path, 'rt') as f:
+        with open(abspath, 'rt') as f:
             reader = csv.reader(f)
 
             # Iterates through each row in the file

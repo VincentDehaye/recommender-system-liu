@@ -14,3 +14,5 @@ class DataManager():
     def getTrendingTwitter(self, numOfTitles):
         return DatabaseManager.getTrendingTwitter()
 
+
+

@@ -1,18 +1,27 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, Float, String, ForeignKey
-import os
-# Use ctrl+alt+u in PyCharm to see strutcture of db
+
+'''
+Author: John Andree Lidquist, Marten Bolin
+Date: 12/10/2017
+Last update: 9/11/2017
+Purpose: Creates the database and the database model
+'''
+
+# Use ctrl+alt+u in PyCharm to see structure of db
 # More info about database is in educational folder on drive
 # Get the path and create the sqlite engine. Echo false means that we do not see generated SQL.
 basedir = os.path.abspath(os.path.dirname(__file__))
-engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), connect_args={'check_same_thread': False}, echo=False)
+engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'),
+                       connect_args={'check_same_thread': False}, echo=False)
 
 
-# Used to turn foreign keys on in SQLite since this is by default
 @event.listens_for(engine, "connect")
+# Used to turn foreign keys on in SQLite since this is by default
 def set_sqlite_pragma(dbapi_connection, connection_record):
     cursor = dbapi_connection.cursor()
     cursor.execute("PRAGMA foreign_keys=ON")
@@ -26,24 +35,9 @@ Base = declarative_base()
 # Do not forget to import type if you want to use other than integer or string
 # The __repr__ returns a string that describes the object
 
-# EXAMPLE BELOW
-class UserTest(Base):
-    __tablename__ = 'testusers'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    password = Column(String)
-
-    def __repr__(self):
-        return "<User(name='%s', password='%s')>" % (
-            self.name, self.password)
-
-
-# RECOMMENDATIONS TEAM BELOW
-# This Model is for Genres
+# This class is for Genres
 class Genre(Base):
     __tablename__ = 'genres'
-
     name = Column(String, primary_key=True)
 
     def __repr__(self):
@@ -51,9 +45,8 @@ class Genre(Base):
             self.name)
 
 
-# This Model is for movies
+# This class is for movies
 class Movie(Base):
-
     __tablename__ = 'movies'
     id = Column(Integer, primary_key=True)
     title = Column(String)
@@ -64,13 +57,11 @@ class Movie(Base):
             self.id, self.title, self.year)
 
 
-# TRENDING TEAM BELOW
 # This class contains the trending scores of the movies. movie_id is a foreign key referencing the Movie table
 # total_score is a float that represents the total trending score. youtube_score and twitter_score are floats that
-# represent the trending scores of these seperate factors
+# represent the trending scores of these separate factors
 class TrendingScore(Base):
     __tablename__ = 'trendingscores'
-
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
     total_score = Column(Float)
     youtube_score = Column(Float)
@@ -80,7 +71,7 @@ class TrendingScore(Base):
         return self == other
 
 
-# Model for the user, only storing, this model i consistent with the lastest movielens dataset.
+# This class is for users
 class User(Base):
 
     __tablename__ = 'users'
@@ -91,9 +82,9 @@ class User(Base):
             self.id)
 
 
-# Model for the relation between Movies and Users, in this case ratings.Foreign key to User table and Movie table
+# Class for the relation between Movies and Users, in this case ratings.
+# Foreign key to User table and Movie table
 class Rating(Base):
-
     __tablename__ = 'ratings'
     user_id = Column(Integer, ForeignKey(User.id), primary_key=True)
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
@@ -104,9 +95,8 @@ class Rating(Base):
             self.user_id, self.movie_id, self.rating)
 
 
-# Model for movies in genres. Foreign key references to Movie and Genre.
+# Class for movies in genres. Foreign key references to Movie and Genre.
 class MovieInGenre(Base):
-
     __tablename__ = 'movieingenre'
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
     genre = Column(String, ForeignKey(Genre.name), primary_key=True)
@@ -116,11 +106,10 @@ class MovieInGenre(Base):
             self.movie_id, self.genre)
 
 
-# Model for link between different online movie_id databases and the movies in the movielens db.
+# Class for link between IMDB, TMDB and the id for a movie in the MovieLens data set.
 # First column is movie_id id
-# second column is imdb id and last column is tmdb id.
+# Second column is imdb id and last column is tmdb id.
 class MovieLinks(Base):
-
     __tablename__ = 'movielinks'
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
     imdb_id = Column(Integer)
@@ -129,9 +118,6 @@ class MovieLinks(Base):
     def __repr__(self):
         return "<Genre(movie_id id='%s', imdb id='%s', tmdb id='%s')>" % (
             self.movie_id, self.imdb_id, self.tmdb_id)
-
-
-# VISUALIZATION TEAM BELOW
 
 
 # DO NOT CHANGE BELOW

@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
-import {red} from "../../../../../../UI/node_modules/@angular-devkit/core/src/terminal/ansi";
+
 
 @Component({
   selector: 'ngx-chartjs-pie',

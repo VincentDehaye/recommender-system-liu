@@ -14,13 +14,7 @@ const components = [
 ];
 
 @NgModule({
-  imports: [
-    ThemeModule,
-    AngularEchartsModule,
-    NgxChartsModule, ChartModule,
-    OverviewRoutingModule
-  ],
-  declarations: [
-    OverviewComponent, ...routedComponents, ...components],
+  imports: [ThemeModule, AngularEchartsModule, NgxChartsModule, ChartModule, OverviewRoutingModule],
+  declarations: [OverviewComponent, ...routedComponents, ...components],
 })
 export class OverviewModule {}

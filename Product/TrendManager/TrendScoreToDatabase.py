@@ -1,4 +1,5 @@
 from Product.TrendManager.TrendingController import TrendingController
+from Product.Database.DatabaseManager import Insert, Retrieve, Alter
 from Product.Database.DBConn import session
 from Product.Database.DBConn import Movie, TrendingScore
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -61,13 +62,13 @@ class TrendingToDB(object):
                     if new_tot_score != res_score.total_score:
                         # If score is new
                         res_score.total_score = new_tot_score
+                        Alter.update_trend_score()
                 else:
                     # If movie is not in TrendingScore table
-                    movie = TrendingScore(movie_id=movie.id, total_score=new_tot_score, youtube_score=0, twitter_score=0)
-                    session.add(movie)
+                    Insert.add_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=0, twitter_score=0)
+
                 # The commit is in the loop for now due to high waiting time but could be moved outside to lower
                 # total run time
-                session.commit()
 
             if not self.continous:
                 break;

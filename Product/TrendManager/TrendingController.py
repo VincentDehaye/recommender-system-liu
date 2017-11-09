@@ -30,6 +30,7 @@ class TrendingController:
 
 
 if __name__ == "__main__":
-    keyword = input()
+    #keyword = input()
     tc = TrendingController()
-    print(tc.get_trending_content(keyword).score)
+    #print(tc.get_trending_content(keyword).score)
+    #tc.get_trending_content(keyword)

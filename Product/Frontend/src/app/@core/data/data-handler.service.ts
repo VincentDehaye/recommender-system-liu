@@ -11,8 +11,12 @@ import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class DataHandlerService {
+<<<<<<< HEAD
   apiUrl: any = environment.apiUrl;
 readonly ROOT_URL = this.apiUrl + '/v1/recommendations';
+=======
+readonly ROOT_URL = 'http://localhost:4200/api/v1/recommendations';
+>>>>>>> 284cc474e1210410a903ba9b1a376df6f01a22b6
   movies: Observable<Movie[]>;
   constructor(private http: HttpClient) {}
   getData(): any {

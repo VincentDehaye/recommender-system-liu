@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, Float, String, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, ForeignKey, types
 import os
 # Use ctrl+alt+u in PyCharm to see strutcture of db
 # More info about database is in educational folder on drive
@@ -27,6 +27,12 @@ Base = declarative_base()
 # The __repr__ returns a string that describes the object
 
 # EXAMPLE BELOW
+class GenderEnum(types.enumerate.Enum):
+    Unknown = 0
+    Other = 1
+    Male = 2
+    Female = 3
+
 class UserTest(Base):
     __tablename__ = 'testusers'
 
@@ -68,6 +74,8 @@ class Movie(Base):
 # This class contains the trending scores of the movies. movie_id is a foreign key referencing the Movie table
 # total_score is a float that represents the total trending score. youtube_score and twitter_score are floats that
 # represent the trending scores of these seperate factors
+
+
 class TrendingScore(Base):
     __tablename__ = 'trendingscores'
 
@@ -86,10 +94,12 @@ class User(Base):
 
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
+    age = Column(Integer, default=-1)
+    gender = Column(GenderEnum, default=GenderEnum.Unknown)
 
     def __repr__(self):
-        return "<User(id='%s')>" % (
-            self.id)
+        return "<User(id='%s', age='%s', gender='%s')>" % (
+            self.id, self.age, self.gender.name)
 
 
 # Model for the relation between Movies and Users, in this case ratings.Foreign key to User table and Movie table

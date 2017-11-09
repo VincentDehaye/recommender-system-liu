@@ -13,6 +13,9 @@ get_movie_title returns the movie title for one movie id
 
 """
 from scipy.sparse import coo_matrix
+import numpy as np #TODO, remove this. Not needed but used to test shape atm
+import random
+
 
 from Product.Database.DBConn import session, Rating, TrendingScore, Movie
 
@@ -39,16 +42,59 @@ def get_trending_scores():
     return trending_scores
 
 
+def get_matricies():
+    """
+    Returns train matrix, test matrix and new users matrix where all are randomly split into parts of 80 %, 10 % and
+    10 % respectively
+
+    :return: training matrix, testing matrix and new users matrix in the form of numpy matricies
+    """
+
+    train_user_list = []
+    train_movie_list = []
+    train_rating_list = []
+
+    test_user_list = []
+    test_movie_list = []
+    test_rating_list = []
+
+    new_users_user_list = []
+    new_users_movie_list = []
+    new_users_rating_list = []
+    random_division = 0.0
+    for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
+        random_division = random.uniform(0, 1)
+        if random_division < 0.1:
+            new_users_user_list.append(row[0])
+            new_users_movie_list.append(row[1])
+            new_users_rating_list.append(row[2])
+        elif random_division > 0.9:
+            test_user_list.append(row[0])
+            test_movie_list.append(row[1])
+            test_rating_list.append(row[2])
+        else:
+            train_user_list.append(row[0])
+            train_movie_list.append(row[1])
+            train_rating_list.append(row[2])
+
+    train_matrix = coo_matrix((train_rating_list, (train_user_list, train_movie_list)))
+    test_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)))
+    new_users_matrix = coo_matrix((new_users_rating_list, (new_users_user_list, new_users_movie_list)))
+    return (train_matrix, test_matrix, new_users_matrix)
+
 def get_train_matrix():
     """
     returns the train matrix. The matrix is 80% (4/5) of the user ratings at the moment
+    OBS! coo_matrix is a sparse matrix and will (most likely) have the same dimensions for train_matrix, test_matrix and
+    new_user_matrix
 
     :return: training matrix in the form of a numpy matrix
     """
+
     user_list = []
     movie_list = []
     rating_list = []
-
+    np.shape(Rating)
     # Puts everything but every 5th row (1, 2, 3, 4, 6, 7, 8, 9, 11...) in train_matrix
     for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
         if counter % 5 != 0:
@@ -57,7 +103,6 @@ def get_train_matrix():
             rating_list.append(row[2])
 
     train_matrix = coo_matrix((rating_list, (user_list, movie_list)))
-
     return train_matrix
 
 
@@ -110,3 +155,4 @@ def get_movie_title(movie_id):
     """
     return session.query(Movie.title).filter(Movie.id == movie_id).one()[0]
 
+get_matricies()

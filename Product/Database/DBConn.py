@@ -11,7 +11,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 if os.environ['LOCAL_DATABASE'] == 1:
     engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), connect_args={'check_same_thread': False}, echo=False)
 else:
-    engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), connect_args={'check_same_thread': False}, echo=False)
+    engine = create_engine('mysql+pymysql://root:example@trending_db/main')
 
 
 # Used to turn foreign keys on in SQLite since this is by default

@@ -1,20 +1,22 @@
 <div class ="row">
-  <div style="background-color: white; border-radius: 3px; box-shadow: 0 0 0 2px grey" class="col-md-6">
-    <nb-card-body>
-        <h2 style="padding: 10px; box-shadow: 0 0 0 2px grey; border-radius: 3px"><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Total trending score</h2>
-    </nb-card-body>
+  <div class="col-md-4">
+    <nb-card>
+      <h2 style="padding: 10px"><button class ="ion-ios-information-outline"></button> Total trending score</h2>
+      <nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.name}} {{movie.id}} </nb-card-header>
+    </nb-card>
   </div>
-  <div class="col-md-6">
-    <div style="background-color: white; border-radius: 3px; box-shadow: 0 0 0 2px grey" class="col-md-12">
-      <nb-card-body>
-       <h2 style="padding: 10px; box-shadow: 0 0 0 2px grey; border-radius: 3px"><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Youtube score</h2>
-      </nb-card-body>
-    </div>
-    <div style="background-color: white; border-radius: 3px; box-shadow: 0 0 0 2px grey" class="col-md-12">
-      <nb-card-body>
-       <h2 style="padding: 10px; box-shadow: 0 0 0 2px grey; border-radius: 3px"><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Twitter score</h2>
-      </nb-card-body>
-    </div>
+  <div class="col-md-4">
+      <nb-card>
+        <h2 style="padding: 10px"><button class ="ion-ios-information-outline"></button> Youtube score</h2>
+        <nb-card-header *ngFor="let movie of dataYoutube?.youtubeMovies"> {{movie.name}} {{movie.id}} </nb-card-header>
+      </nb-card>
+  </div>
+
+  <div class="col-md-4">
+      <nb-card>
+        <h2 style="padding: 10px"><button class ="ion-ios-information-outline"></button> Twitter score</h2>
+        <nb-card-header *ngFor="let movie of dataTwitter?.twitterMovies"> {{movie.name}} {{movie.id}} </nb-card-header>
+      </nb-card>
   </div>
 </div>
 <!--

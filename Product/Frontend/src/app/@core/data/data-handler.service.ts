@@ -13,14 +13,24 @@ import { environment } from '../../../environments/environment';
 export class DataHandlerService {
   apiUrl: any = environment.apiUrl;
 readonly ROOT_URL = this.apiUrl + '/v1/recommendations';
-readonly ROOT_URLt = this.apiUrl + '/v1/trending';
+readonly ROOT_URLtrending = this.apiUrl + '/v1/trending';
+readonly ROOT_URLyoutube = this.apiUrl + '/v1/youtubetrending';
+readonly ROOT_URLtwitter = this.apiUrl + '/v1/twittertrending';
   movies: Observable<Movie[]>;
   trendingMovies: Observable<Movie[]>;
+  youtubeMovies: Observable<Movie[]>;
+  twitterMovies: Observable<Movie[]>;
   constructor(private http: HttpClient) {}
   getData(): any {
     return this.http.get(this.ROOT_URL).map((res: Response) => res);
   }
   getTrendingData(): any {
-    return this.http.get(this.ROOT_URLt).map((res: Response) => res);
+    return this.http.get(this.ROOT_URLtrending).map((res: Response) => res);
+  }
+  getYoutubeData(): any {
+    return this.http.get(this.ROOT_URLyoutube).map((res: Response) => res);
+  }
+  getTwitterData(): any {
+    return this.http.get(this.ROOT_URLtwitter).map((res: Response) => res);
   }
 }

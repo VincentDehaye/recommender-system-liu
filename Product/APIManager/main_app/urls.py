@@ -14,5 +14,7 @@ urlpatterns = [
     url(r'^v1/trending', views.trending, name='trending'),
     url(r'^api/v1/trending', views.trending, name='trending'),
     url(r'^v1/youtubetrending', views.youtubetrending, name='youtubetrending'),
-    url(r'^api/v1/youtubetrending', views.youtubetrending, name='youtubetrending')
+    url(r'^api/v1/youtubetrending', views.youtubetrending, name='youtubetrending'),
+    url(r'^v1/twittertrending', views.twittertrending, name='twittertrending'),
+    url(r'^api/v1/twittertrending', views.twittertrending, name='twittertrending')
 ]

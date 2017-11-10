@@ -38,8 +38,24 @@ def trending(request):
 
 
 def youtubetrending(request):
-    recs = {"movies":[
+    recs = {"youtubeMovies":[
         {"name":"Batmanyoutubetrending","id":1},
+        {"name":"Horseman","id":2},
+        {"name":"Birdperson","id":3},
+        {"name":"Manman","id":4},
+        {"name":"Cowman","id":5},
+        {"name":"Snakeman","id":6},
+        {"name":"Butterflyman","id":7},
+        {"name":"The extremely ordinary man","id":8},
+        {"name":"Wonderman the movie","id":9},
+        {"name":"Manbat","id":10},
+        ]}
+    #recs= {"name":"Batman","id":1}
+    return JsonResponse(recs)
+
+def twittertrending(request):
+    recs = {"twitterMovies":[
+        {"name":"Batmantwittertrending","id":1},
         {"name":"Horseman","id":2},
         {"name":"Birdperson","id":3},
         {"name":"Manman","id":4},

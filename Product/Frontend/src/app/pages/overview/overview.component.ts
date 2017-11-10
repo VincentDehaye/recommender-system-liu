@@ -48,6 +48,5 @@ export class OverviewComponent implements OnInit {
     }
     extractData() {
     return null;
-
   }
 }

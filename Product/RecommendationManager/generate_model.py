@@ -12,7 +12,10 @@ from Product.RecommendationManager import gets_from_database as get_train_matrix
 
 def train_model(filename):
     """
-    Trains and saves a lightFM model
+    Author: Alexander Dahl
+    Date: 2017-10-08
+    Last update: 2017-10-08
+    Purpose: Trains and saves a lightFM model
     :param filename:
     :type filename: string
     """
@@ -29,7 +32,10 @@ def train_model(filename):
 
 def load_model(filename):
     """
-    loads trained model
+    Author: Alexander Dahl
+    Date: 2017-10-08
+    Last update: 2017-10-08
+    Purpose: loads trained model
     :param filename:
     :return: lightFM model
     """
@@ -38,7 +44,10 @@ def load_model(filename):
 
 def test_precision(model, train_matrix, k):
     """
-    returns a test precision for the model at k value.
+    Author: Alexander Dahl
+    Date: 2017-10-08
+    Last update: 2017-10-08
+    Purpose: returns a test precision for the model at k value.
 
     :param model: lightFM model
     :param train_matrix: Matrix from database

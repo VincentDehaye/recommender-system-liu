@@ -57,6 +57,26 @@ def test_get_date_standard_case():
 
     assert output is output.format(expected)
 
+def test_get_date_bad_input():
+    """
+    Author: Karl Lundvall
+    Date: 2017-11-06
+    Purpose: Assert that the get_date method in YoutubeAPI does not returns the incorrect format.
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    days = 30
+
+    # Expected output
+    expected1 = '%Y-%m-%dT%H:%M:%S.%f%z'
+
+    # Bad output
+    expected2 = 'Saturday, June 9th, 2007, 5:46:21 PM'
+
+    # Observed output
+    output = youtube.get_date(days)
+
+    assert output.format(expected1) is not expected2
 
 def test_get_video_id():
     """
@@ -208,3 +228,45 @@ def test_get_like_count_non_existing_keyword():
     for video in search_response.get("items", []):
         observed = youtube.get_like_count(video)
         assert observed == expected
+
+
+def test_add_search_word():
+    """
+    Author: Linn Pettersson
+    Date: 2017-11-08
+    Purpose: Assert that multiple words is added to the search keyword
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    keyword = "Thor"
+
+    # Expected output
+    expected = "Thor movie trailer"
+
+    # Observed output
+    observed = youtube.add_search_words(keyword)
+
+    assert observed == expected
+
+
+def test_get_total_search_result():
+    """
+    Author: Linn Pettersson
+    Date: 2017-11-08
+    Purpose: Assert that total search result is fetched and that it calculates a
+    result percentage (total hits / max possible hits) and returns a number between 0 and 1
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    keyword = "Thor"
+
+    # Expected output
+    # >= 0 and <= 1
+
+    # Observed output
+    observed = youtube.get_total_search_result(keyword)
+
+    assert (observed >= 0) and (observed <= 1)
+
+
+

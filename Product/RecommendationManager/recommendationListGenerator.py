@@ -1,6 +1,8 @@
 import numpy as np
 
 from lightfm import LightFM
+from lightfm.evaluation import precision_at_k
+from lightfm.evaluation import auc_score
 
 import generate_model as gen_model
 import gets_from_database as get_train_matrix
@@ -40,9 +42,9 @@ def sample_recommendation(model, train_matrix, user_ids, trending_weight):
 
         # adds the movie scores to the trending scores to create an aggregated dictionary
         for id in trending_scores:
-            trending_and_user_pref_scores[id] = movie_scores[id]+trending_weight*trending_scores[id]
 
-        print(trending_and_user_pref_scores[2])
+            trending_and_user_pref_scores[id] = movie_scores[id]+trending_weight*trending_scores[id]
+       
         #print(sorted(trending_and_user_pref_scores, key=trending_and_user_pref_scores.get, reverse=True)[:5])
         top5items = sorted(trending_and_user_pref_scores, key=trending_and_user_pref_scores.get, reverse=True)[:5]
         #print(top5items)
@@ -59,14 +61,47 @@ def sample_recommendation(model, train_matrix, user_ids, trending_weight):
         return top5itemlist
 
 model = gen_model.load_model('new_model.sav')
-print("2")
 #print(get_train_matrix.getMovieList())
 
 trainmatrix = get_train_matrix.get_train_matrix()
-print("3")
 # Calls upon the sample_recommendation to create a recommendation list for user 56.
+testmatrix = get_train_matrix.get_test_matrix()
+new_user_matrix = get_train_matrix.get_new_users_matrix()
 
-trending_weight=1.5
+print("Before")
+
+model = LightFM(learning_rate=0.05, loss='warp')
+model.fit(trainmatrix, epochs=10)
+
+train_precision = precision_at_k(model, trainmatrix, k=10).mean()
+test_precision = precision_at_k(model, testmatrix, k=10).mean()
+
+train_auc = auc_score(model, trainmatrix).mean()
+test_auc = auc_score(model, testmatrix).mean()
+
+print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
+print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
+
+model.fit_partial(testmatrix, epochs=10)
+
+train_precision = precision_at_k(model, trainmatrix, k=10).mean()
+test_precision = precision_at_k(model, testmatrix, k=10).mean()
+
+train_auc = auc_score(model, trainmatrix).mean()
+test_auc = auc_score(model, testmatrix).mean()
+
+print("After fitpartial")
+print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
+print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
+
+
+
+
+
+
+
+
+trending_weight=1
 #sample_recommendation(model, trainmatrix, range(56, 57), trending_weight)
 
 user_id=0

@@ -5,8 +5,8 @@ import time
 # If background is set to True(default) a timer can be used in this case with time.sleep(seconds) that will make it
 # run for seconds
 # trending_run.terminate() will stop the function
-trending_run = TrendingToDB(continuous=False)
-time.sleep(500)
+trending_run = TrendingToDB(continuous=True)
+time.sleep(50000000)
 trending_run.terminate()
 time.sleep(10)
 

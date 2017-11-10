@@ -1,6 +1,5 @@
 from Product.Database.Retrieve.Retrieve import Retrieve
 from Product.Database.DBConn import Movie
-
 '''
 Author: John Andree Lidquist, Marten Bolin
 Date: 9/11/2017

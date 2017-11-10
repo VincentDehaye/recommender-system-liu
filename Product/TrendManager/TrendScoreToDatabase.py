@@ -72,13 +72,14 @@ class TrendingToDB(object):
                 else:
                     # If movie is not in TrendingScore table
                     print("Pajj innan add")
-                    self.insert_trend.add_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=0, twitter_score=0)
+                    self.insert_trend.add_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=0,
+                                                      twitter_score=0)
 
                 # The commit is in the loop for now due to high waiting time but could be moved outside to lower
                 # total run time
 
             if not self.continous:
-                break;
+                break
 
         # Used to stop the thread if background is false or for any other reason it needs to be stopped.
     def terminate(self):
@@ -86,4 +87,3 @@ class TrendingToDB(object):
         self.stop = True
         if self.daily:
             self.scheduled.shutdown()
-

@@ -4,22 +4,22 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, Float, String, ForeignKey
 import os
-# Use ctrl+alt+u in PyCharm to see strutcture of db
+
 # More info about database is in educational folder on drive
 # Get the path and create the sqlite engine. Echo false means that we do not see generated SQL.
 basedir = os.path.abspath(os.path.dirname(__file__))
-if os.environ['LOCAL_DATABASE'] == 1:
+
+if os.environ['LOCAL_DATABASE'] == "1":
     engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), connect_args={'check_same_thread': False}, echo=False)
+    # Used to turn foreign keys on in SQLite since this is by default
+    @event.listens_for(engine, "connect")
+    def set_sqlite_pragma(dbapi_connection, connection_record):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
 else:
+    print("SUG")
     engine = create_engine('mysql+pymysql://root:example@trending_db/main')
-
-
-# Used to turn foreign keys on in SQLite since this is by default
-@event.listens_for(engine, "connect")
-def set_sqlite_pragma(dbapi_connection, connection_record):
-    cursor = dbapi_connection.cursor()
-    cursor.execute("PRAGMA foreign_keys=ON")
-    cursor.close()
 
 # Used for the declarative part where we create the model
 Base = declarative_base()
@@ -34,8 +34,8 @@ class UserTest(Base):
     __tablename__ = 'testusers'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    password = Column(String)
+    name = Column(String(200))
+    password = Column(String(200))
 
     def __repr__(self):
         return "<User(name='%s', password='%s')>" % (
@@ -47,7 +47,7 @@ class UserTest(Base):
 class Genre(Base):
     __tablename__ = 'genres'
 
-    name = Column(String, primary_key=True)
+    name = Column(String(100), primary_key=True)
 
     def __repr__(self):
         return "<Genre(name='%s')>" % (
@@ -59,7 +59,7 @@ class Movie(Base):
 
     __tablename__ = 'movies'
     id = Column(Integer, primary_key=True)
-    title = Column(String)
+    title = Column(String(250))
     year = Column(Integer)
 
     def __repr__(self):
@@ -113,7 +113,7 @@ class MovieInGenre(Base):
 
     __tablename__ = 'movieingenre'
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
-    genre = Column(String, ForeignKey(Genre.name), primary_key=True)
+    genre = Column(String(100), ForeignKey(Genre.name), primary_key=True)
 
     def __repr__(self):
         return "<Genre(movie_id='%s', genre='%s')>" % (

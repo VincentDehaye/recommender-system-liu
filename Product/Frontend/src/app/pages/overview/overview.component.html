@@ -12,21 +12,23 @@
 </div>
 <div class ="row">
   <div style="background-color: white; border-radius: 3px; box-shadow: 0 0 0 2px grey" class="col-md-6">
-    <nb-card-body>
-        <h2 style="padding: 10px; box-shadow: 0 0 0 2px grey; border-radius: 3px"><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Top recommended content</h2>
-    </nb-card-body>
+    <nb-card>
+        <nb-card-header style="padding: 10px"><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Top recommended content</nb-card-header>
+            <nb-card-header *ngFor="let movie of data?.movies"> {{movie.name}} {{movie.id}} </nb-card-header>
+    </nb-card>
   </div>
   <div class="col-md-6">
-    <div style="background-color: white; border-radius: 3px; box-shadow: 0 0 0 2px grey" class="col-md-12">
-      <nb-card-body>
-       <h2 style="padding: 10px; box-shadow: 0 0 0 2px grey; border-radius: 3px "><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Top trending content</h2>
-      </nb-card-body>
-    </div>
-    <div style="background-color: white; border-radius: 3px; box-shadow: 0 0 0 2px grey" class="col-md-12">
-      <nb-card-body>
-        <h2 style="padding: 10px; box-shadow: 0 0 0 2px grey; border-radius: 3px"><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Success rate</h2>
-        <ngx-chartjs-pie></ngx-chartjs-pie>
-      </nb-card-body>
-    </div>
+      <nb-card>
+       <h2 style="padding: 10px"><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Top trending content</h2>
+          <nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.name}} {{movie.id}} </nb-card-header>
+      </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div style="background-color: white; border-radius: 3px; box-shadow: 0 0 0 2px grey" class="col-md-12">
+    <nb-card>
+      <h2 style="padding: 10px"><button style = "box-shadow: 0 0 0 2px grey; background: white; border-radius: 3px" class ="ion-ios-information-outline"></button> Success rate</h2>
+      <ngx-chartjs-pie></ngx-chartjs-pie>
+    </nb-card>
   </div>
 </div>

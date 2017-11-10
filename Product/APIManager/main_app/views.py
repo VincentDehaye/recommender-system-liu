@@ -21,7 +21,7 @@ def recommendations(request):
     return JsonResponse(recs)
 
 def trending(request):
-    recs = {"movies":[
+    recs = {"trendingMovies":[
         {"name":"Batmantredning","id":1},
         {"name":"Horseman","id":2},
         {"name":"Birdperson","id":3},

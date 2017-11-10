@@ -7,7 +7,7 @@ import { DataHandlerService} from '../../@core/data/data-handler.service';
   styleUrls: ['./trending.component.scss'],
   templateUrl: './trending.component.html',
 })
-export class TrendingComponent implements OnInit{
+export class TrendingComponent implements OnInit {
   trendingMovies: string[];
   youtubeMovies: string[];
   twitterMovies: string[];

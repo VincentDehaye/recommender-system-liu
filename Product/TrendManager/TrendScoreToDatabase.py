@@ -1,7 +1,8 @@
 from Product.TrendManager.TrendingController import TrendingController
-from Product.Database.DatabaseManager import Insert, Retrieve, Alter
-from Product.Database.DBConn import session
-from Product.Database.DBConn import Movie, TrendingScore
+from Product.Database.Retrieve.RetrieveTrending import RetrieveTrending
+from Product.Database.Insert.InsertTrending import InsertTrending
+from Product.Database.Update.UpdateTrending import UpdateTrending
+from Product.Database.Retrieve.RetrieveMovie import RetrieveMovie
 from apscheduler.schedulers.background import BackgroundScheduler
 import threading
 
@@ -18,9 +19,10 @@ class TrendingToDB(object):
         self.continous = continuous
         self.stop = False
         self.daily = daily
-        self.insert = Insert()
-        self.retrieve = Retrieve()
-        self.alter = Alter()
+        self.insert_trend = InsertTrending()
+        self.retrieve_trend = RetrieveTrending()
+        self.alter_trend = UpdateTrending()
+        self.retrieve_movie = RetrieveMovie()
 
         if daily & continuous:
             # if set to daily, it creates a scheduler and sets the interval to 1 day
@@ -44,17 +46,17 @@ class TrendingToDB(object):
         # 4. Go to step 1
         trend_controller = TrendingController()
 
-        result = session.query(TrendingScore).all()
-
         while True:
             if self.stop:
                 break
-            res_movie = session.query(Movie).all()
+            res_movie = self.retrieve_movie.retrieve_movie()
 
             for movie in res_movie:
                 if self.stop:
                     break
-                res_score = session.query(TrendingScore).filter_by(movie_id=movie.id).first()
+
+                print("Pajj innan res_score")
+                res_score = self.retrieve_trend.retrieve_trend_score(movie.id)
 
                 new_tot_score = trend_controller.get_trending_content(movie.title)  # gets new score
 
@@ -65,10 +67,12 @@ class TrendingToDB(object):
                     if new_tot_score != res_score.total_score:
                         # If score is new
                         res_score.total_score = new_tot_score
-                        Alter.update_trend_score()
+                        print("Pajj innan alter")
+                        self.alter_trend.update_trend_score(movie_id=movie.id, total_score=new_tot_score)
                 else:
                     # If movie is not in TrendingScore table
-                    self.insert.add_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=0, twitter_score=0)
+                    print("Pajj innan add")
+                    self.insert_trend.add_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=0, twitter_score=0)
 
                 # The commit is in the loop for now due to high waiting time but could be moved outside to lower
                 # total run time

@@ -1,5 +1,5 @@
-from Product.Database.DBConn import session
 from Product.Database.DBConn import User
+from Product.Database.DBConn import create_session
 
 '''
 Author: John Andree Lidquist, Marten Bolin
@@ -12,12 +12,13 @@ with the Movielens data set.
 
 class FillUsers:
     def __init__(self):
+        self.session = create_session()
         self.fill()
 
     def fill(self):
         print("Starting to fill 700 users, not based on big or small data set..")
         for i in range(1, 701):
             new_user = User(id=i)
-            session.add(new_user)
-        session.commit()
+            self.session.add(new_user)
+        self.session.commit()
         print("DONE - Users added")

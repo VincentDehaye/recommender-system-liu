@@ -1,7 +1,7 @@
 import csv
 import re
 import os.path
-from Product.Database.DBConn import session, Movie, MovieInGenre, Genre
+from Product.Database.DBConn import create_session, Movie, MovieInGenre, Genre
 
 '''
 Author: John Andree Lidquist, Marten Bolin
@@ -15,6 +15,7 @@ Columns in the are movie csv files: userId, movieId, rating, timestamp
 class FillMovies:
 
     def __init__(self, small_data_set):
+        self.session = create_session()
         self.fill(small_data_set)
 
     def fill(self, small_data_set):
@@ -27,7 +28,7 @@ class FillMovies:
         # Add the genres to the db
         for genre in genres:
             new_genre = Genre(name=genre)
-            session.add(new_genre)
+            self.session.add(new_genre)
 
         # This part handles adding the movies of the dataset into the database
         # Read the movie.csv file to add data into database
@@ -70,10 +71,10 @@ class FillMovies:
                     new_movie = Movie(id=row[0], title=search_for_year_series[0], year=search_for_year_series[1])
                 else:
                     new_movie = Movie(id=row[0], title=row[1])
-                session.add(new_movie)
+                self.session.add(new_movie)
 
             # Need to commit before filling with movies-genre due to foreign key
-            session.commit()
+            self.session.commit()
             f.close()
 
         with open(abspath, 'rt', encoding="utf-8") as f:
@@ -90,10 +91,10 @@ class FillMovies:
                         # loop through all genres for the movie
                         for new_genre in genres:
                             new_movie_genre = MovieInGenre(movie_id=movie_id, genre=new_genre)
-                            session.add(new_movie_genre)
+                            self.session.add(new_movie_genre)
 
         # Commit the added link between movies and their genres
-        session.commit()
+        self.session.commit()
         print("DONE - Movies added")
 
         # Close the csv file

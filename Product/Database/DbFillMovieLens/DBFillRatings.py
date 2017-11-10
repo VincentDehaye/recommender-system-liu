@@ -1,6 +1,6 @@
 import csv
 import os.path
-from Product.Database.DBConn import session
+from Product.Database.DBConn import create_session
 from Product.Database.DBConn import Rating
 
 '''
@@ -14,6 +14,7 @@ Columns in the are rating csv files are: userId, movieId, rating, timestamp
 
 class FillRatings:
     def __init__(self, small_data_set):
+        self.session = create_session()
         self.fill(small_data_set)
 
     def fill(self, small_data_set):
@@ -59,11 +60,11 @@ class FillRatings:
                     if counter == 2:
                         rating = column
                         new_rating = Rating(movie_id=movie_id, user_id=user_id, rating=rating)
-                        session.add(new_rating)
+                        self.session.add(new_rating)
                         # There is also a timestamp in the dataset which is not used
 
         # Commit the added ratings
-        session.commit()
+        self.session.commit()
         print("DONE - Ratings added")
 
         # Close the csv file

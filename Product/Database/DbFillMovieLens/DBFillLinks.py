@@ -1,7 +1,6 @@
 import csv
 import os
-from Product.Database.DBConn import session
-from Product.Database.DBConn import MovieLinks
+from Product.Database.DBConn import MovieLinks, create_session
 
 '''
 Author: John Andree Lidquist, Marten Bolin
@@ -14,6 +13,7 @@ Columns in the are link csv files: movie_id, IMDB_id, TMDB_id
 
 class FillLinks:
     def __init__(self):
+        self.session = create_session()
         self.fill()
 
     def fill(self):
@@ -48,10 +48,10 @@ class FillLinks:
                     if counter == 2:
                         new_tmdb_id = column
                         new_linking = MovieLinks(movie_id=new_movie_id, imdb_id=new_imdb_id, tmdb_id=new_tmdb_id)
-                        session.add(new_linking)
+                        self.session.add(new_linking)
 
         # Commit the added ratings
-        session.commit()
+        self.session.commit()
         print("DONE - Links added")
 
         # Close the csv file

@@ -15,12 +15,12 @@ export class DataHandlerService {
 readonly ROOT_URL = this.apiUrl + '/v1/recommendations';
 readonly ROOT_URLt = this.apiUrl + '/v1/trending';
   movies: Observable<Movie[]>;
-  trendingMovies : Observable<Movie[]>;
+  trendingMovies: Observable<Movie[]>;
   constructor(private http: HttpClient) {}
   getData(): any {
     return this.http.get(this.ROOT_URL).map((res: Response) => res);
   }
-  getTrendingData(): any{
+  getTrendingData(): any {
     return this.http.get(this.ROOT_URLt).map((res: Response) => res);
   }
 }

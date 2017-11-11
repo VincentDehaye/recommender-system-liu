@@ -9,17 +9,22 @@ import os
 # Get the path and create the sqlite engine. Echo false means that we do not see generated SQL.
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-if os.environ['LOCAL_DATABASE'] == "1":
-    engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), connect_args={'check_same_thread': False}, echo=False)
-    # Used to turn foreign keys on in SQLite since this is by default
-    @event.listens_for(engine, "connect")
-    def set_sqlite_pragma(dbapi_connection, connection_record):
-        cursor = dbapi_connection.cursor()
-        cursor.execute("PRAGMA foreign_keys=ON")
-        cursor.close()
-else:
-    DATABASE = os.environ["DATA_DATABASE_HOST"]
-    engine = create_engine('mysql+pymysql://root:example@' + DATABASE + '/main')
+try:
+    PRODUCTION_DATABASE = os.environ['PRODUCTION_DATABASE'] == 1
+except KeyError:
+    PRODUCTION_DATABASE = False
+finally:
+    if PRODUCTION_DATABASE:
+        engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), connect_args={'check_same_thread': False}, echo=False)
+        # Used to turn foreign keys on in SQLite since this is by default
+        @event.listens_for(engine, "connect")
+        def set_sqlite_pragma(dbapi_connection, connection_record):
+            cursor = dbapi_connection.cursor()
+            cursor.execute("PRAGMA foreign_keys=ON")
+            cursor.close()
+    else:
+        DATABASE = os.environ["DATA_DATABASE_HOST"]
+        engine = create_engine('mysql+pymysql://root:example@' + DATABASE + '/main')
 
 # Used for the declarative part where we create the model
 Base = declarative_base()
@@ -93,8 +98,8 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     age = Column(Integer, default=-1)
-    gender = Column(String, default="Unknown")
-    occupation = Column(String, default="Unknown")
+    gender = Column(String(30), default="Unknown")
+    occupation = Column(String(30), default="Unknown")
 
     def __repr__(self):
         return "<User(id='%s', age='%s', gender='%s', occupation='%s')>" % (

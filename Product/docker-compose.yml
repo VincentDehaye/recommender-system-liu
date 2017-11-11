@@ -25,7 +25,7 @@ services:
     expose:
       - "8000"
     environment:
-      LOCAL_DATABASE: 0
+      PRODUCTION_DATABASE: 1
       DATA_DATABASE_HOST: "data_db"
       WEBSITE_DATABASE_HOST: "website_db"
 

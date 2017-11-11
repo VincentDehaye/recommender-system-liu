@@ -3,7 +3,7 @@
 res=6
 while [ $res -ne 52 ]
 do
-	curl -s db:5432
+	curl -s website_db:5432
 	res=$?
 done
 

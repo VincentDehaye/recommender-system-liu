@@ -18,12 +18,19 @@ services:
     container_name: django
     command: bash django_docker_startup_command.sh
     depends_on:
-      - db
+      - website_db
+      - data_db
     volumes:
       - .:/src
     expose:
       - "8000"
 
-  db:
+  website_db:
     image: postgres:latest
     container_name: postgres
+
+  data_db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: main

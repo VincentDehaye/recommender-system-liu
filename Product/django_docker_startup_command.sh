@@ -3,6 +3,7 @@
 res=6
 while [ $res -ne 52 ]
 do
+	sleep 1
 	curl -s $WEBSITE_DATABASE_HOST:5432
 	res=$?
 done

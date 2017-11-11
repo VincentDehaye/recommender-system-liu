@@ -16,7 +16,7 @@ services:
   web:
     build: .
     container_name: django
-    command: bash -c "cd APIManager && python manage.py makemigrations && python manage.py migrate && gunicorn project_config.wsgi --access-logfile '-' -b 0.0.0.0:8000"
+    command: bash django_docker_startup_command.sh
     depends_on:
       - db
     volumes:

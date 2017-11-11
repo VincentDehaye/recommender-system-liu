@@ -18,7 +18,7 @@ if os.environ['LOCAL_DATABASE'] == "1":
         cursor.execute("PRAGMA foreign_keys=ON")
         cursor.close()
 else:
-    DATABASE = os.environ["WEBSITE_DATABASE_HOST"]
+    DATABASE = os.environ["DATA_DATABASE_HOST"]
     engine = create_engine('mysql+pymysql://root:example@' + DATABASE + '/main')
 
 # Used for the declarative part where we create the model

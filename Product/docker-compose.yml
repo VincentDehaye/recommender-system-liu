@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
 
@@ -24,6 +24,10 @@ services:
       - .:/src
     expose:
       - "8000"
+    environment:
+      LOCAL_DATABASE: 0
+      DATA_DATABASE_HOST: "data_db"
+      WEBSITE_DATABASE_HOST: "website_db"
 
   website_db:
     image: postgres:latest

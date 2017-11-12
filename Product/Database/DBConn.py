@@ -9,17 +9,22 @@ import os
 # Get the path and create the sqlite engine. Echo false means that we do not see generated SQL.
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-if os.environ['LOCAL_DATABASE'] == "1":
-    engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), connect_args={'check_same_thread': False}, echo=False)
-    # Used to turn foreign keys on in SQLite since this is by default
-    @event.listens_for(engine, "connect")
-    def set_sqlite_pragma(dbapi_connection, connection_record):
-        cursor = dbapi_connection.cursor()
-        cursor.execute("PRAGMA foreign_keys=ON")
-        cursor.close()
-else:
-    DATABASE = os.environ["WEBSITE_DATABASE_HOST"]
-    engine = create_engine('mysql+pymysql://root:example@' + DATABASE + '/main')
+try:
+    PRODUCTION_DATABASE = os.environ['PRODUCTION_DATABASE'] == 1
+except KeyError:
+    PRODUCTION_DATABASE = False
+finally:
+    if not PRODUCTION_DATABASE:
+        engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), connect_args={'check_same_thread': False}, echo=False)
+        # Used to turn foreign keys on in SQLite since this is by default
+        @event.listens_for(engine, "connect")
+        def set_sqlite_pragma(dbapi_connection, connection_record):
+            cursor = dbapi_connection.cursor()
+            cursor.execute("PRAGMA foreign_keys=ON")
+            cursor.close()
+    else:
+        DATABASE = os.environ["DATA_DATABASE_HOST"]
+        engine = create_engine('mysql+pymysql://root:example@' + DATABASE + '/main')
 
 # Used for the declarative part where we create the model
 Base = declarative_base()

@@ -14,7 +14,7 @@ try:
 except KeyError:
     PRODUCTION_DATABASE = False
 finally:
-    if PRODUCTION_DATABASE:
+    if not PRODUCTION_DATABASE:
         engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), connect_args={'check_same_thread': False}, echo=False)
         # Used to turn foreign keys on in SQLite since this is by default
         @event.listens_for(engine, "connect")

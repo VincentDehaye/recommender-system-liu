@@ -23,6 +23,7 @@ class YoutubeAPI:
         self.max_results = 10
         self.category_id = 24
         self.type = "video"
+        self.published = 30
         self.youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
                              developerKey=DEVELOPER_KEY)
 
@@ -39,7 +40,7 @@ class YoutubeAPI:
             type=self.type,
             videoCategoryId=self.category_id,
             maxResults=self.max_results,
-            publishedAfter=self.get_date(30)
+            publishedAfter=self.get_date(self.published)
         ).execute()
         return search_response
 
@@ -64,8 +65,18 @@ class YoutubeAPI:
         for video in search_response.get("items", []):
             view_count = self.get_view_count(video)
             like_ratio = self.get_like_count(video)
+            publication_date = self.get_publication_date(video)
 
-            total_score += view_count * like_ratio
+            score = 1
+
+            if view_count != 0:
+                score *= view_count
+            if like_ratio != 0:
+                score *= like_ratio
+            if publication_date != 0:
+                score *= publication_date
+
+            total_score += score
         total_score *= total_results
         total_score = int(round(total_score))
         return total_score
@@ -126,6 +137,24 @@ class YoutubeAPI:
         total_result = self.get_youtube_data(keyword).get("pageInfo").get("totalResults")
         result_ratio = total_result / 1000000
         return result_ratio
+
+
+    def get_publication_date(self, video):
+        """
+        Getting the date when a video was uploaded
+        :param keyword: keyword, e.g. movie-title
+        :return: int representing how many days ago a video was uploaded
+        """
+        curr_date = datetime.datetime.today()
+
+        date = video.get("snippet").get("publishedAt")
+        published_at = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%S.%fZ")
+
+        days_ago_datetime = curr_date - published_at
+        days_ago = int(days_ago_datetime.days)
+
+        return 1 - (days_ago / self.published)
+
 
     def get_video_id(self, keyword):
         """

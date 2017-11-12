@@ -30,7 +30,6 @@ def train_model(filename):
     pickle.dump(model, open(filename, 'wb'))
 
 
-
 def load_model(filename):
     """
     Author: Alexander Dahl

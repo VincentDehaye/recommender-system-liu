@@ -269,4 +269,26 @@ def test_get_total_search_result():
     assert (observed >= 0) and (observed <= 1)
 
 
+def test_get_publication_date():
+    """
+    Author: Linn Pettersson
+    Date: 2017-11-11
+    Purpose: Assert that a video get a value between 0 and 1 based on when it has been
+    published where 1 eqauls a newly updated video and 0 equals a video updated 30 days ago
+    """
+    # Pre-conditions
+    youtube = YoutubeAPI()
+    keyword = "Thor"
 
+    search_response = youtube.youtube.videos().list(
+        part="statistics, snippet",
+        id=youtube.get_video_id(keyword)
+    ).execute()
+
+    # Expected output
+    # >= 0 and <= 1
+
+    # Observed output
+    for video in search_response.get("items", []):
+        observed = youtube.get_like_count(video)
+        assert (observed >= 0) and (observed <= 1)

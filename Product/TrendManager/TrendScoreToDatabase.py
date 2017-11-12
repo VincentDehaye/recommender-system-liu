@@ -55,7 +55,6 @@ class TrendingToDB(object):
                 if self.stop:
                     break
 
-                print("Pajj innan res_score")
                 res_score = self.retrieve_trend.retrieve_trend_score(movie.id)
 
                 new_tot_score = trend_controller.get_trending_content(movie.title)  # gets new score
@@ -67,11 +66,9 @@ class TrendingToDB(object):
                     if new_tot_score != res_score.total_score:
                         # If score is new
                         res_score.total_score = new_tot_score
-                        print("Pajj innan alter")
                         self.alter_trend.update_trend_score(movie_id=movie.id, total_score=new_tot_score)
                 else:
                     # If movie is not in TrendingScore table
-                    print("Pajj innan add")
                     self.insert_trend.add_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=0,
                                                       twitter_score=0)
 

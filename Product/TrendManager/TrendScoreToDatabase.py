@@ -57,7 +57,9 @@ class TrendingToDB(object):
 
                 res_score = self.retrieve_trend.retrieve_trend_score(movie.id)
 
-                new_tot_score = trend_controller.get_trending_content(movie.title)  # gets new score
+                new_tot_score = trend_controller.get_trending_content(movie.title)[0]  # gets new score
+                new_youtube_score = trend_controller.get_trending_content(movie.title)[1]
+                new_twitter_score = trend_controller.get_trending_content(movie.title)[2]
 
                 print("Movie ID:", movie.id)
 
@@ -66,11 +68,11 @@ class TrendingToDB(object):
                     if new_tot_score != res_score.total_score:
                         # If score is new
                         res_score.total_score = new_tot_score
-                        self.alter_trend.update_trend_score(movie_id=movie.id, total_score=new_tot_score)
+                        self.alter_trend.update_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=new_youtube_score, twitter_score=new_twitter_score)
                 else:
                     # If movie is not in TrendingScore table
-                    self.insert_trend.add_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=0,
-                                                      twitter_score=0)
+                    self.insert_trend.add_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=new_youtube_score,
+                                                      twitter_score=new_twitter_score)
 
                 # The commit is in the loop for now due to high waiting time but could be moved outside to lower
                 # total run time

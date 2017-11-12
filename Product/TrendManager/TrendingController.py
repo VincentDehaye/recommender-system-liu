@@ -22,9 +22,10 @@ class TrendingController:
     def total_score_calc(self, keyword):
         totalscore = 0
         youtubescore = self.youtubeapi.get_youtube_score(keyword)
+        twitterscore = 0
         # add more scoreres as needed
         totalscore += youtubescore
-        return totalscore
+        return totalscore, youtubescore, twitterscore
 
     # def SendToDatabase(self, scoredMovie):
 

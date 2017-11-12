@@ -1,6 +1,6 @@
 from Product.Database.Retrieve.RetrieveMovie import RetrieveMovie
 from Product.Database.Retrieve.RetrieveTrending import RetrieveTrending
-from Product.DataManager.TopTrending.TopTrending import TopTrending
+from Product.DataManager.TopTrending.TopTrendingList import TopTrending
 
 
 class RetrieveTopTrending:

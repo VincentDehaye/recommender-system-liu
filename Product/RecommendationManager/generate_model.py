@@ -42,7 +42,7 @@ def load_model(filename):
     return pickle.load(open(filename, 'rb'))
 
 
-def test_precision(model, train_matrix, k):
+def test_precision(model, matrix, k):
     """
     Author: Alexander Dahl
     Date: 2017-10-08
@@ -54,7 +54,8 @@ def test_precision(model, train_matrix, k):
     :param k: precision@k
     :return: float
     """
-    return precision_at_k(model, train_matrix, k).mean()
+    return precision_at_k(model, matrix, k=k).mean()
+
 
 # TODO split this method into a method that evolves the model
 # TODO and add the testing methods to the tests folder

@@ -6,7 +6,8 @@ import time
 # run for seconds
 # trending_run.terminate() will stop the function
 trending_run = TrendingToDB(continuous=True)
-time.sleep(50000000)
+time.sleep(50000)
 trending_run.terminate()
 time.sleep(10)
+print("Finished")
 

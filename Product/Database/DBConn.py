@@ -4,7 +4,6 @@ from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, Float, String, ForeignKey
-
 '''
 Author: John Andree Lidquist, Marten Bolin
 Date: 12/10/2017
@@ -12,20 +11,27 @@ Last update: 9/11/2017
 Purpose: Creates the database and the database model
 '''
 
-# Use ctrl+alt+u in PyCharm to see structure of db
 # More info about database is in educational folder on drive
 # Get the path and create the sqlite engine. Echo false means that we do not see generated SQL.
 basedir = os.path.abspath(os.path.dirname(__file__))
-engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'),
-                       connect_args={'check_same_thread': False}, echo=False)
 
+try:
+    PRODUCTION_DATABASE = os.environ['PRODUCTION_DATABASE'] == '1'
+except KeyError:
+    PRODUCTION_DATABASE = False
+finally:
+    if not PRODUCTION_DATABASE:
+        engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), connect_args={'check_same_thread': False}, echo=False)
+        # Used to turn foreign keys on in SQLite since this is by default
+        @event.listens_for(engine, "connect")
+        def set_sqlite_pragma(dbapi_connection, connection_record):
+            cursor = dbapi_connection.cursor()
+            cursor.execute("PRAGMA foreign_keys=ON")
+            cursor.close()
+    else:
+        DATABASE = os.environ["DATA_DATABASE_HOST"]
+        engine = create_engine('mysql+pymysql://root:example@' + DATABASE + '/main')
 
-@event.listens_for(engine, "connect")
-# Used to turn foreign keys on in SQLite since this is by default
-def set_sqlite_pragma(dbapi_connection, connection_record):
-    cursor = dbapi_connection.cursor()
-    cursor.execute("PRAGMA foreign_keys=ON")
-    cursor.close()
 
 # Used for the declarative part where we create the model
 Base = declarative_base()
@@ -35,10 +41,24 @@ Base = declarative_base()
 # Do not forget to import type if you want to use other than integer or string
 # The __repr__ returns a string that describes the object
 
-# This class is for Genres
+# EXAMPLE BELOW
+
+class UserTest(Base):
+    __tablename__ = 'testusers'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200))
+    password = Column(String(200))
+
+    def __repr__(self):
+        return "<User(name='%s', password='%s')>" % (
+            self.name, self.password)
+
+# This Model is for Genres
 class Genre(Base):
     __tablename__ = 'genres'
-    name = Column(String, primary_key=True)
+
+    name = Column(String(100), primary_key=True)
 
     def __repr__(self):
         return "<Genre(name='%s')>" % (
@@ -49,7 +69,7 @@ class Genre(Base):
 class Movie(Base):
     __tablename__ = 'movies'
     id = Column(Integer, primary_key=True)
-    title = Column(String)
+    title = Column(String(250))
     year = Column(Integer)
 
     def __repr__(self):
@@ -59,7 +79,9 @@ class Movie(Base):
 
 # This class contains the trending scores of the movies. movie_id is a foreign key referencing the Movie table
 # total_score is a float that represents the total trending score. youtube_score and twitter_score are floats that
-# represent the trending scores of these separate factors
+# represent the trending scores of these seperate factors
+
+
 class TrendingScore(Base):
     __tablename__ = 'trendingscores'
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
@@ -76,10 +98,13 @@ class User(Base):
 
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
+    age = Column(Integer, default=-1)
+    gender = Column(String, default="Unknown")
+    occupation = Column(String, default="Unknown")
 
     def __repr__(self):
-        return "<User(id='%s')>" % (
-            self.id)
+        return "<User(id='%s', age='%s', gender='%s', occupation='%s')>" % (
+            self.id, self.age, self.gender, self.occupation)
 
 
 # Class for the relation between Movies and Users, in this case ratings.
@@ -99,7 +124,7 @@ class Rating(Base):
 class MovieInGenre(Base):
     __tablename__ = 'movieingenre'
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
-    genre = Column(String, ForeignKey(Genre.name), primary_key=True)
+    genre = Column(String(100), ForeignKey(Genre.name), primary_key=True)
 
     def __repr__(self):
         return "<Genre(movie_id='%s', genre='%s')>" % (

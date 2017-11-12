@@ -1,10 +1,10 @@
-version: '2'
+version: '3'
 
 services:
 
   nginx:
     image: nginx:latest
-    container_name: ng01
+    container_name: nginx
     ports:
       - "80:80"
     volumes:
@@ -15,15 +15,26 @@ services:
 
   web:
     build: .
-    container_name: dg01
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn project_config.wsgi -b 0.0.0.0:8000"
+    container_name: django
+    command: bash django_docker_startup_command.sh
     depends_on:
-      - db
+      - website_db
+      - data_db
     volumes:
-      - ./APIManager:/src
+      - .:/src
     expose:
       - "8000"
+    environment:
+      LOCAL_DATABASE: 0
+      DATA_DATABASE_HOST: "data_db"
+      WEBSITE_DATABASE_HOST: "website_db"
 
-  db:
+  website_db:
     image: postgres:latest
-    container_name: ps01
+    container_name: postgres
+
+  data_db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: main

@@ -7,16 +7,24 @@ from Product.Database.DBConn import session, TrendingScore
 from Product.RecommendationManager import gets_from_database as gets_from_database
 from Product.RecommendationManager.Recommendation.recommendation_list import RecommendationList
 
-#At this point we assume that there is a file namned new_model.sav
+
+# At this point we assume that there is a file named new_model.sav
 class Recommendation(object):
     """
+    Author: Sebastian Maghsoudi / Alexander Dahl
+    Date: 2017-11-01
+    Last update: 2017-11-09 by Alexander Dahl
+    Purpose:
     creates a recommendation class
     """
     def __init__(self, user_id, size):
         """
-        constructor for the recommendation class
+        Author: Sebastian Maghsoudi / Alexander Dahl
+        Date: 2017-11-01
+        Last update: 2017-11-09 by Alexander Dahl
+        Purpose: constructor for the recommendation class
+
         :param user_id: a user_id
-        :param lim: limit on how many trending scores should be fetched from database
         :param size: how many movies should be recommended
 
         model is a lightfm model that has been saved in a folder above
@@ -24,6 +32,7 @@ class Recommendation(object):
         the number of fetched trending_content_meta is limited by the lim variable
 
         """
+        # TODO should the class assume that there is a model named 'new_model.sav'?
         self.model = generate_model.load_model('../new_model.sav')
         self.user_id = user_id
         # right now lim is hard coded to number of movies to be recommended times 3
@@ -36,7 +45,10 @@ class Recommendation(object):
     @staticmethod
     def normalize_user_scores(scores):
         """
-        normalizes the scores to be between 0 and 1.
+        Author: Gustaf Norberg / Alexander Dahl
+        Date: 2017-10-30
+        Last update: 2017-10-30
+        Purpose: normalizes the scores to be between 0 and 1.
 
         :return: list of scores
         """
@@ -49,7 +61,10 @@ class Recommendation(object):
 
     def generate_recommendation_list(self):
         """
-        Generates a recommendation list of size length for a given user.
+        Author: Sebastian Maghsoudi / Alexander Dahl
+        Date: 2017-11-01
+        Last update: 2017-11-09
+        Purpose: Generates a recommendation list of size length for a given user.
 
         :return: a dictionary with user_id and a recommendation_list for that user
         example:

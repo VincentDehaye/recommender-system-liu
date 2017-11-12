@@ -4,8 +4,8 @@ from lightfm import LightFM
 from lightfm.evaluation import precision_at_k
 from lightfm.evaluation import auc_score
 
-import generate_model as gen_model
-import gets_from_database as get_train_matrix
+from Product.RecommendationManager import generate_model as gen_model
+from Product.RecommendationManager import gets_from_database as get_train_matrix
 
 
 def normalize_user_scores(scores):

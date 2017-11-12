@@ -1,8 +1,8 @@
 FROM python:3.4.3
 ENV PYTHONUNBUFFERED 1
-RUN mkdir -p /config/APIManager
+RUN mkdir -p /config/
 ADD requirements.txt /config/
-ADD APIManager/requirements.txt /config/APIManager
-RUN pip install -r /config/requirements.txt
-RUN mkdir /src;
+RUN pip install --upgrade pip
+RUN pip install --timeout 1000 -r /config/requirements.txt
+RUN mkdir /src
 WORKDIR /src

@@ -30,6 +30,10 @@ from Product.Database.DBConn import session, Rating, TrendingScore, Movie
 
 def get_trending_scores():
     """
+    Author: Alexander Dahl
+    Date: 2017-11-01
+    Last update: 2017-11-01
+    Purpose:
     fills a dictionary with trending scores. Movie id is the key and normalized score is the value.
 
     :return: trending_scores in the form a of a dictionary
@@ -44,10 +48,14 @@ def get_trending_scores():
 
 def get_matrices():
     """
+    Author: Gustaf Norberg
+    Date: 2017-11-09
+    Last update: 2017-11-09
+    Purpose:
     Returns train matrix, test matrix and new users matrix where all are randomly split into parts of 80 %, 10 % and
     10 % respectively
 
-    :return: training matrix, testing matrix and new users matrix in the form of numpy matricies
+    :return: training matrix, testing matrix and new users matrix in the form of numpy matrices
     """
 
     train_user_list = []
@@ -85,6 +93,10 @@ def get_matrices():
 
 def get_train_matrix():
     """
+    Author: Marten Bolin / John Lidquist
+    Date: 2017-10-02
+    Last update: 2017-11-06 by Gustaf Norberg
+    Purpose:
     returns the train matrix. The matrix is 80% (4/5) of the user ratings at the moment
     OBS! coo_matrix is a sparse matrix and will (most likely) have the same dimensions for train_matrix, test_matrix and
     new_user_matrix
@@ -109,6 +121,10 @@ def get_train_matrix():
 
 def get_test_matrix():
     """
+    Author: Gustaf Norberg / Alexander Dahl
+    Date: 2017-11-06
+    Last update: 2017-11-06
+    Purpose:
     returns the test matrix. The matrix is 10% of the user ratings at the moment
 
     :return: test matrix in the form of a numpy matrix
@@ -130,7 +146,11 @@ def get_test_matrix():
 
 def get_new_users_matrix():
     """
-    returns the new users matrix. The matrix is 10 % of the user ratings. Is used for showing that model is evolving
+    Author: Gustaf Norberg
+    Date: 2017-11-06
+    Last update: 2017-11-06
+    Purpose: returns the new users matrix. The matrix is 10 % of the user ratings.
+    Is used for showing that model is evolving
 
     :return: new users matrix in the form of a numpy matrix
     """
@@ -151,7 +171,10 @@ def get_new_users_matrix():
 
 def get_movie_title(movie_id):
     """
-    returns the movie title from a movie id input
+    Author: Alexander Dahl
+    Date: 2017-11-01
+    Last update: 2017-11-01
+    Purpose: returns the movie title from a movie id input
 
     :param movie_id:
     :return: movie name as string

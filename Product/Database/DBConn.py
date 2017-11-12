@@ -10,7 +10,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 try:
-    PRODUCTION_DATABASE = os.environ['PRODUCTION_DATABASE'] == 1
+    PRODUCTION_DATABASE = os.environ['PRODUCTION_DATABASE'] == '1'
 except KeyError:
     PRODUCTION_DATABASE = False
 finally:

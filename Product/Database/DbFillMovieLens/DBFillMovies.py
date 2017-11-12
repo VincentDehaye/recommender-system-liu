@@ -1,5 +1,5 @@
 from Product.Database.DBConn import session, Movie, MovieInGenre, Genre
-import csv, re, os.path
+import csv, re, os.path, os
 
 class FillMovies:
 
@@ -23,14 +23,32 @@ class FillMovies:
         # Read the movie.csv file to add data into database
         # Columns in the ratings.csv: movieID, titleAndYear, Genres
         if smallDataSet:
-            fullpath = 'DbFillMovieLens/smallMovies.csv'
-            path = os.path.abspath(fullpath)
+            try:
+                DOCKER = os.environ['DOCKER'] == '1'
+            except KeyError:
+                DOCKER = false
+            finally:
+                if DOCKER:
+                    fullpath = 'Product/Database/DbFillMovieLens/smallMovies.csv'
+                else:
+                    fullpath = 'DbFillMovieLens/smallMovies.csv'
+
+                path = os.path.abspath(fullpath)
             # /home/marbo914/PycharmProjects/Software/Product/Database/DbFillMovieLens/smallMovies.csv
-            print("Starting to fill movies from small data set..")
+                print("Starting to fill movies from small data set..")
         else:
-            fullpath = 'DbFillMovieLens/movies.csv'
-            path = os.path.abspath(fullpath)
-            print("Starting to fill movies from BIG data set..")
+            try:
+                DOCKER = os.environ['DOCKER'] == '1'
+            except KeyError:
+                DOCKER = false
+            finally:
+                if DOCKER:
+                    fullpath = 'Product/Database/DbFillMovieLens/smallMovies.csv'
+                else:
+                    fullpath = 'DbFillMovieLens/movies.csv'
+
+                path = os.path.abspath(fullpath)
+                print("Starting to fill movies from BIG data set..")
 
         with open(path, 'rt', encoding="utf-8") as f:
             reader = csv.reader(f)
@@ -78,6 +96,3 @@ class FillMovies:
 
         # Close the csv file
         f.close()
-
-
-

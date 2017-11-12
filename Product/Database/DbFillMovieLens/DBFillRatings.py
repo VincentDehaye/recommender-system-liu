@@ -11,13 +11,31 @@ class FillRatings:
     def Fill(self, smallDataSet):
 
         if smallDataSet:
-            fullpath = 'DbFillMovieLens/smallRatings.csv'
-            path = os.path.abspath(fullpath)
-            print("Starting to fill ratings from small data set..")
+            try:
+                DOCKER = os.environ['DOCKER'] == '1'
+            except KeyError:
+                DOCKER = false
+            finally:
+                if DOCKER:
+                    fullpath = 'Product/Database/DbFillMovieLens/smallRatings.csv'
+                else:
+                    fullpath = 'DbFillMovieLens/smallRatings.csv'
+
+                path = os.path.abspath(fullpath)
+                print("Starting to fill ratings from small data set..")
         else:
-            fullpath = 'DbFillMovieLens/ratings.csv'
-            path = os.path.abspath(fullpath)
-            print("Starting to fill ratings from BIG data set..")
+            try:
+                DOCKER = os.environ['DOCKER'] == '1'
+            except KeyError:
+                DOCKER = false
+            finally:
+                if DOCKER:
+                    fullpath = 'Product/Database/DbFillMovieLens/ratings.csv'
+                else:
+                    fullpath = 'DbFillMovieLens/ratings.csv'
+
+                path = os.path.abspath(fullpath)
+                print("Starting to fill ratings from BIG data set..")
 
         with open(path, 'rt') as f:
             reader = csv.reader(f)

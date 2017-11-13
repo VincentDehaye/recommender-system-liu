@@ -1,9 +1,8 @@
-from django.conf.urls import url
-from django.contrib.staticfiles.views import serve
-from django.views.generic import RedirectView
+from django.conf.urls import include, url
 
 from . import views
 
 urlpatterns = [
-    url(r'^v1/recommendations', views.RecommendationsView.as_view(), name='recommendations')
+    url(r'^api/v1/recommendations', views.RecommendationsView.as_view(), name='recommendations'),
+    url(r'^api/v1/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

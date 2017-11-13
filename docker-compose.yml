@@ -25,10 +25,11 @@ services:
     expose:
       - "8000"
     environment:
-      DOCKER: 1
-      PRODUCTION_DATABASE: 1
-      DATA_DATABASE_HOST: "data_db"
-      WEBSITE_DATABASE_HOST: "website_db"
+      - DOCKER=1
+      - PRODUCTION_DATABASE=1
+      - DATA_DATABASE_HOST=data_db
+      - WEBSITE_DATABASE_HOST=website_db
+      - PRODUCTION=${PRODUCTION}
 
   website_db:
     image: postgres:latest
@@ -37,5 +38,5 @@ services:
   data_db:
     image: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: main
+      - MYSQL_ROOT_PASSWORD=example
+      - MYSQL_DATABASE=main

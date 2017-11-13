@@ -3,33 +3,35 @@
 # Updated: 2017-10-03
 # Purpose: Controller class for the trending module. Gets data, calculates a score
 # and sends it to the database API.
-
-
 from Product.TrendManager.YoutubeAPI import YoutubeAPI
 from Product.TrendManager.TwitterAPI import TwitterAPI
 
 
 class TrendingController:
+    """""
+    Class responsible for fetching the trending score from the api sources.
+    """
 
-    def __init__(self):
-        self.youtubeapi = YoutubeAPI()
-        self.twitterapi = TwitterAPI()
-        # SendToDatabase(scoredMovie)
-
-    def get_trending_content(self, searchterm):
-        return self.total_score_calc(searchterm)
+    def get_trending_content(self, search_term):
+        """
+        Author: Albin Bergvall, Martin Lundberg
+        Takes a movie title (search_term) and make the search in the
+        api sources and returns a numeric result for each api source.
+        :param search_term:
+        :return:
+        """
+        return self.total_score_calc(search_term)
 
     def total_score_calc(self, keyword):
-        totalscore = 0
-        youtubescore = self.youtubeapi.get_youtube_score(keyword)
-        twitterscore = self.twitterapi.get_twitter_score(keyword)
-        # add more scoreres as needed
-        totalscore += youtubescore + twitterscore
-        return totalscore, youtubescore, twitterscore
-
-
-if __name__ == "__main__":
-    #keyword = input()
-    tc = TrendingController()
-    #print(tc.get_trending_content(keyword).score)
-    #tc.get_trending_content(keyword)
+        """
+        Author: Albin Bergvall, Martin Lundberg
+        Takes the movie title (keyword) as a parameter and fetches score from the api sources
+        and returns a numeric result.
+        :param keyword:
+        :return: total_score, youtube_score, twitter_score
+        """
+        total_score = 0
+        youtube_score = YoutubeAPI().get_youtube_score(keyword)
+        twitter_score = TwitterAPI().get_twitter_score(keyword)
+        total_score += youtube_score + twitter_score
+        return total_score, youtube_score, twitter_score

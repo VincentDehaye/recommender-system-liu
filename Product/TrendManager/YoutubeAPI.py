@@ -193,6 +193,23 @@ class YoutubeAPI:
 
         return id_list
 
+    def get_channel_id(self, keyword):
+        """
+        Getting the channel id for each video
+        :param keyword: keyword, e.g. movie-title
+        :return: channel for each video in list
+        """
+        search_response = self.youtube.videos().list(
+            part="statistics, snippet",
+            id=self.get_video_id(keyword)
+        ).execute()
+        channel_id_list = ""
+        for video in search_response.get("items", []):
+            channel_id = video.get("snippet").get("channelId")
+            if channel_id:
+                channel_id_list = channel_id + ", " + channel_id_list
+        return channel_id_list
+
     @staticmethod
     def get_date(days):
         """

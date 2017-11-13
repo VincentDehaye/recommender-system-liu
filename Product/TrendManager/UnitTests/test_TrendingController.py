@@ -1,5 +1,4 @@
-from ..TrendingController import  TrendingController
-from ..ScoredMovie import ScoredMovie
+from ..TrendingController import TrendingController
 
 def test_get_trending_content_standard_case():
     """

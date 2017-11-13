@@ -55,7 +55,7 @@ class TwitterAPI:
         score_old = None
         words = title.split()
         for word in words:
-            word = format_word(word)
+            word = self.format_word(word)
             score_new = self.get_word_score(word, score_new, self.all_words_new)
             score_old = self.get_word_score(word, score_old, self.all_words_old)
         if score_new < 10:
@@ -81,14 +81,16 @@ class TwitterAPI:
         return score
 
     def load_new_dict(self):
-        yesterday = datetime.datetime.today() - timedelta(1)
-        path = tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
+        # yesterday = datetime.datetime.today() - timedelta(1)
+        # path = tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
+        path = tweets_data_path + "_sample1.bin"
         with open(path, 'rb') as f:
             self.all_words_new = pickle.load(f)
 
     def load_old_dict(self):
-        earlier_date = datetime.datetime.today() - timedelta(7)
-        path = tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
+        # earlier_date = datetime.datetime.today() - timedelta(7)
+        # path = tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
+        path = tweets_data_path + "_sample2.bin"
         with open(path, 'rb') as f:
             self.all_words_old = pickle.load(f)
 
@@ -101,6 +103,16 @@ class TwitterAPI:
             print(k, ": ", v)
 
 
+    def format_word(self, word):
+        word = word.lower()
+        word = word.strip(" ")
+        regex = re.compile('[^a-z0-9]')
+        word = regex.sub('', word)
+        if word == "" or word.startswith("httpstco"):
+            return None
+        return word
+
+
 def word_in_text(word, text):
     word = word.lower()
     text0 = str(text)
@@ -109,16 +121,6 @@ def word_in_text(word, text):
     if match:
         return True
     return False
-
-
-def format_word(word):
-    word = word.lower()
-    word = word.strip(" ")
-    regex = re.compile('[^a-z0-9]')
-    word = regex.sub('', word)
-    if word == "" or word.startswith("httpstco"):
-        return None
-    return word
 
 
 # This is a basic listener that runs
@@ -141,13 +143,22 @@ class StdOutListener(StreamListener):
             word = status.text
             words = status.text.split()
             for word in words:
-                word = format_word(word)
+                word = self.format_word(word)
                 if word is not None:
                     self.update_count(word)
                 return True
         else:
             self.store_dict()
             return False
+
+    def format_word(self, word):
+        word = word.lower()
+        word = word.strip(" ")
+        regex = re.compile('[^a-z0-9]')
+        word = regex.sub('', word)
+        if word == "" or word.startswith("httpstco"):
+            return None
+        return word
 
     def on_error(self, status):
         self.store_dict()
@@ -172,7 +183,7 @@ class StdOutListener(StreamListener):
 # For testing purposes
 if __name__ == '__main__':
     twAPI = TwitterAPI()
-    # twAPI.open_twitter_stream()
+    #twAPI.open_twitter_stream()
     # twAPI.print_dict()
-    print(twAPI.get_twitter_score("batman"))
+    print(twAPI.get_twitter_score("thor"))
 

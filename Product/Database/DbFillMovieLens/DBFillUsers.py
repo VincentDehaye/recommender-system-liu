@@ -1,19 +1,29 @@
-from Product.Database.DBConn import session
 from Product.Database.DBConn import User
+from Product.Database.DBConn import create_session
+
+'''
+Author: John Andree Lidquist, Marten Bolin
+Date: 12/10/2017
+Last update: 9/11/2017
+Purpose: Adds 700 users to the database to be used together
+with the Movielens data set.
+'''
+
 import random
 
 # Adds 700 users as is used in the Movielens data set.
 # Due to no csv file with user they are just added by a loop for now
 class FillUsers:
     def __init__(self):
-        self.Fill()
+        self.session = create_session()
+        self.fill()
 
-    def Fill(self):
+    def fill(self):
         print("Starting to fill 700 users, not based on big or small data set..")
-        for i in range(1,701):
+        for i in range(1, 701):
             new_user = User(id=i)
-            session.add(new_user)
-        session.commit()
+            self.session.add(new_user)
+        self.session.commit()
         print("DONE - Users added")
     # def Fill(self):
     #     def GenerateUser(id):

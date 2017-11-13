@@ -1,10 +1,12 @@
-from Product.TrendManager.TrendingController import TrendingController
-from Product.Database.Retrieve.RetrieveTrending import RetrieveTrending
-from Product.Database.Insert.InsertTrending import InsertTrending
-from Product.Database.Update.UpdateTrending import UpdateTrending
+import threading
+
 from Product.Database.Retrieve.RetrieveMovie import RetrieveMovie
 from apscheduler.schedulers.background import BackgroundScheduler
-import threading
+
+from Product.Database.DatabaseManager.Insert.InsertTrending import InsertTrending
+from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
+from Product.Database.DatabaseManager.Update.UpdateTrending import UpdateTrending
+from Product.TrendManager.TrendingController import TrendingController
 
 
 class TrendingToDB(object):

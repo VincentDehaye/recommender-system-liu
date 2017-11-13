@@ -1,5 +1,5 @@
-from Product.Database.Insert.Insert import Insert
 from Product.Database.DBConn import TrendingScore
+from Product.Database.DatabaseManager.Insert.Insert import Insert
 
 '''
 Author: John Andree Lidquist, Marten Bolin

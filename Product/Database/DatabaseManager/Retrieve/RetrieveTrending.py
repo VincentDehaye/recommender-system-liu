@@ -1,6 +1,8 @@
-from Product.Database.Retrieve.Retrieve import Retrieve
-from Product.Database.DBConn import TrendingScore
 from sqlalchemy import desc
+
+from Product.Database.DBConn import TrendingScore
+from Product.Database.DatabaseManager.Retrieve.Retrieve import Retrieve
+
 '''
 Author: John Andree Lidquist, Marten Bolin
 Date: 9/11/2017

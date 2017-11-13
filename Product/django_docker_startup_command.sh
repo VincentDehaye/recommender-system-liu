@@ -1,5 +1,5 @@
 #!/bin/bash
-res=6
+res=0
 while [ $res -ne 52 ]
 do
 	sleep 1

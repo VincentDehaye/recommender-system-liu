@@ -23,7 +23,6 @@ class TrendingController:
         totalscore = 0
         youtubescore = self.youtubeapi.get_youtube_score(keyword)
         twitterscore = self.twitterapi.get_twitter_score(keyword)
-
         # add more scoreres as needed
         totalscore += youtubescore + twitterscore
         return totalscore, youtubescore, twitterscore

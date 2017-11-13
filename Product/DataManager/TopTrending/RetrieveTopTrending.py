@@ -1,6 +1,7 @@
 from Product.Database.Retrieve.RetrieveMovie import RetrieveMovie
-from Product.Database.Retrieve.RetrieveTrending import RetrieveTrending
-from Product.DataManager.TopTrending.TopTrendingList import TopTrending
+
+from Product.DataManager.TopTrending.TopTrendingList import TopTrendingList
+from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
 
 
 class RetrieveTopTrending:
@@ -15,7 +16,7 @@ class RetrieveTopTrending:
             movie = self.movie_getter.retrieve_movie(entry.movie_id)
             title_list.append(movie.title)
             score_list.append(self.get_score(entry))
-        return TopTrending(title_list, score_list)
+        return TopTrendingList(title_list, score_list)
 
     # This method gets overridden in RetrieveTopTrendingYoutube/Twitter so that the right score is added
     def get_score(self, entry):

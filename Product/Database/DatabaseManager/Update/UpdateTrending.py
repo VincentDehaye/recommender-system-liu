@@ -1,5 +1,6 @@
-from Product.Database.Update.Update import Update
 from Product.Database.DBConn import TrendingScore
+from Product.Database.DatabaseManager.Update.Update import Update
+
 '''
 Author: John Andree Lidquist, Marten Bolin
 Date: 9/11/2017

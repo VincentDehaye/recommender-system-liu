@@ -26,7 +26,7 @@ tweets_data_path = 'trendingdata/twitter_data'
 # Variables for tracked keywords in search, time until the stream stops and interval for saving to file
 tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3' etc.
 time_limit = 7200  # in seconds
-interval = 600  # in seconds
+interval = 5  # in seconds
 
 
 class TwitterAPI:
@@ -55,7 +55,7 @@ class TwitterAPI:
         score_old = None
         words = title.split()
         for word in words:
-            word = format_word(word)
+            word = self.format_word(word)
             score_new = self.get_word_score(word, score_new, self.all_words_new)
             score_old = self.get_word_score(word, score_old, self.all_words_old)
         if score_new < 10:
@@ -100,6 +100,14 @@ class TwitterAPI:
         for v, k in allwords_view:
             print(k, ": ", v)
 
+    def format_word(self, word):
+        word = word.lower()
+        word = word.strip(" ")
+        regex = re.compile('[^a-z0-9]')
+        word = regex.sub('', word)
+        if word == "" or word.startswith("httpstco"):
+            return None
+        return word
 
 def word_in_text(word, text):
     word = word.lower()
@@ -110,17 +118,6 @@ def word_in_text(word, text):
         return True
     return False
 
-
-def format_word(word):
-    word = word.lower()
-    word = word.strip(" ")
-    regex = re.compile('[^a-z0-9]')
-    word = regex.sub('', word)
-    if word == "" or word.startswith("httpstco"):
-        return None
-    return word
-
-
 # This is a basic listener that runs
 class StdOutListener(StreamListener):
 
@@ -130,6 +127,8 @@ class StdOutListener(StreamListener):
         self.interval_time = interval_time
         self.interval = self.interval_time
         self.all_words = {}
+
+
         super(StdOutListener, self).__init__()
 
     def on_status(self, status):
@@ -141,13 +140,22 @@ class StdOutListener(StreamListener):
             word = status.text
             words = status.text.split()
             for word in words:
-                word = format_word(word)
+                word = self.format_word(word)
                 if word is not None:
                     self.update_count(word)
                 return True
         else:
             self.store_dict()
             return False
+
+    def format_word(self, word):
+        word = word.lower()
+        word = word.strip(" ")
+        regex = re.compile('[^a-z0-9]')
+        word = regex.sub('', word)
+        if word == "" or word.startswith("httpstco"):
+            return None
+        return word
 
     def on_error(self, status):
         self.store_dict()

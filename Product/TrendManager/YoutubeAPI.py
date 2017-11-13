@@ -1,9 +1,11 @@
 """
 Search module for the YouTube API
 """
+
 import datetime
 
 import pytz as pytz
+
 from googleapiclient.discovery import build
 
 # Set DEVELOPER_KEY to the API key value from the APIs & auth > Registered apps
@@ -16,10 +18,12 @@ YOUTUBE_API_VERSION = "v3"
 
 
 class YoutubeAPI:
-
+    """
+    Class responsible for retrieving data from Youtube
+    and calculate a trending score based on this data
+    """
 
     def __init__(self):
-        # self.options = self.get_arguments(30,10)
         self.max_results = 10
         self.category_id = 24
         self.type = "video"
@@ -29,11 +33,11 @@ class YoutubeAPI:
 
     def get_youtube_data(self, keyword):
         """
-        Getting the the result from the search with keyword
+        Author: Karl Lundvall
+        Purpose: Getting the the result from the search with keyword
         :param keyword: keyword, e.g. movie-title
-        :return:
+        :return: search response from Youtube API
         """
-
         search_response = self.youtube.search().list(
             q=keyword,
             part="snippet",
@@ -46,7 +50,9 @@ class YoutubeAPI:
 
     def get_youtube_score(self, keyword):
         """
-        Getting video statistics for the selected videoId´s
+        Author: Karl Lundvall, Linn Pettersson
+        Last update: 12/11/2017
+        Purpose: Getting video statistics for the selected videoId´s
         and calculating total trending score
         :param keyword: keyword, e.g. movie-title
         :return: the total trending score for keyword
@@ -58,7 +64,7 @@ class YoutubeAPI:
             id=self.get_video_id(keyword)
         ).execute()
 
-        total_results = self.get_total_search_result(keyword)
+        search_results = self.get_total_search_result(keyword)
 
         total_score = 0
 
@@ -76,23 +82,31 @@ class YoutubeAPI:
             if publication_date != 0:
                 score *= publication_date
 
+            # Total score per video
             total_score += score
-        total_score *= total_results
+
+        # Total score for a keyword search
+        total_score *= search_results
         total_score = int(round(total_score))
         return total_score
 
-    def add_search_words(self, keyword):
+    @staticmethod
+    def add_search_words(keyword):
         """
-        Takes the movie title and adds more words to the search of the API
+        Author: Linn Pettersson
+        Date: 7/11/2017
+        Purpose: Takes the movie title and adds more words to the search of the API
         :param keyword: keyword e.g. movie-title
         :return: new search term
         """
         search_term = keyword + " movie trailer"
         return search_term
 
-    def get_view_count(self, video):
+    @staticmethod
+    def get_view_count(video):
         """
-        Getting view count
+        Author: Karl Lundvall
+        Purpose: Getting view count
         :param video: search result from API response
         :return: number of views
         """
@@ -101,25 +115,27 @@ class YoutubeAPI:
             return 0
         return int(views)
 
-    def get_like_count(self, video):
+    @staticmethod
+    def get_like_count(video):
         """
-        Getting like and dislike count and calculates the ratio
+        Author: Linn Pettersson
+        Purpose: Getting like and dislike count and calculates the ratio
         :param video: search result from API response
         :return: ratio of dislikes/likes
         """
         likes = 0
         get_likes = video.get("statistics").get("likeCount")
-        if not get_likes is None:
+        if get_likes is not None:
             likes = int(get_likes)
 
         dislikes = 0
         get_dislikes = video.get("statistics").get("dislikeCount")
-        if not get_dislikes is None:
+        if get_dislikes is not None:
             dislikes = int(get_dislikes)
 
         if likes != 0 and dislikes != 0:
-            ratio = 1 - (dislikes / likes)
-        elif likes != 0:
+            ratio = 1 - (dislikes/likes)
+        elif likes != 0:  # If only likes is not equal to 0, the video has 100 % likes
             ratio = 1
         else:
             ratio = 0
@@ -128,22 +144,28 @@ class YoutubeAPI:
 
     def get_total_search_result(self, keyword):
         """
-        Getting the total number of results for a movie search and then
+        Atuhor: Linn Pettersson
+        Date: 7/11/2017
+        Purpose: Getting the total number of results for a movie search and then
         dividing it by max result (1 000 000) to get a percentage to use in
         trending calculations
         :param keyword: kyeword, e.g. movie-title
         :return: totalResult ratio
         """
         total_result = self.get_youtube_data(keyword).get("pageInfo").get("totalResults")
+
+        # Number of total results are divided by the maximum possible number of results
         result_ratio = total_result / 1000000
         return result_ratio
 
-
     def get_publication_date(self, video):
         """
-        Getting the date when a video was uploaded
-        :param keyword: keyword, e.g. movie-title
-        :return: int representing how many days ago a video was uploaded
+        Author: Linn Pettersson
+        Date: 9/11/2017
+        Last update: 10/11/2017
+        Purpose: Getting the date when a video was uploaded
+        :param video: search result from API response
+        :return: number between 0 and 1 were 1 represents a video updated 0 days ago
         """
         curr_date = datetime.datetime.today()
 
@@ -153,47 +175,32 @@ class YoutubeAPI:
         days_ago_datetime = curr_date - published_at
         days_ago = int(days_ago_datetime.days)
 
-        return 1 - (days_ago / self.published)
-
+        # self.published is the variable used in the Youtube API search
+        return 1 - (days_ago/self.published)
 
     def get_video_id(self, keyword):
         """
-        Getting the videoId´s from the query
+        Author: Karl Lundvall
+        Purpose: Getting the videoId´s from the query
         :param keyword: keyword, e.g. movie-title
-        :return:
+        :return: a list containing Youtube video id's
         """
-        id = ""
-        idList = ""
+        id_list = ""
         for search_result in self.get_youtube_data(keyword).get("items", []):
-            id = search_result.get("id").get("videoId")
-            if id:
-                idList = id + ", " + idList
+            video_id = search_result.get("id").get("videoId")
+            if video_id:
+                id_list = video_id + ", " + id_list
 
-        return idList
+        return id_list
 
-    def get_date(self, days):
+    @staticmethod
+    def get_date(days):
         """
-        Getting the date for the inputted number of days ago
+        Author: Karl Lundvall
+        Purpose: Getting the date for the inputted number of days ago
         :param days: number of days ago
-        :return:
+        :return: date from specified number of days ago
         """
         date = datetime.datetime.utcnow() - datetime.timedelta(days=days)
         date_with_timezone = date.replace(tzinfo=pytz.UTC)
         return date_with_timezone.isoformat()
-
-
-def main():
-    """
-    Main method.
-    :return:
-    """
-    #arguments = get_arguments(30, 10)
-
-    #try:
-    #    youtube_search(arguments)
-    #except HttpError as error:
-    #    print("An HTTP error %d occurred:\n%s" % (error.resp.status, error.content))
-
-
-if __name__ == "__main__":
-    main()

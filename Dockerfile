@@ -1,5 +1,6 @@
 FROM python:3.4.3
 ENV PYTHONUNBUFFERED 1
+ENV PYTHONPATH="${PYTHONPATH}:/src/Product/"
 RUN mkdir -p /config/Product
 ADD requirements.txt /config/
 ADD Product/requirements.txt /config/Product/

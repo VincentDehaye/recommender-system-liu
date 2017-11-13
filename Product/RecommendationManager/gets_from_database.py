@@ -36,8 +36,9 @@ def get_trending_scores():
     Last update: 2017-11-01
     Purpose:
     fills a dictionary with trending scores. Movie id is the key and normalized score is the value.
-
     :return: trending_scores in the form a of a dictionary
+    
+    ### method only used by files in archive!
     """
     trending_scores = {}
 

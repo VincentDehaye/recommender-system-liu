@@ -57,6 +57,7 @@ def test_get_date_standard_case():
 
     assert output is output.format(expected)
 
+
 def test_get_date_bad_input():
     """
     Author: Karl Lundvall
@@ -77,6 +78,7 @@ def test_get_date_bad_input():
     output = youtube.get_date(days)
 
     assert output.format(expected1) is not expected2
+
 
 def test_get_video_id():
     """

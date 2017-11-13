@@ -1,6 +1,6 @@
 import csv
 import re
-import os.path
+import os
 from Product.Database.DBConn import create_session, Movie, MovieInGenre, Genre
 
 '''
@@ -34,26 +34,10 @@ class FillMovies:
         # Read the movie.csv file to add data into database
         # Columns in the ratings.csv: movieID, titleAndYear, Genres
         if small_data_set:
-            path = 'DbFillMovieLens/smallMovies.csv'
-            abspath = os.path.abspath(path)
-            # If run in gitlab runner change to correct path
-            try:
-                f = open(abspath, 'rt', encoding="utf-8")
-                f.close()
-            except FileNotFoundError:
-                path = 'Product/Database/DbFillMovieLens/smallMovies.csv'
-                abspath = os.path.abspath(path)
+            abspath = os.path.dirname(os.path.abspath(__file__)) + '/smallMovies.csv'
             print("Starting to fill movies from small data set..")
         else:
-            path = 'DbFillMovieLens/movies.csv'
-            abspath = os.path.abspath(path)
-            # If run in gitlab runner change to correct path
-            try:
-                f = open(abspath, 'rt', encoding="utf-8")
-                f.close()
-            except FileNotFoundError:
-                path = 'Product/Database/DbFillMovieLens/smallMovies.csv'
-                abspath = os.path.abspath(path)
+            abspath = os.path.dirname(os.path.abspath(__file__)) + '/movies.csv'
             print("Starting to fill movies from BIG data set..")
 
         with open(abspath, 'rt', encoding="utf-8") as f:

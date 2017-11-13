@@ -2,6 +2,7 @@
 Recommendation Class.
 """
 import numpy as np
+import os
 from Product.RecommendationManager import generate_model as generate_model
 from Product.RecommendationManager import gets_from_database as gets_from_database
 from Product.RecommendationManager.Recommendation.recommendation_list import RecommendationList
@@ -33,7 +34,8 @@ class Recommendation(object):
 
         """
         # TODO should the class assume that there is a model named 'new_model.sav'?
-        self.model = generate_model.load_model('../new_model.sav')
+        path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.model = generate_model.load_model(path + '/new_model.sav')
         self.user_id = user_id
         # right now lim is hard coded to number of movies to be recommended times 3
         # TODO create some logic for how big the limit should be

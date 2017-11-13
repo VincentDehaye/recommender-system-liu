@@ -9,6 +9,7 @@
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
+import os
 import re
 import time
 import datetime
@@ -21,7 +22,7 @@ access_token = "911929395799035905-m0LQX9L0N3C47hCWG9tCDrIVWT6o9To"
 access_token_secret = "gVdDlTqgqXx1JgjiaaGCLYmJV0vu3OkIKT7wMSAXniHyF"
 consumer_key = "o5gC0O5nmnRhj7H1iRdq0LxBu"
 consumer_secret = "Ef9M26RLwi6cZvsaESrFtuzffzgD3sNy7UnezOqzWbs5IDh2mY"
-tweets_data_path = 'trendingdata/twitter_data'
+tweets_data_path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata/twitter_data'
 
 # Variables for tracked keywords in search, time until the stream stops and interval for saving to file
 tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3' etc.
@@ -186,4 +187,3 @@ if __name__ == '__main__':
     #twAPI.open_twitter_stream()
     # twAPI.print_dict()
     print(twAPI.get_twitter_score("thor"))
-

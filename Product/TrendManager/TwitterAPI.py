@@ -25,8 +25,8 @@ tweets_data_path = 'trendingdata/twitter_data'
 
 # Variables for tracked keywords in search, time until the stream stops and interval for saving to file
 tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3' etc.
-time_limit = 7200  # in seconds
-interval = 600  # in seconds
+time_limit = 43200  # in seconds
+interval = 1200  # in seconds
 
 
 class TwitterAPI:
@@ -62,7 +62,7 @@ class TwitterAPI:
             score_new = 10
         if score_old < 10:
             score_old = 10
-        print("Old:", score_old, "New:", score_new)
+        # print("Old:", score_old, "New:", score_new)
         score_ratio = self.chi_square(score_new, score_old)
         return score_ratio
 
@@ -81,14 +81,16 @@ class TwitterAPI:
         return score
 
     def load_new_dict(self):
-        yesterday = datetime.datetime.today() - timedelta(1)
-        path = tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
+        # yesterday = datetime.datetime.today() - timedelta(1)
+        # path = tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
+        path = tweets_data_path + "_sample1.bin"
         with open(path, 'rb') as f:
             self.all_words_new = pickle.load(f)
 
     def load_old_dict(self):
-        earlier_date = datetime.datetime.today() - timedelta(7)
-        path = tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
+        # earlier_date = datetime.datetime.today() - timedelta(7)
+        # path = tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
+        path = tweets_data_path + "_sample2.bin"
         with open(path, 'rb') as f:
             self.all_words_old = pickle.load(f)
 
@@ -174,5 +176,5 @@ if __name__ == '__main__':
     twAPI = TwitterAPI()
     # twAPI.open_twitter_stream()
     # twAPI.print_dict()
-    print(twAPI.get_twitter_score("batman"))
+    # print(twAPI.get_twitter_score("rt"))
 

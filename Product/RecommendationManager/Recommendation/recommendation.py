@@ -7,6 +7,8 @@ from Product.RecommendationManager import generate_model as generate_model
 from Product.Database.DBConn import session, TrendingScore
 from Product.RecommendationManager import gets_from_database as gets_from_database
 from Product.RecommendationManager.Recommendation.recommendation_list import RecommendationList
+from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
+from Product.Database.DatabaseManager.Retrieve.Retrieve import Retrieve
 
 
 # At this point we assume that there is a file named new_model.sav
@@ -41,8 +43,9 @@ class Recommendation(object):
         # TODO create some logic for how big the limit should be
         self.lim = size*3
         self.size = size
-        # TODO move trending_content_meta to DataBaseManager
-        self.trending_content_meta = session.query(TrendingScore.movie_id, TrendingScore.normalized_score).order_by(TrendingScore.normalized_score.desc()).limit(self.lim).all()
+        # this instantiates RetrieveTrending() class in the database manager and
+        # gets limit number of TrendingScore classes.
+        self.trending_content_meta = RetrieveTrending().retrieve_trend_score(number_of_titles=self.lim)
 
     @staticmethod
     def normalize_user_scores(scores):
@@ -72,16 +75,19 @@ class Recommendation(object):
         example:
         {'user_id': 55, 'recommendation_list' : [{'title': 'It', 'score': 1.586134233975164, 'id': 24}]}
         """
-        trending_id = [id[0] for id in self.trending_content_meta]
+        trending_id = [id.movie_id for id in self.trending_content_meta]
         recommendation_list_score = self.model.predict(self.user_id, np.array(trending_id))
         norm_recommendation_list_score = self.normalize_user_scores(recommendation_list_score).tolist()
-        trending_score = [score[1] for score in self.trending_content_meta]
+        trending_score = [score.total_score for score in self.trending_content_meta]
+        # normalize trending score
+        norm_trending_score = self.normalize_user_scores(trending_score)
         # trending_weight is 1 at the moment
-        trending_weight=1
+        trending_weight = 1
         # Here is the formula that can be altered at some point
-        final_recommendation_list_score = [rec+trending_weight*trend for rec, trend in zip(norm_recommendation_list_score,trending_score)]
+        final_recommendation_list_score = [rec+trending_weight*trend for rec, trend
+                                           in zip(norm_recommendation_list_score, norm_trending_score)]
         # gets the movie titles for the movie ids
-        movie_titles = [gets_from_database.get_movie_title(id[0]) for id in self.trending_content_meta]
+        movie_titles = [gets_from_database.get_movie_title(id.movie_id) for id in self.trending_content_meta]
         # combines the movie_ids and movie_titles with the recommendation scores
         full_recommendation_list = list(map(list,zip(trending_id,movie_titles,final_recommendation_list_score)))
         # sorts the list on scores (index 2)
@@ -94,7 +100,7 @@ class Recommendation(object):
             sorted_complete_recommendation_list.append({'id': item[0],
                                                         'title': item[1],
                                                         'score': item[2]})
-        #print(sorted_complete_recommendation_list)
+        # print(sorted_complete_recommendation_list)
         return RecommendationList(self.user_id, sorted_complete_recommendation_list)
 
 print(Recommendation(55, 10).generate_recommendation_list().__dict__)

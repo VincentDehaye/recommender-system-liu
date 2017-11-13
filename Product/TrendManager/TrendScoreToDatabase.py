@@ -1,6 +1,6 @@
 import threading
 
-from Product.Database.Retrieve.RetrieveMovie import RetrieveMovie
+from Product.Database.DatabaseManager.Retrieve import RetrieveMovie
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from Product.Database.DatabaseManager.Insert.InsertTrending import InsertTrending

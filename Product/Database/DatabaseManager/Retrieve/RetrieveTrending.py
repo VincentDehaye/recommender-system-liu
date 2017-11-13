@@ -17,7 +17,7 @@ class RetrieveTrending(Retrieve):
         """
         Author: John Andree Lidquist, Marten Bolin
         Date: 9/11/2017
-        Last update:
+        Last update: 2017-11-13 by Alexander Dahl
         Purpose: Supposed to retrieve the Trending score from database
         :param movie_id : the id of the movie that should be retrieved (optional)
         :param number_of_titles : the number of titles with the highest total score to be returned
@@ -26,7 +26,7 @@ class RetrieveTrending(Retrieve):
         if movie_id:
             trend = self.session.query(TrendingScore).filter_by(movie_id=movie_id).first()
         elif number_of_titles:
-            trend = self.session.query(TrendingScore).order_by(desc(TrendingScore.total_score)).limit(number_of_titles)
+            trend = self.session.query(TrendingScore).order_by(desc(TrendingScore.total_score)).limit(number_of_titles).all()
         else:
             trend = self.session.query(TrendingScore).all()
         self.session.close()

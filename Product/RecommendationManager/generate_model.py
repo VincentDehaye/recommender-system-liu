@@ -34,13 +34,15 @@ def load_model(filename):
     """
     Author: Alexander Dahl
     Date: 2017-10-08
-    Last update: 2017-10-08
+    Last update: 2017-11-03
     Purpose: loads trained model
     :param filename:
     :return: lightFM model
     """
-    return pickle.load(open(filename, 'rb'))
-
+    try:
+        return pickle.load(open(filename, 'rb'))
+    except FileNotFoundError:
+        print('Wrong file or file path')
 
 def test_precision(model, matrix, k):
     """
@@ -109,4 +111,4 @@ def evolve_model():
     print(np.shape(new_user_matrix))
 
 
-# evolve_model()
+#   evolve_model()

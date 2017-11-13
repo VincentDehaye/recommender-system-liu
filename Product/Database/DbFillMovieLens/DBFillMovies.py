@@ -38,6 +38,7 @@ class FillMovies:
             print("Starting to fill movies from small data set..")
         else:
             abspath = os.path.dirname(os.path.abspath(__file__)) + '/movies.csv'
+            print("Starting to fill movies from BIG data set..")
 
         with open(abspath, 'rt', encoding="utf-8") as f:
             reader = csv.reader(f)

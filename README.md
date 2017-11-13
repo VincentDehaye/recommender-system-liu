@@ -7,6 +7,8 @@
 
 * [Install LightFM](https://docs.google.com/document/d/1lThbge6BgZpE9xuhVv50D8TxVLCFZnQ4T0exulv_70o/edit)
 
+* [Run development server](https://gitlab.ida.liu.se/PUM-Company3/Software/blob/development/Product/README.md)
+
 ## Guidelines
 
 * [GitLab](https://drive.google.com/open?id=0B0-_5NZyjrIgNnNJb3FqOW5XVTQ)

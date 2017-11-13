@@ -74,12 +74,13 @@ WSGI_APPLICATION = 'project_config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+DATABASE_HOST = os.environ['WEBSITE_DATABASE_HOST']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'HOST': 'db',
+        'HOST': DATABASE_HOST,
         'PORT': 5432,
     }
 }
@@ -121,13 +122,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-
-ANGULAR_APP_DIR = os.path.join(BASE_DIR, 'static_angular')
-
-
-STATICFILES_DIRS = [
-    ANGULAR_APP_DIR
-]
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

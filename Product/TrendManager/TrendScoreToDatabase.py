@@ -1,8 +1,11 @@
-from Product.TrendManager.TrendingController import TrendingController
-from Product.Database.DBConn import session
-from Product.Database.DBConn import Movie, TrendingScore
-from apscheduler.schedulers.background import BackgroundScheduler
 import threading
+
+from apscheduler.schedulers.background import BackgroundScheduler
+from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
+from Product.Database.DatabaseManager.Insert.InsertTrending import InsertTrending
+from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
+from Product.Database.DatabaseManager.Update.UpdateTrending import UpdateTrending
+from Product.TrendManager.TrendingController import TrendingController
 
 
 class TrendingToDB(object):
@@ -17,6 +20,10 @@ class TrendingToDB(object):
         self.continous = continuous
         self.stop = False
         self.daily = daily
+        self.insert_trend = InsertTrending()
+        self.retrieve_trend = RetrieveTrending()
+        self.alter_trend = UpdateTrending()
+        self.retrieve_movie = RetrieveMovie()
 
         if daily & continuous:
             # if set to daily, it creates a scheduler and sets the interval to 1 day
@@ -40,51 +47,40 @@ class TrendingToDB(object):
         # 4. Go to step 1
         trend_controller = TrendingController()
 
-        # Getting the current maxScore from the DB to be able to normalize the values
-        result = session.query(TrendingScore).all()
-        maxScore = 1
-        for score in result:
-            if score.total_score > maxScore:
-                maxScore = score.total_score
-        print("The maxScore is: ", maxScore)
-
         while True:
             if self.stop:
                 break
-            res_movie = session.query(Movie).all()
+            res_movie = self.retrieve_movie.retrieve_movie()
 
             for movie in res_movie:
                 if self.stop:
                     break
-                res_score = session.query(TrendingScore).filter_by(movie_id=movie.id).first()
 
-                new_tot_score = trend_controller.get_trending_content(movie.title)  # gets new score
+                res_score = self.retrieve_trend.retrieve_trend_score(movie.id)
 
-                #Update maxScore if its higher than current maxScore
-                if new_tot_score > maxScore:
-                    maxScore = new_tot_score
+                scores = trend_controller.get_trending_content(movie.title)
+                new_tot_score = scores[0]  # Gets total score
+                new_youtube_score = scores[1]  # Gets Youtube score
+                new_twitter_score = scores[2]  # Gets Twittwer score
 
                 print("Movie ID:", movie.id)
-                print("MaxScore: ", maxScore)
-
-                normScore = new_tot_score/maxScore
 
                 if res_score:
-                    res_score.normalized_score = normScore
+
                     if new_tot_score != res_score.total_score:
                         # If score is new
                         res_score.total_score = new_tot_score
+                        self.alter_trend.update_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=new_youtube_score, twitter_score=new_twitter_score)
                 else:
                     # If movie is not in TrendingScore table
-                    movie = TrendingScore(movie_id=movie.id, normalized_score=normScore, total_score=new_tot_score, youtube_score=0,
-                                          twitter_score=0)
-                    session.add(movie)
+                    self.insert_trend.add_trend_score(movie_id=movie.id, total_score=new_tot_score, youtube_score=new_youtube_score,
+                                                      twitter_score=new_twitter_score)
+
                 # The commit is in the loop for now due to high waiting time but could be moved outside to lower
                 # total run time
-                session.commit()
 
             if not self.continous:
-                break;
+                break
 
         # Used to stop the thread if background is false or for any other reason it needs to be stopped.
     def terminate(self):
@@ -92,4 +88,3 @@ class TrendingToDB(object):
         self.stop = True
         if self.daily:
             self.scheduled.shutdown()
-

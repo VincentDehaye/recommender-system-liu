@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DataHandlerService} from '../../@core/data/data-handler.service';
+
 
 @Component({
   selector: 'ngx-users',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class UsersComponent implements OnInit {
-  list: any;
+  movies: string[];
+  data: any;
+
 
   paginationModel = 1;
 
@@ -16,7 +20,20 @@ export class UsersComponent implements OnInit {
     two: false,
   };
 
+  constructor(private dataHandlerService: DataHandlerService) { }
+
   ngOnInit() {
-    this.list = ['Erik', 'Erik', 'Erik', 'Erik', 'Erik'];
+    this.getData();
+    this.extractData();
+
+
+  }
+  public getData(){
+      this.dataHandlerService.getData().subscribe((data) => {
+      this.data = data;
+    }); // Converts the data making it reachable in the htm file
+  }
+   extractData() {
+    return null;
   }
 }

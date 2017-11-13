@@ -11,14 +11,8 @@
   </div>
     <div class="col-lg-4">
       <nb-card>
-        <nb-card-header>
-          <h1>TOP RECOMMENDATIONS</h1>
-        </nb-card-header>
-        <nb-card-body>
-          <h2 *ngFor="let item of list">
-            {{item}}
-          </h2>
-        </nb-card-body>
+          <nb-card-header>Top RECOMMENDATIONS</nb-card-header>
+          <nb-card-header *ngFor="let movie of data?.movies"> {{movie.name}} {{movie.id}} </nb-card-header>
       </nb-card>
     </div>
 </div>

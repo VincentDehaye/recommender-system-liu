@@ -62,7 +62,7 @@ class TwitterAPI:
             score_new = 10
         if score_old < 10:
             score_old = 10
-        # print("Old:", score_old, "New:", score_new)
+        print("Old:", score_old, "New:", score_new)
         score_ratio = self.chi_square(score_new, score_old)
         return score_ratio
 
@@ -102,6 +102,7 @@ class TwitterAPI:
         for v, k in allwords_view:
             print(k, ": ", v)
 
+
     def format_word(self, word):
         word = word.lower()
         word = word.strip(" ")
@@ -111,6 +112,7 @@ class TwitterAPI:
             return None
         return word
 
+
 def word_in_text(word, text):
     word = word.lower()
     text0 = str(text)
@@ -119,16 +121,6 @@ def word_in_text(word, text):
     if match:
         return True
     return False
-
-
-def format_word(word):
-    word = word.lower()
-    word = word.strip(" ")
-    regex = re.compile('[^a-z0-9]')
-    word = regex.sub('', word)
-    if word == "" or word.startswith("httpstco"):
-        return None
-    return word
 
 
 # This is a basic listener that runs
@@ -151,7 +143,7 @@ class StdOutListener(StreamListener):
             word = status.text
             words = status.text.split()
             for word in words:
-                word = format_word(word)
+                word = self.format_word(word)
                 if word is not None:
                     self.update_count(word)
                 return True
@@ -191,7 +183,7 @@ class StdOutListener(StreamListener):
 # For testing purposes
 if __name__ == '__main__':
     twAPI = TwitterAPI()
-    # twAPI.open_twitter_stream()
+    #twAPI.open_twitter_stream()
     # twAPI.print_dict()
-    print(twAPI.get_twitter_score("batman"))
+    print(twAPI.get_twitter_score("thor"))
 

@@ -12,7 +12,6 @@ class RetrieveMovie(Retrieve):
     Last update: 10/11/2017
     Purpose: Supposed to Retrieve data from movie table in database
     """
-
     def retrieve_movie(self, movie_id=None):
         """
         Author: John Andree Lidquist, Marten Bolin
@@ -24,8 +23,8 @@ class RetrieveMovie(Retrieve):
         :return Movie : a movie of type Movie
         """
         if movie_id:
-            movie=self.session.query(Movie).filter_by(id=movie_id).first()
+            movie = self.session.query(Movie).filter_by(id=movie_id).first()
         else:
-            movie=self.session.query(Movie).all()
+            movie = self.session.query(Movie).all()
         self.session.close()
         return movie

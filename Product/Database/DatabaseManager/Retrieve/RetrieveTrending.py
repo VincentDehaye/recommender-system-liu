@@ -24,11 +24,11 @@ class RetrieveTrending(Retrieve):
         :return TrendingScore : of type TrendingScore
         """
         if movie_id:
-            trend=self.session.query(TrendingScore).filter_by(movie_id=movie_id).first()
+            trend = self.session.query(TrendingScore).filter_by(movie_id=movie_id).first()
         elif number_of_titles:
-            trend=self.session.query(TrendingScore).order_by(desc(TrendingScore.total_score)).limit(number_of_titles)
+            trend = self.session.query(TrendingScore).order_by(desc(TrendingScore.total_score)).limit(number_of_titles)
         else:
-            trend=self.session.query(TrendingScore).all()
+            trend = self.session.query(TrendingScore).all()
         self.session.close()
         return trend
 

@@ -4,7 +4,7 @@ The Retrieve super class
 from Product.Database.DBConn import create_session
 
 
-class Retrieve():
+class Retrieve:
     """
     Author: Marten Bolin / John Lidquist
     Date: 2017-11-10

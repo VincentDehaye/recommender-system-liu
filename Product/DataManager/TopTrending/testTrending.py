@@ -1,8 +1,9 @@
 from Product.DataManager.TopTrending.RetrieveTopTrendingTotal import RetrieveTopTrendingTotal
 from Product.DataManager.TopTrending.RetrieveTopTrendingYoutube import RetrieveTopTrendingYoutube
 from Product.DataManager.TopTrending.RetrieveTopTrendingTwitter import RetrieveTopTrendingTwitter
-# It is problems at the moment due to in get_title_and_score it uses total_score
-# Total
+
+# This file is only for our own testing of the RetreiveTopTrending files
+
 trender = RetrieveTopTrendingTotal()
 Trends = trender.get_top_trending(10)
 print("This is total:")

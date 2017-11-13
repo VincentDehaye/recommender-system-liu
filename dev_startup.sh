@@ -23,12 +23,9 @@ cleanup() {
 
 # Try to make sure that we're in the correct folder for running the script, then start the
 # development environment.
-cd Product
-cd ..
-cd Product
 docker-compose up &
 
-cd Frontend
+cd Product/Frontend
 npm install
 npm start &
 

@@ -6,7 +6,6 @@
 
 
 from Product.TrendManager.YoutubeAPI import YoutubeAPI
-from Product.TrendManager.ScoredMovie import ScoredMovie
 
 
 class TrendingController:
@@ -16,7 +15,6 @@ class TrendingController:
         # SendToDatabase(scoredMovie)
 
     def get_trending_content(self, searchterm):
-        #scoredmovie = ScoredMovie(1, self.total_score_calc(searchterm))  # temp id, use id from database/imdb id?
         return self.total_score_calc(searchterm)
 
     def total_score_calc(self, keyword):
@@ -24,10 +22,8 @@ class TrendingController:
         youtubescore = self.youtubeapi.get_youtube_score(keyword)
         twitterscore = 0
         # add more scoreres as needed
-        totalscore += youtubescore
+        totalscore += youtubescore + twitterscore
         return totalscore, youtubescore, twitterscore
-
-    # def SendToDatabase(self, scoredMovie):
 
 
 if __name__ == "__main__":

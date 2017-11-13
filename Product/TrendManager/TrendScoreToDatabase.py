@@ -59,9 +59,10 @@ class TrendingToDB(object):
 
                 res_score = self.retrieve_trend.retrieve_trend_score(movie.id)
 
-                new_tot_score = trend_controller.get_trending_content(movie.title)[0]  # gets new score
-                new_youtube_score = trend_controller.get_trending_content(movie.title)[1]
-                new_twitter_score = trend_controller.get_trending_content(movie.title)[2]
+                scores = trend_controller.get_trending_content(movie.title)
+                new_tot_score = scores[0]  # Gets total score
+                new_youtube_score = scores[1]  # Gets Youtube score
+                new_twitter_score = scores[2]  # Gets Twittwer score
 
                 print("Movie ID:", movie.id)
 

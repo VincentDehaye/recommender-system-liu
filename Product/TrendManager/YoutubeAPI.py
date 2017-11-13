@@ -144,7 +144,7 @@ class YoutubeAPI:
 
     def get_total_search_result(self, keyword):
         """
-        Atuhor: Linn Pettersson
+        Author: Linn Pettersson
         Date: 7/11/2017
         Purpose: Getting the total number of results for a movie search and then
         dividing it by max result (1 000 000) to get a percentage to use in

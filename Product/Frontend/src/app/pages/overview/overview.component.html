@@ -1,25 +1,23 @@
 
 <div class ="row">
-<div class ="row">
   <div class="col-md-6">
     <nb-card>
-        <h2 style="padding: 10px"><ngx-modals [modalHeader]=modalHeader1 [modalContent]=modalContent1></ngx-modals> Top recommended content</h2>
+        <nb-card-header><ngx-modals [modalHeader]=modalHeader1 [modalContent]=modalContent1></ngx-modals> Top recommended content</nb-card-header>
             <nb-card-header *ngFor="let movie of data?.movies"> {{movie.name}} {{movie.id}} </nb-card-header>
     </nb-card>
   </div>
   <div class="col-md-6">
       <nb-card>
-       <h2 style="padding: 10px"><ngx-modals [modalHeader]=modalHeader2 [modalContent]=modalContent2></ngx-modals> Top trending content</h2>
+       <nb-card-header><ngx-modals [modalHeader]=modalHeader2 [modalContent]=modalContent2></ngx-modals> Top trending content</nb-card-header>
           <nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.name}} {{movie.id}} </nb-card-header>
       </nb-card>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
+
+  <div class="col-md-6">
     <nb-card>
       <h2 style="padding: 10px"><button class ="ion-ios-information-outline"></button> Success rate</h2>
       <ngx-chartjs-pie></ngx-chartjs-pie>
     </nb-card>
   </div>
-</div>
+
 </div>

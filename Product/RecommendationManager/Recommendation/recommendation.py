@@ -22,7 +22,7 @@ class Recommendation(object):
         """
         Author: Sebastian Maghsoudi / Alexander Dahl
         Date: 2017-11-01
-        Last update: 2017-11-09 by Alexander Dahl
+        Last update: 2017-11-13 by Alexander Dahl
         Purpose: constructor for the recommendation class
 
         :param user_id: a user_id
@@ -67,7 +67,7 @@ class Recommendation(object):
         """
         Author: Sebastian Maghsoudi / Alexander Dahl
         Date: 2017-11-01
-        Last update: 2017-11-09
+        Last update: 2017-11-13
         Purpose: Generates a recommendation list of size length for a given user.
 
         :return: a dictionary with user_id and a recommendation_list for that user
@@ -76,6 +76,10 @@ class Recommendation(object):
         [{'title': 'It', 'score': 1.586134233975164, 'id': 24}]}
         """
         trending_id = [id.movie_id for id in self.trending_content_meta]
+        print(np.array(trending_id))
+        # TODO this only makes user preference scores on items that are part of the
+        # TODO 30 limit trending list
+        # TODO should it really be like that?
         rec_list_score = self.model.predict(self.user_id, np.array(trending_id))
         norm_rec_list_score = self.normalize_user_scores(rec_list_score).tolist()
         trending_score = [score.total_score for score in self.trending_content_meta]

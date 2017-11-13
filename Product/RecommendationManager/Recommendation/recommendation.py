@@ -2,12 +2,11 @@
 Recommendation Class.
 """
 import numpy as np
+import os
 from Product.RecommendationManager import generate_model as generate_model
-from Product.Database.DBConn import session, TrendingScore
 from Product.RecommendationManager import gets_from_database as gets_from_database
 from Product.RecommendationManager.Recommendation.recommendation_list import RecommendationList
 from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
-from Product.Database.DatabaseManager.Retrieve.Retrieve import Retrieve
 
 
 # At this point we assume that there is a file named new_model.sav
@@ -35,7 +34,8 @@ class Recommendation(object):
 
         """
         # TODO should the class assume that there is a model named 'new_model.sav'?
-        self.model = generate_model.load_model('../new_model.sav')
+        path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.model = generate_model.load_model(path + '/new_model.sav')
         self.user_id = user_id
         # right now lim is hard coded to number of movies to be recommended times 3
         # TODO create some logic for how big the limit should be
@@ -43,7 +43,8 @@ class Recommendation(object):
         self.size = size
         # this instantiates RetrieveTrending() class in the database manager and
         # gets limit number of TrendingScore classes.
-        self.trending_content_meta = RetrieveTrending().retrieve_trend_score(number_of_titles=self.lim)
+        self.trending_content_meta = RetrieveTrending().\
+            retrieve_trend_score(number_of_titles=self.lim)
 
     @staticmethod
     def normalize_user_scores(scores):
@@ -71,34 +72,36 @@ class Recommendation(object):
 
         :return: a dictionary with user_id and a recommendation_list for that user
         example:
-        {'user_id': 55, 'recommendation_list' : [{'title': 'It', 'score': 1.586134233975164, 'id': 24}]}
+        {'user_id': 55, 'recommendation_list' :
+        [{'title': 'It', 'score': 1.586134233975164, 'id': 24}]}
         """
         trending_id = [id.movie_id for id in self.trending_content_meta]
-        recommendation_list_score = self.model.predict(self.user_id, np.array(trending_id))
-        norm_recommendation_list_score = self.normalize_user_scores(recommendation_list_score).tolist()
+        rec_list_score = self.model.predict(self.user_id, np.array(trending_id))
+        norm_rec_list_score = self.normalize_user_scores(rec_list_score).tolist()
         trending_score = [score.total_score for score in self.trending_content_meta]
         # normalize trending score
         norm_trending_score = self.normalize_user_scores(trending_score)
         # trending_weight is 1 at the moment
         trending_weight = 1
         # Here is the formula that can be altered at some point
-        final_recommendation_list_score = [rec+trending_weight*trend for rec, trend
-                                           in zip(norm_recommendation_list_score, norm_trending_score)]
+        final_rec_list_score = [rec+trending_weight*trend for rec, trend
+                                in zip(norm_rec_list_score, norm_trending_score)]
         # gets the movie titles for the movie ids
-        movie_titles = [gets_from_database.get_movie_title(id.movie_id) for id in self.trending_content_meta]
+        movie_titles = [gets_from_database.get_movie_title(id.movie_id) for id
+                        in self.trending_content_meta]
         # combines the movie_ids and movie_titles with the recommendation scores
-        full_recommendation_list = list(map(list,zip(trending_id,movie_titles,final_recommendation_list_score)))
+        full_rec_list = list(map(list, zip(trending_id, movie_titles, final_rec_list_score)))
         # sorts the list on scores (index 2)
-        sorted_recommendation_list = sorted(full_recommendation_list,
-                                            key=lambda x: x[2],
-                                            reverse=True)
+        sorted_rec_list = sorted(full_rec_list,
+                                 key=lambda x: x[2],
+                                 reverse=True)
 
-        sorted_complete_recommendation_list = []
-        for item in sorted_recommendation_list[:self.size]:
-            sorted_complete_recommendation_list.append({'id': item[0],
-                                                        'title': item[1],
-                                                        'score': item[2]})
-        # print(sorted_complete_recommendation_list)
-        return RecommendationList(self.user_id, sorted_complete_recommendation_list)
+        sorted_complete_rec_list = []
+        for item in sorted_rec_list[:self.size]:
+            sorted_complete_rec_list.append({'id': item[0],
+                                             'title': item[1],
+                                             'score': item[2]})
+        # print(sorted_complete_rec_list)
+        return RecommendationList(self.user_id, sorted_complete_rec_list)
 
 print(Recommendation(55, 10).generate_recommendation_list().__dict__)

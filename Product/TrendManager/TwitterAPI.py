@@ -81,14 +81,16 @@ class TwitterAPI:
         return score
 
     def load_new_dict(self):
-        yesterday = datetime.datetime.today() - timedelta(1)
-        path = tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
+        # yesterday = datetime.datetime.today() - timedelta(1)
+        # path = tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
+        path = tweets_data_path + "_sample1.bin"
         with open(path, 'rb') as f:
             self.all_words_new = pickle.load(f)
 
     def load_old_dict(self):
-        earlier_date = datetime.datetime.today() - timedelta(7)
-        path = tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
+        # earlier_date = datetime.datetime.today() - timedelta(7)
+        # path = tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
+        path = tweets_data_path + "_sample2.bin"
         with open(path, 'rb') as f:
             self.all_words_old = pickle.load(f)
 
@@ -181,7 +183,7 @@ class StdOutListener(StreamListener):
 # For testing purposes
 if __name__ == '__main__':
     twAPI = TwitterAPI()
-    twAPI.open_twitter_stream()
+    #twAPI.open_twitter_stream()
     # twAPI.print_dict()
-    print(twAPI.get_twitter_score("batman"))
+    print(twAPI.get_twitter_score("thor"))
 

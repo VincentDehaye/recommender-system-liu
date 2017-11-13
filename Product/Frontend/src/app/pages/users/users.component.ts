@@ -28,7 +28,7 @@ export class UsersComponent implements OnInit {
 
 
   }
-  public getData(){
+  public getData() {
       this.dataHandlerService.getData().subscribe((data) => {
       this.data = data;
     }); // Converts the data making it reachable in the htm file

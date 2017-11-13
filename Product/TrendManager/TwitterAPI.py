@@ -55,14 +55,14 @@ class TwitterAPI:
         score_old = None
         words = title.split()
         for word in words:
-            word = self.format_word(word)
+            word = format_word(word)
             score_new = self.get_word_score(word, score_new, self.all_words_new)
             score_old = self.get_word_score(word, score_old, self.all_words_old)
         if score_new < 10:
             score_new = 10
         if score_old < 10:
             score_old = 10
-        # print("Old:", score_old, "New:", score_new)
+        print("Old:", score_old, "New:", score_new)
         score_ratio = self.chi_square(score_new, score_old)
         return score_ratio
 
@@ -81,16 +81,14 @@ class TwitterAPI:
         return score
 
     def load_new_dict(self):
-        # yesterday = datetime.datetime.today() - timedelta(1)
-        # path = tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
-        path = tweets_data_path + "_sample1.bin"
+        yesterday = datetime.datetime.today() - timedelta(1)
+        path = tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
         with open(path, 'rb') as f:
             self.all_words_new = pickle.load(f)
 
     def load_old_dict(self):
-        # earlier_date = datetime.datetime.today() - timedelta(7)
-        # path = tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
-        path = tweets_data_path + "_sample2.bin"
+        earlier_date = datetime.datetime.today() - timedelta(7)
+        path = tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
         with open(path, 'rb') as f:
             self.all_words_old = pickle.load(f)
 
@@ -102,14 +100,6 @@ class TwitterAPI:
         for v, k in allwords_view:
             print(k, ": ", v)
 
-    def format_word(self, word):
-        word = word.lower()
-        word = word.strip(" ")
-        regex = re.compile('[^a-z0-9]')
-        word = regex.sub('', word)
-        if word == "" or word.startswith("httpstco"):
-            return None
-        return word
 
 def word_in_text(word, text):
     word = word.lower()
@@ -158,15 +148,6 @@ class StdOutListener(StreamListener):
         else:
             self.store_dict()
             return False
-
-    def format_word(self, word):
-        word = word.lower()
-        word = word.strip(" ")
-        regex = re.compile('[^a-z0-9]')
-        word = regex.sub('', word)
-        if word == "" or word.startswith("httpstco"):
-            return None
-        return word
 
     def on_error(self, status):
         self.store_dict()

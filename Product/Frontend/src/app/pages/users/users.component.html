@@ -24,6 +24,42 @@
 </div>
 <div class="row">
   <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        Demographic
+      </nb-card-header>
+      <nb-card-body>
+        <div class="btn-group btn-toggle-group btn-outline-toggle-group" data-toggle="buttons"
+             [(ngModel)]="paginationModel" ngbRadioGroup>
+          <label ngbButtonLabel class="btn btn-outline-success">
+            <input ngbButton type="radio" [value]="1"> All
+          </label>
+          <label ngbButtonLabel class="btn btn-outline-success">
+            <input ngbButton type="radio" [value]="2"> 18-24
+          </label>
+          <label ngbButtonLabel class="btn btn-outline-success">
+            <input ngbButton type="radio" [value]="3"> 25-34
+          </label>
+          <label ngbButtonLabel class="btn btn-outline-success">
+            <input ngbButton type="radio" [value]="4"> 35-44
+          </label>
+          <label ngbButtonLabel class="btn btn-outline-success">
+            <input ngbButton type="radio" [value]="5"> 45-64
+          </label>
+          <label ngbButtonLabel class="btn btn-outline-success">
+            <input ngbButton type="radio" [value]="6"> 65+
+          </label>
+        </div>
+        <div class="btn-group btn-toggle-group" data-toggle="buttons">
+          <label ngbButtonLabel class="btn btn-success" [class.active]="iconToolbarModel.one">
+            <input ngbButton type="checkbox" [(ngModel)]="iconToolbarModel.one"> Male
+          </label>
+          <label ngbButtonLabel class="btn btn-success" [class.active]="iconToolbarModel.two">
+            <input ngbButton type="checkbox" [(ngModel)]="iconToolbarModel.two"> Female
+          </label>
+        </div>
+      </nb-card-body>
+    </nb-card>
   </div>
 </div>
   <!--<div class="col-lg-8">

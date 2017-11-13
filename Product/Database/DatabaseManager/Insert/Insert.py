@@ -18,6 +18,6 @@ class Insert:
         Date: 2017-11-10
         Last update:
         Purpose:
-        The constructor of the RetrieveTopTrending class, creates a session to be used y subclass
+        The constructor of the Insert class, creates a session to be used by subclasses
         """
         self.session = create_session()

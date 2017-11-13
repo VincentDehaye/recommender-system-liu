@@ -18,6 +18,7 @@ import random
 
 
 from Product.Database.DBConn import session, Rating, TrendingScore, Movie
+from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
 
 ### old TODOS, ok to delete?
 # Filling the lists with data from the database
@@ -173,12 +174,12 @@ def get_movie_title(movie_id):
     """
     Author: Alexander Dahl
     Date: 2017-11-01
-    Last update: 2017-11-01
+    Last update: 2017-11-13
     Purpose: returns the movie title from a movie id input
 
     :param movie_id:
     :return: movie name as string
     """
-    return session.query(Movie.title).filter(Movie.id == movie_id).one()[0]
+    return RetrieveMovie().retrieve_movie(movie_id).title
 
-get_matrices()
+#get_matrices()

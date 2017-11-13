@@ -10,12 +10,11 @@ def test_get_top_trending():
 
     # Pre-conditions
     trender = RetrieveTopTrendingYoutube()
-    num_of_movies = 5
 
     # Expected output
-    result = trender.get_top_trending(num_of_movies)
+    num_of_movies = 5
 
     # Observed output
-    observed = len(result.dict())
+    observed = len(trender.get_top_trending(num_of_movies).dict())
 
     assert observed == num_of_movies

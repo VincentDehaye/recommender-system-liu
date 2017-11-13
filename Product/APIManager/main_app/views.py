@@ -2,7 +2,8 @@
 """
 This module contains classes that handle the API requests
 """
-
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation
@@ -11,6 +12,8 @@ class RecommendationsView(APIView):
     """
     This class is used to return the top 10 recommendations from Recommendations
     """
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         """

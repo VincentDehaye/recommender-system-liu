@@ -59,25 +59,27 @@ def test_precision(model, matrix, k):
     return precision_at_k(model, matrix, k=k).mean()
 
 
+
 # TODO split this method into a method that evolves the model
 # TODO and add the testing methods to the tests folder
-def evolve_model():
+def evolve_model(filename, model, new_users_matrix):
     """
     Author: Gustaf Norberg
     Date: 2017-11-09
-    Last update: 2017-11-10
-    Purpose: evolves the model and prints test_precisions after evolution
+    Last update: 2017-11-13
+    Purpose: evolves the model using fit_partial - an add-on for the already fitted model
 
+    :param model: lightFM model
+    :param new_users_matrix: Matrix from database
+    :param filename:
+    :type filename: string
     """
-    model = load_model('new_model.sav')
-    # print(get_train_matrix.getMovieList())
+    model.fit_partial(new_users_matrix, epochs=10)
+    pickle.dump(model, open(filename, 'wb'))
 
-    trainmatrix = get_matrices.get_train_matrix()
-    testmatrix = get_matrices.get_test_matrix()
-    new_user_matrix = get_matrices.get_new_users_matrix()
-    # trainmatrix, testmatrix, new_user_matrix = get_train_matrix.get_matricies()
 
-    print("Before")
+
+    """    print("Before")
 
     model = LightFM(learning_rate=0.05, loss='warp')
     model.fit(trainmatrix, epochs=10)
@@ -108,7 +110,4 @@ def evolve_model():
     print("Train")
     print(np.shape(trainmatrix))
     print(np.shape(testmatrix))
-    print(np.shape(new_user_matrix))
-
-
-#   evolve_model()
+    print(np.shape(new_user_matrix))"""

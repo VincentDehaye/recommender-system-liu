@@ -13,6 +13,8 @@ import { UsersD3AreaStackComponent } from './users-components/users-d3-area-stac
 import { UsersD3PolarComponent } from './users-components/users-d3-polar.component';
 import { UsersD3AdvancedPieComponent } from './users-components/users-d3-advanced-pie.component';
 
+
+
 const components = [
   UsersD3BarComponent,
   UsersD3LineComponent,

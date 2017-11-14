@@ -108,4 +108,4 @@ class Recommendation(object):
         # print(sorted_complete_rec_list)
         return RecommendationList(self.user_id, sorted_complete_rec_list)
 
-print(Recommendation(55, 10).generate_recommendation_list().__dict__)
+# print(Recommendation(55, 10).generate_recommendation_list().__dict__)

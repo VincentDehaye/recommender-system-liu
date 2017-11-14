@@ -1,18 +1,20 @@
 stages:
   - test
-  
 before_script:
     - pwd
-    - export PYTHONPATH="${PYTHONPATH}:/home/gitlab-runner/builds/6b21c71b/0/PUM-Company3/Software/Product"
+    - whoami
+    - export PYTHONPATH="${PYTHONPATH}:/home/gitlab-runner/builds/6b21c71b/0/PUM-Company3/Software/"
     - source /home/gitlab-runner/git_venv/bin/activate
     - python --version
     - pip install -r requirements.txt
     - python ./Product/Database/DBConn.py
     - python ./Product/Database/DBFillSmallSet.py
+    
 test_script:
   script:
-    - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
+    - source /home/gitlab-runner/virtualenvs/git_venv/bin/activate
 
     - ./test_script
   stage: test
-  
+ 
+ 

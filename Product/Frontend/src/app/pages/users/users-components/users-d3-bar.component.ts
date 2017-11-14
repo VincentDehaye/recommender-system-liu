@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
+import { UsersComponent } from '../users.component'
 
 @Component({
   selector: 'ngx-d3-bar',
@@ -16,11 +17,17 @@ import { NbThemeService } from '@nebular/theme';
   `,
 })
 export class UsersD3BarComponent implements OnDestroy {
-
   results = [
-    { name: 'Batman', value: 8940 },
+    { name: 'name', value: 8940 },
     { name: 'Frozen', value: 5000 },
     { name: 'The Room', value: 2000 },
+    { name: 'Batman1', value: 8240 },
+    { name: 'Batman2', value: 8340 },
+    { name: 'Batman3', value: 8540 },
+    { name: 'Batman4', value: 8640 },
+    { name: 'Batman5', value: 8840 },
+    { name: 'Batman6', value: 8940 },
+    { name: 'Batman7', value: 8140 },
   ];
   showLegend = true;
   showXAxis = true;

@@ -1,63 +1,23 @@
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <h1>Home</h1>
-    <p>You're logged in with Coogl3</p>
-    <div>
-        Users from secure api end point:
-        <ul>
-            <li *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</li>
-        </ul>
-    </div>
-    <p><a>Logout</a></p>
-</div>
-  <!--<div class="col-xxxl-3 col-md-6">
-    <ngx-status-card title="Server Status" type="success">
-      <i class="nb-power"></i>
-    </ngx-status-card>
+
+<div class ="row">
+  <div class="col-md-6">
+    <nb-card>
+        <nb-card-header><ngx-modals [modalHeader]=modalHeader1 [modalContent]=modalContent1></ngx-modals> Top recommended content</nb-card-header>
+            <nb-card-header *ngFor="let movie of data?.movies"> {{movie.name}} {{movie.id}} </nb-card-header>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+      <nb-card>
+       <nb-card-header><ngx-modals [modalHeader]=modalHeader2 [modalContent]=modalContent2></ngx-modals> Top trending content</nb-card-header>
+          <nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.name}} {{movie.id}} </nb-card-header>
+      </nb-card>
   </div>
 
-  <div class="col-xxxl-3 col-md-6">
-    <ngx-status-card title="Recommendations Engine" type="primary">
-      <i class="nb-heart"></i>
-    </ngx-status-card>
+  <div class="col-md-6">
+    <nb-card>
+      <h2 style="padding: 10px"><button class ="ion-ios-information-outline"></button> Success rate</h2>
+      <ngx-chartjs-pie></ngx-chartjs-pie>
+    </nb-card>
   </div>
 
-  <div class="col-xxxl-3 col-md-6">
-    <ngx-status-card title="Trending Engine" type="info">
-      <i class="nb-bar-chart"></i>
-    </ngx-status-card>
-  </div>
-
-  <div class="col-xxxl-3 col-md-6">
-    <ngx-status-card title="Application Status" type="warning">
-      <i class="nb-layout-sidebar-left"></i>
-    </ngx-status-card>
-  </div>
-</div>
-
-<div class="row">
-
-  <div class="col-xxxl-3 col-xxl-4 col-lg-5 col-md-6">
-    <ngx-info></ngx-info>
-    <ngx-recommendations-performance [chartValue]="63"></ngx-recommendations-performance>
-  </div>
-
-  <div class="col-xxxl-3 col-xxl-4 col-md-5">
-    <ngx-trending-score></ngx-trending-score>
-    <ngx-subscribers></ngx-subscribers>
-  </div>
-
-  <div class="col-xxxl-6 col-xxl-12 col-md-7">
-    <ngx-content-lists></ngx-content-lists>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
-    <ngx-views></ngx-views>
-  </div>
-
-  <div class="col-xxxl-3 col-xxl-4 col-lg-7 col-md-6">
-    <ngx-actors></ngx-actors>
-  </div>-->
 </div>

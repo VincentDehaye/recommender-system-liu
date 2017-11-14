@@ -19,6 +19,7 @@ import random
 
 from Product.Database.DBConn import session, Rating, TrendingScore, Movie
 from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
+from Product.Database.DatabaseManager.Retrieve.RetrieveRating import RetrieveRating
 
 
 def get_trending_scores():
@@ -101,13 +102,18 @@ def get_train_matrix():
     user_list = []
     movie_list = []
     rating_list = []
+    ratings = RetrieveRating().retrieve_ratings()
+    #print(ratings)
     np.shape(Rating)
+
+    counter=0
     # Puts everything but every 5th row (1, 2, 3, 4, 6, 7, 8, 9, 11...) in train_matrix
-    for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
-        if counter % 5 != 0:
-            user_list.append(row[0])
-            movie_list.append(row[1])
-            rating_list.append(row[2])
+    for rating in ratings:
+        if counter % 5!=0:
+            user_list.append(rating.user_id)
+            movie_list.append(rating.movie_id)
+            rating_list.append(rating.rating)
+        counter += 1
 
     train_matrix = coo_matrix((rating_list, (user_list, movie_list)))
     return train_matrix
@@ -148,9 +154,11 @@ def get_new_users_matrix():
 
     :return: new users matrix in the form of a numpy matrix
     """
+
     user_list = []
     movie_list = []
     rating_list = []
+
     #Puts every 10th row (10, 20, 30...) in new_users_matrix
     for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
         if counter % 10 == 0:
@@ -176,3 +184,4 @@ def get_movie_title(movie_id):
     return RetrieveMovie().retrieve_movie(movie_id).title
 
 #get_matrices()
+get_train_matrix()

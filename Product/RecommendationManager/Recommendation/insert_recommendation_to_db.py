@@ -2,10 +2,16 @@ from Product.Database.DatabaseManager.Insert.InsertRecommendation import InsertR
 from Product.Database.DatabaseManager.Retrieve.RetrieveUser import RetrieveUser
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation
 
-users=RetrieveUser().retrieve_all_users()
+users = RetrieveUser().retrieve_all_users()
+
 for user in users:
     print(user.id)
-#    print(Recommendation(user.id, 10).generate_recommendation_list().__dict__)
+    recommendations=Recommendation(user.id, 10).generate_recommendation_list().__dict__
 
-#InsertRecommendation().insert_recommendation()
-
+#    print(recommendations.get('recommendation_list'))
+    for rec in recommendations.get('recommendation_list'):
+        print(rec['id'])
+        print(user.id)
+        # TODO this method is broken at the moment, will be fixed soon
+        #InsertRecommendation().insert_recommendation(user_id=user.id, movie_id=rec['id'])
+        print('inserted')

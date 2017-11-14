@@ -7,6 +7,7 @@ from Product.RecommendationManager import generate_model as generate_model
 from Product.RecommendationManager import gets_from_database as gets_from_database
 from Product.RecommendationManager.Recommendation.recommendation_list import RecommendationList
 from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
+from Product.Database.DatabaseManager.Retrieve.RetrieveUser import RetrieveUser
 
 
 # At this point we assume that there is a file named new_model.sav
@@ -77,19 +78,25 @@ class Recommendation(object):
         """
         trending_id = [id.movie_id for id in self.trending_content_meta]
         # print(np.array(trending_id))
-        # TODO this only makes user preference scores on items that are part of the
-        # TODO 30 limit trending list
-        # TODO should it really be like that?
-        rec_list_score = self.model.predict(self.user_id, np.array(trending_id))
-        norm_rec_list_score = self.normalize_user_scores(rec_list_score).tolist()
         trending_score = [score.total_score for score in self.trending_content_meta]
         # normalize trending score
         norm_trending_score = self.normalize_user_scores(trending_score)
         # trending_weight is 1 at the moment
         trending_weight = 1
         # Here is the formula that can be altered at some point
-        final_rec_list_score = [rec+trending_weight*trend for rec, trend
-                                in zip(norm_rec_list_score, norm_trending_score)]
+
+        # checks if the user has ratings in the database
+        # if there are no ratings the user preferences does not matter and
+        # the user only gets the trendings as recommendations
+
+        if RetrieveUser().check_if_user_in_rating(self.user_id):
+            rec_list_score = self.model.predict(self.user_id, np.array(trending_id))
+            norm_rec_list_score = self.normalize_user_scores(rec_list_score).tolist()
+
+            final_rec_list_score = [rec+trending_weight*trend for rec, trend
+                                    in zip(norm_rec_list_score, norm_trending_score)]
+        else:
+            final_rec_list_score = [trending_weight*trend for trend in norm_trending_score]
         # gets the movie titles for the movie ids
         movie_titles = [gets_from_database.get_movie_title(id.movie_id) for id
                         in self.trending_content_meta]

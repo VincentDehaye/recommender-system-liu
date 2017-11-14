@@ -18,6 +18,9 @@ import { fakeBackendProvider } from './authentication/_helpers/fake-backend';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions } from '@angular/http';
 
+import { ModalsComponent } from './components/modals/modals.component'
+import { ModalComponent } from './components/modals/modal/modal.component'
+
 const PAGES_COMPONENTS = [
   PagesComponent,
 ];

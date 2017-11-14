@@ -13,9 +13,8 @@ import { TrendingEchartsMultipleXaxisComponent } from './trending-components/tre
 import { TrendingEchartsAreaStackComponent } from './trending-components/trending-echarts-area-stack.component';
 import { TrendingEchartsBarAnimationComponent } from './trending-components/trending-echarts-bar-animation.component';
 import { TrendingEchartsRadarComponent } from './trending-components/trending-echarts-radar.component';
-// Modals
-import { ModalsComponent } from '../components/modals/modals.component'
-import { ModalComponent } from '../components/modals/modal/modal.component'
+
+
 
 const components = [
   TrendingEchartsLineComponent,
@@ -30,8 +29,5 @@ const components = [
 @NgModule({
   imports: [ThemeModule, TrendingRoutingModule, AngularEchartsModule, NgxChartsModule, ChartModule],
   declarations: [...routedComponents, ...components],
-  entryComponents: [
-    ModalComponent,
-  ],
 })
 export class TrendingModule {}

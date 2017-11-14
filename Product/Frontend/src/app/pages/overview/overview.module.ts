@@ -5,7 +5,7 @@ import { ChartModule } from 'angular2-chartjs';
 import { OverviewChartjsPieComponent } from './overview-components/rec-chartjs-pie.component';
 
 import { ModalsComponent } from '../components/modals/modals.component'
-import { ModalComponent } from '../components/modals/modal/modal.component'
+import { ModalComponent } from '../components/modals/modal/modal.component' 
 
 
 import { ThemeModule } from '../../@theme/theme.module';
@@ -15,8 +15,8 @@ import { OverviewRoutingModule, routedComponents } from './overview-routing.modu
 
 const components = [
     OverviewChartjsPieComponent,
-    ModalsComponent,
     ModalComponent,
+    ModalsComponent,
 ];
 @NgModule({
   imports: [ThemeModule, AngularEchartsModule, NgxChartsModule, ChartModule, OverviewRoutingModule,

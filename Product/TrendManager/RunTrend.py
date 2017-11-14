@@ -1,4 +1,7 @@
-from Product.TrendManager.TrendScoreToDatabase import TrendingToDB
+"""
+Running TrendManager to get trending score for movies in database
+"""
+
 import time
 # TrendingToDB has two in parameters, daily which sets it to run once daily and daemon which if
 # True will make the TrendingToDB to terminate when the application is done

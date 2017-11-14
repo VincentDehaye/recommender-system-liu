@@ -1,3 +1,7 @@
+"""
+Gets movie from database and stores a trending score
+"""
+
 import threading
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -14,7 +18,8 @@ class TrendingToDB(object):
     Author: John Andree Lidquist, Marten Bolin
     Date:
     Last update: 13/11/2017
-    Purpose: This class handles collecting all the trending scores so that they can be stored in the database.
+    Purpose: This class handles collecting all the trending scores so that they can
+    be stored in the database.
     The class is using threads and will be abel to run in the background continuously
     """
     def __init__(self, daemon=False, daily=False):
@@ -45,8 +50,9 @@ class TrendingToDB(object):
             self.scheduled.start()
             self.scheduled.modify_job(job_id="1", next_run_time=datetime.now())
         else:
-            # creates the thread that will make the method run parallel. Sets daemon to true so that it will allow
-            # the app to be terminated and will terminate with it
+            # creates the thread that will make the method run parallel.
+            # Sets daemon to true so that it will allow
+            # the app to be terminated and will terminate with it.
             thread = threading.Thread(target=self.run, args=())
             thread.daemon = daemon
             thread.start()
@@ -56,15 +62,15 @@ class TrendingToDB(object):
         Author: John Andree Lidquist, Marten Bolin
         Date:
         Last update:
-        Purpose: The method where which will fetch all the scores by the trendingcontroller which communicate
-        with the Youtube and Twitter API.
+        Purpose: The method where which will fetch all the scores by the
+        TrendingController which communicatewith the Youtube and Twitter API.
         """
 
         # Fllowing steps are done:
         # 1. Query movies from database
         # 2. Get new score for that movie
-        # 3. If current trend score is different from the newly fetched score - Update score in database,
-        # else go to step 1
+        # 3. If current trend score is different from the newly
+        # fetched score - Update score in database, else go to step 1
         # 4. Go to step 1
         trend_controller = TrendingController()
         res_movie = self.retrieve_movie.retrieve_movie()
@@ -98,8 +104,8 @@ class TrendingToDB(object):
                                                   youtube_score=new_youtube_score,
                                                   twitter_score=new_twitter_score)
 
-            # The commit is in the loop for now due to high waiting time but could be moved outside to lower
-            # total run time
+                # The commit is in the loop for now due to high waiting time but
+                # could be moved outside to lower total run time
 
         # Used to stop the thread if background is false or for any other reason it needs to be stopped.
     def terminate(self):

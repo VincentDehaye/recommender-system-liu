@@ -6,8 +6,6 @@ import time
 # run for seconds
 # trending_run.terminate() will stop the function
 trending_run = TrendingToDB(daily=False)
-time.sleep(50000)
-trending_run.terminate()
-time.sleep(10)
-print("Finished")
+# time.sleep(150)
+# trending_run.terminate()
 

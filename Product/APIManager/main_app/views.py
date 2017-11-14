@@ -2,6 +2,7 @@
 """
 This module contains classes that handle the API requests
 """
+from django.http import JsonResponse
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response

@@ -7,6 +7,8 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from main_app.serializers import RatingSerializer
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation
 
 class RecommendationsView(APIView):
@@ -87,3 +89,9 @@ class TwitterTrendingView(APIView):
             {"name":"Manbat", "id":10},
             ]}
         return Response(recs)
+
+class RateMovieView(APIView):
+    serializer_class = RatingSerializer
+
+    def post(self, request):
+        return Response({})

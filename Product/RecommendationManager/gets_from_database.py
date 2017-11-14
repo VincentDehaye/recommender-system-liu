@@ -162,18 +162,10 @@ def get_new_users_matrix():
     movie_list = []
     rating_list = []
 
-    #Puts every 10th row (10, 20, 30...) in new_users_matrix
-    for counter, row in enumerate(session.query(Rating.user_id, Rating.movie_id, Rating.rating)):
-        #print(counter)
-        if counter % 10 == 0:
-            user_list.append(row[0])
-            movie_list.append(row[1])
-            rating_list.append(row[2])
-
     ratings = RetrieveRating().retrieve_ratings()
 
     counter = 0
-    # Puts every 10th row (5, 15, 25...) in test_matrix
+    # Puts every 10th row (10, 20, 30...) in new_users_matrix
     for rating in ratings:
         if counter % 10 == 0:
             user_list.append(rating.user_id)

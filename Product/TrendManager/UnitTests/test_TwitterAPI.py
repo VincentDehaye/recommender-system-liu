@@ -61,12 +61,13 @@ def test_chi_square():
 
     assert observed == expected
 
-# NO BINARY FILES YET TO BE FOUND, will fail in test without them.
-    """"
+
 def test_load_dict():
+    """
     Author: Karl Lundvall
     Date: 2017-11-13
     Purpose: Assert that print_dict retrieves a dictionary from the twitter_dataYYYYMMDD.bin.
+    """
     # Pre-conditions
     twitterApi = TwitterAPI()
 
@@ -74,13 +75,14 @@ def test_load_dict():
     observed1 = twitterApi.load_old_dict()
 
     assert observed1 is not None
-    """
 
-    """
+
 def test_get_twitter_score():
+    """
     Author: Karl Lundvall
     Date: 2017-11-13
     Purpose: Assert that get_twitter_score retrieves a score.
+    """
     # Pre-conditions
     twitter_api = TwitterAPI()
 
@@ -88,5 +90,3 @@ def test_get_twitter_score():
     observed = twitter_api.get_twitter_score("Batman")
 
     assert observed is not None
-    """
-

@@ -88,6 +88,8 @@ class YoutubeAPI:
         # Total score for a keyword search
         total_score *= search_results
         total_score = int(round(total_score))
+        if total_score < 0:
+            return 0
         return total_score
 
     @staticmethod

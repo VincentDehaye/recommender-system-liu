@@ -11,7 +11,7 @@ before_script:
     - python ./Product/Database/DBFillSmallSet.py
 test_script:
   script:
-    - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
+    - source /home/gitlab-runner/virtualenvs/pum-venv/bin/activate
 
     - ./test_script
   stage: test

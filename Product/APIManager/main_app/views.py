@@ -94,4 +94,6 @@ class RateMovieView(APIView):
     serializer_class = RatingSerializer
 
     def post(self, request):
-        return Response({})
+        serializer = RatingSerializer(request.data)
+        print(serializer.data)
+        return Response(serializer.data)

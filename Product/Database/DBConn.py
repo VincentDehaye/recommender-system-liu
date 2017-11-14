@@ -144,9 +144,14 @@ class MovieLinks(Base):
         return "<Genre(movie_id id='%s', imdb id='%s', tmdb id='%s')>" % (
             self.movie_id, self.imdb_id, self.tmdb_id)
 
+# Class for the movies a user has been recommended
+class Recommendations(Base):
+    __tablename__ = 'recommendations'
+    user_id = Column(Integer, ForeignKey(User.id), primary_key=True)
+    movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
+
 
 # DO NOT CHANGE BELOW
-
 def create_session():
     # Creates the tables in the database
     Base.metadata.create_all(engine)

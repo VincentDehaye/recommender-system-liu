@@ -23,7 +23,7 @@ consumer_key = "o5gC0O5nmnRhj7H1iRdq0LxBu"
 consumer_secret = "Ef9M26RLwi6cZvsaESrFtuzffzgD3sNy7UnezOqzWbs5IDh2mY"
 
 # Variables for tracked keywords in search, time until the stream stops and interval for saving to file
-tweets_data_path = '\\trendingdata\\twitter_data'
+tweets_data_path = '/trendingdata/twitter_data'
 tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3' etc.
 time_limit = 7200  # in seconds
 interval = 600  # in seconds

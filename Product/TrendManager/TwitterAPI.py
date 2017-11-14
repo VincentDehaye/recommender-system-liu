@@ -1,19 +1,22 @@
+"""
+Search module for the Twitter API
+"""
+
 # Author: Albin Bergvall
 # Date: 2017-10-09
 # Purpose: Class for gathering trending data from the twitter API. Uses a stream to gather
 # tweets, and then saves it as dictionary to the file system. The dictionary can later be
 # accessed and used to give titles a twitter based trending score.
 
+import re
+import time
+import datetime
+import pickle
+
 # Import the necessary methods from tweepy library
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
-import re
-import time
-import datetime
-from datetime import timedelta
-import pickle
-
 
 # Variables that contains the user credentials to access Twitter API
 access_token = "911929395799035905-m0LQX9L0N3C47hCWG9tCDrIVWT6o9To"
@@ -21,9 +24,10 @@ access_token_secret = "gVdDlTqgqXx1JgjiaaGCLYmJV0vu3OkIKT7wMSAXniHyF"
 consumer_key = "o5gC0O5nmnRhj7H1iRdq0LxBu"
 consumer_secret = "Ef9M26RLwi6cZvsaESrFtuzffzgD3sNy7UnezOqzWbs5IDh2mY"
 
-# Variables for tracked keywords in search, time until the stream stops and interval for saving to file
+# Variables for tracked keywords in search,
+# time until the stream stops and interval for saving to file.
 tweets_data_path = 'trendingdata/twitter_data'
-tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3' etc.
+tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3'
 time_limit = 7200  # in seconds
 interval = 600  # in seconds
 
@@ -39,11 +43,13 @@ class TwitterAPI:
         self.all_words_new = {}
         self.all_words_old = {}
 
-    def open_twitter_stream(self):
+    @staticmethod
+    def open_twitter_stream():
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: To initiate a stream against the twitter API which listens for new tweets corresponding to a set
-        of movie/series related keywords. The stream runs on a separate thread, and the duration of the stream as well
+        Purpose: To initiate a stream against the twitter API which listens for
+        new tweets corresponding to a set of movie/series related keywords.
+        The stream runs on a separate thread, and the duration of the stream as well
         as how often it will save the data can be set in the TwitterAPI.py file.
         :return:
         """
@@ -59,8 +65,8 @@ class TwitterAPI:
     def get_twitter_score(self, title):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: To score a movie/series title based on the number of times each word in the title is mentioned in
-        tweets. This method does not require a background model.
+        Purpose: To score a movie/series title based on the number of times each word
+        in the title is mentioned in tweets. This method does not require a background model.
         :param title:
         :return twitter_score:
         """
@@ -77,8 +83,9 @@ class TwitterAPI:
     def get_twitter_score_freq_ratio(self, title):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: To score a movie/series title based on the number of times each word in the title is mentioned in
-        tweets and how the frequency has changed compared to past. Requires a background model to compare with.
+        Purpose: To score a movie/series title based on the number of times each word
+        in the title is mentioned in weets and how the frequency has changed compared to past.
+        Requires a background model to compare with.
         :param title:
         :return:
         """
@@ -101,23 +108,28 @@ class TwitterAPI:
         score_ratio = self.chi_square(score_new, score_old)
         return score_ratio
 
-    def chi_square(self, f_obs, f_exp):
+    @staticmethod
+    def chi_square(f_obs, f_exp):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: Static function used to determine a frequency ratio between new data and background model. f_obs is
-        the new observed value, and f_exp is the old expected value.
+        Purpose: Static function used to determine a
+        frequency ratio between new data and background model.
+        f_obs is the new observed value, and f_exp is the old expected value.
         :param f_obs:
         :param f_exp:
         :return score_ratio:
         """
         return (f_obs - f_exp) ** 2 / f_exp
 
-    def get_word_score(self, word, score, word_dict):
+    @staticmethod
+    def get_word_score(word, score, word_dict):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: This function is used to determine how many times a certain word has been mentioned. It will also
-        compare the score to an already set score, and choose the one with fewer mentions. This is to give a score
-        based on keyword mentions of the entire title.
+        Purpose: This function is used to determine how many times
+        a certain word has been mentioned.
+        It will also compare the score to an already set score,
+        and choose the one with fewer mentions.
+        This is to give a score based on keyword mentions of the entire title.
         :param word:
         :param score:
         :param word_dict:
@@ -136,8 +148,8 @@ class TwitterAPI:
     def load_new_dict(self):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: The purpose of this function is to load a saved dictionary from the file system. The file loaded will
-        be from the day before.
+        Purpose: The purpose of this function is to load a saved dictionary from the file system.
+        The file loaded will be from the day before.
         :return:
         """
         # yesterday = datetime.datetime.today() - timedelta(1)
@@ -149,8 +161,8 @@ class TwitterAPI:
     def load_old_dict(self):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: The purpose of this function is to load a saved dictionary from the file system. The file loaded will
-        be from the a week ago and can be used as a background model.
+        Purpose: The purpose of this function is to load a saved dictionary from the file system.
+        The file loaded will be from the a week ago and can be used as a background model.
         :return:
         """
         # earlier_date = datetime.datetime.today() - timedelta(7)
@@ -162,7 +174,8 @@ class TwitterAPI:
     def print_dict(self):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: To print the contents of a dictionary saved yesterday, descending from the key with highest value.
+        Purpose: To print the contents of a dictionary saved yesterday,
+        descending from the key with highest value.
         :return:
         """
         if not self.all_words_new:
@@ -172,11 +185,12 @@ class TwitterAPI:
         for v, k in allwords_view:
             print(k, ": ", v)
 
-    def format_word(self, word):
+    @staticmethod
+    def format_word(word):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: To take a word as a parameter, format and return it so that it will be of same format as words stored
-        from twitter stream.
+        Purpose: To take a word as a parameter, format and return it
+        so that it will be of same format as words stored from twitter stream.
         :param word:
         :return:
         """
@@ -191,16 +205,18 @@ class TwitterAPI:
 
 class StdOutListener(StreamListener):
     """
-    Listener class used for twitter stream. Function on_status is called each time a tweet corresponding to a set of
-    keywords is picked up by stream. Also contains functions for formatting words, saving them to a dictionary and
+    Listener class used for twitter stream. Function on_status is called
+    each time a tweet corresponding to a set of keywords is picked up by stream.
+    Also contains functions for formatting words, saving them to a dictionary and
     lastly saving the dictionary to the file system.
     """
 
     def __init__(self, limit, interval_time):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: Constructor for the stream class. Takes time limit for the stream as parameter, as well as an interval
-        for how often it should be saved to file.
+        Purpose: Constructor for the stream class.
+        Takes time limit for the stream as parameter,
+        as well as an interval for how often it should be saved to file.
         :param limit:
         :param interval_time:
         """
@@ -214,8 +230,9 @@ class StdOutListener(StreamListener):
     def on_status(self, status):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: This function is called each time a tweet is picked up by the filter. It checks if time limits has
-        been exceeded for saving to file, and also takes the tweet text, splits it, and then calls other functions for
+        Purpose: This function is called each time a tweet is picked up by the filter.
+        It checks if time limits has been exceeded for saving to file,
+        and also takes the tweet text, splits it, and then calls other functions for
         formatting and saving the words to a dictionary.
         :param status:
         :return:
@@ -235,11 +252,13 @@ class StdOutListener(StreamListener):
             self.store_dict()
             return False
 
-    def format_word(self, word):
+    @staticmethod
+    def format_word(word):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: To take a word as a parameter, format it and return the word if there is anything left after doing
-        a regex check over the characters of the word. Otherwise, return None.
+        Purpose: To take a word as a parameter, format it and return the word
+        if there is anything left after doing a regex check over the characters of the word.
+        Otherwise, return None.
         :param word:
         :return word:
         """
@@ -253,7 +272,8 @@ class StdOutListener(StreamListener):
 
     def on_error(self, status):
         """
-        Purpose: Function which is called if there was an error with the stream. Saves the dictionary and closes stream.
+        Purpose: Function which is called if there was an error with the stream.
+        Saves the dictionary and closes stream.
         :param status:
         :return:
         """
@@ -263,8 +283,8 @@ class StdOutListener(StreamListener):
     def update_count(self, word):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: To save a word to the dictionary if it hasn't been mentioned yet, and otherwise increase the count of
-        an already mentioned word.
+        Purpose: To save a word to the dictionary if it hasn't been mentioned yet,
+        otherwise increase the count of an already mentioned word.
         :param word:
         :return:
         """
@@ -278,8 +298,9 @@ class StdOutListener(StreamListener):
     def store_dict(self):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: To save a dictionary to a file in the trendingdata folder. The name of the file will include the date
-        of when it was saved. This way, we will know from which day data was stored.
+        Purpose: To save a dictionary to a file in the trendingdata folder.
+        The name of the file will include the date of when it was saved.
+        This way, we will know from which day data was stored.
         :return:
         """
         path = tweets_data_path + datetime.datetime.today().strftime('%Y%m%d') + ".bin"

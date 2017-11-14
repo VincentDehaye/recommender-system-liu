@@ -6,18 +6,22 @@ Testing the precision@k for a lightFM model
 """
 import pickle
 from lightfm import LightFM
-from lightfm.evaluation import precision_at_k
-from Product.RecommendationManager import gets_from_database as get_train_matrix
+from lightfm.evaluation import precision_at_k, auc_score
+from Product.RecommendationManager import gets_from_database as get_matrices
+import numpy as np
 
 
 def train_model(filename):
     """
-    Trains and saves a lightFM model
+    Author: Alexander Dahl
+    Date: 2017-10-08
+    Last update: 2017-10-08
+    Purpose: Trains and saves a lightFM model
     :param filename:
     :type filename: string
     """
     # gets the training matrix from the database
-    train_matrix = get_train_matrix.get_train_matrix()
+    train_matrix = get_matrices.get_train_matrix()
 
     # Instantiate and train the model
     # epochs is number of iterations of training done on the training matrix.
@@ -26,23 +30,84 @@ def train_model(filename):
     pickle.dump(model, open(filename, 'wb'))
 
 
-
 def load_model(filename):
     """
-    loads trained model
+    Author: Alexander Dahl
+    Date: 2017-10-08
+    Last update: 2017-11-03
+    Purpose: loads trained model
     :param filename:
     :return: lightFM model
     """
-    return pickle.load(open(filename, 'rb'))
+    try:
+        return pickle.load(open(filename, 'rb'))
+    except FileNotFoundError:
+        print('Wrong file or file path')
 
-
-def test_precision(model, train_matrix, k):
+def test_precision(model, matrix, k):
     """
-    returns a test precision for the model at k value.
+    Author: Alexander Dahl
+    Date: 2017-10-08
+    Last update: 2017-10-08
+    Purpose: returns a test precision for the model at k value.
 
     :param model: lightFM model
     :param train_matrix: Matrix from database
     :param k: precision@k
     :return: float
     """
-    return precision_at_k(model, train_matrix, k).mean()
+    return precision_at_k(model, matrix, k=k).mean()
+
+
+
+# TODO split this method into a method that evolves the model
+# TODO and add the testing methods to the tests folder
+def evolve_model(filename, model, new_users_matrix):
+    """
+    Author: Gustaf Norberg
+    Date: 2017-11-09
+    Last update: 2017-11-13
+    Purpose: evolves the model using fit_partial - an add-on for the already fitted model
+
+    :param model: lightFM model
+    :param new_users_matrix: Matrix from database
+    :param filename:
+    :type filename: string
+    """
+    model.fit_partial(new_users_matrix, epochs=10)
+    pickle.dump(model, open(filename, 'wb'))
+
+
+
+    """    print("Before")
+
+    model = LightFM(learning_rate=0.05, loss='warp')
+    model.fit(trainmatrix, epochs=10)
+
+    train_precision = precision_at_k(model, trainmatrix, k=10).mean()
+    test_precision = precision_at_k(model, testmatrix, k=10).mean()
+
+    train_auc = auc_score(model, trainmatrix).mean()
+    test_auc = auc_score(model, testmatrix).mean()
+
+    print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
+    print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
+
+    model.fit_partial(new_user_matrix, epochs=10)
+
+    ninetypercent_matrix = trainmatrix + new_user_matrix
+
+    train_precision = precision_at_k(model, ninetypercent_matrix, k=10).mean()
+    test_precision = precision_at_k(model, testmatrix, k=10).mean()
+
+    train_auc = auc_score(model, ninetypercent_matrix).mean()
+    test_auc = auc_score(model, testmatrix).mean()
+
+    print("After fitpartial")
+    print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
+    print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
+
+    print("Train")
+    print(np.shape(trainmatrix))
+    print(np.shape(testmatrix))
+    print(np.shape(new_user_matrix))"""

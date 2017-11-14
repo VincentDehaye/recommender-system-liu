@@ -13,8 +13,8 @@ class RecommendationsView(APIView):
     """
     This class is used to return the top 10 recommendations from Recommendations
     """
-    authentication_classes = (SessionAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (SessionAuthentication,)
+    # permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         """
@@ -33,7 +33,7 @@ class RecommendationsView(APIView):
             {"name":"Wonderman the movie", "id":9},
             {"name":"Manbat", "id":10},
             ]}
-        recs = Recommendation(55, 10).generate_recommendation_list().__dict__
+        # recs = Recommendation(55, 10).generate_recommendation_list().__dict__
         return Response(recs)
 
 class TrendingView(APIView):

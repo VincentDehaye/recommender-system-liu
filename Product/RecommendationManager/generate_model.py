@@ -44,6 +44,7 @@ def load_model(filename):
     except FileNotFoundError:
         print('Wrong file or file path')
 
+
 def test_precision(model, matrix, k):
     """
     Author: Alexander Dahl
@@ -59,9 +60,6 @@ def test_precision(model, matrix, k):
     return precision_at_k(model, matrix, k=k).mean()
 
 
-
-# TODO split this method into a method that evolves the model
-# TODO and add the testing methods to the tests folder
 def evolve_model(filename, model, new_users_matrix):
     """
     Author: Gustaf Norberg

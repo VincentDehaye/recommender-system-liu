@@ -20,14 +20,6 @@ import random
 from Product.Database.DBConn import session, Rating, TrendingScore, Movie
 from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
 
-### old TODOS, ok to delete?
-# Filling the lists with data from the database
-# This way of doing a testmatrix is wrong it will result in a different size matrix then the Trainmatrix.
-# TODO Should only collect ratings over 3, otherwise even a one is treated as a positive rating. We should load
-# TODO the combination of every movie and user into the lists. If there is no rating by the user,
-# TODO this should be represented as a zero.
-# TODO should the creation of the testing matrix be here too?
-
 
 def get_trending_scores():
     """
@@ -37,7 +29,7 @@ def get_trending_scores():
     Purpose:
     fills a dictionary with trending scores. Movie id is the key and normalized score is the value.
     :return: trending_scores in the form a of a dictionary
-    
+
     ### method only used by files in archive!
     """
     trending_scores = {}

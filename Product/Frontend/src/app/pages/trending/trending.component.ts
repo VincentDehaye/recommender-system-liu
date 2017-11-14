@@ -54,4 +54,3 @@ export class TrendingComponent implements OnInit {
     return null;
   }
 }
-

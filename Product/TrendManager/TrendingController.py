@@ -32,6 +32,6 @@ class TrendingController:
         """
         total_score = 0
         youtube_score = YoutubeAPI().get_youtube_score(keyword)
-        twitter_score = TwitterAPI().get_twitter_score(keyword)
+        twitter_score = TwitterAPI().get_twitter_score(keyword) * 100
         total_score += youtube_score + twitter_score
         return total_score, youtube_score, twitter_score

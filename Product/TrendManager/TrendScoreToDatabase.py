@@ -16,7 +16,7 @@ class TrendingToDB(object):
     Purpose: This class handles collecting all the trending scores so that they can be stored in the database.
     The class is using threads and will be abel to run in the background continuously
     """
-    def __init__(self, background=False, continuous=False, daily=False):
+    def __init__(self, background=False, daily=False):
         """
         Author: John Andree Lidquist, Marten Bolin
         Date:
@@ -27,7 +27,7 @@ class TrendingToDB(object):
         :param daily: True - Will make the process run once every day.
         False - Will only run the process once.
         """
-        self.continous = continuous
+
         self.stop = False
         self.daily = daily
         self.insert_trend = InsertTrending()
@@ -35,7 +35,7 @@ class TrendingToDB(object):
         self.alter_trend = UpdateTrending()
         self.retrieve_movie = RetrieveMovie()
 
-        if daily & continuous:
+        if daily:
             # if set to daily, it creates a scheduler and sets the interval to 1 day
             self.scheduled = BackgroundScheduler()
             self.scheduled.add_job(self.run, 'interval', days=1)
@@ -101,7 +101,7 @@ class TrendingToDB(object):
                 # The commit is in the loop for now due to high waiting time but could be moved outside to lower
                 # total run time
 
-            if not self.continous:
+            if not self.daily:
                 break
 
         # Used to stop the thread if background is false or for any other reason it needs to be stopped.

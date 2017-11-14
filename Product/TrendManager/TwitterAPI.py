@@ -16,6 +16,7 @@ from tweepy import Stream
 import re
 import time
 import datetime
+from datetime import timedelta
 import pickle
 
 # Import the necessary methods from tweepy library
@@ -31,7 +32,7 @@ consumer_secret = "Ef9M26RLwi6cZvsaESrFtuzffzgD3sNy7UnezOqzWbs5IDh2mY"
 
 # Variables for tracked keywords in search,
 # time until the stream stops and interval for saving to file.
-tweets_data_path = 'trendingdata/twitter_data'
+tweets_data_path = '\\trendingdata\\twitter_data'
 tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3'
 time_limit = 7200  # in seconds
 interval = 600  # in seconds

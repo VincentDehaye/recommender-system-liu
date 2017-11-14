@@ -5,6 +5,7 @@
 # accessed and used to give titles a twitter based trending score.
 
 # Import the necessary methods from tweepy library
+import os
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
@@ -22,7 +23,7 @@ consumer_key = "o5gC0O5nmnRhj7H1iRdq0LxBu"
 consumer_secret = "Ef9M26RLwi6cZvsaESrFtuzffzgD3sNy7UnezOqzWbs5IDh2mY"
 
 # Variables for tracked keywords in search, time until the stream stops and interval for saving to file
-tweets_data_path = 'trendingdata/twitter_data'
+tweets_data_path = '\\trendingdata\\twitter_data'
 tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3' etc.
 time_limit = 7200  # in seconds
 interval = 600  # in seconds
@@ -141,8 +142,9 @@ class TwitterAPI:
         :return:
         """
         # yesterday = datetime.datetime.today() - timedelta(1)
-        # path = tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
-        path = tweets_data_path + "_sample1.bin"  # This is the path to a temp file containing data for testing.
+        # path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
+        # This is the path to a temp file containing data for testing.
+        path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + '_sample1.bin'
         with open(path, 'rb') as f:
             self.all_words_new = pickle.load(f)
 
@@ -154,8 +156,8 @@ class TwitterAPI:
         :return:
         """
         # earlier_date = datetime.datetime.today() - timedelta(7)
-        # path = tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
-        path = tweets_data_path + "_sample2.bin"
+        # path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
+        path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + '_sample2.bin'
         with open(path, 'rb') as f:
             self.all_words_old = pickle.load(f)
 
@@ -282,7 +284,7 @@ class StdOutListener(StreamListener):
         of when it was saved. This way, we will know from which day data was stored.
         :return:
         """
-        path = tweets_data_path + datetime.datetime.today().strftime('%Y%m%d') + ".bin"
+        path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + datetime.datetime.today().strftime('%Y%m%d') + ".bin"
         with open(path, 'wb') as f:
             pickle.dump(self.all_words, f, pickle.HIGHEST_PROTOCOL)
             f.close()
@@ -292,4 +294,5 @@ class StdOutListener(StreamListener):
 # For stream testing purposes
 if __name__ == "__main__":
     tw = TwitterAPI()
-    tw.open_twitter_stream()
+    # tw.open_twitter_stream()
+    print(tw.get_twitter_score("rt"))

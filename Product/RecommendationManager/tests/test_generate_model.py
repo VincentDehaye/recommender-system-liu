@@ -42,8 +42,8 @@ def test_evolve_model():
     print(value_before)
     print("Value after")
     print(value_after)
-    # Expected output
-    # >0
-    #assert(generate_model.evolve_model('test_new_model.sav', model, new_users_matrix))
+    # Expected output > 0
+    # since value_after > value_before
+    assert(value_after - value_before >= 0)
 
 test_evolve_model()

@@ -76,7 +76,7 @@ class Recommendation(object):
         [{'title': 'It', 'score': 1.586134233975164, 'id': 24}]}
         """
         trending_id = [id.movie_id for id in self.trending_content_meta]
-        print(np.array(trending_id))
+        # print(np.array(trending_id))
         # TODO this only makes user preference scores on items that are part of the
         # TODO 30 limit trending list
         # TODO should it really be like that?
@@ -108,4 +108,4 @@ class Recommendation(object):
         # print(sorted_complete_rec_list)
         return RecommendationList(self.user_id, sorted_complete_rec_list)
 
-print(Recommendation(55, 10).generate_recommendation_list().__dict__)
+# print(Recommendation(55, 10).generate_recommendation_list().__dict__)

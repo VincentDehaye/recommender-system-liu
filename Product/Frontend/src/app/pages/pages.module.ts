@@ -8,6 +8,7 @@ import { TrendingModule } from './trending/trending.module';
 import { RecommendedModule } from './recommended/recommended.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
+import { ComponentsModule } from './components/components.module';
 
 import {LoginComponent} from './authentication/login/index';
 import { AuthGuard } from './authentication/_guards/index';
@@ -17,9 +18,6 @@ import { AuthenticationService, UserService } from './authentication/_services/i
 import { fakeBackendProvider } from './authentication/_helpers/fake-backend';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions } from '@angular/http';
-
-import { ModalsComponent } from './components/modals/modals.component'
-import { ModalComponent } from './components/modals/modal/modal.component'
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -34,6 +32,7 @@ const PAGES_COMPONENTS = [
     TrendingModule,
     RecommendedModule,
     UserModule,
+    ComponentsModule,
   ],
   declarations: [
     ...PAGES_COMPONENTS,

@@ -12,7 +12,7 @@
     <div class="col-lg-4">
       <nb-card>
           <nb-card-header>Top RECOMMENDATIONS</nb-card-header>
-          <nb-card-header *ngFor="let movie of data?.movies"> {{movie.name}} {{movie.id}} </nb-card-header>
+          <nb-card-header *ngFor="let movie of data?.recommendation_list"> {{movie.title}} </nb-card-header>
       </nb-card>
     </div>
 </div>

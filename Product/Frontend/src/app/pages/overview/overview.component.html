@@ -2,13 +2,13 @@
   <div class="col-md-6">
     <nb-card>
         <nb-card-header><h2 style="padding: 10px"><ngx-modals [modalHeader]=modalHeader1 [modalContent]=modalContent1></ngx-modals> Top recommended content</h2></nb-card-header>
-            <nb-card-header *ngFor="let movie of data?.movies"> {{movie.name}} {{movie.id}} </nb-card-header>
+            <nb-card-header *ngFor="let movie of data?.recommendation_list"> {{movie.title}} </nb-card-header>
         </nb-card>
   </div>
   <div class="col-md-6">
       <nb-card>
        <nb-card-header><h2 style="padding: 10px"><ngx-modals [modalHeader]=modalHeader2 [modalContent]=modalContent2></ngx-modals> Top trending content</h2></nb-card-header>
-          <nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.name}} {{movie.id}} </nb-card-header>
+          <nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.title}}</nb-card-header>
       </nb-card>
   </div>
 

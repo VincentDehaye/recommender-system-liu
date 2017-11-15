@@ -25,7 +25,8 @@ const components = [
 ];
 
 @NgModule({
-  imports: [ ComponentsModule, ThemeModule, RecommendedRoutingModule, AngularEchartsModule, NgxChartsModule, ChartModule],
+  imports: [ ComponentsModule, ThemeModule, RecommendedRoutingModule, AngularEchartsModule, NgxChartsModule,
+    ChartModule],
   declarations: [...routedComponents, ...components],
 })
 export class RecommendedModule {}

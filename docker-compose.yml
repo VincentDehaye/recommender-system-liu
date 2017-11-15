@@ -40,3 +40,16 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=example
       - MYSQL_DATABASE=main
+
+  trending:
+    build: .
+    container_name: trend
+    command: python Product/TrendManager/RunTrend.py
+    depends_on:
+     - data_db
+    dns: 8.8.8.8
+    volumes:
+     - .:/src
+    environment:
+     - PRODUCTION_DATABASE=1
+     - DATA_DATABASE_HOST=data_db

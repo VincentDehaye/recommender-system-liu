@@ -9,7 +9,7 @@ TrendingController runs the API's and calculates a total trending score
 # and sends it to the database API.
 from Product.TrendManager.YoutubeAPI import YoutubeAPI
 from Product.TrendManager.TwitterAPI import TwitterAPI
-
+from googleapiclient.errors import HttpError
 
 class TrendingController:
     """""
@@ -36,7 +36,10 @@ class TrendingController:
         :return: total_score, youtube_score, twitter_score
         """
         total_score = 0
-        youtube_score = YoutubeAPI().get_youtube_score(keyword)
+        try:
+            youtube_score = YoutubeAPI().get_youtube_score(keyword)
+        except HttpError:
+            print("The daily quota of youtube requests have been reached.")
         twitter_score = TwitterAPI().get_twitter_score(keyword) * 100
         total_score += youtube_score + twitter_score
         return total_score, youtube_score, twitter_score

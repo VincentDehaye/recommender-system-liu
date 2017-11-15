@@ -33,7 +33,7 @@ class TopTrendingList(object):
         for (movie, score) in zip(self.list_of_movies, self.list_of_scores):
             print("The movie", movie, "scored", score)
 
-    def dict(self):
+    def list(self):
         """
         Author: Marten Bolin
         Date: 2017-11-10
@@ -41,7 +41,7 @@ class TopTrendingList(object):
         Purpose:
         Returns the list as a dict
         """
-        tmp = []
+        result = []
         for title, score in zip(self.list_of_movies, self.list_of_scores):
-            tmp.append({"title": title, "score": score})
-        return {"list": tmp}
+            result.append({"title": title, "score": score})
+        return result

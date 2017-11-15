@@ -13,7 +13,10 @@ import traceback
 
 from main_app.serializers import RatingSerializer
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation
+from Product.DataManager.TopTrending.RetrieveTopTrendingTotal import RetrieveTopTrendingTotal
 from Product.DataManager.TopTrending.RetrieveTopTrendingTwitter import RetrieveTopTrendingTwitter
+from Product.DataManager.TopTrending.RetrieveTopTrendingYoutube import RetrieveTopTrendingYoutube
+
 
 class RecommendationsView(APIView):
     """
@@ -37,30 +40,30 @@ class RecommendationsView(APIView):
             recs = Recommendation(55, 10).generate_recommendation_list().__dict__
         except ValueError:
             recs = {"movies":[
-                {"name":"Batman", "id":1},
-                {"name":"Horseman", "id":2},
-                {"name":"Birdperson", "id":3},
-                {"name":"Manman", "id":4},
-                {"name":"Cowman", "id":5},
-                {"name":"Snakeman", "id":6},
-                {"name":"Butterflyman", "id":7},
-                {"name":"The extremely ordinary man", "id":8},
-                {"name":"Wonderman the movie", "id":9},
-                {"name":"Manbat", "id":10},
+                {"title":"Batman", "id":1},
+                {"title":"Horseman", "id":2},
+                {"title":"Birdperson", "id":3},
+                {"title":"Manman", "id":4},
+                {"title":"Cowman", "id":5},
+                {"title":"Snakeman", "id":6},
+                {"title":"Butterflyman", "id":7},
+                {"title":"The extremely ordinary man", "id":8},
+                {"title":"Wonderman the movie", "id":9},
+                {"title":"Manbat", "id":10},
                 ]}
         except:
             traceback.print_exc()
             recs = {"movies":[
-                {"name":"Batman", "id":1},
-                {"name":"Horseman", "id":2},
-                {"name":"Birdperson", "id":3},
-                {"name":"Manman", "id":4},
-                {"name":"Cowman", "id":5},
-                {"name":"Snakeman", "id":6},
-                {"name":"Butterflyman", "id":7},
-                {"name":"The extremely ordinary man", "id":8},
-                {"name":"Wonderman the movie", "id":9},
-                {"name":"Manbat", "id":10},
+                {"title":"Batman", "id":1},
+                {"title":"Horseman", "id":2},
+                {"title":"Birdperson", "id":3},
+                {"title":"Manman", "id":4},
+                {"title":"Cowman", "id":5},
+                {"title":"Snakeman", "id":6},
+                {"title":"Butterflyman", "id":7},
+                {"title":"The extremely ordinary man", "id":8},
+                {"title":"Wonderman the movie", "id":9},
+                {"title":"Manbat", "id":10},
                 ]}
         return Response(recs)
 
@@ -73,36 +76,44 @@ class TrendingView(APIView):
         Last update: 2017-11-14 by Bamse
         Purpose: Handles GET requests to trending API. Returns mock data.
         """
-        recs = {"trendingMovies":[
-            {"name":"Batmantredning", "id":1},
-            {"name":"Horseman", "id":2},
-            {"name":"Birdperson", "id":3},
-            {"name":"Manman", "id":4},
-            {"name":"Cowman", "id":5},
-            {"name":"Snakeman", "id":6},
-            {"name":"Butterflyman", "id":7},
-            {"name":"The extremely ordinary man", "id":8},
-            {"name":"Wonderman the movie", "id":9},
-            {"name":"Manbat", "id":10},
-            ]}
+        try:
+            trender = RetrieveTopTrendingTotal()
+            recs = {"trendingMovies": trender.get_top_trending(10).list()}
+        except:
+            recs = {"trendingMovies":[
+                {"title":"Batmantredning", "score":1},
+                {"title":"Horseman", "score":2},
+                {"title":"Birdperson", "score":3},
+                {"title":"Manman", "score":4},
+                {"title":"Cowman", "score":5},
+                {"title":"Snakeman", "score":6},
+                {"title":"Butterflyman", "score":7},
+                {"title":"The extremely ordinary man", "score":8},
+                {"title":"Wonderman the movie", "score":9},
+                {"title":"Manbat", "score":10},
+                ]}
         return Response(recs)
 
 
 class YoutubeTrendingView(APIView):
 
     def get(self, request):
-        recs = {"youtubeMovies":[
-            {"name":"Batmanyoutubetrending", "id":1},
-            {"name":"Horseman", "id":2},
-            {"name":"Birdperson", "id":3},
-            {"name":"Manman", "id":4},
-            {"name":"Cowman", "id":5},
-            {"name":"Snakeman", "id":6},
-            {"name":"Butterflyman", "id":7},
-            {"name":"The extremely ordinary man", "id":8},
-            {"name":"Wonderman the movie", "id":9},
-            {"name":"Manbat", "id":10},
-            ]}
+        try:
+            trender = RetrieveTopTrendingYoutube()
+            recs = {"youtubeMovies": trender.get_top_trending(10).list()}
+        except:
+            recs = {"youtubeMovies":[
+                {"title":"Batmanyoutubetrending", "score":1},
+                {"title":"Horseman", "score":2},
+                {"title":"Birdperson", "score":3},
+                {"title":"Manman", "score":4},
+                {"title":"Cowman", "score":5},
+                {"title":"Snakeman", "score":6},
+                {"title":"Butterflyman", "score":7},
+                {"title":"The extremely ordinary man", "score":8},
+                {"title":"Wonderman the movie", "score":9},
+                {"title":"Manbat", "score":10},
+                ]}
         return Response(recs)
 
 class TwitterTrendingView(APIView):
@@ -110,19 +121,19 @@ class TwitterTrendingView(APIView):
     def get(self, request):
         try:
             trender = RetrieveTopTrendingTwitter()
-            recs = trender.get_top_trending(10).dict()
+            recs = {"twitterMovies": trender.get_top_trending(10).list()}
         except:
             recs = {"twitterMovies":[
-                {"name":"Batmantwittertrending", "id":1},
-                {"name":"Horseman", "id":2},
-                {"name":"Birdperson", "id":3},
-                {"name":"Manman", "id":4},
-                {"name":"Cowman", "id":5},
-                {"name":"Snakeman", "id":6},
-                {"name":"Butterflyman", "id":7},
-                {"name":"The extremely ordinary man", "id":8},
-                {"name":"Wonderman the movie", "id":9},
-                {"name":"Manbat", "id":10},
+                {"title":"Batmantwittertrending", "score":1},
+                {"title":"Horseman", "score":2},
+                {"title":"Birdperson", "score":3},
+                {"title":"Manman", "score":4},
+                {"title":"Cowman", "score":5},
+                {"title":"Snakeman", "score":6},
+                {"title":"Butterflyman", "score":7},
+                {"title":"The extremely ordinary man", "score":8},
+                {"title":"Wonderman the movie", "score":9},
+                {"title":"Manbat", "score":10},
                 ]}
         return Response(recs)
 

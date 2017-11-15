@@ -15,14 +15,14 @@ export class TrendingComponent implements OnInit {
   dataYoutube: any;
   dataTwitter: any;
   // Modal headers 1-
-  modalHeader1 = 'This is where you decide the modal header';
-  modalHeader2 = 'this is a different modal so it needs a different variable';
-  modalHeader3 = 'this is a different modal so it needs a different variable';
+  modalHeader1 = 'Information';
+  modalHeader2 = 'Information';
+  modalHeader3 = 'Information';
 
   // Modal content 1-
-  modalContent1 = `In this list the most trending content according to youtube is displayed.`;
-  modalContent2 = `In this list the most trending content according to twitter is displayed.`;
-  modalContent3 = `same goes for this this is for the second modal`;
+  modalContent1 = `To be decided`;
+  modalContent2 = `To be decided`;
+  modalContent3 = `To be decided`;
 
 
     constructor(private dataHandlerService: DataHandlerService) { }

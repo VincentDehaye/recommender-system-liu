@@ -19,9 +19,9 @@ export class OverviewComponent implements OnInit {
   obj: any;
   // Modal headers 1-
   // Modal header for the "top recommended content"
-  modalHeader1 = 'INFORMATION ABOUT THE TOP RECOMMENDED CONTENT';
+  modalHeader1 = 'Information about the top recommended content';
   // Modal header for the "top trending content"
-  modalHeader2 = 'INFORMATION ABOUT THE TOP TRENDING CONTENT';
+  modalHeader2 = 'Information about the top trending content';
 
   // Modal content 1-
   // Modal content for the "top recommended content"

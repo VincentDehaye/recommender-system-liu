@@ -12,14 +12,16 @@ export class UsersComponent implements OnInit {
   movies: string[];
   data: any;
   // Modal headers 1-
-  modalHeader1 = 'This is where you decide the modal header';
+  modalHeader1 = 'Information about times recommended';
   modalHeader2 = 'this is a different modal so it needs a different variable';
-  modalHeader3 = 'this is a different modal so it needs a different variable';
+  modalHeader3 = 'How to configure demographics';
 
   // Modal content 1-
-  modalContent1 = `this is the content that will be shown in the modal`;
-  modalContent2 = `same goes for this this is for the second modal`;
-  modalContent3 = `same goes for this this is for the second modal`;
+  modalContent1 = `Each bar shows the number of times a certain movie has been
+                    recommended and shows the top recommendations
+                    depending on the demographics setting.`;
+  modalContent2 = `shows a list of the top recommended movies recommended by the algorithm.`;
+  modalContent3 = `explains the controlls and how they work`;
 
   paginationModel = 1;
 

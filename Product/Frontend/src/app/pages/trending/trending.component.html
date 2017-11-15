@@ -5,8 +5,8 @@
         <h2 style="padding: 10px">
         <ngx-modals [modalHeader]=modalHeader1 [modalContent]=modalContent1></ngx-modals>
         Total trending score
-        </h2>
-      <nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.title}} {{movie.score}} </nb-card-header>
+      </h2>
+      <nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.title}} </nb-card-header>
     </nb-card>
   </div>
   <div class="col-md-4">
@@ -15,7 +15,7 @@
         <ngx-modals [modalHeader]=modalHeader2 [modalContent]=modalContent2></ngx-modals>
         YouTube Score
         </h2>
-        <nb-card-header *ngFor="let movie of dataYoutube?.youtubeMovies"> {{movie.title}} {{movie.score}} </nb-card-header>
+        <nb-card-header *ngFor="let movie of dataYoutube?.youtubeMovies"> {{movie.title}} </nb-card-header>
       </nb-card>
   </div>
   <div class="col-md-4">
@@ -24,7 +24,7 @@
         <ngx-modals [modalHeader]=modalHeader3 [modalContent]=modalContent3></ngx-modals>
         Twitter Score
         </h2>
-        <nb-card-header *ngFor="let movie of dataTwitter?.twitterMovies"> {{movie.title}} {{movie.score}} </nb-card-header>
+        <nb-card-header *ngFor="let movie of dataTwitter?.twitterMovies"> {{movie.title}} </nb-card-header>
       </nb-card>
   </div>
 </div>

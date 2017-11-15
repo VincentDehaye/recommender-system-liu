@@ -8,6 +8,7 @@ import { TrendingModule } from './trending/trending.module';
 import { RecommendedModule } from './recommended/recommended.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
+import { ComponentsModule } from './components/components.module';
 
 import {LoginComponent} from './authentication/login/index';
 import { AuthGuard } from './authentication/_guards/index';
@@ -31,6 +32,7 @@ const PAGES_COMPONENTS = [
     TrendingModule,
     RecommendedModule,
     UserModule,
+    ComponentsModule,
   ],
   declarations: [
     ...PAGES_COMPONENTS,

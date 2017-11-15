@@ -32,10 +32,10 @@ consumer_secret = "Ef9M26RLwi6cZvsaESrFtuzffzgD3sNy7UnezOqzWbs5IDh2mY"
 
 # Variables for tracked keywords in search,
 # time until the stream stops and interval for saving to file.
-tweets_data_path = '\\trendingdata\\twitter_data'
+tweets_data_path = '/trendingdata/twitter_data'
 tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3'
 time_limit = 7200  # in seconds
-interval = 600  # in seconds
+interval = 4  # in seconds
 
 
 class TwitterAPI:
@@ -310,10 +310,18 @@ class StdOutListener(StreamListener):
         This way, we will know from which day data was stored.
         :return:
         """
-        path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + datetime.datetime.today().strftime('%Y%m%d') + ".bin"
-        with open(path, 'wb') as f:
-            pickle.dump(self.all_words, f, pickle.HIGHEST_PROTOCOL)
-            f.close()
+        try:
+            path = os.path.dirname(os.path.abspath('__file__')) + tweets_data_path + datetime.datetime.today().strftime(
+                '%Y%m%d') + ".bin"
+            with open(path, 'wb') as f:
+                pickle.dump(self.all_words, f, pickle.HIGHEST_PROTOCOL)
+                f.close()
+        except:
+            path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + datetime.datetime.today().strftime(
+                '%Y%m%d') + ".bin"
+            with open(path, 'wb') as f:
+                pickle.dump(self.all_words, f, pickle.HIGHEST_PROTOCOL)
+                f.close()
         print("Dictionary saved to file! Path:", path)
 
 
@@ -321,4 +329,4 @@ class StdOutListener(StreamListener):
 if __name__ == "__main__":
     tw = TwitterAPI()
     # tw.open_twitter_stream()
-    print(tw.get_twitter_score("rt"))
+    # print(tw.get_twitter_score("rt"))

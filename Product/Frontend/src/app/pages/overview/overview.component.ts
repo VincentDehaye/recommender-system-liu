@@ -18,8 +18,8 @@ export class OverviewComponent implements OnInit {
   dataTrending: any;
   obj: any;
   // Modal headers 1-
-  modalHeader1 = 'This is where you decide the modal header';
-  modalHeader2 = 'this is a different modal so it needs a different variable';
+  modalHeader1 = 'Top recommended content';
+  modalHeader2 = 'put description of what is shown here';
   // Modal content 1-
   modalContent1 = `this is the content that will be shown in the modal`;
   modalContent2 = `same goes for this this is for the second modal`;

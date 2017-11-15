@@ -12,9 +12,8 @@ import { RecommendedChartjsPieComponent } from './recommended-components/rec-cha
 import { RecommendedChartjsMultipleXaxisComponent} from './recommended-components/rec-chartjs-multiple-xaxis.component';
 import { RecommendedChartjsBarHorizontalComponent} from './recommended-components/rec-chartjs-bar-horizontal.component';
 import { RecommendedChartjsRadarComponent } from './recommended-components/rec-chartjs-radar.component';
+import {ComponentsModule} from '../components/components.module';
 // Modals
-import { ModalsComponent } from '../components/modals/modals.component'
-import { ModalComponent } from '../components/modals/modal/modal.component'
 
 const components = [
   RecommendedChartjsBarComponent,
@@ -26,10 +25,8 @@ const components = [
 ];
 
 @NgModule({
-  imports: [ThemeModule, RecommendedRoutingModule, AngularEchartsModule, NgxChartsModule, ChartModule],
+  imports: [ ComponentsModule, ThemeModule, RecommendedRoutingModule,
+    AngularEchartsModule, NgxChartsModule, ChartModule],
   declarations: [...routedComponents, ...components],
-  entryComponents: [
-    ModalComponent,
-  ],
 })
 export class RecommendedModule {}

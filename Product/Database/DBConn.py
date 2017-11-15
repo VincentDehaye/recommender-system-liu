@@ -147,6 +147,8 @@ class MovieLinks(Base):
 # Class for the movies a user has been recommended
 class Recommendations(Base):
     __tablename__ = 'recommendations'
+    # TODO add auto_increment id here, user_ids and movie_ids obviously cant be primary keys
+
     user_id = Column(Integer, ForeignKey(User.id), primary_key=True)
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
 

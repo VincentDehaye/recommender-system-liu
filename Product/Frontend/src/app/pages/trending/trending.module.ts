@@ -14,6 +14,7 @@ import { TrendingEchartsAreaStackComponent } from './trending-components/trendin
 import { TrendingEchartsBarAnimationComponent } from './trending-components/trending-echarts-bar-animation.component';
 import { TrendingEchartsRadarComponent } from './trending-components/trending-echarts-radar.component';
 
+import {ComponentsModule} from '../components/components.module';
 
 
 const components = [
@@ -27,7 +28,7 @@ const components = [
 ];
 
 @NgModule({
-  imports: [ThemeModule, TrendingRoutingModule, AngularEchartsModule, NgxChartsModule, ChartModule],
+  imports: [ComponentsModule, ThemeModule, TrendingRoutingModule, AngularEchartsModule, NgxChartsModule, ChartModule],
   declarations: [...routedComponents, ...components],
 })
 export class TrendingModule {}

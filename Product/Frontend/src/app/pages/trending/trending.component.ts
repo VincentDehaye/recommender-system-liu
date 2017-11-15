@@ -20,8 +20,8 @@ export class TrendingComponent implements OnInit {
   modalHeader3 = 'this is a different modal so it needs a different variable';
 
   // Modal content 1-
-  modalContent1 = `this is the content that will be shown in the modal`;
-  modalContent2 = `same goes for this this is for the second modal`;
+  modalContent1 = `In this list the most trending content according to youtube is displayed.`;
+  modalContent2 = `In this list the most trending content according to twitter is displayed.`;
   modalContent3 = `same goes for this this is for the second modal`;
 
 

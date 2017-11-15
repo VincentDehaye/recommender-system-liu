@@ -41,4 +41,7 @@ class TopTrendingList(object):
         Purpose:
         Returns the list as a dict
         """
-        return dict(zip(self.list_of_movies, self.list_of_scores))
+        tmp = []
+        for title, score in zip(self.list_of_movies, self.list_of_scores):
+            tmp.append({"title": title, "score": score})
+        return {"list": tmp}

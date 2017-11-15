@@ -13,6 +13,7 @@ import traceback
 
 from main_app.serializers import RatingSerializer
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation
+from Product.DataManager.TopTrending.RetrieveTopTrendingTwitter import RetrieveTopTrendingTwitter
 
 class RecommendationsView(APIView):
     """
@@ -107,18 +108,22 @@ class YoutubeTrendingView(APIView):
 class TwitterTrendingView(APIView):
 
     def get(self, request):
-        recs = {"twitterMovies":[
-            {"name":"Batmantwittertrending", "id":1},
-            {"name":"Horseman", "id":2},
-            {"name":"Birdperson", "id":3},
-            {"name":"Manman", "id":4},
-            {"name":"Cowman", "id":5},
-            {"name":"Snakeman", "id":6},
-            {"name":"Butterflyman", "id":7},
-            {"name":"The extremely ordinary man", "id":8},
-            {"name":"Wonderman the movie", "id":9},
-            {"name":"Manbat", "id":10},
-            ]}
+        try:
+            trender = RetrieveTopTrendingTwitter()
+            recs = trender.get_top_trending(10).dict()
+        except:
+            recs = {"twitterMovies":[
+                {"name":"Batmantwittertrending", "id":1},
+                {"name":"Horseman", "id":2},
+                {"name":"Birdperson", "id":3},
+                {"name":"Manman", "id":4},
+                {"name":"Cowman", "id":5},
+                {"name":"Snakeman", "id":6},
+                {"name":"Butterflyman", "id":7},
+                {"name":"The extremely ordinary man", "id":8},
+                {"name":"Wonderman the movie", "id":9},
+                {"name":"Manbat", "id":10},
+                ]}
         return Response(recs)
 
 class RateMovieView(APIView):

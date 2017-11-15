@@ -167,4 +167,4 @@ def show_evolvement():
     print("Precision after re-training of model")
     print(precision_after)
 
-show_evolvement()
+#show_evolvement()

@@ -49,9 +49,9 @@ export class UsersD3BarComponent implements OnDestroy, OnInit {
   public getData() {
       this.dataHandlerService.getData().subscribe((data) => {
       this.movies = data.movies;
-       //console.log();
-       //console.log(this.movies[0]["name"]);
-       //console.log(this.movies.values());
+      // console.log();
+        // console.log(this.movies[0]["name"]);
+       // console.log(this.movies.values());
      /* var i:number;
       for (i = 0;i < 9; ++i){
         this.results.push({name: this.movies[1]["name"], value: this.movies[1]['id']});

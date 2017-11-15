@@ -1,0 +1,29 @@
+<!-- Performance page-->
+<div class="row">
+  <div class="col-md-6">
+    <nb-card>
+        <nb-card-header>
+          <h2 style="padding: 10px">
+          <ngx-modals [modalHeader]=modalHeader1 [modalContent]=modalContent1></ngx-modals>
+          Improvement Over Time
+          </h2>
+        </nb-card-header>
+        <nb-card-body>
+          <ngx-chartjs-multiple-xaxis></ngx-chartjs-multiple-xaxis>
+        </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+    <nb-card>
+        <nb-card-header>
+          <h2 style="padding: 10px">
+          <ngx-modals [modalHeader]=modalHeader2 [modalContent]=modalContent2></ngx-modals>
+           Success Rate
+          </h2>
+        </nb-card-header>
+        <nb-card-body>
+        <ngx-chartjs-pie></ngx-chartjs-pie>
+        </nb-card-body>
+    </nb-card>
+  </div>
+</div>

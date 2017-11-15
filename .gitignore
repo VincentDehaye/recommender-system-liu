@@ -234,3 +234,9 @@ testem.log
 
 #System Files
 .DS_Store
+
+#datasets
+*.zip
+
+#pickles
+.sav

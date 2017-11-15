@@ -292,5 +292,5 @@ def test_get_publication_date():
 
     # Observed output
     for video in search_response.get("items", []):
-        observed = youtube.get_like_count(video)
+        observed = youtube.get_publication_date(video)
         assert (observed >= 0) and (observed <= 1)

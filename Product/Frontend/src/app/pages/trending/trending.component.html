@@ -4,7 +4,7 @@
       <h2 style="padding: 10px">
         Total trending score
       </h2>
-      <nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.title}} {{movie.score}} </nb-card-header>
+      <nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.title}} </nb-card-header>
     </nb-card>
   </div>
   <div class="col-md-4">
@@ -12,7 +12,7 @@
         <h2 style="padding: 10px">
           YouTube Score
         </h2>
-        <nb-card-header *ngFor="let movie of dataYoutube?.youtubeMovies"> {{movie.title}} {{movie.score}} </nb-card-header>
+        <nb-card-header *ngFor="let movie of dataYoutube?.youtubeMovies"> {{movie.title}} </nb-card-header>
       </nb-card>
   </div>
 
@@ -23,7 +23,7 @@
         <h2 style="padding: 10px">
           Twitter Score
         </h2>
-        <nb-card-header *ngFor="let movie of dataTwitter?.twitterMovies"> {{movie.title}} {{movie.score}} </nb-card-header>
+        <nb-card-header *ngFor="let movie of dataTwitter?.twitterMovies"> {{movie.title}} </nb-card-header>
       </nb-card>
   </div>
 </div>

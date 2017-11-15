@@ -60,6 +60,35 @@ def test_precision(model, matrix, k):
     return precision_at_k(model, matrix, k=k).mean()
 
 
+# TODO - Fix this script to show improvement graph
+def evolve_model_graph(train_matrix, test_matrix):
+    alpha = 1e-3
+    epochs = 70
+
+    adagrad_model = LightFM(no_components=30,
+                            loss='warp',
+                            learning_schedule='adagrad',
+                            user_alpha=alpha,
+                            item_alpha=alpha)
+    adadelta_model = LightFM(no_components=30,
+                             loss='warp',
+                             learning_schedule='adadelta',
+                             user_alpha=alpha,
+                             item_alpha=alpha)
+
+    adagrad_auc = []
+
+    for epoch in range(epochs):
+        adagrad_model.fit_partial(train_matrix, epochs=1)
+        adagrad_auc.append(auc_score(adagrad_model, test_matrix).mean())
+
+    adadelta_auc = []
+
+    for epoch in range(epochs):
+        adadelta_model.fit_partial(train_matrix, epochs=1)
+        adadelta_auc.append(auc_score(adadelta_model, test_matrix).mean())
+
+
 def evolve_model(filename, model, new_users_matrix):
     """
     Author: Gustaf Norberg
@@ -109,3 +138,33 @@ def evolve_model(filename, model, new_users_matrix):
     print(np.shape(trainmatrix))
     print(np.shape(testmatrix))
     print(np.shape(new_user_matrix))"""
+
+
+def show_evolvement():
+    """
+    Shows, in print, that model evolves after running evolve_model
+    """
+    print("Generate new model")
+    train_model('test_new_model.sav')
+    print("Load the new model")
+    model = load_model('test_new_model.sav')
+    print("Import train matrix (80 % of total user data)")
+    print("Import new user data matrix - emulated new user data (10 % of total user data)")
+    print(" ")
+    train_matrix = get_matrices.get_train_matrix()
+    new_users_matrix = get_matrices.get_new_users_matrix()
+    k = 10
+
+    print("Check precision @ k for the model based on the train matrix (80 %)")
+    precision_before = test_precision(model, train_matrix, k)
+    print("Precision before re-training of model")
+    print(precision_before)
+    print(" ")
+    print("Re-train model with the extra users (80 + 10 %)")
+    evolve_model('test_new_model.sav', model, new_users_matrix)
+    print("Check precision @ k for the model based on the train matrix & new users (90 %)")
+    precision_after = test_precision(model, train_matrix + new_users_matrix, k)
+    print("Precision after re-training of model")
+    print(precision_after)
+
+show_evolvement()

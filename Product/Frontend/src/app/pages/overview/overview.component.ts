@@ -22,11 +22,16 @@ export class OverviewComponent implements OnInit {
   modalHeader1 = 'INFORMATION ABOUT THE TOP RECOMMENDED CONTENT';
   // Modal header for the "top trending content"
   modalHeader2 = 'INFORMATION ABOUT THE TOP TRENDING CONTENT';
+
   // Modal content 1-
   // Modal content for the "top recommended content"
-  modalContent1 = `Here you can find the top recommended movies for you from our high class recommendation algorithm.`;
+  modalContent1 = `Here you can find the top recommended movies for you from
+  our high class recommendation algorithm.`;
   // Modal content for the "top trending content"
-  modalContent2 = `In this list the top trending movies are presented to you. By applicating the trending factor to the result from our recommendation algorithm, we offer you a unique experience with the most relevant movies right now. `;
+  modalContent2 = `In this list the top trending movies are presented to you.
+  By applicating the trending factor to the result from our recommendation
+  algorithm, we offer you a unique experience with the most relevant movies
+  right now. `;
 
     constructor(private userService: UserService, private dataHandlerService: DataHandlerService) { }
 

@@ -46,4 +46,4 @@ def test_evolve_model():
     # since value_after > value_before
     assert(value_after - value_before >= 0)
 
-test_evolve_model()
+#test_evolve_model()

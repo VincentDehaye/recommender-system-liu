@@ -19,7 +19,7 @@ class UpdateTrending(Update):
         Last update: 10/11/2017
         Purpose: Updates the different trend scores of a movie
         """
-        to_update = self.session.query(TrendingScore).filter_by(movie_id=movie_id)
+        to_update = self.session.query(TrendingScore).filter_by(movie_id=movie_id).first()
         if total_score:
             to_update.total_score = total_score
         if youtube_score:

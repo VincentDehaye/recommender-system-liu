@@ -40,6 +40,7 @@ def test_add_trend_score():
     session.commit()
     session.delete(dummy_movie)
     session.commit()
+    session.close()
 
     assert observed
     assert observed.movie_id == movie_id

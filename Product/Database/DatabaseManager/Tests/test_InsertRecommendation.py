@@ -49,6 +49,7 @@ def test_insert_recommendation():
     session.delete(dummy_movie_2)
     session.delete(dummy_user)
     session.commit()
+    session.close()
 
     assert observed_1
     assert observed_1.movie_id == movie_id_1

@@ -1,6 +1,6 @@
 from Product.Database.DatabaseManager.Insert.Insert import Insert
 from Product.Database.DBConn import Recommendation
-from sqlalchemy import exists
+
 
 class InsertRecommendation(Insert):
     """
@@ -13,11 +13,14 @@ class InsertRecommendation(Insert):
         """
         Author: Alexander Dahl
         Date: 2017-11-15
-        Last update: 2017-11-15
+        Last update: 2017-11-16
         Purpose: Make Inserts to the recommendation table in the database
         """
+
         for rec in movie_list:
             new_recommendation = Recommendation(movie_id=rec['id'], user_id=user_id)
             self.session.add(new_recommendation)
-            self.session.commit()
+            print('added movie')
+        self.session.commit()
+        print('commited for user %s' % user_id)
         self.session.close()

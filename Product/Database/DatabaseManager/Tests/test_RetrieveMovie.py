@@ -12,7 +12,7 @@ def test_retrieve_movie():
     """
 
     # PRE-CONDITIONS
-    movie_id = -3
+    movie_id = -7
     movie_title = "dummy"
     movie_year = 1111
 
@@ -21,7 +21,7 @@ def test_retrieve_movie():
     dummy_movie = Movie(id=movie_id, title=movie_title, year=movie_year)
     session.add(dummy_movie)
     session.commit()
-
+    session.close()  # We need to close the session, else we get an error when trying to delete it
 
     # EXPECTED OUTPUT
     expected_id = movie_id
@@ -29,16 +29,18 @@ def test_retrieve_movie():
     expected_year = movie_year
 
     # OBSERVED OUTPUT
-    # We query the the movie to get a observed output
-    observed = RetrieveMovie().retrieve_movie(movie_id=movie_id)
+    # We call the method to be tested to get 1) The movie we added above, and 2) All the movies which
+    # is done by not setting the parameter "movie_id"
+    retrieve_movie = RetrieveMovie()
+    observed_one_movie = retrieve_movie.retrieve_movie(movie_id=movie_id)
+    observed_all_movies = retrieve_movie.retrieve_movie()
 
-    # After adding the dummy movie and the dummy trending score for it, we remove them again.
-    # We need to commit twice because of foreign key constraints
-    session.delete(observed)
+    # After adding the dummy movie  we remove them again.
+    session.delete(observed_one_movie)
     session.commit()
 
-    assert observed
-    assert observed.movie_id == expected_id
-    assert observed.title == expected_title
-    assert observed.year == expected_year
-
+    assert observed_one_movie
+    assert observed_one_movie.id == expected_id
+    assert observed_one_movie.title == expected_title
+    assert observed_one_movie.year == expected_year
+    assert observed_all_movies

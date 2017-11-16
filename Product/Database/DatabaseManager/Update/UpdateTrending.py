@@ -18,6 +18,10 @@ class UpdateTrending(Update):
         Date: 9/11/2017
         Last update: 10/11/2017
         Purpose: Updates the different trend scores of a movie
+        :param movie_id : The id of the movie to update
+        :param total_score : The value of the new total_score (Optional)
+        :param youtube_score : The value of the new youtube_score (Optional)
+        :param twitter_score : The value of the new twitter_score (Optional)
         """
         to_update = self.session.query(TrendingScore).filter_by(movie_id=movie_id).first()
         if total_score:

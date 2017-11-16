@@ -16,18 +16,8 @@ class TrendingController:
     Class responsible for fetching the trending score from the api sources.
     """
 
-    def get_trending_content(self, search_term):
-        """
-        Author: Albin Bergvall, Martin Lundberg
-        Takes a movie title (search_term) and make the search in the
-        api sources and returns a numeric result for each api source.
-        :param search_term:
-        :return:
-        """
-        return self.total_score_calc(search_term)
-
     @staticmethod
-    def total_score_calc(keyword):
+    def get_trending_content(keyword):
         """
         Author: Albin Bergvall, Martin Lundberg
         Takes the movie title (keyword) as a parameter and fetches score from the api sources

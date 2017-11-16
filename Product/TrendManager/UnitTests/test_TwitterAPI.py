@@ -1,5 +1,4 @@
 from ..TwitterAPI import TwitterAPI
-from ..TwitterAPI import TwitterAPI
 
 
 def test_get_word_score():
@@ -74,7 +73,7 @@ def test_load_dict():
     # Observed output
     observed1 = twitterApi.load_old_dict()
 
-    #assert observed1 is not None
+    # assert observed1 is not None
 
 
 def test_get_twitter_score():
@@ -92,6 +91,27 @@ def test_get_twitter_score():
     assert observed > 0
 
 
+def test_get_twitter_score_freq_ratio():
+    """
+    Author: Karl Lundvall
+    Date: 2017-11-16
+    Purpose: Assert that the freq_ratio returns a value greater than zero.
+    :return:
+    """
+    # Pre-conditions
+    twitter_api = TwitterAPI()
+    title = "rt"
+
+    # Observed output
+    observed = twitter_api.get_twitter_score_freq_ratio(title)
+
+    # Expected output
+    expected = 0
+
+    assert observed > expected
+    assert observed is float(observed)
+
+
 def test_open_twitter_stream():  # NOT DONE
     """
     Author: Alin Bergvall
@@ -103,4 +123,4 @@ def test_open_twitter_stream():  # NOT DONE
     twitter_api = TwitterAPI()
 
     # Observed output
-    twitter_api.open_twitter_stream()
+    # twitter_api.open_twitter_stream()

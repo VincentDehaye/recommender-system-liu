@@ -9,9 +9,9 @@ def test_insert_recommendation():
     """
     Author: John Andrée Lidquist
     Date: 2017-11-15
+    Last Updated: 2017-11-16
     Purpose: Assert that recommendations are inserted to the database
     """
-    # def insert_recommendation(self, movie_list, user_id):
 
     # PRE-CONDITIONS
     movie_id_1 = -1

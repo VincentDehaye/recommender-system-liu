@@ -12,7 +12,7 @@ def test_retrieve_movie():
     """
 
     # PRE-CONDITIONS
-    movie_id = -7
+    movie_id = -1
     movie_title = "dummy"
     movie_year = 1111
 
@@ -20,9 +20,8 @@ def test_retrieve_movie():
     session = create_session()
     dummy_movie = Movie(id=movie_id, title=movie_title, year=movie_year)
     session.add(dummy_movie)
-    session.commit()
-    session.close()  # We need to close the session, else we get an error when trying to delete it
-
+    session.commit()  # We need to close the session, else we get an error when trying to delete it
+    session.close()
     # EXPECTED OUTPUT
     expected_id = movie_id
     expected_title = movie_title

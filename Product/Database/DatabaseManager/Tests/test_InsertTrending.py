@@ -11,7 +11,7 @@ def test_add_trend_score():
     Purpose: Assert that trend scores are inserted to the database correctly
     """
 
-    # Pre-conditions
+    # PRE-CONDITIONS
     movie_id = -1
     total_score = 10
     youtube_score = 20
@@ -27,10 +27,10 @@ def test_add_trend_score():
     InsertTrending().add_trend_score(movie_id=movie_id, total_score=total_score,
                                      youtube_score=youtube_score, twitter_score=twitter_score)
 
-    # Expected output
+    # EXPECTED OUTPUT
     # The expected output are the same variables as the Pre-conditions
 
-    # Observed output
+    # OBSERVED OUTPUT
     # We query the the score to get a observed output
     observed = session.query(TrendingScore).filter_by(movie_id=movie_id).first()
 

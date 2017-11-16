@@ -67,13 +67,4 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },*/
-  {
-    title: 'SIMULATION',
-    group: true,
-  },
-  {
-    title: 'User',
-    icon: 'ion-android-person',
-    link: '/pages/user',
-  },
 ];

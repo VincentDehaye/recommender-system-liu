@@ -19,3 +19,35 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+Dependant Modules
+---------------------------------------
+
+This code has the following dependencies
+above and beyond the Python standard library:
+
+certifi - Mozilla Public License
+chardet - GNU LESSER GENERAL PUBLIC LICENSE
+idna -  Python Software Foundation License
+lightfm - Apache License 2.0
+numpy - BSD 3-clause License
+pytest - MIT License
+scip - https://github.com/scipy/scipy/blob/master/LICENSE.txt
+SQLAlchemy -  MIT license
+urllib3 - MIT License
+wheel - MIT License
+colorama - BSD 3-clause License
+google-api-python-client - Apache License 2.0
+httplib2 - Httplib2 Software License
+oauth2client - Apache License 2.0
+oauthlib - BSD 3-clause License
+pyasn1 - BSD 2-clause License
+python-dateutil - https://github.com/dateutil/dateutil/blob/master/LICENSE
+pytz - MIT License
+requests - Apache License 2.0
+requests-oauthlib - ISC License
+setuptools - MIT License
+six - MIT License
+uritemplate - MIT License
+nebular - MIT License

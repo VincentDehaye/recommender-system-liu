@@ -38,6 +38,7 @@ def test_retrieve_movie():
     # After adding the dummy movie  we remove them again.
     session.delete(observed_one_movie)
     session.commit()
+    session.close()
 
     assert observed_one_movie
     assert observed_one_movie.id == expected_id

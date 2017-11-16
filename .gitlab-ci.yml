@@ -6,7 +6,6 @@ before_script:
     - export PYTHONPATH="${PYTHONPATH}:/home/gitlab-runner/builds/6b21c71b/0/PUM-Company3/Software/"
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
     - python --version
-    - pip install -r requirements.txt
     - python ./Product/Database/DBConn.py
     - python ./Product/Database/DBFillSmallSet.py
     - python ./Product/TrendManager/RunTrend.py

@@ -7,8 +7,8 @@
 """
 import os
 
-from Product.RecommendationManager import generate_model as generate_model
+from Product.RecommendationManager.model import generate_model as generate_model
 
 PATH = os.path.dirname(os.path.abspath(__file__))
-
+print(PATH)
 generate_model.train_model(PATH + '/new_model.sav')

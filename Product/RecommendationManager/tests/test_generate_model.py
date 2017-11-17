@@ -2,9 +2,8 @@
 Testing generate model
 """
 # TODO does the test module need to import pytest?
-import pytest
-from Product.RecommendationManager import generate_model as generate_model
 from Product.RecommendationManager import gets_from_database as get_matrices
+from Product.RecommendationManager.model import generate_model as generate_model
 
 
 def test_test_precision():

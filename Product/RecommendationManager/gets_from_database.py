@@ -13,7 +13,7 @@ get_movie_title returns the movie title for one movie id
 
 """
 from scipy.sparse import coo_matrix
-import random
+# import random
 
 
 from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
@@ -26,7 +26,8 @@ from Product.Database.DatabaseManager.Retrieve.RetrieveRating import RetrieveRat
 #     Date: 2017-11-09
 #     Last update: 2017-11-09
 #     Purpose:
-#     Returns train matrix, test matrix and new users matrix where all are randomly split into parts of 80 %, 10 % and
+#     Returns train matrix, test matrix and new users matrix where all are randomly split
+#     into parts of 80 %, 10 % and
 #     10 % respectively
 #
 #     :return: training matrix, testing matrix and new users matrix in the form of numpy matrices
@@ -61,7 +62,8 @@ from Product.Database.DatabaseManager.Retrieve.RetrieveRating import RetrieveRat
 #
 #     train_matrix = coo_matrix((train_rating_list, (train_user_list, train_movie_list)))
 #     test_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)))
-#     new_users_matrix = coo_matrix((new_users_rating_list, (new_users_user_list, new_users_movie_list)))
+#     new_users_matrix = coo_matrix((new_users_rating_list, (new_users_user_list,
+#                                                            new_users_movie_list)))
 #     return (train_matrix, test_matrix, new_users_matrix)
 
 
@@ -168,4 +170,3 @@ def get_movie_title(movie_id):
     :return: movie name as string
     """
     return RetrieveMovie().retrieve_movie(movie_id).title
-

@@ -2,6 +2,8 @@
 Class to get the correct output structure in the
 recommendation.generate_recommendation_list()
 """
+
+
 class RecommendationList(object):
     """
     Author: Sebastian Maghsoudi / Alexander Dahl

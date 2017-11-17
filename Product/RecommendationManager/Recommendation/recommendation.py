@@ -1,8 +1,8 @@
 """
 Recommendation Class.
 """
-import numpy as np
 import os
+import numpy as np
 from Product.RecommendationManager import generate_model as generate_model
 from Product.RecommendationManager import gets_from_database as gets_from_database
 from Product.RecommendationManager.Recommendation.recommendation_list import RecommendationList

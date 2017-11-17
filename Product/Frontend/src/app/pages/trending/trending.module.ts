@@ -14,7 +14,7 @@ import {ComponentsModule} from '../components/components.module';
 
 
 const components = [
-  TrendingD3BarComponent
+  TrendingD3BarComponent,
 ];
 
 @NgModule({

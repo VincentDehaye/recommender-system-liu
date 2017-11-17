@@ -8,7 +8,6 @@ import pickle
 from lightfm import LightFM
 from lightfm.evaluation import precision_at_k, auc_score
 from Product.RecommendationManager import gets_from_database as get_matrices
-import numpy as np
 
 
 def train_model(filename):
@@ -62,6 +61,12 @@ def test_precision(model, matrix, k):
 
 # TODO - Fix this script to show improvement graph
 def evolve_model_graph(train_matrix, test_matrix):
+    """
+    Author: Gustaf Norberg
+    Date: 2017-11-15
+    Last update: 2017-11-15
+    Purpose: should generate a graph to show improvement over time, not finished.
+    """
     alpha = 1e-3
     epochs = 70
 
@@ -104,45 +109,48 @@ def evolve_model(filename, model, new_users_matrix):
     model.fit_partial(new_users_matrix, epochs=10)
     pickle.dump(model, open(filename, 'wb'))
 
-
-
-    """    print("Before")
-
-    model = LightFM(learning_rate=0.05, loss='warp')
-    model.fit(trainmatrix, epochs=10)
-
-    train_precision = precision_at_k(model, trainmatrix, k=10).mean()
-    test_precision = precision_at_k(model, testmatrix, k=10).mean()
-
-    train_auc = auc_score(model, trainmatrix).mean()
-    test_auc = auc_score(model, testmatrix).mean()
-
-    print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
-    print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
-
-    model.fit_partial(new_user_matrix, epochs=10)
-
-    ninetypercent_matrix = trainmatrix + new_user_matrix
-
-    train_precision = precision_at_k(model, ninetypercent_matrix, k=10).mean()
-    test_precision = precision_at_k(model, testmatrix, k=10).mean()
-
-    train_auc = auc_score(model, ninetypercent_matrix).mean()
-    test_auc = auc_score(model, testmatrix).mean()
-
-    print("After fitpartial")
-    print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
-    print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
-
-    print("Train")
-    print(np.shape(trainmatrix))
-    print(np.shape(testmatrix))
-    print(np.shape(new_user_matrix))"""
+    # TODO what is the purpose of this commented code?
+    # print("Before")
+    #
+    # model = LightFM(learning_rate=0.05, loss='warp')
+    # model.fit(trainmatrix, epochs=10)
+    #
+    # train_precision = precision_at_k(model, trainmatrix, k=10).mean()
+    # test_precision = precision_at_k(model, testmatrix, k=10).mean()
+    #
+    # train_auc = auc_score(model, trainmatrix).mean()
+    # test_auc = auc_score(model, testmatrix).mean()
+    #
+    # print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
+    # print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
+    #
+    # model.fit_partial(new_user_matrix, epochs=10)
+    #
+    # ninetypercent_matrix = trainmatrix + new_user_matrix
+    #
+    # train_precision = precision_at_k(model, ninetypercent_matrix, k=10).mean()
+    # test_precision = precision_at_k(model, testmatrix, k=10).mean()
+    #
+    # train_auc = auc_score(model, ninetypercent_matrix).mean()
+    # test_auc = auc_score(model, testmatrix).mean()
+    #
+    # print("After fitpartial")
+    # print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
+    # print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
+    #
+    # print("Train")
+    # print(np.shape(trainmatrix))
+    # print(np.shape(testmatrix))
+    # print(np.shape(new_user_matrix))
+    #
 
 
 def show_evolvement():
     """
-    Shows, in print, that model evolves after running evolve_model
+    Author: Gustaf Norberg
+    Date: 2017-11-09
+    Last update: 2017-11-13
+    Purpose: Shows, in print, that model evolves after running evolve_model
     """
     print("Generate new model")
     train_model('test_new_model.sav')
@@ -167,4 +175,4 @@ def show_evolvement():
     print("Precision after re-training of model")
     print(precision_after)
 
-#show_evolvement()
+# show_evolvement()

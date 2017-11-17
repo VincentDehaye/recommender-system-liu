@@ -48,7 +48,7 @@ export class TrendingD3BarComponent implements OnDestroy, OnInit {
 
   }
   public getData() {
-      if (this.factor == 1){
+      if (this.factor === 1) {
         this.dataHandlerService.getTrendingData().subscribe((data) => {
       this.movies = data.trendingMovies;
 
@@ -67,7 +67,7 @@ export class TrendingD3BarComponent implements OnDestroy, OnInit {
     });
 
       }
-      if (this.factor == 2){
+      if (this.factor === 2) {
         this.dataHandlerService.getYoutubeData().subscribe((data) => {
       this.movies = data.youtubeMovies;
 
@@ -86,7 +86,7 @@ export class TrendingD3BarComponent implements OnDestroy, OnInit {
     });
 
       }
-      if (this.factor == 3){
+      if (this.factor === 3) {
         this.dataHandlerService.getTwitterData().subscribe((data) => {
       this.movies = data.twitterMovies;
 

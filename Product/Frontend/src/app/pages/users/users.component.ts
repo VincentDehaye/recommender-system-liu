@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataHandlerService} from '../../@core/data/data-handler.service';
 
 
@@ -9,8 +9,16 @@ import { DataHandlerService} from '../../@core/data/data-handler.service';
 })
 
 export class UsersComponent implements OnInit {
+  model = {
+    male: true,
+    other: true,
+    female: true,
+  };
   movies: string[];
   data: any;
+  value: any= '0 - 200';
+
+  // Gender control variables initiates as true;
   // Modal headers 1-
   modalHeader1 = 'Information about times recommended';
   modalHeader2 = 'this is a different modal so it needs a different variable';
@@ -34,8 +42,6 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.getData();
-    this.extractData();
-
 
   }
   public getData() {
@@ -43,7 +49,10 @@ export class UsersComponent implements OnInit {
       this.data = data;
     }); // Converts the data making it reachable in the htm file
   }
-   extractData() {
-    return null;
+   setAge(fromAge: any, toAge: any) {
+    this.value = fromAge.toString() + ' - ' + toAge.toString();
   }
+   enableGender() {
+     return null;
+   }
 }

@@ -1,6 +1,9 @@
-import pytest
-from Product.RecommendationManager import generate_model as generate_model
+"""
+Testing generate model
+"""
+# TODO does the test module need to import pytest?
 from Product.RecommendationManager import gets_from_database as get_matrices
+from Product.RecommendationManager.model import generate_model as generate_model
 
 
 def test_test_precision():
@@ -16,7 +19,7 @@ def test_test_precision():
     train_matrix = get_matrices.get_train_matrix()
     # Expected output
     # >0
-    assert(generate_model.test_precision(model,train_matrix, 10) > 0)
+    assert generate_model.test_precision(model, train_matrix, 10) > 0
 
 
 def test_evolve_model():
@@ -31,7 +34,7 @@ def test_evolve_model():
     model = generate_model.load_model('test_new_model.sav')
     train_matrix = get_matrices.get_train_matrix()
     new_users_matrix = get_matrices.get_new_users_matrix()
-    test_matrix = get_matrices.get_test_matrix()
+    # test_matrix = get_matrices.get_test_matrix()
     k = 10
 
     value_before = generate_model.test_precision(model, train_matrix, k)
@@ -44,6 +47,4 @@ def test_evolve_model():
     print(value_after)
     # Expected output > 0
     # since value_after > value_before
-    assert(value_after - value_before >= 0)
-
-
+    assert(value_after - value_before) >= 0

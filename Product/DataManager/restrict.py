@@ -67,5 +67,4 @@ def get_restricted_match(table, feature_list, list_of_matching_strings_list):
 
     for object in result:
         output_list.append(object.id)
-
     return output_list

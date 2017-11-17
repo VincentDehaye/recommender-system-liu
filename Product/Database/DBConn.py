@@ -145,6 +145,19 @@ class MovieLinks(Base):
             self.movie_id, self.imdb_id, self.tmdb_id)
 
 
+# Class for the movies a user has been recommended
+
+class Recommendation(Base):
+    __tablename__ = 'recommendation'
+
+    user_id = Column(Integer, ForeignKey(User.id), primary_key=True)
+    movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
+
+    def __repr__(self):
+        return "<Recommendation(user_id id='%s', movie_id ='%s')>" % (self.user_id, self.movie_id)
+
+
+
 # DO NOT CHANGE BELOW
 def create_session():
     # Creates the tables in the database
@@ -154,5 +167,3 @@ def create_session():
     # to the file in which you want to do such
     Session = sessionmaker(bind=engine)
     return Session()
-
-session=create_session()

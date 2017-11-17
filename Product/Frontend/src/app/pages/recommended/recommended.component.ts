@@ -7,9 +7,11 @@ import { Component } from '@angular/core';
   templateUrl: './recommended.component.html',
 })
 export class RecommendedComponent {
-  modalHeader1 = 'This is where you decide the modal header';
-  modalHeader2 = 'this is a different modal so it needs a different variable';
+  modalHeader1 = 'Information about success rate over time';
+  modalHeader2 = 'Information about the success rate';
   // Modal content 1-
-  modalContent1 = `this is the content that will be shown in the modal`;
-  modalContent2 = `same goes for this this is for the second modal`;
+  modalContent1 = `The graph visualised the success progression over time and
+                is measured by the overall recommendation success among users.`;
+  modalContent2 = `The piechart displayes the latest percentage (presented in green)
+                    of successful matches.`;
 }

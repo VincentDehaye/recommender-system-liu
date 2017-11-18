@@ -1,7 +1,11 @@
 """
-Gets movie from database and stores a trending score
+Author: John Andree Lidquist, Marten Bolin
+Date:
+Last update:
+Purpose: Gets movie from database and stores a trending score
 """
 
+from datetime import datetime
 import threading
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -10,14 +14,13 @@ from Product.Database.DatabaseManager.Insert.InsertTrending import InsertTrendin
 from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
 from Product.Database.DatabaseManager.Update.UpdateTrending import UpdateTrending
 from Product.TrendManager.TrendingController import TrendingController
-from datetime import datetime
 
 
 class TrendingToDB(object):
     """
     Author: John Andree Lidquist, Marten Bolin
     Date:
-    Last update: 13/11/2017
+    Last update: 2017-11-13
     Purpose: This class handles collecting all the trending scores so that they can
     be stored in the database.
     The class is using threads and will be abel to run in the background continuously
@@ -33,7 +36,7 @@ class TrendingToDB(object):
         :param daily: True - Will make the process run once every day.
         False - Will only run the process once.
         """
-        self.daemon = daemon
+        #self.daemon = daemon
         self.stop = False
         self.daily = daily
         self.insert_trend = InsertTrending()
@@ -44,8 +47,8 @@ class TrendingToDB(object):
         if daily:
             # if set to daily, it creates a scheduler and sets the interval to 1 day
             self.scheduled = BackgroundScheduler()
-            if not self.daemon:
-                self.scheduled._daemon=False
+            if not daemon:
+                self.scheduled.daemon = False
             self.scheduled.add_job(self.run, 'interval', seconds=50, id="1")
             self.scheduled.start()
             self.scheduled.modify_job(job_id="1", next_run_time=datetime.now())
@@ -63,7 +66,7 @@ class TrendingToDB(object):
         Date:
         Last update:
         Purpose: The method where which will fetch all the scores by the
-        TrendingController which communicatewith the Youtube and Twitter API.
+        TrendingController which communicate with the Youtube and Twitter API.
         """
 
         # Fllowing steps are done:
@@ -107,7 +110,8 @@ class TrendingToDB(object):
                 # The commit is in the loop for now due to high waiting time but
                 # could be moved outside to lower total run time
 
-        # Used to stop the thread if background is false or for any other reason it needs to be stopped.
+        # Used to stop the thread if background is false
+        # or for any other reason it needs to be stopped.
     def terminate(self):
         """
         Author: John Andree Lidquist, Marten Bolin

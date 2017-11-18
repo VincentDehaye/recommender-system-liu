@@ -1,5 +1,8 @@
 """
-Running TrendManager to get trending score for movies in database
+Author: Marten Bolin
+Date:
+Last update:
+Purpose: Running TrendManager to get trending score for movies in database
 """
 
 # import time

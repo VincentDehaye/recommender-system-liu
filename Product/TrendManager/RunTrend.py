@@ -11,5 +11,6 @@ from Product.TrendManager.TrendScoreToDatabase import TrendingToDB
 # True will make the TrendingToDB to terminate when the application is done
 # trending_run.terminate() will stop the TrendingToDB
 TRENDING_RUN = TrendingToDB(daily=False)
+
 # time.sleep(150)
 # trending_run.terminate()

@@ -15,14 +15,14 @@ export class TrendingComponent implements OnInit {
   dataYoutube: any;
   dataTwitter: any;
   // Modal headers 1-
-  modalHeader1 = 'Information';
-  modalHeader2 = 'Information';
-  modalHeader3 = 'Information';
+  modalHeader1 = 'Graph for the combined trending content';
+  modalHeader2 = 'Graph for the Youtube trending content';
+  modalHeader3 = 'Graph for the Twitter trending content';
 
   // Modal content 1-
-  modalContent1 = `To be decided`;
-  modalContent2 = `To be decided`;
-  modalContent3 = `To be decided`;
+  modalContent1 = `This graph shows the top trending movies and their score produced by Coogl3's algorithm. This score is the sum of the Youtube and Twitter scores.`;
+  modalContent2 = `This graph shows the top Youtube trending movies and their score produced by Coogl3's algorithm.`;
+  modalContent3 = `This graph shows the top Twitter trending movies and their score produced by Coogl3's algorithm.`;
 
 
     constructor(private dataHandlerService: DataHandlerService) { }

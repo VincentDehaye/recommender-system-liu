@@ -1,5 +1,10 @@
+import os
 from Product.Database.DatabaseManager.Insert.InsertFeedback import InsertFeedback
+from Product.RecommendationManager.model import generate_model as generate_model
+from Product.RecommendationManager.gets_from_database import get_new_users_matrix, get_train_matrix, get_test_matrix
+import numpy as np
 
+import scipy.sparse as sp
 
 class Feedback(object):
     """
@@ -25,5 +30,22 @@ class Feedback(object):
             :type float
             """
             InsertFeedback().insert_feedback(user_id, movie_id, watched, rating)
+
+            if rating:
+                path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                model = generate_model.load_model(path + '/model/new_model.sav')
+                #print(model)
+                # Converting to lists because of coo_matrix
+                rating_list = [rating]
+                user_list = [user_id]
+                movie_list = [movie_id]
+                user_matrix = sp.coo_matrix((rating_list, (user_list, movie_list)))
+
+
+                new_Users_matrix = get_new_users_matrix()
+                print(get_train_matrix().shape)
+                print(get_new_users_matrix().shape)
+                print(get_test_matrix().shape)
+                #generate_model.evolve_model("new_model.sav", model, new_Users_matrix)
 
 # Feedback.insert_feedback(user_id=1,movie_id=24,watched=None, rating=276)

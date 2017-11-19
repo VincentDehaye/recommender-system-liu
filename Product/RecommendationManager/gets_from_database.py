@@ -18,6 +18,7 @@ from scipy.sparse import coo_matrix
 
 from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
 from Product.Database.DatabaseManager.Retrieve.RetrieveRating import RetrieveRating
+from Product.Database.DatabaseManager.Retrieve.RetrieveUser import RetrieveUser
 
 #
 # def get_matrices():
@@ -95,7 +96,9 @@ def get_train_matrix():
             rating_list.append(rating.rating)
         counter += 1
 
-    train_matrix = coo_matrix((rating_list, (user_list, movie_list)))
+    train_matrix = coo_matrix((rating_list, (user_list, movie_list)),
+                              shape=(RetrieveUser().retrieve_largest_user_id(),
+                                     RetrieveMovie().retrieve_largest_movie_id()))
     return train_matrix
 
 
@@ -124,7 +127,9 @@ def get_test_matrix():
             test_rating_list.append(rating.rating)
         counter += 1
 
-    test_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)))
+    test_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)),
+                             shape=(RetrieveUser().retrieve_largest_user_id(),
+                                    RetrieveMovie().retrieve_largest_movie_id()))
     return test_matrix
 
 
@@ -154,7 +159,9 @@ def get_new_users_matrix():
             rating_list.append(rating.rating)
         counter += 1
 
-    new_users_matrix = coo_matrix((rating_list, (user_list, movie_list)))
+    new_users_matrix = coo_matrix((rating_list, (user_list, movie_list)),
+                                  shape=(RetrieveUser().retrieve_largest_user_id(),
+                                         RetrieveMovie().retrieve_largest_movie_id()))
 
     return new_users_matrix
 

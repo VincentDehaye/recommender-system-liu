@@ -28,7 +28,7 @@ export class UsersComponent implements OnInit {
   modalContent1 = `Each bar shows the number of times a certain movie has been
                     recommended and shows the top recommendations
                     depending on the demographics setting.`;
-  modalContent2 = `This list shows the top recommended movies and their title. 
+  modalContent2 = `This list shows the top recommended movies and their title.
   The first movie in the list is the one with the highest score.`;
   modalContent3 = `Default setting: all users in the database are taken into consideration.
  Use the numbered buttons to change the age interval.

@@ -67,6 +67,7 @@ class Recommendation(object):
         return scores
 
     def generate_recommendation_list(self):
+        # TODO Do not recommened already viewed movies
         """
         Author: Sebastian Maghsoudi / Alexander Dahl
         Date: 2017-11-01
@@ -117,4 +118,4 @@ class Recommendation(object):
         # print(sorted_complete_rec_list)
         return RecommendationList(self.user_id, sorted_complete_rec_list)
 
-# print(Recommendation(55, 10).generate_recommendation_list().__dict__)
+#print(Recommendation(55, 10).generate_recommendation_list().__dict__)

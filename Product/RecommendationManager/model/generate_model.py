@@ -11,6 +11,7 @@ from Product.RecommendationManager import gets_from_database as get_matrices
 
 
 def train_model(filename):
+    # TODO When create new user the entire model has to be retrained due to new shape
     """
     Author: Alexander Dahl
     Date: 2017-10-08

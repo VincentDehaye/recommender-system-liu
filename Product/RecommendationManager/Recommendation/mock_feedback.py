@@ -3,7 +3,7 @@ creating some mock feedback to add to the database
 """
 from Product.RecommendationManager.Recommendation.feedback import Feedback
 
-user_ids = [672, 673, 674, 680, 10, 10, 10, 10, 10, 10]
+user_ids = [55, 55, 55, 55, 55, 55, 55, 10, 10, 10]
 movie_ids = [1, 2, 5, 4, 2, 4, 3, 6, 4, 8]
 watched = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ratings = [5, 4, 3, 2, 1, 3, 4, 5, 2, 1]

@@ -28,9 +28,11 @@ export class OverviewComponent implements OnInit {
   // Modal content for the "top recommended content"
   modalContent1 = `This graph shows the top recommended movies and their score produced from Coogl3's algorithm.`;
   // Modal content for the "top trending content"
-  modalContent2 = `This list shows the top recommended movies and their title. The first movie in the list is the one with the highest score.`;
+  modalContent2 = `This list shows the top recommended movies and their title. 
+  The first movie in the list is the one with the highest score.`;
   modalContent3 = `This graph shows the top trending movies and the score produced from Coogl3's algorithm.`;
-  modalContent4 = `This list shows the top trending movies and their title. The first movie in the list is the one with the highest score.`;
+  modalContent4 = `This list shows the top trending movies and their title. 
+  The first movie in the list is the one with the highest score.`;
 
     constructor(private userService: UserService, private dataHandlerService: DataHandlerService) { }
 

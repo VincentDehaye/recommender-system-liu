@@ -26,14 +26,15 @@ class InsertFeedback(Insert):
         :type float
         """
         current_recommendation = self.session.query(Recommendation).filter_by(movie_id=movie_id, user_id=user_id).first()
-        if watched:
+        if watched and current_recommendation:
             current_recommendation.watched = watched
         if rating:
             current_rating = self.session.query(Rating).filter_by(movie_id=movie_id, user_id=user_id).first()
-            current_rating.rating = rating
             if not current_rating:
                 new_rating = Rating(user_id=user_id, movie_id=movie_id, rating=rating)
                 self.session.add(new_rating)
+            else:
+                current_rating.rating = rating
 
         self.session.commit()
         print('committed for user %s' % user_id)

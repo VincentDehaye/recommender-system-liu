@@ -30,12 +30,11 @@ class InsertFeedback(Insert):
             current_recommendation.watched = watched
         if rating:
             current_rating = self.session.query(Rating).filter_by(movie_id=movie_id, user_id=user_id).first()
+            current_rating.rating = rating
             if not current_rating:
                 new_rating = Rating(user_id=user_id, movie_id=movie_id, rating=rating)
                 self.session.add(new_rating)
-            current_recommendation.rating = rating
 
         self.session.commit()
-        print('commited for user %s' % user_id)
-
+        print('committed for user %s' % user_id)
         self.session.close()

@@ -155,7 +155,6 @@ class Recommendation(Base):
 
     user_id = Column(Integer, ForeignKey(User.id), primary_key=True)
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
-    rating = Column(Float)
     watched = Column(Integer)
 
     def __repr__(self):

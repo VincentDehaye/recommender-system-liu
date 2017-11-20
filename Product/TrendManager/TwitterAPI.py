@@ -24,7 +24,6 @@ CONSUMER_SECRET = "Ef9M26RLwi6cZvsaESrFtuzffzgD3sNy7UnezOqzWbs5IDh2mY"
 # time until the stream stops for saving to file.
 TWEETS_DATA_PATH = '/trendingdata/twitter_data'
 TRACKED_KEYWORDS = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3'
-TIME_LIMIT = 43200  # in seconds
 
 
 class TwitterAPI:
@@ -41,7 +40,7 @@ class TwitterAPI:
         self.all_words_new = {}
 
     @staticmethod
-    def open_twitter_stream():
+    def open_twitter_stream(time_limit):
         """
         Author: Albin Bergvall, Karl Lundvall
         Purpose: To initiate a stream against the twitter API which listens for
@@ -50,12 +49,12 @@ class TwitterAPI:
         as how often it will save the data can be set in the TwitterAPI.py file.
         :return:
         """
-        output_stream = StdOutListener(TIME_LIMIT)
+        output_stream = StdOutListener(time_limit)
         auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
         auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         stream = Stream(auth, output_stream)
         try:
-            stream.filter(track=[TRACKED_KEYWORDS], languages=['en'], async=True)
+            stream.filter(track=[TRACKED_KEYWORDS], languages=['en'])
         except:
             print("An error occurred. The twitter stream has been terminated.")
 
@@ -105,14 +104,31 @@ class TwitterAPI:
         """
         Author: Albin Bergvall, Karl Lundvall
         Purpose: The purpose of this function is to load a saved dictionary from the file system.
-        The file loaded will be the latest one modified
+        The file loaded will be the latest modified one.
+        :return:
+        """
+        latest_file = self.get_newest_file()
+        try:
+            with open(latest_file, 'rb') as f:
+                self.all_words_new = pickle.load(f)
+        except (TypeError, FileNotFoundError):
+            print("File could not be loaded into dictionary for twitter score calculations.")
+
+    @staticmethod
+    def get_newest_file():
+        """
+        Author: Albin Bergvall
+        Purpose: The purpose of this function is to load the latest modified file from the trendingdata
+        directory. Used for loading dictionaries and to check if files exist.
         :return:
         """
         path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata/*.bin'
         list_of_files = glob.iglob(path)
-        latest_file = max(list_of_files, key=os.path.getctime)
-        with open(latest_file, 'rb') as f:
-            self.all_words_new = pickle.load(f)
+        try:
+            latest_file = max(list_of_files, key=os.path.getctime)
+            return latest_file
+        except ValueError:
+            return None
 
     @staticmethod
     def remove_old_dict():
@@ -179,6 +195,7 @@ class StdOutListener(StreamListener):
         self.limit = limit
         self.all_words = {}
         super(StdOutListener, self).__init__()
+        print("Twitter stream has been started")
 
     def on_status(self, status):
         """
@@ -272,5 +289,5 @@ class StdOutListener(StreamListener):
 # For stream testing purposes
 if __name__ == "__main__":
     tw = TwitterAPI()
-    # tw.open_twitter_stream()
+    # tw.open_twitter_stream(43200)
     # print(tw.get_twitter_score("rt"))

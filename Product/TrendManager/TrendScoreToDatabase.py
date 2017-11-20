@@ -7,6 +7,7 @@ Purpose: Gets movie from database and stores a trending score
 
 from datetime import datetime
 import threading
+from Product.TrendManager.TwitterAPI import TwitterAPI
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
@@ -14,6 +15,8 @@ from Product.Database.DatabaseManager.Insert.InsertTrending import InsertTrendin
 from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
 from Product.Database.DatabaseManager.Update.UpdateTrending import UpdateTrending
 from Product.TrendManager.TrendingController import TrendingController
+TIME_LIMIT_TWITTER_STREAM = 43200  # Time limit for twitter stream uptime in seconds
+TIME_LIMIT_TWITTER_STREAM_NO_FILE = 7200  # Time limit for twitter stream if there is no file to load data from
 
 
 class TrendingToDB(object):
@@ -75,6 +78,9 @@ class TrendingToDB(object):
         # 3. If current trend score is different from the newly
         # fetched score - Update score in database, else go to step 1
         # 4. Go to step 1
+        if TwitterAPI().get_newest_file() is None:  # Check is file exist for scoring twitter
+            TwitterAPI.open_twitter_stream(TIME_LIMIT_TWITTER_STREAM_NO_FILE)  # time limit parameter in seconds
+
         trend_controller = TrendingController()
         res_movie = self.retrieve_movie.retrieve_movie()
 
@@ -113,8 +119,11 @@ class TrendingToDB(object):
         # twitter_max = self.retrieve_trend.get_twitter_max()
         # youtube_max = self.retrieve_trend.get_youtube_max()
 
-        # Used to stop the thread if background is false
-        # or for any other reason it needs to be stopped.
+        #  Open twitter stream after titles has been scored, to gather new data
+        TwitterAPI().open_twitter_stream(TIME_LIMIT_TWITTER_STREAM)
+
+    # Used to stop the thread if background is false
+    # or for any other reason it needs to be stopped.
     def terminate(self):
         """
         Author: John Andree Lidquist, Marten Bolin

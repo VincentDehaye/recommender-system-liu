@@ -8,6 +8,8 @@ import pickle
 from lightfm import LightFM
 from lightfm.evaluation import precision_at_k
 from Product.RecommendationManager import gets_from_database as get_matrices
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def train_model(filename):
@@ -69,7 +71,7 @@ def evolve_model_graph(train_matrix):
     Purpose: should generate a graph to show improvement over time, not finished.
     """
     alpha = 1e-3
-    epochs = 70
+    epochs = 50
     k = 10
 
     adagrad_model = LightFM(no_components=30,
@@ -95,6 +97,13 @@ def evolve_model_graph(train_matrix):
     for epoch in range(epochs):
         adadelta_model.fit_partial(train_matrix, epochs=1)
         adadelta_precision_at_k.append(test_precision(adadelta_model, train_matrix, k))
+
+    x = np.arange(len(adagrad_precision_at_k))
+    plt.plot(x, np.array(adagrad_precision_at_k))
+    plt.plot(x, np.array(adadelta_precision_at_k))
+    plt.legend(['adagrad', 'adadelta'], loc='lower right')
+    plt.show()
+
 
     print("adadelta")
     for value in adadelta_precision_at_k:

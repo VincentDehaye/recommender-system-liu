@@ -61,7 +61,6 @@ def test_precision(model, matrix, k):
 
 
 # TODO - Fix this script to show improvement graph
-"""def evolve_model_graph(train_matrix, test_matrix):"""
 def evolve_model_graph(train_matrix, test_matrix):
     """
     Author: Gustaf Norberg

@@ -34,7 +34,7 @@ def test_evolve_model():
     model = generate_model.load_model('test_new_model.sav')
     train_matrix = get_matrices.get_train_matrix()
     new_users_matrix = get_matrices.get_new_users_matrix()
-    test_matrix = get_matrices.get_test_matrix()
+    # test_matrix = get_matrices.get_test_matrix()
     k = 10
 
     value_before = generate_model.test_precision(model, train_matrix, k)
@@ -63,21 +63,21 @@ def test_evolve_model_graph():
     #generate_model.train_model('test_new_model.sav')
     #model = generate_model.load_model('test_new_model.sav')
     train_matrix = get_matrices.get_train_matrix()
-    #new_users_matrix = get_matrices.get_new_users_matrix()
-    test_matrix = get_matrices.get_test_matrix()
-    k = 10
+    # new_users_matrix = get_matrices.get_new_users_matrix()
+    # test_matrix = get_matrices.get_test_matrix()
+    # k = 10
 
-    generate_model.evolve_model_graph(train_matrix, test_matrix)
-    """
-    value_before = generate_model.test_precision(model, train_matrix, k)
-    generate_model.evolve_model('test_new_model.sav', model, new_users_matrix)
-    value_after = generate_model.test_precision(model, train_matrix + new_users_matrix, k)
-
-    x = np.arange(len(adagrad_auc))
-    plt.plot(x, np.array(adagrad_auc))
-    plt.plot(x, np.array(adadelta_auc))
-    plt.legend(['adagrad', 'adadelta'], loc='lower right')
-    plt.show()"""
+    generate_model.evolve_model_graph(train_matrix)
+    #
+    # value_before = generate_model.test_precision(model, train_matrix, k)
+    # generate_model.evolve_model('test_new_model.sav', model, new_users_matrix)
+    # value_after = generate_model.test_precision(model, train_matrix + new_users_matrix, k)
+    #
+    # x = np.arange(len(adagrad_auc))
+    # plt.plot(x, np.array(adagrad_auc))
+    # plt.plot(x, np.array(adadelta_auc))
+    # plt.legend(['adagrad', 'adadelta'], loc='lower right')
+    # plt.show()
 
 
 # test_evolve_model_graph()

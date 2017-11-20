@@ -6,7 +6,7 @@ Testing the precision@k for a lightFM model
 """
 import pickle
 from lightfm import LightFM
-from lightfm.evaluation import precision_at_k, auc_score
+from lightfm.evaluation import precision_at_k
 from Product.RecommendationManager import gets_from_database as get_matrices
 
 
@@ -53,7 +53,7 @@ def test_precision(model, matrix, k):
     Purpose: returns a test precision for the model at k value.
 
     :param model: lightFM model
-    :param train_matrix: Matrix from database
+    :param matrix: Matrix from database
     :param k: precision@k
     :return: float
     """
@@ -61,7 +61,7 @@ def test_precision(model, matrix, k):
 
 
 # TODO - Fix this script to show improvement graph
-def evolve_model_graph(train_matrix, test_matrix):
+def evolve_model_graph(train_matrix):
     """
     Author: Gustaf Norberg
     Date: 2017-11-15

@@ -159,7 +159,7 @@ class Recommendation(Base):
 
     def __repr__(self):
         return "<Recommendation(user_id id='%s', movie_id ='%s', rating='%s', watched='%s')>" % (
-            self.user_id, self.movie_id, self.rating, self.watched)
+            self.user_id, self.movie_id, self.watched)
 
 
 # DO NOT CHANGE BELOW

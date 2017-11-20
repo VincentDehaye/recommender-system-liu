@@ -1,15 +1,14 @@
 """
-Author: Albin Bergvall
-Date: 2017-10-09
-Last update:
-Purpose: Search module for the Twitter API
+Search module for the Twitter API
 """
 
 import os
 import re
 import time
 import datetime
+from datetime import timedelta
 import pickle
+import glob
 
 # Import the necessary methods from tweepy library
 from tweepy.streaming import StreamListener
@@ -154,12 +153,27 @@ class TwitterAPI:
         :return:
         """
         # yesterday = datetime.datetime.today() - timedelta(1)
-        # path = os.path.dirname(os.path.abspath(__file__))
-        # + tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
+        # path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
         # This is the path to a temp file containing data for testing.
-        path = os.path.dirname(os.path.abspath(__file__)) + TWEETS_DATA_PATH + '_sample1.bin'
-        with open(path, 'rb') as file:
-            self.all_words_new = pickle.load(file)
+        # path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + '_sample1.bin'
+
+        # self.remove_old_dict() - Removes all the files that been created for more than 7 days ago..
+        path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata/*.bin'
+        list_of_files = glob.iglob(path)
+        latest_file = max(list_of_files, key=os.path.getctime)
+        print(latest_file)
+        with open(latest_file, 'rb') as f:
+            self.all_words_new = pickle.load(f)
+
+    def remove_old_dict(self):
+        path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata'
+        now = time.time()
+        for f in os.listdir(path):
+            f = os.path.join(path, f)
+            if os.stat(f).st_mtime < (now - 7 * 86400):
+                if os.path.isfile(f):
+                    os.remove(f)
+
 
     def load_old_dict(self):
         """
@@ -169,11 +183,10 @@ class TwitterAPI:
         :return:
         """
         # earlier_date = datetime.datetime.today() - timedelta(7)
-        # path = os.path.dirname(os.path.abspath(__file__))
-        # + tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
-        path = os.path.dirname(os.path.abspath(__file__)) + TWEETS_DATA_PATH + '_sample2.bin'
-        with open(path, 'rb') as file:
-            self.all_words_old = pickle.load(file)
+        # path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
+        path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + '_sample2.bin'
+        with open(path, 'rb') as f:
+            self.all_words_old = pickle.load(f)
 
     def print_dict(self):
         """
@@ -184,10 +197,10 @@ class TwitterAPI:
         """
         if not self.all_words_new:
             self.load_new_dict()
-        all_words_view = [(v, k) for k, v in self.all_words_new.items()]
-        all_words_view.sort(reverse=True)
-        for value, key in all_words_view:
-            print(key, ": ", value)
+        allwords_view = [(v, k) for k, v in self.all_words_new.items()]
+        allwords_view.sort(reverse=True)
+        for v, k in allwords_view:
+            print(k, ": ", v)
 
     @staticmethod
     def format_word(word):
@@ -324,6 +337,6 @@ class StdOutListener(StreamListener):
 
 # For stream testing purposes
 if __name__ == "__main__":
-    TWITTER = TwitterAPI()
-    # TWITTER.open_twitter_stream()
-    # print(TWITTER.get_twitter_score("rt"))
+    tw = TwitterAPI()
+    # tw.open_twitter_stream()
+    # print(tw.get_twitter_score("rt"))

@@ -104,6 +104,7 @@ def evolve_model_graph(train_matrix, test_matrix):
     for i in range(len(adagrad_precision_at_k)):
         print(adagrad_precision_at_k[i])
 
+
 def evolve_model(filename, model, new_users_matrix):
     """
     Author: Gustaf Norberg
@@ -118,41 +119,6 @@ def evolve_model(filename, model, new_users_matrix):
     """
     model.fit_partial(new_users_matrix, epochs=10)
     pickle.dump(model, open(filename, 'wb'))
-
-
-
-    """    print("Before")
-
-    model = LightFM(learning_rate=0.05, loss='warp')
-    model.fit(trainmatrix, epochs=10)
-
-    train_precision = precision_at_k(model, trainmatrix, k=10).mean()
-    test_precision = precision_at_k(model, testmatrix, k=10).mean()
-
-    train_auc = auc_score(model, trainmatrix).mean()
-    test_auc = auc_score(model, testmatrix).mean()
-
-    print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
-    print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
-
-    model.fit_partial(new_user_matrix, epochs=10)
-
-    ninetypercent_matrix = trainmatrix + new_user_matrix
-
-    train_precision = precision_at_k(model, ninetypercent_matrix, k=10).mean()
-    test_precision = precision_at_k(model, testmatrix, k=10).mean()
-
-    train_auc = auc_score(model, ninetypercent_matrix).mean()
-    test_auc = auc_score(model, testmatrix).mean()
-
-    print("After fitpartial")
-    print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
-    print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
-
-    print("Train")
-    print(np.shape(trainmatrix))
-    print(np.shape(testmatrix))
-    print(np.shape(new_user_matrix))"""
 
 
 def show_evolvement():
@@ -184,4 +150,3 @@ def show_evolvement():
     precision_after = test_precision(model, train_matrix + new_users_matrix, k)
     print("Precision after re-training of model")
     print(precision_after)
-

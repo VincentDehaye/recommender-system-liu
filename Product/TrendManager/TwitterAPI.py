@@ -111,7 +111,6 @@ class TwitterAPI:
         path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata/*.bin'
         list_of_files = glob.iglob(path)
         latest_file = max(list_of_files, key=os.path.getctime)
-        print(latest_file)
         with open(latest_file, 'rb') as f:
             self.all_words_new = pickle.load(f)
 
@@ -172,8 +171,8 @@ class StdOutListener(StreamListener):
         """
         Author: Albin Bergvall, Karl Lundvall
         Purpose: Constructor for the stream class.
-        Takes time limit for the stream as parameter,
-        as well as an interval for how often it should be saved to file.
+        Takes time limit for the stream as parameter
+        for when it should be terminated.
         :param limit: time for stream uptime in seconds
         """
         self.start_time = time.time()

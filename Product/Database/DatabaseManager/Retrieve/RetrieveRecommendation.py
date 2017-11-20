@@ -1,5 +1,6 @@
 from Product.Database.DatabaseManager.Retrieve.Retrieve import Retrieve
 from Product.Database.DBConn import Recommendation
+from Product.Database.DBConn import User
 
 
 class RetrieveRecommendation(Retrieve):
@@ -16,3 +17,22 @@ class RetrieveRecommendation(Retrieve):
         number_not_watched = self.session.query(Recommendation).count() - number_watched
         self.session.close()
         return number_watched, number_not_watched
+
+    def retrieve_average_user_experience(self):
+        users = self.session.query(User).all()
+
+        ratio_list = []
+        for user in users:
+            recommendations = self.session.query(Recommendation).filter_by(user_id=user.id).all()
+            num_watched = 0
+            num_recommended = 0
+            for rec in recommendations:
+                num_recommended += 1
+                if rec.watched == 1:
+                    num_watched += 1
+            if num_recommended != 0:
+                ratio_list.append(num_watched/num_recommended)
+
+        print(ratio_list)
+
+RetrieveRecommendation().retrieve_average_user_experience()

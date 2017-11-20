@@ -158,7 +158,7 @@ class Recommendation(Base):
     watched = Column(Integer)
 
     def __repr__(self):
-        return "<Recommendation(user_id id='%s', movie_id ='%s', rating='%s', watched='%s')>" % (
+        return "<Recommendation(user_id id='%s', movie_id ='%s', watched='%s')>" % (
             self.user_id, self.movie_id, self.watched)
 
 

@@ -15,7 +15,7 @@ from googleapiclient.discovery import build
 # tab of
 #   https://cloud.google.com/console
 # Please ensure that you have enabled the YouTube Data API for your project.
-DEVELOPER_KEY="AIzaSyB4FD0e0wN0-UbGitee3DCbaiaHKkOsBwI"
+DEVELOPER_KEY = "AIzaSyAncPk0ysVz0IO4S0fQLaG-0_NP42mgucU"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 

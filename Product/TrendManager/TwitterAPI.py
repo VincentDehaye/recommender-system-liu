@@ -18,6 +18,7 @@ import time
 import datetime
 from datetime import timedelta
 import pickle
+import glob
 
 # Import the necessary methods from tweepy library
 from tweepy.streaming import StreamListener
@@ -35,7 +36,7 @@ consumer_secret = "Ef9M26RLwi6cZvsaESrFtuzffzgD3sNy7UnezOqzWbs5IDh2mY"
 tweets_data_path = '/trendingdata/twitter_data'
 tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3'
 time_limit = 7200  # in seconds
-interval = 4  # in seconds
+interval = 20  # in seconds
 
 
 class TwitterAPI:
@@ -155,15 +156,31 @@ class TwitterAPI:
         """
         Author: Albin Bergvall, Karl Lundvall
         Purpose: The purpose of this function is to load a saved dictionary from the file system.
-        The file loaded will be from the day before.
-        :return:
+        The file loaded will be from the day before. Return last created file.
+        :return: last created file.
         """
         # yesterday = datetime.datetime.today() - timedelta(1)
         # path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
         # This is the path to a temp file containing data for testing.
-        path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + '_sample1.bin'
-        with open(path, 'rb') as f:
+        # path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + '_sample1.bin'
+
+        # self.remove_old_dict() - Removes all the files that been created for more than 7 days ago..
+        path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata/*.bin'
+        list_of_files = glob.iglob(path)
+        latest_file = max(list_of_files, key=os.path.getctime)
+        print(latest_file)
+        with open(latest_file, 'rb') as f:
             self.all_words_new = pickle.load(f)
+
+    def remove_old_dict(self):
+        path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata'
+        now = time.time()
+        for f in os.listdir(path):
+            f = os.path.join(path, f)
+            if os.stat(f).st_mtime < (now - 7 * 86400):
+                if os.path.isfile(f):
+                    os.remove(f)
+
 
     def load_old_dict(self):
         """
@@ -328,5 +345,5 @@ class StdOutListener(StreamListener):
 # For stream testing purposes
 if __name__ == "__main__":
     tw = TwitterAPI()
-    # tw.open_twitter_stream()
-    # print(tw.get_twitter_score("rt"))
+    #tw.open_twitter_stream()
+    print(tw.get_twitter_score("rt"))

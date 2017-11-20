@@ -32,26 +32,26 @@ class RetrieveTrending(Retrieve):
         self.session.close()
         return trend
 
-    def get_trending_twitter(self, numOfTitles):
+    def get_trending_twitter(self, num_of_titles):
         """
         Author: John Andree Lidquist, Marten Bolin
         Date: 9/11/2017
         Last update:
         Purpose: Supposed to retrieve the Trending score from database
-        :param number_of_titles : the number of titles with the highest twitter score to be returned
+        :param num_of_titles : the number of titles with the highest twitter score to be returned
         :return TrendingScore : of type TrendingScore
         """
-        query = self.session.query(TrendingScore).order_by(desc(TrendingScore.twitter_score)).limit(numOfTitles)
+        query = self.session.query(TrendingScore).order_by(desc(TrendingScore.twitter_score)).limit(num_of_titles)
         return query
 
-    def get_trending_youtube(self, numOfTitles):
+    def get_trending_youtube(self, num_of_titles):
         """
         Author: John Andree Lidquist, Marten Bolin
         Date: 9/11/2017
         Last update:
         Purpose: Supposed to retrieve the Trending score from database
-        :param number_of_titles : the number of titles with the highest twitter score to be returned
+        :param num_of_titles : the number of titles with the highest twitter score to be returned
         :return TrendingScore : of type TrendingScore
         """
-        query = self.session.query(TrendingScore).order_by(desc(TrendingScore.youtube_score)).limit(numOfTitles)
+        query = self.session.query(TrendingScore).order_by(desc(TrendingScore.youtube_score)).limit(num_of_titles)
         return query

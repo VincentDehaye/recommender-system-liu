@@ -35,6 +35,6 @@ class TrendingController:
             youtube_score = YoutubeAPI().get_youtube_score(keyword)
         except HttpError:
             print("The daily quota of youtube requests have been reached.")
-        twitter_score = TwitterAPI().get_twitter_score(keyword) * 100
+        twitter_score = TwitterAPI().get_twitter_score(keyword)
         total_score += youtube_score + twitter_score
         return total_score, youtube_score, twitter_score

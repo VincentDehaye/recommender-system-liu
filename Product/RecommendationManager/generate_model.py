@@ -61,33 +61,43 @@ def test_precision(model, matrix, k):
 
 
 # TODO - Fix this script to show improvement graph
+"""def evolve_model_graph(train_matrix, test_matrix):"""
 def evolve_model_graph(train_matrix, test_matrix):
     alpha = 1e-3
     epochs = 70
+    k = 10
 
     adagrad_model = LightFM(no_components=30,
                             loss='warp',
                             learning_schedule='adagrad',
                             user_alpha=alpha,
                             item_alpha=alpha)
+
     adadelta_model = LightFM(no_components=30,
                              loss='warp',
                              learning_schedule='adadelta',
                              user_alpha=alpha,
                              item_alpha=alpha)
 
-    adagrad_auc = []
+    adagrad_precision_at_k = []
 
     for epoch in range(epochs):
         adagrad_model.fit_partial(train_matrix, epochs=1)
-        adagrad_auc.append(auc_score(adagrad_model, test_matrix).mean())
+        adagrad_precision_at_k.append(test_precision(adagrad_model, train_matrix, k))
 
-    adadelta_auc = []
+    adadelta_precision_at_k = []
 
     for epoch in range(epochs):
         adadelta_model.fit_partial(train_matrix, epochs=1)
-        adadelta_auc.append(auc_score(adadelta_model, test_matrix).mean())
+        adadelta_precision_at_k.append(test_precision(adadelta_model, train_matrix, k))
 
+    print("adadelta")
+    for i in range(len(adadelta_precision_at_k)):
+        print(adadelta_precision_at_k[i])
+
+    print("adagrad")
+    for i in range(len(adagrad_precision_at_k)):
+        print(adagrad_precision_at_k[i])
 
 def evolve_model(filename, model, new_users_matrix):
     """
@@ -167,4 +177,3 @@ def show_evolvement():
     print("Precision after re-training of model")
     print(precision_after)
 
-show_evolvement()

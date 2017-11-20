@@ -1,7 +1,7 @@
 """
 creating some mock feedback to add to the database
 """
-from Product.RecommendationManager.Recommendation.feedback import Feedback
+from Product.RecommendationManager.feedback.feedback import Feedback
 
 user_ids = [55, 55, 55, 55, 55, 55, 55, 10, 10, 10]
 movie_ids = [1, 2, 5, 4, 2, 4, 3, 6, 4, 8]

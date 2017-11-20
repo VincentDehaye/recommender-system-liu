@@ -87,7 +87,7 @@ class TrendingToDB(object):
             scores = trend_controller.get_trending_content(movie.title)
             new_tot_score = scores[0]  # Gets total score
             new_youtube_score = scores[1]  # Gets Youtube score
-            new_twitter_score = scores[2]  # Gets Twittwer score
+            new_twitter_score = scores[2]  # Gets Twitter score
 
             print("Movie ID:", movie.id)
 
@@ -109,6 +109,9 @@ class TrendingToDB(object):
 
                 # The commit is in the loop for now due to high waiting time but
                 # could be moved outside to lower total run time
+
+        # twitter_max = self.retrieve_trend.get_twitter_max()
+        # youtube_max = self.retrieve_trend.get_youtube_max()
 
         # Used to stop the thread if background is false
         # or for any other reason it needs to be stopped.

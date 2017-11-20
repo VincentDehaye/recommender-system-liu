@@ -7,7 +7,7 @@ def test_retrieve_all_users():
     """
     Author: John Andrée Lidquist
     Date: 2017-11-16
-    Lates Update: 2017-11-20
+    Latest Update: 2017-11-20
     Purpose: Assert that users are retrieved from the database correctly
     """
 
@@ -67,7 +67,7 @@ def test_retrieve_largest_user_id():
     """
     Author: John Andrée Lidquist
     Date: 2017-11-20
-    Lates Update: 2017-11-20
+    Latest Update: 2017-11-20
     Purpose: Assert that the highest user id is retrieved
     """
 

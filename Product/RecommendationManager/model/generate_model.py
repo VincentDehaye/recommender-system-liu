@@ -65,7 +65,7 @@ def evolve_model_graph(train_matrix, test_matrix):
     """
     Author: Gustaf Norberg
     Date: 2017-11-15
-    Last update: 2017-11-15
+    Last update: 2017-11-20
     Purpose: should generate a graph to show improvement over time, not finished.
     """
     alpha = 1e-3
@@ -97,12 +97,12 @@ def evolve_model_graph(train_matrix, test_matrix):
         adadelta_precision_at_k.append(test_precision(adadelta_model, train_matrix, k))
 
     print("adadelta")
-    for i in range(len(adadelta_precision_at_k)):
-        print(adadelta_precision_at_k[i])
+    for value in adadelta_precision_at_k:
+        print(value)
 
-    print("adagrad")
-    for i in range(len(adagrad_precision_at_k)):
-        print(adagrad_precision_at_k[i])
+    for value in adagrad_precision_at_k:
+        print(value)
+
 
 
 def evolve_model(filename, model, new_users_matrix):

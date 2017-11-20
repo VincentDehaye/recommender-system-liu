@@ -46,5 +46,6 @@ class RetrieveRecommendation(Retrieve):
                     num_watched += 1
             if num_recommended != 0:
                 ratio_list.append(num_watched/num_recommended)
+        self.session.close()
 
         return np.mean(ratio_list)

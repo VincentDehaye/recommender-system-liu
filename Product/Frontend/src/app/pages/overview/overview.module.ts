@@ -9,10 +9,11 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { OverviewComponent } from './overview.component';
 import { OverviewRoutingModule, routedComponents } from './overview-routing.module';
 import {ComponentsModule} from '../components/components.module';
+import { OverviewD3BarComponent } from './overview-components/overview-d3-bar.component';
 
 
 const components = [
-    OverviewChartjsPieComponent,
+    OverviewD3BarComponent,
 ];
 @NgModule({
   imports: [ComponentsModule, ThemeModule, AngularEchartsModule, NgxChartsModule, ChartModule, OverviewRoutingModule,

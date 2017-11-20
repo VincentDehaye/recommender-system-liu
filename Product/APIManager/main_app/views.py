@@ -39,31 +39,80 @@ class RecommendationsView(APIView):
         try:
             recs = Recommendation(55, 10).generate_recommendation_list().__dict__
         except ValueError:
-            recs = {"movies":[
-                {"title":"Batman", "id":1},
-                {"title":"Horseman", "id":2},
-                {"title":"Birdperson", "id":3},
-                {"title":"Manman", "id":4},
-                {"title":"Cowman", "id":5},
-                {"title":"Snakeman", "id":6},
-                {"title":"Butterflyman", "id":7},
-                {"title":"The extremely ordinary man", "id":8},
-                {"title":"Wonderman the movie", "id":9},
-                {"title":"Manbat", "id":10},
+            recs = {"recommendation_list":[
+                {"title":"Batman", "id":1, "score":10},
+                {"title":"Horseman", "id":2, "score":9},
+                {"title":"Birdperson", "id":3, "score":8},
+                {"title":"Manman", "id":4, "score":8},
+                {"title":"Cowman", "id":5, "score":7},
+                {"title":"Snakeman", "id":6, "score":5},
+                {"title":"Butterflyman", "id":7, "score":4},
+                {"title":"The extremely ordinary man", "id":8, "score":4},
+                {"title":"Wonderman the movie", "id":9, "score":3},
+                {"title":"Manbat", "id":10, "score":2},
                 ]}
         except:
             traceback.print_exc()
-            recs = {"movies":[
-                {"title":"Batman", "id":1},
-                {"title":"Horseman", "id":2},
-                {"title":"Birdperson", "id":3},
-                {"title":"Manman", "id":4},
-                {"title":"Cowman", "id":5},
-                {"title":"Snakeman", "id":6},
-                {"title":"Butterflyman", "id":7},
-                {"title":"The extremely ordinary man", "id":8},
-                {"title":"Wonderman the movie", "id":9},
-                {"title":"Manbat", "id":10},
+            recs = {"recommendation_list":[
+                {"title":"Batman", "id":1, "score":10},
+                {"title":"Horseman", "id":2, "score":8},
+                {"title":"Birdperson", "id":3, "score":8},
+                {"title":"Manman", "id":4, "score":8},
+                {"title":"Cowman", "id":5, "score":8},
+                {"title":"Snakeman", "id":6, "score":8},
+                {"title":"Butterflyman", "id":7, "score":8},
+                {"title":"The extremely ordinary man", "id":8, "score":8},
+                {"title":"Wonderman the movie", "id":9, "score":8},
+                {"title":"Manbat", "id":10, "score":8},
+                ]}
+        return Response(recs)
+
+class UserRecommendationsView(APIView):
+    """
+    Author: Bamse
+    Date: 2017-10-04
+    Last update: 2017-11-14 by Bamse
+    This class is used to return the top 10 recommendations from Recommendations team
+    """
+    # authentication_classes = (SessionAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+
+    def get(self, request, user_id):
+        """
+        Author: Bamse
+        Date: 2017-11-14
+        Last update: 2017-11-14 by Bamse
+        Purpose: Handles GET requests to recommendations API. Returns mock data if fetching from
+        recommendation doesn't work.
+        """
+        try:
+            recs = Recommendation(user_id, 10).generate_recommendation_list().__dict__
+        except ValueError:
+            recs = {"recommendation_list":[
+                {"title":"Batman", "id":1, "score":10},
+                {"title":"Horseman", "id":2, "score":10},
+                {"title":"Birdperson", "id":3, "score":10},
+                {"title":"Manman", "id":4, "score":10},
+                {"title":"Cowman", "id":5, "score":10},
+                {"title":"Snakeman", "id":6, "score":10},
+                {"title":"Butterflyman", "id":7, "score":10},
+                {"title":"The extremely ordinary man", "id":8, "score":10},
+                {"title":"Wonderman the movie", "id":9, "score":10},
+                {"title":"Manbat", "id":10, "score":10},
+                ]}
+        except:
+            traceback.print_exc()
+            recs = {"recommendation_list":[
+                {"title":"Batman", "id":1, "score":10},
+                {"title":"Horseman", "id":2, "score":10},
+                {"title":"Birdperson", "id":3, "score":10},
+                {"title":"Manman", "id":4, "score":10},
+                {"title":"Cowman", "id":5, "score":10},
+                {"title":"Snakeman", "id":6, "score":10},
+                {"title":"Butterflyman", "id":7, "score":10},
+                {"title":"The extremely ordinary man", "id":8, "score":10},
+                {"title":"Wonderman the movie", "id":9, "score":10},
+                {"title":"Manbat", "id":10, "score":10},
                 ]}
         return Response(recs)
 
@@ -79,6 +128,20 @@ class TrendingView(APIView):
         try:
             trender = RetrieveTopTrendingTotal()
             recs = {"trendingMovies": trender.get_top_trending(10).list()}
+            if len(recs["trendingMovies"]) == 0:
+                recs = {"trendingMovies":[
+                    {"title":"Batmantredning", "score":1},
+                    {"title":"Horseman", "score":2},
+                    {"title":"Birdperson", "score":3},
+                    {"title":"Manman", "score":4},
+                    {"title":"Cowman", "score":5},
+                    {"title":"Snakeman", "score":6},
+                    {"title":"Butterflyman", "score":7},
+                    {"title":"The extremely ordinary man", "score":8},
+                    {"title":"Wonderman the movie", "score":9},
+                    {"title":"Manbat", "score":10},
+                    ]}
+
         except:
             recs = {"trendingMovies":[
                 {"title":"Batmantredning", "score":1},

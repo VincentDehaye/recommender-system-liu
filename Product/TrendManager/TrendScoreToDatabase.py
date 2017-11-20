@@ -1,8 +1,13 @@
 """
-Gets movie from database and stores a trending score
+Author: John Andree Lidquist, Marten Bolin
+Date:
+Last update:
+Purpose: Gets movie from database and stores a trending score
 """
 
+from datetime import datetime
 import threading
+from Product.TrendManager.TwitterAPI import TwitterAPI
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
@@ -10,14 +15,15 @@ from Product.Database.DatabaseManager.Insert.InsertTrending import InsertTrendin
 from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
 from Product.Database.DatabaseManager.Update.UpdateTrending import UpdateTrending
 from Product.TrendManager.TrendingController import TrendingController
-from datetime import datetime
+TIME_LIMIT_TWITTER_STREAM = 43200  # Time limit for twitter stream uptime in seconds
+TIME_LIMIT_TWITTER_STREAM_NO_FILE = 7200  # Time limit for twitter stream if there is no file to load data from
 
 
 class TrendingToDB(object):
     """
     Author: John Andree Lidquist, Marten Bolin
-    Date:
-    Last update: 13/11/2017
+    Date: 2017-10-12
+    Last update: 2017-11-13
     Purpose: This class handles collecting all the trending scores so that they can
     be stored in the database.
     The class is using threads and will be abel to run in the background continuously
@@ -25,15 +31,15 @@ class TrendingToDB(object):
     def __init__(self, daemon=False, daily=False):
         """
         Author: John Andree Lidquist, Marten Bolin
-        Date:
-        Last update:
+        Date:2017-10-12
+        Last update: 2017-11-17
         Purpose: Instantiates the class, and based on the params an be run in different ways.
         :param daemon: True - makes the process terminate when app is finished.
         False - The process will not terminate until finished or terminated.
         :param daily: True - Will make the process run once every day.
         False - Will only run the process once.
         """
-        self.daemon = daemon
+        # self.daemon = daemon
         self.stop = False
         self.daily = daily
         self.insert_trend = InsertTrending()
@@ -44,8 +50,8 @@ class TrendingToDB(object):
         if daily:
             # if set to daily, it creates a scheduler and sets the interval to 1 day
             self.scheduled = BackgroundScheduler()
-            if not self.daemon:
-                self.scheduled._daemon=False
+            if not daemon:
+                self.scheduled.daemon = False
             self.scheduled.add_job(self.run, 'interval', seconds=50, id="1")
             self.scheduled.start()
             self.scheduled.modify_job(job_id="1", next_run_time=datetime.now())
@@ -60,10 +66,10 @@ class TrendingToDB(object):
     def run(self):
         """
         Author: John Andree Lidquist, Marten Bolin
-        Date:
-        Last update:
+        Date: 2017-10-28
+        Last update:2017-11-17
         Purpose: The method where which will fetch all the scores by the
-        TrendingController which communicatewith the Youtube and Twitter API.
+        TrendingController which communicate with the Youtube and Twitter API.
         """
 
         # Fllowing steps are done:
@@ -72,6 +78,9 @@ class TrendingToDB(object):
         # 3. If current trend score is different from the newly
         # fetched score - Update score in database, else go to step 1
         # 4. Go to step 1
+        if TwitterAPI().get_newest_file() is None:  # Check is file exist for scoring twitter
+            TwitterAPI.open_twitter_stream(TIME_LIMIT_TWITTER_STREAM_NO_FILE)  # time limit parameter in seconds
+
         trend_controller = TrendingController()
         res_movie = self.retrieve_movie.retrieve_movie()
 
@@ -84,7 +93,7 @@ class TrendingToDB(object):
             scores = trend_controller.get_trending_content(movie.title)
             new_tot_score = scores[0]  # Gets total score
             new_youtube_score = scores[1]  # Gets Youtube score
-            new_twitter_score = scores[2]  # Gets Twittwer score
+            new_twitter_score = scores[2]  # Gets Twitter score
 
             print("Movie ID:", movie.id)
 
@@ -107,7 +116,14 @@ class TrendingToDB(object):
                 # The commit is in the loop for now due to high waiting time but
                 # could be moved outside to lower total run time
 
-        # Used to stop the thread if background is false or for any other reason it needs to be stopped.
+        # twitter_max = self.retrieve_trend.get_twitter_max()
+        # youtube_max = self.retrieve_trend.get_youtube_max()
+
+        #  Open twitter stream after titles has been scored, to gather new data
+        TwitterAPI().open_twitter_stream(TIME_LIMIT_TWITTER_STREAM)
+
+    # Used to stop the thread if background is false
+    # or for any other reason it needs to be stopped.
     def terminate(self):
         """
         Author: John Andree Lidquist, Marten Bolin

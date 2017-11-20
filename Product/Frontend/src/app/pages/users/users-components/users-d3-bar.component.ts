@@ -48,7 +48,7 @@ export class UsersD3BarComponent implements OnDestroy, OnInit {
   }
   public getData() {
       this.dataHandlerService.getData().subscribe((data) => {
-      this.movies = data.movies;
+      this.movies = data.recommendation_list;
       // console.log();
         // console.log(this.movies[0]["name"]);
        // console.log(this.movies.values());
@@ -57,16 +57,16 @@ export class UsersD3BarComponent implements OnDestroy, OnInit {
         this.results.push({name: this.movies[1]["name"], value: this.movies[1]['id']});
       }*/
       this.results = [
-        { name: this.movies[0]['name'], value: this.movies[0]['id']},
-        { name: this.movies[1]['name'], value: this.movies[1]['id']},
-        { name: this.movies[2]['name'], value: this.movies[2]['id']},
-        { name: this.movies[3]['name'], value: this.movies[3]['id']},
-        { name: this.movies[4]['name'], value: this.movies[4]['id']},
-        { name: this.movies[5]['name'], value: this.movies[5]['id']},
-        { name: this.movies[6]['name'], value: this.movies[6]['id']},
-        { name: this.movies[7]['name'], value: this.movies[7]['id']},
-        { name: this.movies[8]['name'], value: this.movies[8]['id']},
-        { name: this.movies[9]['name'], value: this.movies[9]['id']},
+        { name: this.movies[0]['title'], value: this.movies[0]['score']},
+        { name: this.movies[1]['title'], value: this.movies[1]['score']},
+        { name: this.movies[2]['title'], value: this.movies[2]['score']},
+        { name: this.movies[3]['title'], value: this.movies[3]['score']},
+        { name: this.movies[4]['title'], value: this.movies[4]['score']},
+        { name: this.movies[5]['title'], value: this.movies[5]['score']},
+        { name: this.movies[6]['title'], value: this.movies[6]['score']},
+        { name: this.movies[7]['title'], value: this.movies[7]['score']},
+        { name: this.movies[8]['title'], value: this.movies[8]['score']},
+        { name: this.movies[9]['title'], value: this.movies[9]['score']},
         ]
     }); // Converts the data making it reachable in the htm file
   }

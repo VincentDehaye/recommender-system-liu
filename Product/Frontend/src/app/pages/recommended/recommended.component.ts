@@ -7,9 +7,12 @@ import { Component } from '@angular/core';
   templateUrl: './recommended.component.html',
 })
 export class RecommendedComponent {
-  modalHeader1 = 'This is where you decide the modal header';
-  modalHeader2 = 'this is a different modal so it needs a different variable';
+  modalHeader1 = 'Graph that displays the improvement over time for the Coogl3 algorithm.';
   // Modal content 1-
-  modalContent1 = `this is the content that will be shown in the modal`;
-  modalContent2 = `same goes for this this is for the second modal`;
+  modalContent1 = `Each dot on the graph is connected to a certain time and success rate
+  for the algorithm. The success rate is
+based on the end-users reaction to watching content,
+this is determined by whether they liked or disliked a movie from the generated
+recommendations list.`;
+
 }

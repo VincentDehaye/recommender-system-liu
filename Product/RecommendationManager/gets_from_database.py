@@ -130,7 +130,7 @@ def get_test_matrix():
 
     test_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)),
                              shape=(RetrieveUser().retrieve_largest_user_id(),
-                                    RetrieveMovie().retrieve_largest_movie_id())+1)
+                                    RetrieveMovie().retrieve_largest_movie_id()+1))
     return test_matrix
 
 

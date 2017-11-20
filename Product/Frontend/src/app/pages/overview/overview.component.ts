@@ -19,19 +19,20 @@ export class OverviewComponent implements OnInit {
   obj: any;
   // Modal headers 1-
   // Modal header for the "top recommended content"
-  modalHeader1 = 'Information about the top recommended content';
+  modalHeader1 = 'Graph for the top recommended content';
   // Modal header for the "top trending content"
-  modalHeader2 = 'Information about the top trending content';
-
+  modalHeader2 = 'List for the top recommended content';
+  modalHeader3 = 'Graph for the top trending content';
+  modalHeader4 = 'List for the top trending content';
   // Modal content 1-
   // Modal content for the "top recommended content"
-  modalContent1 = `Here you can find the top recommended movies for you from
-  our high class recommendation algorithm.`;
+  modalContent1 = `This graph shows the top recommended movies and their score produced from Coogl3's algorithm.`;
   // Modal content for the "top trending content"
-  modalContent2 = `In this list the top trending movies are presented to you.
-  By applicating the trending factor to the result from our recommendation
-  algorithm, we offer you a unique experience with the most relevant movies
-  right now. `;
+  modalContent2 = `This list shows the top recommended movies and their title.
+The first movie in the list is the one with the highest score.`;
+  modalContent3 = `This graph shows the top trending movies and the score produced from Coogl3's algorithm.`;
+  modalContent4 = `This list shows the top trending movies and their title.
+The first movie in the list is the one with the highest score.`;
 
     constructor(private userService: UserService, private dataHandlerService: DataHandlerService) { }
 

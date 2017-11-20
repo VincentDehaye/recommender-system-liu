@@ -21,8 +21,10 @@ except KeyError:
     PRODUCTION_DATABASE = False
 finally:
     if not PRODUCTION_DATABASE:
-        engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), connect_args={'check_same_thread': False}, echo=False)
+        engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'),
+                               connect_args={'check_same_thread': False}, echo=False)
         # Used to turn foreign keys on in SQLite since this is by default
+
         @event.listens_for(engine, "connect")
         def set_sqlite_pragma(dbapi_connection, connection_record):
             cursor = dbapi_connection.cursor()
@@ -53,6 +55,7 @@ class UserTest(Base):
     def __repr__(self):
         return "<User(name='%s', password='%s')>" % (
             self.name, self.password)
+
 
 # This Model is for Genres
 class Genre(Base):
@@ -152,10 +155,11 @@ class Recommendation(Base):
 
     user_id = Column(Integer, ForeignKey(User.id), primary_key=True)
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
+    watched = Column(Integer)
 
     def __repr__(self):
-        return "<Recommendation(user_id id='%s', movie_id ='%s')>" % (self.user_id, self.movie_id)
-
+        return "<Recommendation(user_id id='%s', movie_id ='%s', rating='%s', watched='%s')>" % (
+            self.user_id, self.movie_id, self.rating, self.watched)
 
 
 # DO NOT CHANGE BELOW
@@ -167,5 +171,3 @@ def create_session():
     # to the file in which you want to do such
     Session = sessionmaker(bind=engine)
     return Session()
-
-session=create_session()

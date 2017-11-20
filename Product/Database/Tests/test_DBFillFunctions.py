@@ -1,4 +1,8 @@
-from Product.Database.DBConn import User, Movie, Genre, MovieInGenre
+from Product.Database.DBConn import User
+from Product.Database.DBConn import Movie
+from Product.Database.DBConn import Genre
+from Product.Database.DBConn import MovieInGenre
+from Product.Database.DBConn import Rating
 from Product.Database.DBConn import create_session
 
 # This is the file to unit test the four DBFill files (DBFillUsers, DBFillMovies, DBFillRatings, DBFillLinks)
@@ -10,7 +14,7 @@ from Product.Database.DBConn import create_session
 
 # Tests for DBFillUsers
 def test_DBFillUsers():
-    session=create_session()
+    session = create_session()
     result = session.query(User).filter_by(id=1).first()
     assert result.id == 1
     session.close()
@@ -18,7 +22,7 @@ def test_DBFillUsers():
 
 # Tests for DBFillMovies
 def test_DBFillMovies():
-    session=create_session()
+    session = create_session()
     result = session.query(Genre).filter_by(name='Action').first()
     assert result.name == 'Action'
 
@@ -40,14 +44,10 @@ def test_DBFillMovies():
             assert res.genre == "Fantasy"
     session.close()
 
+
 # Tests for DBFillRatings
-#def test_DBFillRatings():
-  #  result = session.query(Rating).filter_by(user_id=1, movie_id=13).first()
-   # assert result.rating == 5.0
-
-
-
-
-
-
-
+def test_DBFillRatings():
+    session = create_session()
+    result = session.query(Rating).filter_by(user_id=1, movie_id=13).first()
+    assert result.rating == 5.0
+    session.close

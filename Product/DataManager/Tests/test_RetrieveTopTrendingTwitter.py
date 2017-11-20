@@ -1,4 +1,6 @@
 from Product.DataManager.TopTrending.RetrieveTopTrendingTwitter import RetrieveTopTrendingTwitter
+from Product.TrendManager.TrendScoreToDatabase import TrendingToDB
+import time
 
 
 def test_get_top_trending():
@@ -10,11 +12,14 @@ def test_get_top_trending():
 
     # Pre-conditions
     trender = RetrieveTopTrendingTwitter()
+    trend_to_db = TrendingToDB(daily=False)
+    time.sleep(3)
+    trend_to_db.terminate()
 
     # Expected output
-    num_of_movies = 5
+    num_of_movies = 1
 
     # Observed output
-    observed = len(trender.get_top_trending(num_of_movies).dict())
+    observed = len(trender.get_top_trending(num_of_movies).list())
 
     assert observed == num_of_movies

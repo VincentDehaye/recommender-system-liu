@@ -2,17 +2,7 @@
 Search module for the Twitter API
 """
 
-# Author: Albin Bergvall
-# Date: 2017-10-09
-# Purpose: Class for gathering trending data from the twitter API. Uses a stream to gather
-# tweets, and then saves it as dictionary to the file system. The dictionary can later be
-# accessed and used to give titles a twitter based trending score.
-
-# Import the necessary methods from tweepy library
 import os
-from tweepy.streaming import StreamListener
-from tweepy import OAuthHandler
-from tweepy import Stream
 import re
 import time
 import datetime
@@ -26,22 +16,25 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 
 # Variables that contains the user credentials to access Twitter API
-access_token = "911929395799035905-m0LQX9L0N3C47hCWG9tCDrIVWT6o9To"
-access_token_secret = "gVdDlTqgqXx1JgjiaaGCLYmJV0vu3OkIKT7wMSAXniHyF"
-consumer_key = "o5gC0O5nmnRhj7H1iRdq0LxBu"
-consumer_secret = "Ef9M26RLwi6cZvsaESrFtuzffzgD3sNy7UnezOqzWbs5IDh2mY"
+ACCESS_TOKEN = "911929395799035905-m0LQX9L0N3C47hCWG9tCDrIVWT6o9To"
+ACCESS_TOKEN_SECRET = "gVdDlTqgqXx1JgjiaaGCLYmJV0vu3OkIKT7wMSAXniHyF"
+CONSUMER_KEY = "o5gC0O5nmnRhj7H1iRdq0LxBu"
+CONSUMER_SECRET = "Ef9M26RLwi6cZvsaESrFtuzffzgD3sNy7UnezOqzWbs5IDh2mY"
 
 # Variables for tracked keywords in search,
 # time until the stream stops and interval for saving to file.
-tweets_data_path = '/trendingdata/twitter_data'
-tracked_keywords = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3'
-time_limit = 7200  # in seconds
-interval = 20  # in seconds
+TWEETS_DATA_PATH = '/trendingdata/twitter_data'
+TRACKED_KEYWORDS = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3'
+TIME_LIMIT = 7200  # in seconds
+INTERVAL = 4  # in seconds
 
 
 class TwitterAPI:
     """
-    Class responsible for saving twitter data to the file system
+    Author: Albin Bergvall
+    Date:
+    Last update:
+    Purpose: Class responsible for saving twitter data to the file system
     via a stream, and also calculating a twitter trending score
     based on the data from the stream.
     """
@@ -60,12 +53,12 @@ class TwitterAPI:
         as how often it will save the data can be set in the TwitterAPI.py file.
         :return:
         """
-        output_stream = StdOutListener(time_limit, interval)
-        auth = OAuthHandler(consumer_key, consumer_secret)
-        auth.set_access_token(access_token, access_token_secret)
+        output_stream = StdOutListener(TIME_LIMIT, INTERVAL)
+        auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+        auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         stream = Stream(auth, output_stream)
         try:
-            stream.filter(track=[tracked_keywords], languages=['en'], async=True)
+            stream.filter(track=[TRACKED_KEYWORDS], languages=['en'], async=True)
         except:
             print("An error occurred. The twitter stream has been terminated.")
 
@@ -156,8 +149,8 @@ class TwitterAPI:
         """
         Author: Albin Bergvall, Karl Lundvall
         Purpose: The purpose of this function is to load a saved dictionary from the file system.
-        The file loaded will be from the day before. Return last created file.
-        :return: last created file.
+        The file loaded will be from the day before.
+        :return:
         """
         # yesterday = datetime.datetime.today() - timedelta(1)
         # path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
@@ -328,22 +321,22 @@ class StdOutListener(StreamListener):
         :return:
         """
         try:
-            path = os.path.dirname(os.path.abspath('__file__')) + tweets_data_path + datetime.datetime.today().strftime(
-                '%Y%m%d') + ".bin"
-            with open(path, 'wb') as f:
-                pickle.dump(self.all_words, f, pickle.HIGHEST_PROTOCOL)
-                f.close()
+            path = os.path.dirname(os.path.abspath('__file__')) + TWEETS_DATA_PATH \
+                   + datetime.datetime.today().strftime('%Y%m%d') + ".bin"
+            with open(path, 'wb') as file:
+                pickle.dump(self.all_words, file, pickle.HIGHEST_PROTOCOL)
+                file.close()
         except:
-            path = os.path.dirname(os.path.abspath(__file__)) + tweets_data_path + datetime.datetime.today().strftime(
-                '%Y%m%d') + ".bin"
-            with open(path, 'wb') as f:
-                pickle.dump(self.all_words, f, pickle.HIGHEST_PROTOCOL)
-                f.close()
+            path = os.path.dirname(os.path.abspath(__file__)) + TWEETS_DATA_PATH \
+                   + datetime.datetime.today().strftime('%Y%m%d') + ".bin"
+            with open(path, 'wb') as file:
+                pickle.dump(self.all_words, file, pickle.HIGHEST_PROTOCOL)
+                file.close()
         print("Dictionary saved to file! Path:", path)
 
 
 # For stream testing purposes
 if __name__ == "__main__":
     tw = TwitterAPI()
-    #tw.open_twitter_stream()
-    print(tw.get_twitter_score("rt"))
+    # tw.open_twitter_stream()
+    # print(tw.get_twitter_score("rt"))

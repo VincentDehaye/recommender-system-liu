@@ -1,35 +1,40 @@
-# Author: Martin Lundberg, Albin Bergvall
-# Date: 2017-09-28
-# Updated: 2017-10-03
-# Purpose: Controller class for the trending module. Gets data, calculates a score
-# and sends it to the database API.
+"""
+Author: Albin Bergvall, Martin Bergvall
+Date: 2017-09-28
+Last update: 2017-10-03
+Purpose: TrendingController runs the API's and calculates a total trending score
+"""
 
 
 from Product.TrendManager.YoutubeAPI import YoutubeAPI
-from Product.TrendManager.ScoredMovie import ScoredMovie
+from Product.TrendManager.TwitterAPI import TwitterAPI
+from googleapiclient.errors import HttpError
 
 
 class TrendingController:
+    """""
+    Author: Albin Bergvall, Martin Lundberg
+    Date: 2017-09-28
+    Last update: 2017-10-03
+    Purpose: Class responsible for fetching the trending score from the API sources.
+    """
 
-    def __init__(self):
-        self.youtubeapi = YoutubeAPI()
-        # SendToDatabase(scoredMovie)
-
-    def get_trending_content(self, searchterm):
-        #scoredmovie = ScoredMovie(1, self.total_score_calc(searchterm))  # temp id, use id from database/imdb id?
-        return self.total_score_calc(searchterm)
-
-    def total_score_calc(self, keyword):
-        totalscore = 0
-        youtubescore = self.youtubeapi.get_youtube_score(keyword)
-        # add more scoreres as needed
-        totalscore += youtubescore
-        return totalscore
-
-    # def SendToDatabase(self, scoredMovie):
-
-
-if __name__ == "__main__":
-    keyword = input()
-    tc = TrendingController()
-    print(tc.get_trending_content(keyword).score)
+    @staticmethod
+    def get_trending_content(keyword):
+        """
+        Author: Albin Bergvall, Martin Lundberg
+        Date:
+        Last update:
+        Purpose: Takes the movie title (keyword) as a parameter and fetches score
+        from the API sources and returns a numeric result.
+        :param keyword: keyword, e.g. movie title
+        :return: total_score, youtube_score, twitter_score
+        """
+        total_score = 0
+        try:
+            youtube_score = YoutubeAPI().get_youtube_score(keyword)
+        except HttpError:
+            print("The daily quota of youtube requests have been reached.")
+        twitter_score = TwitterAPI().get_twitter_score(keyword)
+        total_score += youtube_score + twitter_score
+        return total_score, youtube_score, twitter_score

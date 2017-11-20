@@ -1,5 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
+import { UsersComponent } from '../users.component'
+import { DataHandlerService} from '../../../@core/data/data-handler.service';
 
 @Component({
   selector: 'ngx-d3-bar',
@@ -15,14 +17,12 @@ import { NbThemeService } from '@nebular/theme';
     </ngx-charts-bar-vertical>
   `,
 })
-export class UsersD3BarComponent implements OnDestroy {
+export class UsersD3BarComponent implements OnDestroy, OnInit {
 
-  results = [
-    { name: 'Batman', value: 8940 },
-    { name: 'Frozen', value: 5000 },
-    { name: 'The Room', value: 2000 },
-  ];
-  showLegend = true;
+  movies: string[];
+  data: any;
+  results = [];
+  showLegend = false;
   showXAxis = true;
   showYAxis = true;
   xAxisLabel = 'movies';
@@ -30,7 +30,7 @@ export class UsersD3BarComponent implements OnDestroy {
   colorScheme: any;
   themeSubscription: any;
 
-  constructor(private theme: NbThemeService) {
+  constructor(private theme: NbThemeService, private dataHandlerService: DataHandlerService) {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       this.colorScheme = {
@@ -38,6 +38,42 @@ export class UsersD3BarComponent implements OnDestroy {
       };
     });
   }
+
+  ngOnInit() {
+    this.getData();
+    this.extractData();
+
+
+
+  }
+  public getData() {
+      this.dataHandlerService.getData().subscribe((data) => {
+      this.movies = data.recommendation_list;
+      // console.log();
+        // console.log(this.movies[0]["name"]);
+       // console.log(this.movies.values());
+     /* var i:number;
+      for (i = 0;i < 9; ++i){
+        this.results.push({name: this.movies[1]["name"], value: this.movies[1]['id']});
+      }*/
+      this.results = [
+        { name: this.movies[0]['title'], value: this.movies[0]['score']},
+        { name: this.movies[1]['title'], value: this.movies[1]['score']},
+        { name: this.movies[2]['title'], value: this.movies[2]['score']},
+        { name: this.movies[3]['title'], value: this.movies[3]['score']},
+        { name: this.movies[4]['title'], value: this.movies[4]['score']},
+        { name: this.movies[5]['title'], value: this.movies[5]['score']},
+        { name: this.movies[6]['title'], value: this.movies[6]['score']},
+        { name: this.movies[7]['title'], value: this.movies[7]['score']},
+        { name: this.movies[8]['title'], value: this.movies[8]['score']},
+        { name: this.movies[9]['title'], value: this.movies[9]['score']},
+        ]
+    }); // Converts the data making it reachable in the htm file
+  }
+   extractData() {
+    return null;
+  }
+
 
   ngOnDestroy(): void {
     this.themeSubscription.unsubscribe();

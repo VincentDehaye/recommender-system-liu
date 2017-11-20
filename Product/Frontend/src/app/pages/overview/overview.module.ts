@@ -1,37 +1,25 @@
 import { NgModule } from '@angular/core';
 import { AngularEchartsModule } from 'ngx-echarts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ChartModule } from 'angular2-chartjs';
+import { OverviewChartjsPieComponent } from './overview-components/rec-chartjs-pie.component';
+
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { OverviewComponent } from './overview.component';
-import { StatusCardComponent } from './status-card/status-card.component';
-import { ActorsComponent } from './actors/actors.component';
-import { InfoComponent } from './info/info.component';
-import { ContentListsComponent } from './content-lists/content-lists.component';
-import { ViewsComponent } from './views/views.component';
-import { ViewsChartComponent } from './views/views-chart/views-chart.component';
-import { SubscribersComponent } from './subscribers/subscribers.component';
-import {RecommendationsPerformanceComponent} from './recommendations-performance/recommendations-performance.component';
-import { TrendingScoreComponent } from './trending-score/trending-score.component';
-import { TrendingScoreChartComponent } from './trending-score/trending-score-chart.component';
+import { OverviewRoutingModule, routedComponents } from './overview-routing.module';
+import {ComponentsModule} from '../components/components.module';
+import { OverviewD3BarComponent } from './overview-components/overview-d3-bar.component';
 
 
+const components = [
+    OverviewD3BarComponent,
+];
 @NgModule({
-  imports: [
-    ThemeModule,
-    AngularEchartsModule,
+  imports: [ComponentsModule, ThemeModule, AngularEchartsModule, NgxChartsModule, ChartModule, OverviewRoutingModule,
   ],
-  declarations: [
-    OverviewComponent,
-    StatusCardComponent,
-    ActorsComponent,
-    InfoComponent,
-    ContentListsComponent,
-    ViewsComponent,
-    ViewsChartComponent,
-    SubscribersComponent,
-    RecommendationsPerformanceComponent,
-    TrendingScoreComponent,
-    TrendingScoreChartComponent,
+  declarations: [OverviewComponent , ...routedComponents, ...components],
+  entryComponents: [
   ],
 })
-export class OverviewModule { }
+export class OverviewModule {}

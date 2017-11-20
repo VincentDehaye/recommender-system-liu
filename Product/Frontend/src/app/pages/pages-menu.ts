@@ -20,10 +20,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'ANALYTICS',
     group: true,
   },
-  {
+   {
     title: 'Overview',
+    icon: 'ion-android-globe',
+    link: '/pages/overview',
+  },
+  {
+    title: 'Recommendations',
     icon: 'ion-person-stalker',
-    link: '/pages/users',
+    link: '/pages/recommendations',
   },
   {
     title: 'Trending',
@@ -31,9 +36,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/trending',
   },
   {
-    title: 'Recommendations',
+    title: 'Performance',
     icon: 'ion-heart',
-    link: '/pages/recommended',
+    link: '/pages/performance',
   },
   /*{
     title: 'Content',
@@ -62,13 +67,4 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },*/
-  {
-    title: 'SIMULATION',
-    group: true,
-  },
-  {
-    title: 'User',
-    icon: 'ion-android-person',
-    link: '/pages/user',
-  },
 ];

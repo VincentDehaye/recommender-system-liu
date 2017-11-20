@@ -12,6 +12,7 @@ Explain how to run the tests here
 * example - Some examples to get started
 * tests - Tests here
 * scripts - Scripts for creating a database here
+* archive - Old files no longer in use. Kept for future reference
 
 
 ## lightfm determinism

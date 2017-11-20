@@ -1,67 +1,85 @@
-from Product.Database.DBConn import session, Movie, MovieInGenre, Genre
+import csv
+import re
+import os
+from Product.Database.DBConn import create_session, Movie, MovieInGenre, Genre
 
-import csv, re
+'''
+Author: John Andree Lidquist, Marten Bolin
+Date: 12/10/2017
+Last update: 9/11/2017
+Purpose: Read the movie_id.csv/smallMovies.csv file and load it into the database.
+Columns in the are movie csv files: userId, movieId, rating, timestamp
+'''
 
 
-# This part handles adding the different genres to the databas
-# List of all genres that can be se en in the movie lens dataset
-genreList = ["Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary",
-             "Drama", "Fantasy", "Film-Noir", "Horror","IMAX", "Musical", "Mystery", "Romance", "Sci-Fi",
-             "Thriller", "War", "Western", "(no genres listed)"]
-#
-# Add the genres to the db
-for genre in genreList:
-    new_genre = Genre(name=genre)
-    session.add(new_genre)
+class FillMovies:
 
-# This part handles adding the movies of the dataset into the database
-# Read the movie.csv file to add data into database
-# Columns in the ratings.csv: movieID, titleAndYear, Genres
-with open("movies.csv", 'rt', encoding="utf-8") as f:
-    reader = csv.reader(f)
+    def __init__(self, small_data_set):
+        self.session = create_session()
+        self.fill(small_data_set)
 
-    # Iterates through each row in the file and take column one (id) and column 2 (title)
-    for row in reader:
+    def fill(self, small_data_set):
+        # This part handles adding the different genres to the databas
+        # List of all genres that can be se en in the movie lens dataset
+        genres = ["Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary",
+                  "Drama", "Fantasy", "Film-Noir", "Horror", "IMAX", "Musical", "Mystery", "Romance",
+                  "Sci-Fi", "Thriller", "War", "Western", "(no genres listed)"]
 
-        # Search the title string of row[1] of occurances for (yyyy) and (yyyy-) for series
-        # Then checks length if it was found and puts it in the new_movie if year is
-        # not found it goes into the else statement and no year is inputted to the creation
-        searchForYear = re.split(r" \(([0-9][0-9][0-9][0-9])+\)", row[1])
-        searchForYearSeries = re.split(r"\(([0-9][0-9][0-9][0-9]-)+\)", row[1])
-        if len(searchForYear)>1:
-            new_movie=Movie(id=row[0], title=searchForYear[0], year=searchForYear[1])
-        elif len(searchForYearSeries)>1:
-            new_movie=Movie(id=row[0], title=searchForYearSeries[0], year=searchForYearSeries[1])
+        # Add the genres to the db
+        for genre in genres:
+            new_genre = Genre(name=genre)
+            self.session.add(new_genre)
+
+        # This part handles adding the movies of the dataset into the database
+        # Read the movie.csv file to add data into database
+        # Columns in the ratings.csv: movieID, titleAndYear, Genres
+        if small_data_set:
+            abspath = os.path.dirname(os.path.abspath(__file__)) + '/smallMovies.csv'
+            print("Starting to fill movies from small data set..")
         else:
-            new_movie=Movie(id=row[0], title=row[1])
-        session.add(new_movie)
+            abspath = os.path.dirname(os.path.abspath(__file__)) + '/movies.csv'
+            print("Starting to fill movies from BIG data set..")
 
-    # Need to commit before filling with movies-genre due to foreign key
-    session.commit()
-    f.close()
+        with open(abspath, 'rt', encoding="utf-8") as f:
+            reader = csv.reader(f)
+            # Iterates through each row in the file and take column one (id) and column 2 (title)
+            for row in reader:
+                # Search the title string of row[1] of occurances for (yyyy) and (yyyy-) for series
+                # Then checks length if it was found and puts it in the new_movie if year is
+                # not found it goes into the else statement and no year is inputted to the creation
+                search_for_year = re.split(r" \(([0-9][0-9][0-9][0-9])+\)", row[1])
+                search_for_year_series = re.split(r"\(([0-9][0-9][0-9][0-9]-)+\)", row[1])
+                if len(search_for_year) > 1:
+                    new_movie = Movie(id=row[0], title=search_for_year[0], year=search_for_year[1])
+                elif len(search_for_year_series) > 1:
+                    new_movie = Movie(id=row[0], title=search_for_year_series[0], year=search_for_year_series[1])
+                else:
+                    new_movie = Movie(id=row[0], title=row[1])
+                self.session.add(new_movie)
 
-with open("movies.csv", 'rt', encoding="utf-8") as f:
-    reader = csv.reader(f)
+            # Need to commit before filling with movies-genre due to foreign key
+            self.session.commit()
+            f.close()
 
-    for row in reader:
-        for counter, column in enumerate(row):
-            if counter == 0:
-                movie_id = column
+        with open(abspath, 'rt', encoding="utf-8") as f:
+            reader = csv.reader(f)
 
-            if counter == 2:
-                genres = column.split("|")
+            for row in reader:
+                for counter, column in enumerate(row):
+                    if counter == 0:
+                        movie_id = column
 
-                # loop through all genres for the movie
-                for new_genre in genres:
-                    new_movie_genre = MovieInGenre(movie_id=movie_id, genre=new_genre)
-                    session.add(new_movie_genre)
+                    if counter == 2:
+                        genres = column.split("|")
 
+                        # loop through all genres for the movie
+                        for new_genre in genres:
+                            new_movie_genre = MovieInGenre(movie_id=movie_id, genre=new_genre)
+                            self.session.add(new_movie_genre)
 
-# Commit the added link between movies and their genres
-session.commit()
+        # Commit the added link between movies and their genres
+        self.session.commit()
+        print("DONE - Movies added")
 
-# Close the csv file
-f.close()
-
-
-
+        # Close the csv file
+        f.close()

@@ -1,3 +1,4 @@
+// Performance page
 import { Component } from '@angular/core';
 
 @Component({
@@ -5,4 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./recommended.component.scss'],
   templateUrl: './recommended.component.html',
 })
-export class RecommendedComponent {}
+export class RecommendedComponent {
+  modalHeader1 = 'Graph that displays the improvement over time for the Coogl3 algorithm.';
+  // Modal content 1-
+  modalContent1 = `Each dot on the graph is connected to a certain time and success rate
+  for the algorithm. The success rate is
+based on the end-users reaction to watching content,
+this is determined by whether they liked or disliked a movie from the generated
+recommendations list.`;
+
+}

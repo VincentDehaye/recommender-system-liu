@@ -5,4 +5,5 @@
  */
 export const environment = {
   production: true,
+  apiUrl: 'http://pumi-3-1.tddc88-2017.ida.liu.se/api/',
 };

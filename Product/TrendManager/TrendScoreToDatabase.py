@@ -1,78 +1,137 @@
-from Product.TrendManager.TrendingController import TrendingController
-from Product.Database.DBConn import session
-from Product.Database.DBConn import Movie, TrendingScore
+"""
+Author: John Andree Lidquist, Marten Bolin
+Date:
+Last update:
+Purpose: Gets movie from database and stores a trending score
+"""
+
+from datetime import datetime
 import threading
+from Product.TrendManager.TwitterAPI import TwitterAPI
+
+from apscheduler.schedulers.background import BackgroundScheduler
+from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
+from Product.Database.DatabaseManager.Insert.InsertTrending import InsertTrending
+from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
+from Product.Database.DatabaseManager.Update.UpdateTrending import UpdateTrending
+from Product.TrendManager.TrendingController import TrendingController
+TIME_LIMIT_TWITTER_STREAM = 43200  # Time limit for twitter stream uptime in seconds
+TIME_LIMIT_TWITTER_STREAM_NO_FILE = 7200  # Time limit for twitter stream if there is no file to load data from
 
 
 class TrendingToDB(object):
-    # Call the trending to db to start filling the trend table in the database. This will be ran in the background
-    # as long as the application is running
+    """
+    Author: John Andree Lidquist, Marten Bolin
+    Date: 2017-10-12
+    Last update: 2017-11-13
+    Purpose: This class handles collecting all the trending scores so that they can
+    be stored in the database.
+    The class is using threads and will be abel to run in the background continuously
+    """
+    def __init__(self, daemon=False, daily=False):
+        """
+        Author: John Andree Lidquist, Marten Bolin
+        Date:2017-10-12
+        Last update: 2017-11-17
+        Purpose: Instantiates the class, and based on the params an be run in different ways.
+        :param daemon: True - makes the process terminate when app is finished.
+        False - The process will not terminate until finished or terminated.
+        :param daily: True - Will make the process run once every day.
+        False - Will only run the process once.
+        """
+        # self.daemon = daemon
+        self.stop = False
+        self.daily = daily
+        self.insert_trend = InsertTrending()
+        self.retrieve_trend = RetrieveTrending()
+        self.alter_trend = UpdateTrending()
+        self.retrieve_movie = RetrieveMovie()
 
-    def __init__(self, background=True, continuous=True):
-        self.continous = continuous
-        self. stop = False
-        # creates the thread that will make the method run parallel. Sets daemon to true so that it will allow
-        # the app to be terminated and will terminate with it
-        thread = threading.Thread(target=self.run, args=())
-        thread.daemon = background
-        thread.start()
+        if daily:
+            # if set to daily, it creates a scheduler and sets the interval to 1 day
+            self.scheduled = BackgroundScheduler()
+            if not daemon:
+                self.scheduled.daemon = False
+            self.scheduled.add_job(self.run, 'interval', seconds=50, id="1")
+            self.scheduled.start()
+            self.scheduled.modify_job(job_id="1", next_run_time=datetime.now())
+        else:
+            # creates the thread that will make the method run parallel.
+            # Sets daemon to true so that it will allow
+            # the app to be terminated and will terminate with it.
+            thread = threading.Thread(target=self.run, args=())
+            thread.daemon = daemon
+            thread.start()
 
     def run(self):
-        # This is the actual method that will run until the application is shut down, it is done in the
-        # following steps
+        """
+        Author: John Andree Lidquist, Marten Bolin
+        Date: 2017-10-28
+        Last update:2017-11-17
+        Purpose: The method where which will fetch all the scores by the
+        TrendingController which communicate with the Youtube and Twitter API.
+        """
+
+        # Fllowing steps are done:
         # 1. Query movies from database
         # 2. Get new score for that movie
-        # 3. If current trend score is different from the newly fetched score - Update score in database,
-        # else go to step 1
+        # 3. If current trend score is different from the newly
+        # fetched score - Update score in database, else go to step 1
         # 4. Go to step 1
+        if TwitterAPI().get_newest_file() is None:  # Check is file exist for scoring twitter
+            TwitterAPI.open_twitter_stream(TIME_LIMIT_TWITTER_STREAM_NO_FILE)  # time limit parameter in seconds
+
         trend_controller = TrendingController()
+        res_movie = self.retrieve_movie.retrieve_movie()
 
-        # Getting the current maxScore from the DB to be able to normalize the values
-        result = session.query(TrendingScore).all()
-        maxScore = 1
-        for score in result:
-            if score.total_score > maxScore:
-                maxScore = score.total_score
-        print("The maxScore is: ", maxScore)
-
-        while True:
+        for movie in res_movie:
             if self.stop:
                 break
-            res_movie = session.query(Movie).all()
 
-            for movie in res_movie:
-                if self.stop:
-                    break
-                res_score = session.query(TrendingScore).filter_by(movie_id=movie.id).first()
+            res_score = self.retrieve_trend.retrieve_trend_score(movie.id)
 
-                new_tot_score = trend_controller.get_trending_content(movie.title)  # gets new score
+            scores = trend_controller.get_trending_content(movie.title)
+            new_tot_score = scores[0]  # Gets total score
+            new_youtube_score = scores[1]  # Gets Youtube score
+            new_twitter_score = scores[2]  # Gets Twitter score
 
-                #Update maxScore if its higher than current maxScore
-                if new_tot_score > maxScore:
-                    maxScore = new_tot_score
+            print("Movie ID:", movie.id)
 
-                print("Movie ID:", movie.id)
-                print("MaxScore: ", maxScore)
+            if res_score:
 
-                normScore = new_tot_score/maxScore
+                if new_tot_score != res_score.total_score:
+                    # If score is new
+                    res_score.total_score = new_tot_score
+                    self.alter_trend.update_trend_score(movie_id=movie.id,
+                                                        total_score=new_tot_score,
+                                                        youtube_score=new_youtube_score,
+                                                        twitter_score=new_twitter_score)
+            else:
+                # If movie is not in TrendingScore table
+                self.insert_trend.add_trend_score(movie_id=movie.id,
+                                                  total_score=new_tot_score,
+                                                  youtube_score=new_youtube_score,
+                                                  twitter_score=new_twitter_score)
 
-                if res_score:
-                    res_score.normalized_score = normScore
-                    if new_tot_score != res_score.total_score:
-                        # If score is new
-                        res_score.total_score = new_tot_score
-                else:
-                    # If movie is not in TrendingScore table
-                    movie = TrendingScore(movie_id=movie.id, normalized_score=normScore, total_score=new_tot_score, youtube_score=0,
-                                          twitter_score=0)
-                    session.add(movie)
-                # The commit is in the loop for now due to high waiting time but could be moved outside to lower
-                # total run time
-                session.commit()
+                # The commit is in the loop for now due to high waiting time but
+                # could be moved outside to lower total run time
 
-            if not self.continous:
-                break;
+        # twitter_max = self.retrieve_trend.get_twitter_max()
+        # youtube_max = self.retrieve_trend.get_youtube_max()
 
-        # Used to stop the thread if background is false or for any other reason it needs to be stopped.
+        #  Open twitter stream after titles has been scored, to gather new data
+        TwitterAPI().open_twitter_stream(TIME_LIMIT_TWITTER_STREAM)
+
+    # Used to stop the thread if background is false
+    # or for any other reason it needs to be stopped.
     def terminate(self):
+        """
+        Author: John Andree Lidquist, Marten Bolin
+        Date:
+        Last update:
+        Purpose: Terminates the process
+        """
+        print("Shutting down TrendScoreToDatabase..")
         self.stop = True
+        if self.daily:
+            self.scheduled.shutdown()

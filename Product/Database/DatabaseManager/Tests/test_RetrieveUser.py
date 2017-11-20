@@ -3,14 +3,6 @@ from Product.Database.DBConn import create_session
 from Product.Database.DBConn import User
 
 
-def test_check_if_user_in_rating():
-    assert True
-
-
-def test_retrieve_largest_user_id():
-    assert True
-
-
 def test_retrieve_all_users():
     """
     Author: John Andrée Lidquist
@@ -55,7 +47,7 @@ def test_retrieve_all_users():
             observed_user_occupation = user.occupation
             break
 
-    # After adding the dummy userwe remove them again.
+    # After adding the dummy user we remove them again.
     session.delete(dummy_user)
     session.commit()
 
@@ -66,3 +58,37 @@ def test_retrieve_all_users():
     assert observed_user_occupation == expected_user_occupation
 
 
+def test_check_if_user_in_rating():
+    # TODO finish this unit test
+    assert True
+
+
+def test_retrieve_largest_user_id():
+    """
+    Author: John Andrée Lidquist
+    Date: 2017-11-20
+    Lates Update: 2017-11-20
+    Purpose: Assert that the highest user id is retrieved
+    """
+
+    # PRE-CONDITIONS
+    user_id = 9999999999999999
+
+    # We create a session and add a dummy user
+    session = create_session()
+    dummy_user = User(id=user_id, age=20, gender='Male', occupation='Student')
+    session.add(dummy_user)
+    session.commit()
+
+    # EXPECTED OUTPUT
+    expected_user_id = user_id
+
+    # OBSERVED OUTPUT
+    # We call the method to be tested that retrieves all the users
+    observed_user_user_id = RetrieveUser().retrieve_largest_user_id()
+
+    # After adding the dummy user we remove them again.
+    session.delete(dummy_user)
+    session.commit()
+
+    assert observed_user_user_id == expected_user_id

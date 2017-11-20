@@ -72,6 +72,22 @@ def test_get_twitter_score():
     assert observed > 0
 
 
+def test_get_newest_file():
+    """
+    Author: Albin Bergvall
+    Date: 2017-11-20
+    Purpose: Assert that get_newest_file returns a file
+    from the twitterdata directory, if the file exists
+    """
+    # Pre-conditions
+    twitter_api = TwitterAPI()
+
+    # Observed outputs
+    observed = twitter_api.get_newest_file()
+
+    assert observed is not None
+
+
 """ - Not really testable
 def test_open_twitter_stream():  # NOT DONE
 

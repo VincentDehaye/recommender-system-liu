@@ -19,7 +19,7 @@ from Product.TrendManager.TrendingController import TrendingController
 class TrendingToDB(object):
     """
     Author: John Andree Lidquist, Marten Bolin
-    Date:
+    Date: 2017-10-12
     Last update: 2017-11-13
     Purpose: This class handles collecting all the trending scores so that they can
     be stored in the database.
@@ -28,15 +28,15 @@ class TrendingToDB(object):
     def __init__(self, daemon=False, daily=False):
         """
         Author: John Andree Lidquist, Marten Bolin
-        Date:
-        Last update:
+        Date:2017-10-12
+        Last update: 2017-11-17
         Purpose: Instantiates the class, and based on the params an be run in different ways.
         :param daemon: True - makes the process terminate when app is finished.
         False - The process will not terminate until finished or terminated.
         :param daily: True - Will make the process run once every day.
         False - Will only run the process once.
         """
-        #self.daemon = daemon
+        # self.daemon = daemon
         self.stop = False
         self.daily = daily
         self.insert_trend = InsertTrending()
@@ -63,8 +63,8 @@ class TrendingToDB(object):
     def run(self):
         """
         Author: John Andree Lidquist, Marten Bolin
-        Date:
-        Last update:
+        Date: 2017-10-28
+        Last update:2017-11-17
         Purpose: The method where which will fetch all the scores by the
         TrendingController which communicate with the Youtube and Twitter API.
         """

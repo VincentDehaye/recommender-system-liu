@@ -26,7 +26,7 @@ class RetrieveUser(Retrieve):
         return users
 
     def check_if_user_in_rating(self, user_id):
-        # TODO and check so that rating is not null, return boolean instead of object.
+        # TODO and check so that rating is not null, return boolean instead of object, write unit test for this method
         return self.session.query(Rating).filter_by(user_id=user_id).first()
 
     def retrieve_largest_user_id(self):

@@ -47,7 +47,7 @@ export class UsersComponent implements OnInit {
   constructor(private dataHandlerService: DataHandlerService) { }
 
   ngOnInit() {
-    this.getData();
+    this.getDemoData();
 
   }
   public getData() {
@@ -55,7 +55,7 @@ export class UsersComponent implements OnInit {
       this.data = data;
     }); // Converts the data making it reachable in the htm file
   }
-  updateDemoData() {
+  getDemoData() {
     this.dataHandlerService.getMetaRecommendationsData(
       this.fromAge, this.toAge, this.model.male,
       this.model.female, this.model.other,
@@ -69,7 +69,7 @@ export class UsersComponent implements OnInit {
    setAge(fromAge: any, toAge: any) {
     this.fromAge = fromAge;
     this.toAge = toAge;
-    this.updateDemoData();
+    this.getDemoData();
   }
    enableGender() {
      return null;

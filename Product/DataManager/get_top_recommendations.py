@@ -48,4 +48,3 @@ def get_top_recommendations(age_range, gender_list):
     return output_list
 
 
-print(get_top_recommendations([],[]))

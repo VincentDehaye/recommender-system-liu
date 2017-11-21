@@ -50,7 +50,7 @@ def test_evolve_model():
     assert(value_after - value_before >= 0)
 
 
-def test_evolve_model_graph():
+# def test_evolve_model_graph():
     """
     Author: Gustaf Norberg
     Date: 2017-11-20
@@ -59,15 +59,15 @@ def test_evolve_model_graph():
     WARP function and prints a graph for the same
     """
     # Pre-Conditions
-    print("Inne i test_evolve_model_graph()")
+    # print("Inne i test_evolve_model_graph()")
     #generate_model.train_model('test_new_model.sav')
     #model = generate_model.load_model('test_new_model.sav')
-    train_matrix = get_matrices.get_train_matrix()
+    #train_matrix = get_matrices.get_train_matrix()
     # new_users_matrix = get_matrices.get_new_users_matrix()
     # test_matrix = get_matrices.get_test_matrix()
     # k = 10
 
-    generate_model.evolve_model_graph(train_matrix)
+    # generate_model.evolve_model_graph(train_matrix)
     #
     # value_before = generate_model.test_precision(model, train_matrix, k)
     # generate_model.evolve_model('test_new_model.sav', model, new_users_matrix)

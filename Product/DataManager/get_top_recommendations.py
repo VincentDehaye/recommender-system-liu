@@ -22,7 +22,7 @@ def get_top_recommendations(age_range, gender_list):
     toplist = {}
     session = create_session()
 
-    # Populates toplist.
+    # Populates top recommended movies list.
     for user in list_of_matching_users:
         recommended_to_user = session.query(Recommendation).filter(Recommendation.user_id == user).all()
         for recommendation in recommended_to_user:
@@ -33,9 +33,11 @@ def get_top_recommendations(age_range, gender_list):
 
     output_list = []
 
+    # Sort the keys of the movies from the most recommended to the least.
     keys = sorted(toplist.items(), key=lambda x: x[1], reverse=True)
 
-    # Prints toplist
+    # Fill the list with dictionaries containing movie id, name and count of recommendations
+    # in the order of the most recommended to the least.
     for k, v in keys:
         tmp_dict = {}
         tmp_dict["id"] = k

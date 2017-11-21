@@ -10,6 +10,7 @@ from Product.Database.DatabaseManager.Retrieve.RetrieveUser import RetrieveUser
 from Product.RecommendationManager import gets_from_database as gets_from_database
 from Product.RecommendationManager.Recommendation.recommendation_list import RecommendationList
 from Product.RecommendationManager.model import generate_model as generate_model
+from Product.Database.DatabaseManager.Insert.InsertRecommendation import InsertRecommendation
 
 
 # At this point we assume that there is a file named new_model.sav
@@ -96,7 +97,7 @@ class Recommendation(object):
         if RetrieveUser().check_if_user_in_rating(self.user_id):
             rec_list_score = self.model.predict(self.user_id, np.array(trending_id))
             norm_rec_list_score = self.normalize_user_scores(rec_list_score).tolist()
-
+            print(norm_rec_list_score)
             final_rec_list_score = [rec+trending_weight*trend for rec, trend
                                     in zip(norm_rec_list_score, norm_trending_score)]
         else:
@@ -116,7 +117,11 @@ class Recommendation(object):
             sorted_complete_rec_list.append({'id': item[0],
                                              'title': item[1],
                                              'score': item[2]})
-        # print(sorted_complete_rec_list)
+        # Creates an instance of InsertRecommendation that handles database insertions.
+        # Calls the insert_recommendation method in it and makes the db insertion
+        # This will not remove old recommendations and will add new ones.
+        InsertRecommendation().insert_recommendation(user_id=self.user_id,
+                                                      movie_list=sorted_complete_rec_list)
         return RecommendationList(self.user_id, sorted_complete_rec_list)
 
-# print(Recommendation(55, 10).generate_recommendation_list().__dict__)
+#print(Recommendation(55, 10).generate_recommendation_list().__dict__)

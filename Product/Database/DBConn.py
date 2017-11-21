@@ -100,7 +100,7 @@ class TrendingScore(Base):
 class User(Base):
 
     __tablename__ = 'users'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, autoincrement=True, primary_key=True)
     age = Column(Integer, default=-1)
     gender = Column(String(30), default="Unknown")
     occupation = Column(String(30), default="Unknown")

@@ -47,17 +47,17 @@ def test_evolve_model():
     print(value_after)
     # Expected output > 0
     # since value_after > value_before
-    assert(value_after - value_before >= 0)
+    assert(value_after - value_before) >= 0
 
 
 # def test_evolve_model_graph():
-    """
-    Author: Gustaf Norberg
-    Date: 2017-11-20
-    Last update: 2017-11-20
-    Purpose: Tests model evolvement for Light_FM with the
-    WARP function and prints a graph for the same
-    """
+#     """
+#     Author: Gustaf Norberg
+#     Date: 2017-11-20
+#     Last update: 2017-11-20
+#     Purpose: Tests model evolvement for Light_FM with the
+#     WARP function and prints a graph for the same
+#     """
     # Pre-Conditions
     # print("Inne i test_evolve_model_graph()")
     #generate_model.train_model('test_new_model.sav')

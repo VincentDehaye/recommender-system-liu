@@ -121,7 +121,7 @@ class Recommendation(object):
         # Calls the insert_recommendation method in it and makes the db insertion
         # This will not remove old recommendations and will add new ones.
         InsertRecommendation().insert_recommendation(user_id=self.user_id,
-                                                      movie_list=sorted_complete_rec_list)
+                                                     movie_list=sorted_complete_rec_list)
         return RecommendationList(self.user_id, sorted_complete_rec_list)
 
-#print(Recommendation(55, 10).generate_recommendation_list().__dict__)
+# print(Recommendation(55, 10).generate_recommendation_list().__dict__)

@@ -9,8 +9,16 @@ Purpose: Filter users on metadata values
 '''
 
 def get_user_group_ids(age, gender):
-    age_list = get_restricted_ids("User", "age", age[0], age[1])
-    gender_list = get_restricted_match("User",["gender"],[gender])
+    if type(age) == list and len(age) == 2:
+        age_list = get_restricted_ids("User", "age", age[0], age[1])
+    else:
+        age_list = get_restricted_ids("User", "age", 0, 200)
+
+    if type(gender) == list and len(gender) >= 1:
+        gender_list = get_restricted_match("User", ["gender"], [gender])
+    else:
+        gender_list = get_restricted_match("User", [], [])
+
     output = set(age_list) & set(gender_list)
     return output
 

@@ -11,9 +11,6 @@ Purpose: Return the movies which has been the most recommended for the users con
 
 def get_top_recommendations(age_range, gender_list):
 
-    # Defines what columns in the User table to restrict on.  Will be a parameter
-    feature_list = ['age', 'gender']
-
     # Generates the list of users matching the query
     list_of_matching_users = get_user_group_ids(age_range, gender_list)
 
@@ -34,7 +31,6 @@ def get_top_recommendations(age_range, gender_list):
 
     keys = sorted(toplist.items(), key=lambda x: x[1], reverse=True)
 
-
     # Prints toplist
     for k, v in keys:
         tmp_dict = {}
@@ -45,3 +41,5 @@ def get_top_recommendations(age_range, gender_list):
 
     return output_list
 
+
+print(get_top_recommendations([],[]))

@@ -10,6 +10,10 @@ Purpose: Return the movies which has been the most recommended for the users con
 """
 
 def get_top_recommendations(age_range, gender_list):
+    # Example call for all users : get_top_recommandations([], [])
+    # Example call for only Male and Unknown users : get_top_recommandations([],["Male", "Unknown"])
+    # Example call for users only between 15 and 35 : get_top_recommandations([15,35], [])
+    # Example call for Female users between 35 and 50 : get_top_recommandations([35,50], ["Female"])
 
     # Generates the list of users matching the query
     list_of_matching_users = get_user_group_ids(age_range, gender_list)

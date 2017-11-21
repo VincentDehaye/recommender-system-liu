@@ -14,6 +14,8 @@ export class UsersComponent implements OnInit {
     other: true,
     female: true,
   };
+  fromAge: number= 0;
+  toAge: number= 200;
   movies: string[];
   data: any;
   value: any= '0 - 200';
@@ -40,7 +42,8 @@ export class UsersComponent implements OnInit {
     one: false,
     two: false,
   };
-
+  tmp1: any;
+  tmp2: any;
   constructor(private dataHandlerService: DataHandlerService) { }
 
   ngOnInit() {
@@ -52,8 +55,21 @@ export class UsersComponent implements OnInit {
       this.data = data;
     }); // Converts the data making it reachable in the htm file
   }
+  updateDemoData() {
+    this.dataHandlerService.getMetaRecommendationsData(
+      this.fromAge, this.toAge, this.model.male,
+      this.model.female, this.model.other,
+    ).subscribe((data) => {
+       this.data = data;
+    });
+    this.tmp1 = this.model.male;
+    this.tmp2 = this.model.female;
+
+  }
    setAge(fromAge: any, toAge: any) {
-    this.value = fromAge.toString() + ' - ' + toAge.toString();
+    this.fromAge = fromAge;
+    this.toAge = toAge;
+    this.updateDemoData();
   }
    enableGender() {
      return null;

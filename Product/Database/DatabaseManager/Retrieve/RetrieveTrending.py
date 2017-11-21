@@ -2,6 +2,7 @@
 RetrieveTrending Class, is supposed to provide data from the Trending table in the database
 """
 from sqlalchemy import desc
+from sqlalchemy import func
 from Product.Database.DBConn import TrendingScore
 from Product.Database.DatabaseManager.Retrieve.Retrieve import Retrieve
 
@@ -32,26 +33,48 @@ class RetrieveTrending(Retrieve):
         self.session.close()
         return trend
 
-    def get_trending_twitter(self, numOfTitles):
+    def get_trending_twitter(self, num_of_titles):
         """
         Author: John Andree Lidquist, Marten Bolin
         Date: 9/11/2017
         Last update:
         Purpose: Supposed to retrieve the Trending score from database
-        :param number_of_titles : the number of titles with the highest twitter score to be returned
+        :param num_of_titles : the number of titles with the highest twitter score to be returned
         :return TrendingScore : of type TrendingScore
         """
-        query = self.session.query(TrendingScore).order_by(desc(TrendingScore.twitter_score)).limit(numOfTitles)
+        query = self.session.query(TrendingScore).order_by(desc(TrendingScore.twitter_score)).limit(num_of_titles)
         return query
 
-    def get_trending_youtube(self, numOfTitles):
+    def get_trending_youtube(self, num_of_titles):
         """
         Author: John Andree Lidquist, Marten Bolin
         Date: 9/11/2017
         Last update:
         Purpose: Supposed to retrieve the Trending score from database
-        :param number_of_titles : the number of titles with the highest twitter score to be returned
+        :param num_of_titles : the number of titles with the highest twitter score to be returned
         :return TrendingScore : of type TrendingScore
         """
-        query = self.session.query(TrendingScore).order_by(desc(TrendingScore.youtube_score)).limit(numOfTitles)
+        query = self.session.query(TrendingScore).order_by(desc(TrendingScore.youtube_score)).limit(num_of_titles)
+        return query
+
+    def get_twitter_max(self):
+        """
+        Author: Linn Pettersson
+        Date: 2017-11-20
+        Last update:
+        Purpose: Get the highest stored Twitter score
+        :return: Query getting the max value from twitter_score in the database
+        """
+        query = self.session.query(func.max(TrendingScore.twitter_score))
+        return query
+
+    def get_youtube_max(self):
+        """
+        Author: Linn Pettersson
+        Date: 2017-11-20
+        Last update: 2017-11-20
+        Purpose: Get the highest stored Youtube score
+        :return: Query getting the max value from youtube_score in the database
+        """
+        query = self.session.query(func.max(TrendingScore.youtube_score))
         return query

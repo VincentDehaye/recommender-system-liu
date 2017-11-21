@@ -88,9 +88,9 @@ class Movie(Base):
 class TrendingScore(Base):
     __tablename__ = 'trendingscores'
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
-    total_score = Column(Float)
-    youtube_score = Column(Float)
-    twitter_score = Column(Float)
+    total_score = Column(Float, default=0)
+    youtube_score = Column(Float, default=0)
+    twitter_score = Column(Float, default=0)
 
     def __eq__(self, other):
         return self == other
@@ -158,8 +158,8 @@ class Recommendation(Base):
     watched = Column(Integer)
 
     def __repr__(self):
-        return "<Recommendation(user_id id='%s', movie_id ='%s', rating='%s', watched='%s')>" % (
-            self.user_id, self.movie_id, self.rating, self.watched)
+        return "<Recommendation(user_id id='%s', movie_id ='%s', watched='%s')>" % (
+            self.user_id, self.movie_id, self.watched)
 
 
 # DO NOT CHANGE BELOW

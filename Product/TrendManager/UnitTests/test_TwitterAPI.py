@@ -23,6 +23,7 @@ def test_get_word_score():
     assert observed is expected1
     assert observed1 is expected2
 
+
 def test_format_word():
     """
     Author: Karl Lundvall
@@ -40,26 +41,6 @@ def test_format_word():
 
     assert observed == expected
 
-def test_chi_square():
-    """
-    Author: Karl Lundvall
-    Date: 2017-11-14
-    Purpose: Assert that the chi-square method returns a ratio of improvement or the opposite.
-    :return:
-    """
-    # Pre-conditions
-    twitter_api = TwitterAPI()
-    new_val = 10
-    old_val = 20
-
-    # Expected output
-    expected = 5.0
-
-    # Observed output
-    observed = twitter_api.chi_square(new_val, old_val)
-
-    assert observed == expected
-
 
 def test_load_dict():
     """
@@ -68,12 +49,12 @@ def test_load_dict():
     Purpose: Assert that print_dict retrieves a dictionary from the twitter_dataYYYYMMDD.bin.
     """
     # Pre-conditions
-    twitterApi = TwitterAPI()
+    twitterapi = TwitterAPI()
 
     # Observed output
-    observed1 = twitterApi.load_old_dict()
+    twitterapi.load_new_dict()
 
-    # assert observed1 is not None
+    assert twitterapi.all_words_new is not None
 
 
 def test_get_twitter_score():
@@ -91,36 +72,32 @@ def test_get_twitter_score():
     assert observed > 0
 
 
-def test_get_twitter_score_freq_ratio():
+def test_get_newest_file():
     """
-    Author: Karl Lundvall
-    Date: 2017-11-16
-    Purpose: Assert that the freq_ratio returns a value greater than zero.
-    :return:
+    Author: Albin Bergvall
+    Date: 2017-11-20
+    Purpose: Assert that get_newest_file returns a file
+    from the twitterdata directory, if the file exists
     """
     # Pre-conditions
     twitter_api = TwitterAPI()
-    title = "rt"
 
-    # Observed output
-    observed = twitter_api.get_twitter_score_freq_ratio(title)
+    # Observed outputs
+    observed = twitter_api.get_newest_file()
 
-    # Expected output
-    expected = 0
-
-    assert observed > expected
-    assert observed is float(observed)
+    assert observed is not None
 
 
+""" - Not really testable
 def test_open_twitter_stream():  # NOT DONE
-    """
+
     Author: Alin Bergvall
     Date: 2017-11-15
     Purpose: Assert that the twitter stream opens and saves file to system
     :return:
-    """
     # Pre-conditions
-    twitter_api = TwitterAPI()
+    # twitter_api = TwitterAPI()
 
     # Observed output
     # twitter_api.open_twitter_stream()
+"""

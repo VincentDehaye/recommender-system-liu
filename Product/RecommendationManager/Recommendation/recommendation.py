@@ -84,8 +84,9 @@ class Recommendation(object):
         trending_score = [score.total_score for score in self.trending_content_meta]
         # normalize trending score
         norm_trending_score = self.normalize_user_scores(trending_score)
-        # trending_weight is 1 at the moment
-        trending_weight = 1
+        # trending_weight is 0.5 at the moment
+        # TODO document why trending weight is 0.5
+        trending_weight = 0.5
         # Here is the formula that can be altered at some point
 
         # checks if the user has ratings in the database
@@ -118,4 +119,4 @@ class Recommendation(object):
         # print(sorted_complete_rec_list)
         return RecommendationList(self.user_id, sorted_complete_rec_list)
 
-#print(Recommendation(55, 10).generate_recommendation_list().__dict__)
+# print(Recommendation(55, 10).generate_recommendation_list().__dict__)

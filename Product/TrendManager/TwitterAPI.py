@@ -1,8 +1,5 @@
 """
-Author: Albin Bergvall
-Date: 2017-10-09
-Last update:
-Purpose: Search module for the Twitter API
+Search module for the Twitter API
 """
 
 import os
@@ -10,6 +7,7 @@ import re
 import time
 import datetime
 import pickle
+import glob
 
 # Import the necessary methods from tweepy library
 from tweepy.streaming import StreamListener
@@ -23,18 +21,16 @@ CONSUMER_KEY = "o5gC0O5nmnRhj7H1iRdq0LxBu"
 CONSUMER_SECRET = "Ef9M26RLwi6cZvsaESrFtuzffzgD3sNy7UnezOqzWbs5IDh2mY"
 
 # Variables for tracked keywords in search,
-# time until the stream stops and interval for saving to file.
+# time until the stream stops for saving to file.
 TWEETS_DATA_PATH = '/trendingdata/twitter_data'
 TRACKED_KEYWORDS = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword1,keyword2,keyword3'
-TIME_LIMIT = 7200  # in seconds
-INTERVAL = 4  # in seconds
 
 
 class TwitterAPI:
     """
     Author: Albin Bergvall
-    Date:
-    Last update:
+    Date: 2017-10-06
+    Last update: 2017-11-20
     Purpose: Class responsible for saving twitter data to the file system
     via a stream, and also calculating a twitter trending score
     based on the data from the stream.
@@ -42,10 +38,9 @@ class TwitterAPI:
 
     def __init__(self):
         self.all_words_new = {}
-        self.all_words_old = {}
 
     @staticmethod
-    def open_twitter_stream():
+    def open_twitter_stream(time_limit):
         """
         Author: Albin Bergvall, Karl Lundvall
         Purpose: To initiate a stream against the twitter API which listens for
@@ -54,12 +49,12 @@ class TwitterAPI:
         as how often it will save the data can be set in the TwitterAPI.py file.
         :return:
         """
-        output_stream = StdOutListener(TIME_LIMIT, INTERVAL)
+        output_stream = StdOutListener(time_limit)
         auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
         auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         stream = Stream(auth, output_stream)
         try:
-            stream.filter(track=[TRACKED_KEYWORDS], languages=['en'], async=True)
+            stream.filter(track=[TRACKED_KEYWORDS], languages=['en'])
         except:
             print("An error occurred. The twitter stream has been terminated.")
 
@@ -80,47 +75,6 @@ class TwitterAPI:
             word = self.format_word(word)
             twitter_score = self.get_word_score(word, twitter_score, self.all_words_new)
         return twitter_score
-
-    def get_twitter_score_freq_ratio(self, title):
-        """
-        Author: Albin Bergvall, Karl Lundvall
-        Purpose: To score a movie/series title based on the number of times each word
-        in the title is mentioned in weets and how the frequency has changed compared to past.
-        Requires a background model to compare with.
-        :param title:
-        :return:
-        """
-        if not self.all_words_new:
-            self.load_new_dict()
-        if not self.all_words_old:
-            self.load_old_dict()
-        title = title.lower()
-        score_new = None
-        score_old = None
-        words = title.split()
-        for word in words:
-            word = self.format_word(word)
-            score_new = self.get_word_score(word, score_new, self.all_words_new)
-            score_old = self.get_word_score(word, score_old, self.all_words_old)
-        if score_new < 10:
-            score_new = 10
-        if score_old < 10:
-            score_old = 10
-        score_ratio = self.chi_square(score_new, score_old)
-        return score_ratio
-
-    @staticmethod
-    def chi_square(f_obs, f_exp):
-        """
-        Author: Albin Bergvall, Karl Lundvall
-        Purpose: Static function used to determine a
-        frequency ratio between new data and background model.
-        f_obs is the new observed value, and f_exp is the old expected value.
-        :param f_obs:
-        :param f_exp:
-        :return score_ratio:
-        """
-        return (f_obs - f_exp) ** 2 / f_exp
 
     @staticmethod
     def get_word_score(word, score, word_dict):
@@ -150,30 +104,41 @@ class TwitterAPI:
         """
         Author: Albin Bergvall, Karl Lundvall
         Purpose: The purpose of this function is to load a saved dictionary from the file system.
-        The file loaded will be from the day before.
+        The file loaded will be the latest modified one.
         :return:
         """
-        # yesterday = datetime.datetime.today() - timedelta(1)
-        # path = os.path.dirname(os.path.abspath(__file__))
-        # + tweets_data_path + yesterday.strftime('%Y%m%d') + ".bin"
-        # This is the path to a temp file containing data for testing.
-        path = os.path.dirname(os.path.abspath(__file__)) + TWEETS_DATA_PATH + '_sample1.bin'
-        with open(path, 'rb') as file:
-            self.all_words_new = pickle.load(file)
+        latest_file = self.get_newest_file()
+        try:
+            with open(latest_file, 'rb') as f:
+                self.all_words_new = pickle.load(f)
+        except (TypeError, FileNotFoundError):
+            print("File could not be loaded into dictionary for twitter score calculations.")
 
-    def load_old_dict(self):
+    @staticmethod
+    def get_newest_file():
         """
-        Author: Albin Bergvall, Karl Lundvall
-        Purpose: The purpose of this function is to load a saved dictionary from the file system.
-        The file loaded will be from the a week ago and can be used as a background model.
+        Author: Albin Bergvall
+        Purpose: The purpose of this function is to load the latest modified file from the trendingdata
+        directory. Used for loading dictionaries and to check if files exist.
         :return:
         """
-        # earlier_date = datetime.datetime.today() - timedelta(7)
-        # path = os.path.dirname(os.path.abspath(__file__))
-        # + tweets_data_path + earlier_date.strftime('%Y%m%d') + ".bin"
-        path = os.path.dirname(os.path.abspath(__file__)) + TWEETS_DATA_PATH + '_sample2.bin'
-        with open(path, 'rb') as file:
-            self.all_words_old = pickle.load(file)
+        path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata/*.bin'
+        list_of_files = glob.iglob(path)
+        try:
+            latest_file = max(list_of_files, key=os.path.getctime)
+            return latest_file
+        except ValueError:
+            return None
+
+    @staticmethod
+    def remove_old_dict():
+        path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata'
+        now = time.time()
+        for f in os.listdir(path):
+            f = os.path.join(path, f)
+            if os.stat(f).st_mtime < (now - 7 * 86400):
+                if os.path.isfile(f):
+                    os.remove(f)
 
     def print_dict(self):
         """
@@ -186,8 +151,8 @@ class TwitterAPI:
             self.load_new_dict()
         all_words_view = [(v, k) for k, v in self.all_words_new.items()]
         all_words_view.sort(reverse=True)
-        for value, key in all_words_view:
-            print(key, ": ", value)
+        for v, k in all_words_view:
+            print(k, ": ", v)
 
     @staticmethod
     def format_word(word):
@@ -209,27 +174,28 @@ class TwitterAPI:
 
 class StdOutListener(StreamListener):
     """
+    Author: Albin Bergvall, Karl Lundvall
+    Date: 2017-10-06
+    Last update: 2017-11-20
     Listener class used for twitter stream. Function on_status is called
     each time a tweet corresponding to a set of keywords is picked up by stream.
     Also contains functions for formatting words, saving them to a dictionary and
     lastly saving the dictionary to the file system.
     """
 
-    def __init__(self, limit, interval_time):
+    def __init__(self, limit):
         """
         Author: Albin Bergvall, Karl Lundvall
         Purpose: Constructor for the stream class.
-        Takes time limit for the stream as parameter,
-        as well as an interval for how often it should be saved to file.
-        :param limit:
-        :param interval_time:
+        Takes time limit for the stream as parameter
+        for when it should be terminated.
+        :param limit: time for stream uptime in seconds
         """
         self.start_time = time.time()
         self.limit = limit
-        self.interval_time = interval_time
-        self.interval = self.interval_time
         self.all_words = {}
         super(StdOutListener, self).__init__()
+        print("Twitter stream has been started")
 
     def on_status(self, status):
         """
@@ -241,10 +207,6 @@ class StdOutListener(StreamListener):
         :param status:
         :return:
         """
-        if(time.time() - self.start_time) > self.interval_time:
-            self.store_dict()
-            print("Stored at interval time:", self.interval_time, "s")
-            self.interval_time += self.interval
         if(time.time() - self.start_time) < self.limit:
             words = status.text.split()
             for word in words:
@@ -313,17 +275,19 @@ class StdOutListener(StreamListener):
             with open(path, 'wb') as file:
                 pickle.dump(self.all_words, file, pickle.HIGHEST_PROTOCOL)
                 file.close()
-        except:
+        except FileNotFoundError:
             path = os.path.dirname(os.path.abspath(__file__)) + TWEETS_DATA_PATH \
                    + datetime.datetime.today().strftime('%Y%m%d') + ".bin"
             with open(path, 'wb') as file:
                 pickle.dump(self.all_words, file, pickle.HIGHEST_PROTOCOL)
                 file.close()
         print("Dictionary saved to file! Path:", path)
+        print("Removing old dictionaries...")
+        TwitterAPI.remove_old_dict()
 
 
 # For stream testing purposes
 if __name__ == "__main__":
-    TWITTER = TwitterAPI()
-    # TWITTER.open_twitter_stream()
-    # print(TWITTER.get_twitter_score("rt"))
+    tw = TwitterAPI()
+    # tw.open_twitter_stream(43200)
+    # print(tw.get_twitter_score("rt"))

@@ -17,7 +17,7 @@
           <nb-card-header>
             <h2 style="padding: 10px">
             <ngx-modals [modalHeader]=modalHeader2 [modalContent]=modalContent2></ngx-modals>
-            Top Recommendations</h2>
+            Top Recommendations {{tmp1}} ::: {{tmp2}}</h2>
           </nb-card-header>
           <nb-card-header *ngFor="let movie of data?.recommendation_list"> {{movie.title}} </nb-card-header>
       </nb-card>
@@ -29,7 +29,7 @@
       <nb-card-header>
         <h2 style="padding: 10px">
         <ngx-modals [modalHeader]=modalHeader3 [modalContent]=modalContent3></ngx-modals>
-        Demographic {{value}} {{model | json}}
+        Demographic {{fromAge}} {{toAge}} {{model | json}}
         </h2>
       </nb-card-header>
       <nb-card-body>
@@ -56,13 +56,13 @@
         </div>
         <div class="btn-group btn-toggle-group" data-toggle="buttons">
           <label ngbButtonLabel class="btn btn-success" [class.active]="model.male">
-            <input ngbButton type="checkbox" [(ngModel)]="model.male"> Male
+            <input (click)="updateDemoData()" ngbButton type="checkbox" [(ngModel)]="model.male"> Male
           </label>
           <label ngbButtonLabel class="btn btn-success" [class.active]=model.other>
-            <input ngbButton type="checkbox" [(ngModel)]="model.other"> Other
+            <input (click)="updateDemoData()" ngbButton type="checkbox" [(ngModel)]="model.other"> Other
           </label>
           <label ngbButtonLabel class="btn btn-success" [class.active]="model.female">
-            <input ngbButton type="checkbox" [(ngModel)]="model.female"> Female
+            <input (click)="updateDemoData()" ngbButton type="checkbox" [(ngModel)]="model.female"> Female
           </label>
         </div>
       </nb-card-body>

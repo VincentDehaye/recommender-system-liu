@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from Product.RecommendationManager.model import generate_model as generate_model
+from Product.RecommendationManager import gets_from_database as get_matrices
 
 # TODO - Fix this script to show improvement graph
 def evolve_model_graph(train_matrix):
@@ -52,4 +53,4 @@ def evolve_model_graph(train_matrix):
     for value in adagrad_precision_at_k:
         print(value)
 
-
+# evolve_model_graph(get_matrices.get_train_matrix())

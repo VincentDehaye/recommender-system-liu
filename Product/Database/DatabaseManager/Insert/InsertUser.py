@@ -6,7 +6,7 @@ class InsertUser(Insert):
     """
     Author: Alexander Dahl, Marten Bolin
     Date: 2017-11-17
-    Last update:
+    Last update: 2017-11-21 (John)
     Purpose: Make Insert of Feedback to the database
     """
 
@@ -26,7 +26,7 @@ class InsertUser(Insert):
         if occupation:
             new_user = User(age=age, gender=gender, occupation=occupation)
         else:
-            new_user = User(age=age, gender=gender, occupation=occupation)
+            new_user = User(age=age, gender=gender)
         self.session.add(new_user)
         self.session.commit()
         print('commited for user %s' % gender)

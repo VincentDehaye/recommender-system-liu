@@ -7,11 +7,12 @@ import { Component } from '@angular/core';
   templateUrl: './recommended.component.html',
 })
 export class RecommendedComponent {
-  modalHeader1 = 'Information about success rate over time';
-  modalHeader2 = 'Information about the success rate';
+  modalHeader1 = 'Graph that displays the improvement over time for the Coogl3 algorithm.';
   // Modal content 1-
-  modalContent1 = `The graph visualised the success progression over time and
-                is measured by the overall recommendation success among users.`;
-  modalContent2 = `The piechart displayes the latest percentage (presented in green)
-                    of successful matches.`;
+  modalContent1 = `Each dot on the graph is connected to a certain time and success rate
+  for the algorithm. The success rate is
+based on the end-users reaction to watching content,
+this is determined by whether they liked or disliked a movie from the generated
+recommendations list.`;
+
 }

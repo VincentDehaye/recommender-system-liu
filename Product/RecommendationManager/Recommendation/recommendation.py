@@ -1,13 +1,16 @@
 """
 Recommendation Class.
 """
-import numpy as np
 import os
-from Product.RecommendationManager import generate_model as generate_model
-from Product.RecommendationManager import gets_from_database as gets_from_database
-from Product.RecommendationManager.Recommendation.recommendation_list import RecommendationList
+
+import numpy as np
+
 from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
 from Product.Database.DatabaseManager.Retrieve.RetrieveUser import RetrieveUser
+from Product.RecommendationManager import gets_from_database as gets_from_database
+from Product.RecommendationManager.Recommendation.recommendation_list import RecommendationList
+from Product.RecommendationManager.model import generate_model as generate_model
+from Product.Database.DatabaseManager.Insert.InsertRecommendation import InsertRecommendation
 
 
 # At this point we assume that there is a file named new_model.sav
@@ -36,7 +39,7 @@ class Recommendation(object):
         """
         # TODO should the class assume that there is a model named 'new_model.sav'?
         path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.model = generate_model.load_model(path + '/new_model.sav')
+        self.model = generate_model.load_model(path + '/model/new_model.sav')
         self.user_id = user_id
         # right now lim is hard coded to number of movies to be recommended times 3
         # TODO create some logic for how big the limit should be
@@ -45,7 +48,7 @@ class Recommendation(object):
         # this instantiates RetrieveTrending() class in the database manager and
         # gets limit number of TrendingScore classes.
         self.trending_content_meta = RetrieveTrending().\
-            retrieve_trend_score(number_of_titles=self.lim)
+            retrieve_trend_score(number_of_titles=self.lim, user_id=self.user_id)
 
     @staticmethod
     def normalize_user_scores(scores):
@@ -65,6 +68,7 @@ class Recommendation(object):
         return scores
 
     def generate_recommendation_list(self):
+        # TODO Do not recommened already viewed movies
         """
         Author: Sebastian Maghsoudi / Alexander Dahl
         Date: 2017-11-01
@@ -77,12 +81,13 @@ class Recommendation(object):
         [{'title': 'It', 'score': 1.586134233975164, 'id': 24}]}
         """
         trending_id = [id.movie_id for id in self.trending_content_meta]
-        # print(np.array(trending_id))
+        # print(np.array(trending_id
         trending_score = [score.total_score for score in self.trending_content_meta]
         # normalize trending score
         norm_trending_score = self.normalize_user_scores(trending_score)
-        # trending_weight is 1 at the moment
-        trending_weight = 1
+        # trending_weight is 0.5 at the moment
+        # TODO document why trending weight is 0.5
+        trending_weight = 0.5
         # Here is the formula that can be altered at some point
 
         # checks if the user has ratings in the database
@@ -92,7 +97,7 @@ class Recommendation(object):
         if RetrieveUser().check_if_user_in_rating(self.user_id):
             rec_list_score = self.model.predict(self.user_id, np.array(trending_id))
             norm_rec_list_score = self.normalize_user_scores(rec_list_score).tolist()
-
+            # print(norm_rec_list_score)
             final_rec_list_score = [rec+trending_weight*trend for rec, trend
                                     in zip(norm_rec_list_score, norm_trending_score)]
         else:
@@ -112,7 +117,11 @@ class Recommendation(object):
             sorted_complete_rec_list.append({'id': item[0],
                                              'title': item[1],
                                              'score': item[2]})
-        # print(sorted_complete_rec_list)
+        # Creates an instance of InsertRecommendation that handles database insertions.
+        # Calls the insert_recommendation method in it and makes the db insertion
+        # This will not remove old recommendations and will add new ones.
+        InsertRecommendation().insert_recommendation(user_id=self.user_id,
+                                                     movie_list=sorted_complete_rec_list)
         return RecommendationList(self.user_id, sorted_complete_rec_list)
 
 # print(Recommendation(55, 10).generate_recommendation_list().__dict__)

@@ -1,39 +1,36 @@
 <!-- Trending page-->
 <div class ="row">
-  <div class="col-md-4">
+  <div class="col-lg-10">
     <nb-card>
-        <h2 style="padding: 10px">
+      <h2 style="padding: 10px">
         <ngx-modals [modalHeader]=modalHeader1 [modalContent]=modalContent1></ngx-modals>
         Total trending score
       </h2>
-      <nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.title}} </nb-card-header>
+
+      <ngx-d3-bar style="height: 660px; width: auto" [factor] = 1></ngx-d3-bar>
+
+      <!--<nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.title}} </nb-card-header>-->
     </nb-card>
   </div>
-  <div class="col-md-4">
-      <nb-card>
-        <h2 style="padding: 10px">
+  <div class="col-lg-5">
+    <nb-card>
+      <h2 style="padding: 10px">
         <ngx-modals [modalHeader]=modalHeader2 [modalContent]=modalContent2></ngx-modals>
         YouTube Score
-        </h2>
-        <nb-card-header *ngFor="let movie of dataYoutube?.youtubeMovies"> {{movie.title}} </nb-card-header>
-      </nb-card>
+      </h2>
+      <ngx-d3-bar style="height: 660px; width: auto" [factor] = 2></ngx-d3-bar>
+      <!--<nb-card-header *ngFor="let movie of dataYoutube?.youtubeMovies"> {{movie.title}} </nb-card-header>-->
+    </nb-card>
   </div>
-  <div class="col-md-4">
-      <nb-card>
-        <h2 style="padding: 10px">
+  <div class="col-lg-5">
+    <nb-card>
+
+      <h2 style="padding: 10px">
         <ngx-modals [modalHeader]=modalHeader3 [modalContent]=modalContent3></ngx-modals>
         Twitter Score
-        </h2>
-        <nb-card-header *ngFor="let movie of dataTwitter?.twitterMovies"> {{movie.title}} </nb-card-header>
-      </nb-card>
+      </h2>
+      <ngx-d3-bar style="height: 660px; width: auto" [factor] = 3></ngx-d3-bar>
+      <!--<nb-card-header *ngFor="let movie of dataTwitter?.twitterMovies"> {{movie.title}} </nb-card-header>-->
+    </nb-card>
   </div>
 </div>
-<!--
-  <div class="col-lg-4">
-    <nb-card>
-      <nb-card-header>keyword usage over time</nb-card-header>
-      <nb-card-body>
-        <ngx-echarts-multiple-xaxis></ngx-echarts-multiple-xaxis>
-      </nb-card-body>
-    </nb-card>
-  </div>-->

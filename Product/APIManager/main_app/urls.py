@@ -1,3 +1,10 @@
+
+"""
+Author: Bamse
+Date: 2017-09-28
+Last update: 2017-11-22
+Purpose: Mapping URL requests to the API.
+"""
 from django.conf.urls import include, url
 
 from . import views

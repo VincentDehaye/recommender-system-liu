@@ -35,20 +35,20 @@ class RetrieveTrending(Retrieve):
             if user_id:
                 # Get the rated movies for the user in the rating table
                 subquery_rating = self.session.query(Rating.movie_id).filter(
-                        Rating.user_id == user_id)
+                    Rating.user_id == user_id)
 
                 # Get the watched movies for the user in the recommendation table
                 subquery_recommendation = self.session.query(Recommendation.movie_id).filter(
-                        and_(Recommendation.user_id == user_id, Recommendation.watched == 1))
+                    and_(Recommendation.user_id == user_id, Recommendation.watched == 1))
 
                 # Get the trending movies that are not in the previous subqueries
                 trend = self.session.query(TrendingScore).filter(
-                        and_(TrendingScore.movie_id.notin_(subquery_rating),
-                             TrendingScore.movie_id.notin_(subquery_recommendation))).limit(
-                        number_of_titles).all()
+                    and_(TrendingScore.movie_id.notin_(subquery_rating),
+                         TrendingScore.movie_id.notin_(subquery_recommendation))).limit(
+                             number_of_titles).all()
             else:
                 trend = self.session.query(TrendingScore).order_by(
-                        desc(TrendingScore.total_score)).limit(number_of_titles).all()
+                    desc(TrendingScore.total_score)).limit(number_of_titles).all()
         else:
             trend = self.session.query(TrendingScore).all()
         self.session.close()
@@ -64,7 +64,7 @@ class RetrieveTrending(Retrieve):
         :return TrendingScore : of type TrendingScore
         """
         query = self.session.query(TrendingScore).order_by(desc(
-                TrendingScore.twitter_score)).limit(num_of_titles)
+            TrendingScore.twitter_score)).limit(num_of_titles)
         return query
 
     def get_trending_youtube(self, num_of_titles):
@@ -77,7 +77,7 @@ class RetrieveTrending(Retrieve):
         :return TrendingScore : of type TrendingScore
         """
         query = self.session.query(TrendingScore).order_by(desc(
-                TrendingScore.youtube_score)).limit(num_of_titles)
+            TrendingScore.youtube_score)).limit(num_of_titles)
         return query
 
     def get_twitter_max(self):

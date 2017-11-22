@@ -35,7 +35,7 @@ readonly ROOT_URLtwitter = this.apiUrl + '/v1/twittertrending';
   }
   getMetaRecommendationsData(age_lower = 0, age_upper = 200, male = true, female = true, other = true): any {
     let filter: string = '';
-    filter += 'age_lower=' + age_lower.toString() + '&age_upper' + age_upper.toString();
+    filter += 'age_lower=' + age_lower.toString() + '&age_upper=' + age_upper.toString();
     if (male) { filter += '&male=1'; }
     if (other) {filter += '&other=1'; }
     if (female) {filter += '&female=1'; }

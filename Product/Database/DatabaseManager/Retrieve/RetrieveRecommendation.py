@@ -23,7 +23,7 @@ class RetrieveRecommendation(Retrieve):
         number_watched = self.session.query(Recommendation.watched).filter_by(watched=1).count()
         number_not_watched = self.session.query(Recommendation).count() - number_watched
         self.session.close()
-        return number_watched, number_not_watched
+        return number_watched/number_not_watched
 
     def retrieve_average_user_experience(self):
         """

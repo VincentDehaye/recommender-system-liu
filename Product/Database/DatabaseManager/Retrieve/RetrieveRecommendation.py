@@ -23,8 +23,6 @@ class RetrieveRecommendation(Retrieve):
         """
         number_watched = self.session.query(Recommendation.watched).filter_by(watched=1).count()
         number_of_recommended = self.session.query(Recommendation).count()
-        print("number_watched", number_watched)
-        print("number_of_recommended", number_of_recommended)
         self.session.close()
         if number_of_recommended == 0:
             return 0

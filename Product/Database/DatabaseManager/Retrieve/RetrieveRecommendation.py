@@ -55,5 +55,3 @@ class RetrieveRecommendation(Retrieve):
         self.session.close()
 
         return np.mean(ratio_list)
-
-print(RetrieveRecommendation().retrieve_watched_and_not_watched())

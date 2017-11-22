@@ -7,6 +7,14 @@ do
 	res=$?
 done
 
+res=6
+while [ $res -eq 6 -o $res -eq 7 ]
+do
+	sleep 1
+	curl -s $DATA_DATABASE_HOST:3306
+	res=$?
+done
+
 cd Product/APIManager &&
 python manage.py makemigrations &&
 python manage.py migrate &&

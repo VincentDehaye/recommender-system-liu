@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^api/v1/youtubetrending/$', views.YoutubeTrendingView.as_view(), name='youtubetrending'),
     url(r'^api/v1/twittertrending/$', views.TwitterTrendingView.as_view(), name='twittertrending'),
     url(r'^api/v1/ratemovie/$', views.RateMovieView.as_view(), name='ratemovie'),
+    url(r'^api/v1/success-rate/$', views.SuccessRateView.as_view(), name='success-rate-view'),
 ]

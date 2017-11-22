@@ -220,3 +220,33 @@ class RateMovieView(APIView):
         serializer = RatingSerializer(request.data)
         print(serializer.data)
         return Response(serializer.data)
+
+class SuccessRateView(APIView):
+    """
+    Author: Bamse
+    Date: 2017-11-22
+    Last update: 2017-11-22 by Bamse
+    This class is used to get the success rate from the machine learning algorithm.
+    """
+
+    def get(self, request):
+        """
+        Author: Bamse
+        Date: 2017-11-22
+        Last update: 2017-11-22 by Bamse
+        This function handles GET requests for the success rate from the machine learning algorithm.
+        """
+
+        success_rates = {"success_rates":[
+            {"title":"Batman", "id":1, "successRate":10},
+            {"title":"Horseman", "id":2, "successRate":9},
+            {"title":"Birdperson", "id":3, "successRate":8},
+            {"title":"Manman", "id":4, "successRate":8},
+            {"title":"Cowman", "id":5, "successRate":7},
+            {"title":"Snakeman", "id":6, "successRate":5},
+            {"title":"Butterflyman", "id":7, "successRate":4},
+            {"title":"The extremely ordinary man", "id":8, "successRate":4},
+            {"title":"Wonderman the movie", "id":9, "successRate":3},
+            {"title":"Manbat", "id":10, "successRate":2},
+            ]}
+        return Response(success_rates)

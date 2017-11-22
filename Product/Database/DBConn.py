@@ -95,6 +95,9 @@ class TrendingScore(Base):
     def __eq__(self, other):
         return self == other
 
+    def __repr__(self):
+        return "<TrendingScore(movie_id='%s', total_score='%s', youtube_score='%s', twitter_score='%s')>" % (
+            self.movie_id, self.total_score, self.youtube_score, self.twitter_score)
 
 # This class is for users
 class User(Base):

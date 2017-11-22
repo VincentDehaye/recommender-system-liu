@@ -5,7 +5,7 @@ from Product.RecommendationManager.Recommendation.create_recommendations_for_all
     import CreateRecommendationsForAllUsers
 import time
 
-
+# TODO: Docstrings and make check for chnages before update model
 class RecreateModel:
 
     def __init__(self, daemon=False):

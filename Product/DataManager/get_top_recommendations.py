@@ -6,7 +6,7 @@ from Product.RecommendationManager import gets_from_database as gets_from_databa
 Author: Eric Petersson, Vincent Dehaye
 Date: 2017-11-21
 Last update:
-Purpose: Return the movies which has been the most recommended for the users considered
+Purpose: Return the movies which have been the most recommended for the users considered
 """
 
 def get_top_recommendations(age_range, gender_list):
@@ -51,10 +51,7 @@ def get_top_recommendations(age_range, gender_list):
         tmp_dict["id"] = k
         tmp_dict["title"] = gets_from_database.get_movie_title(k)
         tmp_dict["count"] = v
-        if watched_list[k] == 0:
-            tmp_dict["ratio"] = 0
-        else:
-            tmp_dict["ratio"] = (watched_list[k]/v)*100
+        tmp_dict["ratio"] = (watched_list[k]/v)*100
         output_list.append(tmp_dict)
 
     return output_list

@@ -22,12 +22,13 @@ class RetrieveRecommendation(Retrieve):
         :return Number of watched movies divided by the number of movies not watched
         """
         number_watched = self.session.query(Recommendation.watched).filter_by(watched=1).count()
-        number_not_watched = self.session.query(Recommendation).count() - number_watched
+        number_of_recommended = self.session.query(Recommendation).count()
+        print("number_watched", number_watched)
+        print("number_of_recommended", number_of_recommended)
         self.session.close()
-        # TODO make sure the right thing is returned. If changed, remeber to change in the unit test!
-        if number_not_watched == 0:
-            return number_watched
-        return number_watched/number_not_watched
+        if number_of_recommended == 0:
+            return 0
+        return number_watched/number_of_recommended
 
     def retrieve_average_user_experience(self):
         """
@@ -54,3 +55,5 @@ class RetrieveRecommendation(Retrieve):
         self.session.close()
 
         return np.mean(ratio_list)
+
+print(RetrieveRecommendation().retrieve_watched_and_not_watched())

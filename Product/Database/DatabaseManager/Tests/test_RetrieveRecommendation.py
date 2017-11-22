@@ -48,6 +48,7 @@ def test_retrieve_watched_and_not_watched():
 
     assert observed_watched
     assert observed_watched >= 0
+    assert observed_watched <= 1
 
 
 def test_retrieve_average_user_experience():

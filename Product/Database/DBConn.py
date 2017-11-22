@@ -88,9 +88,9 @@ class Movie(Base):
 class TrendingScore(Base):
     __tablename__ = 'trendingscores'
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
-    total_score = Column(Float)
-    youtube_score = Column(Float)
-    twitter_score = Column(Float)
+    total_score = Column(Float, default=0)
+    youtube_score = Column(Float, default=0)
+    twitter_score = Column(Float, default=0)
 
     def __eq__(self, other):
         return self == other
@@ -100,7 +100,7 @@ class TrendingScore(Base):
 class User(Base):
 
     __tablename__ = 'users'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, autoincrement=True, primary_key=True)
     age = Column(Integer, default=-1)
     gender = Column(String(30), default="Unknown")
     occupation = Column(String(30), default="Unknown")

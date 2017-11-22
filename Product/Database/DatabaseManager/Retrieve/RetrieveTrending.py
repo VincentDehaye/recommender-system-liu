@@ -25,8 +25,8 @@ class RetrieveTrending(Retrieve):
         Purpose: Supposed to retrieve the Trending score from database
         :param movie_id : the id of the movie that should be retrieved (optional)
         :param number_of_titles : the number of titles with the highest total score to be returned
-        :param user_id : The id of the user that the recommendation is for, will only return non-viewed or rated
-        content (optional)
+        :param user_id : The id of the user that the recommendation is for, will only return
+        non-viewed or rated content (optional)
         :return TrendingScore : of type TrendingScore
         """
         if movie_id:
@@ -34,7 +34,8 @@ class RetrieveTrending(Retrieve):
         elif number_of_titles:
             if user_id:
                 # Get the rated movies for the user in the rating table
-                subquery_rating = self.session.query(Rating.movie_id).filter(Rating.user_id == user_id)
+                subquery_rating = self.session.query(Rating.movie_id).filter(
+                        Rating.user_id == user_id)
 
                 # Get the watched movies for the user in the recommendation table
                 subquery_recommendation = self.session.query(Recommendation.movie_id).filter(
@@ -43,7 +44,8 @@ class RetrieveTrending(Retrieve):
                 # Get the trending movies that are not in the previous subqueries
                 trend = self.session.query(TrendingScore).filter(
                         and_(TrendingScore.movie_id.notin_(subquery_rating),
-                             TrendingScore.movie_id.notin_(subquery_recommendation))).limit(number_of_titles).all()
+                             TrendingScore.movie_id.notin_(subquery_recommendation))).limit(
+                        number_of_titles).all()
             else:
                 trend = self.session.query(TrendingScore).order_by(
                         desc(TrendingScore.total_score)).limit(number_of_titles).all()
@@ -61,7 +63,8 @@ class RetrieveTrending(Retrieve):
         :param num_of_titles : the number of titles with the highest twitter score to be returned
         :return TrendingScore : of type TrendingScore
         """
-        query = self.session.query(TrendingScore).order_by(desc(TrendingScore.twitter_score)).limit(num_of_titles)
+        query = self.session.query(TrendingScore).order_by(desc(
+                TrendingScore.twitter_score)).limit(num_of_titles)
         return query
 
     def get_trending_youtube(self, num_of_titles):
@@ -73,7 +76,8 @@ class RetrieveTrending(Retrieve):
         :param num_of_titles : the number of titles with the highest twitter score to be returned
         :return TrendingScore : of type TrendingScore
         """
-        query = self.session.query(TrendingScore).order_by(desc(TrendingScore.youtube_score)).limit(num_of_titles)
+        query = self.session.query(TrendingScore).order_by(desc(
+                TrendingScore.youtube_score)).limit(num_of_titles)
         return query
 
     def get_twitter_max(self):

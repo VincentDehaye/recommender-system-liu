@@ -19,10 +19,8 @@ class InsertRecommendation(Insert):
 
         for rec in movie_list:
             if not self.session.query(Recommendation).filter_by(user_id=user_id, movie_id=rec['id']).scalar():
-                print(self.session.query(Recommendation).filter_by(user_id=user_id, movie_id=rec['id']).scalar())
                 new_recommendation = Recommendation(movie_id=rec['id'], user_id=user_id)
                 self.session.add(new_recommendation)
-            print('added movie')
         self.session.commit()
-        print('commited for user %s' % user_id)
+        print('commited recommendations for user %s' % user_id)
         self.session.close()

@@ -18,11 +18,15 @@ class RetrieveRecommendation(Retrieve):
         Date: 2017-11-20
         Last update: 2017-11-20
         Purpose: Retrieve data from the recommendation table and count how many of the recommended movies have been
-        watched and how many that have not been watched
+        watched divided by the number of movies not watched
+        :return Number of watched movies divided by the number of movies not watched
         """
         number_watched = self.session.query(Recommendation.watched).filter_by(watched=1).count()
         number_not_watched = self.session.query(Recommendation).count() - number_watched
         self.session.close()
+        # TODO make sure the right thing is returned. If changed, remeber to change in the unit test!
+        if number_not_watched == 0:
+            return number_watched
         return number_watched/number_not_watched
 
     def retrieve_average_user_experience(self):
@@ -32,6 +36,7 @@ class RetrieveRecommendation(Retrieve):
         Last update: 2017-11-20
         Purpose: Retrieve data from the recommendation table and count how many of the recommended movies have been
         watched and how many that have not been watched for each user and then the average is returned
+        :return The average of the ratios of movies watched divided by movies not watched by each user
         """
         users = self.session.query(User).all()
 

@@ -48,7 +48,7 @@ class Recommendation(object):
         # this instantiates RetrieveTrending() class in the database manager and
         # gets limit number of TrendingScore classes.
         self.trending_content_meta = RetrieveTrending().\
-            retrieve_trend_score(number_of_titles=self.lim)
+            retrieve_trend_score(number_of_titles=self.lim, user_id=self.user_id)
 
     @staticmethod
     def normalize_user_scores(scores):
@@ -81,7 +81,7 @@ class Recommendation(object):
         [{'title': 'It', 'score': 1.586134233975164, 'id': 24}]}
         """
         trending_id = [id.movie_id for id in self.trending_content_meta]
-        # print(np.array(trending_id))
+        print(np.array(trending_id))
         trending_score = [score.total_score for score in self.trending_content_meta]
         # normalize trending score
         norm_trending_score = self.normalize_user_scores(trending_score)

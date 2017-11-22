@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, Float, String, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, ForeignKey, DateTime
 '''
 Author: John Andree Lidquist, Marten Bolin
 Date: 12/10/2017
@@ -99,9 +99,9 @@ class TrendingScore(Base):
         return "<TrendingScore(movie_id='%s', total_score='%s', youtube_score='%s', twitter_score='%s')>" % (
             self.movie_id, self.total_score, self.youtube_score, self.twitter_score)
 
+
 # This class is for users
 class User(Base):
-
     __tablename__ = 'users'
     id = Column(Integer, autoincrement=True, primary_key=True)
     age = Column(Integer, default=-1)
@@ -152,10 +152,8 @@ class MovieLinks(Base):
 
 
 # Class for the movies a user has been recommended
-
 class Recommendation(Base):
     __tablename__ = 'recommendation'
-
     user_id = Column(Integer, ForeignKey(User.id), primary_key=True)
     movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
     watched = Column(Integer)
@@ -163,6 +161,18 @@ class Recommendation(Base):
     def __repr__(self):
         return "<Recommendation(user_id id='%s', movie_id ='%s', watched='%s')>" % (
             self.user_id, self.movie_id, self.watched)
+
+
+class SuccessRate(Base):
+    __tablename__ = 'recommendation'
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    average_total = Column(Float)
+    average_user_experience = Column(Float)
+    timestamp = Column(DateTime)
+
+    def __repr__(self):
+        return "<Recommendation(id id='%s', average_total ='%s', average_user_experience='%s', timestamp='%s')>" % (
+            self.id, self.average_total, self.average_user_experience, self.timestamp)
 
 
 # DO NOT CHANGE BELOW

@@ -13,16 +13,19 @@ import traceback
 
 from main_app.serializers import RatingSerializer
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation
+from Product.DataManager.get_top_recommendations import get_top_recommendations
 from Product.DataManager.TopTrending.RetrieveTopTrendingTotal import RetrieveTopTrendingTotal
 from Product.DataManager.TopTrending.RetrieveTopTrendingTwitter import RetrieveTopTrendingTwitter
 from Product.DataManager.TopTrending.RetrieveTopTrendingYoutube import RetrieveTopTrendingYoutube
 
+MINIMUM_AGE = 0
+MAXIMUM_AGE = 200
 
 class RecommendationsView(APIView):
     """
     Author: Bamse
     Date: 2017-10-04
-    Last update: 2017-11-14 by Bamse
+    Last update: 2017-11-22 by Bamse
     This class is used to return the top 10 recommendations from Recommendations team
     """
     # authentication_classes = (SessionAuthentication,)
@@ -32,12 +35,22 @@ class RecommendationsView(APIView):
         """
         Author: Bamse
         Date: 2017-11-14
-        Last update: 2017-11-14 by Bamse
+        Last update: 2017-11-22 by Bamse
         Purpose: Handles GET requests to recommendations API. Returns mock data if fetching from
         recommendation doesn't work.
         """
         try:
-            recs = Recommendation(55, 10).generate_recommendation_list().__dict__
+            age_range = [request.query_params.get("age_lower", MINIMUM_AGE), request.query_params.get("age_upper", MAXIMUM_AGE)]
+            gender_list = []
+            if request.query_params.get("male", "0") == "1":
+                gender_list.append("Male")
+            if request.query_params.get("female", "0") == "1":
+                gender_list.append("Female")
+            if request.query_params.get("other", "0") == "1":
+                gender_list.append("Unknown")
+
+            recommendation_list = get_top_recommendations(age_range, gender_list)
+            recs = {"data": recommendation_list}
         except ValueError:
             recs = {"recommendation_list":[
                 {"title":"Batman", "id":1, "score":10},

@@ -8,7 +8,7 @@ before_script:
     - python --version
     - python ./Product/Database/DBConn.py
     - python ./Product/Database/DBFillSmallSet.py
-    - python ./Product/TrendManager/RunTrend.py
+    
     
 test_script:
   script:

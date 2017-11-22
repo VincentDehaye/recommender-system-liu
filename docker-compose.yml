@@ -44,7 +44,7 @@ services:
   trending:
     build: .
     container_name: trend
-    command: python Product/TrendManager/RunTrend.py
+    command: bash Product/Docker/trending_startup_script.sh
     depends_on:
      - data_db
     dns: 8.8.8.8

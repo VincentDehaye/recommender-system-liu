@@ -31,3 +31,4 @@ class CreateNewModel:
         """
         PATH = os.path.dirname(os.path.abspath(__file__))
         generate_model.train_model(PATH + '/new_model.sav')
+        print("Model adjusted.")

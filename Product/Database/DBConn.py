@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, Float, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, Float, String, ForeignKey, func, Date
 '''
 Author: John Andree Lidquist, Marten Bolin
 Date: 12/10/2017
@@ -164,11 +164,11 @@ class Recommendation(Base):
 
 
 class SuccessRate(Base):
-    __tablename__ = 'recommendation'
+    __tablename__ = 'successrate'
     id = Column(Integer, autoincrement=True, primary_key=True)
     average_total = Column(Float)
     average_user_experience = Column(Float)
-    timestamp = Column(DateTime)
+    timestamp = Column(Date, default=func.now())
 
     def __repr__(self):
         return "<Recommendation(id id='%s', average_total ='%s', average_user_experience='%s', timestamp='%s')>" % (

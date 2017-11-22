@@ -9,14 +9,14 @@ services:
       - "80:80"
     volumes:
       - .:/src
-      - ./Product/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./Product/Docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - web
 
   web:
     build: .
     container_name: django
-    command: bash Product/django_docker_startup_command.sh
+    command: bash Product/Docker/django_docker_startup_command.sh
     depends_on:
       - website_db
       - data_db
@@ -44,7 +44,7 @@ services:
   trending:
     build: .
     container_name: trend
-    command: python Product/TrendManager/RunTrend.py
+    command: bash Product/Docker/trending_startup_script.sh
     depends_on:
      - data_db
     dns: 8.8.8.8

@@ -283,7 +283,7 @@ class StdOutListener(StreamListener):
                 file.close()
         print("Dictionary saved to file! Path:", path)
         print("Removing old dictionaries...")
-        TwitterAPI.remove_old_dict()
+        # TwitterAPI.remove_old_dict()
 
 
 # For stream testing purposes

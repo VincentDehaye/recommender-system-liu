@@ -6,20 +6,22 @@ from Product.RecommendationManager import gets_from_database as gets_from_databa
 Author: Eric Petersson, Vincent Dehaye
 Date: 2017-11-21
 Last update:
-Purpose: Return the movies which has been the most recommended for the users considered
+Purpose: Return the movies which have been the most recommended for the users considered
 """
 
 def get_top_recommendations(age_range, gender_list):
-    # Example call for all users : get_top_recommandations([], [])
-    # Example call for only Male and Unknown users : get_top_recommandations([],["Male", "Unknown"])
-    # Example call for users only between 15 and 35 : get_top_recommandations([15,35], [])
-    # Example call for Female users between 35 and 50 : get_top_recommandations([35,50], ["Female"])
+    # Example call for all users : get_top_recommendations([], [])
+    # Example call for only Male and Unknown users : get_top_recommendations([],["Male", "Unknown"])
+    # Example call for users only between 15 and 35 : get_top_recommendations([15,35], [])
+    # Example call for Female users between 35 and 50 : get_top_recommendations([35,50], ["Female"])
 
     # Generates the list of users matching the query
     list_of_matching_users = get_user_group_ids(age_range, gender_list)
 
     # Will be the list of recommended movies, and the number of time the were recommended.
     toplist = {}
+    # Count the number of times each movie has been watched
+    watched_list  = {}
     session = create_session()
 
     # Populates top recommended movies list.
@@ -28,8 +30,14 @@ def get_top_recommendations(age_range, gender_list):
         for recommendation in recommended_to_user:
             if recommendation.movie_id not in toplist:
                 toplist[recommendation.movie_id] = 1
+                if recommendation.watched == 1:
+                    watched_list[recommendation.movie_id] = 1
+                else:
+                    watched_list[recommendation.movie_id] = 0
             else:
                 toplist[recommendation.movie_id] += 1
+                if recommendation.watched == 1:
+                    watched_list[recommendation.movie_id] += 1
 
     output_list = []
 
@@ -43,8 +51,7 @@ def get_top_recommendations(age_range, gender_list):
         tmp_dict["id"] = k
         tmp_dict["title"] = gets_from_database.get_movie_title(k)
         tmp_dict["count"] = v
+        tmp_dict["ratio"] = (watched_list[k]/v)*100
         output_list.append(tmp_dict)
 
     return output_list
-
-

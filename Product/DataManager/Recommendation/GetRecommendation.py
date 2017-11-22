@@ -19,7 +19,7 @@ class GetRecommendation:
         Purpose: Retrieve the number of recommended movies that have been watched, and the number that
         have not been watched
         """
-        return RetrieveRecommendation().retrieve_watched_and_not_watched()
+        return RetrieveRecommendation().retrieve_watched_ratio()
 
     @staticmethod
     def retrieve_average_user_experience():

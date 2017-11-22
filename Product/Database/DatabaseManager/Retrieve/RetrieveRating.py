@@ -4,9 +4,9 @@ from Product.Database.DBConn import Rating
 
 class RetrieveRating(Retrieve):
     """
-    Author: Alexander Dahl
+    Author: Alexander Dahl, Marten Bolin
     Date: 2017-11-14
-    Last update: 2017-11-14
+    Last update: 2017-11-22
     Purpose: Retrieve data from rating table in database
     """
     # TODO the logic to get 80% or 10% of the ratings should be done here and not in gets_from_db

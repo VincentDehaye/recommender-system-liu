@@ -35,7 +35,7 @@ def test_retrieve_watched_and_not_watched():
 
     # OBSERVED OUTPUT
     # We call the method to be tested to get all the ratings
-    observed_watched = RetrieveRecommendation().retrieve_watched_and_not_watched()
+    observed_watched = RetrieveRecommendation().retrieve_watched_ratio()
 
     # After adding the dummy movie, the dummy user and the dummy recommendation, we remove them again.
     # We need to commit twice because of foreign key constraints

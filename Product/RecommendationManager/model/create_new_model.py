@@ -9,6 +9,25 @@ import os
 
 from Product.RecommendationManager.model import generate_model as generate_model
 
-PATH = os.path.dirname(os.path.abspath(__file__))
-print(PATH)
-generate_model.train_model(PATH + '/new_model.sav')
+
+class CreateNewModel:
+    """
+    Author: Alexander Dahl, Mårten Bolin
+    Date: 2017-11-22
+    Last update:
+    Purpose:
+    This file creates a new model by calling the train model method
+    in generate model.
+    """
+
+    @staticmethod
+    def create_new_model():
+        """
+        Author: Alexander Dahl, Mårten Bolin
+        Date: 2017-11-22
+        Last update:
+        Purpose:
+        Call this function to retrain the model
+        """
+        PATH = os.path.dirname(os.path.abspath(__file__))
+        generate_model.train_model(PATH + '/new_model.sav')

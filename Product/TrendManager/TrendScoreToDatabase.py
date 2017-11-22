@@ -53,7 +53,7 @@ class TrendingToDB(object):
             self.scheduled = BackgroundScheduler()
             if not daemon:
                 self.scheduled.daemon = False
-            self.scheduled.add_job(self.run, 'interval', seconds=50, id="1")
+            self.scheduled.add_job(self.run, 'interval', days=1, id="1")
             self.scheduled.start()
             self.scheduled.modify_job(job_id="1", next_run_time=datetime.now())
         else:

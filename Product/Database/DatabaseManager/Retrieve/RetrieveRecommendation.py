@@ -12,7 +12,7 @@ class RetrieveRecommendation(Retrieve):
     Purpose: Retrieve data from the recommendation table
     """
 
-    def retrieve_watched_and_not_watched(self):
+    def retrieve_watched_ratio(self):
         """
         Author: John Andree Lidquist, Alexander Dahl
         Date: 2017-11-20

@@ -97,8 +97,9 @@ def get_train_matrix():
         counter += 1
 
     # Added +1 because else the matrix will be to small
+    # TODO Change dimensions to greater than 1 if problem with dimensions
     train_matrix = coo_matrix((rating_list, (user_list, movie_list)),
-                              shape=(RetrieveUser().retrieve_largest_user_id(),
+                              shape=(RetrieveUser().retrieve_largest_user_id()+1,
                                      RetrieveMovie().retrieve_largest_movie_id()+1))
     return train_matrix
 
@@ -127,9 +128,9 @@ def get_test_matrix():
             test_movie_list.append(rating.movie_id)
             test_rating_list.append(rating.rating)
         counter += 1
-
+    # TODO Change dimensions to greater than 1 if problem with dimensions
     test_matrix = coo_matrix((test_rating_list, (test_user_list, test_movie_list)),
-                             shape=(RetrieveUser().retrieve_largest_user_id(),
+                             shape=(RetrieveUser().retrieve_largest_user_id()+1,
                                     RetrieveMovie().retrieve_largest_movie_id()+1))
     return test_matrix
 
@@ -159,9 +160,9 @@ def get_new_users_matrix():
             movie_list.append(rating.movie_id)
             rating_list.append(rating.rating)
         counter += 1
-
+    # TODO Change dimensions to greater than 1 if problem with dimensions
     new_users_matrix = coo_matrix((rating_list, (user_list, movie_list)),
-                                  shape=(RetrieveUser().retrieve_largest_user_id(),
+                                  shape=(RetrieveUser().retrieve_largest_user_id()+1,
                                          RetrieveMovie().retrieve_largest_movie_id()+1))
 
     return new_users_matrix

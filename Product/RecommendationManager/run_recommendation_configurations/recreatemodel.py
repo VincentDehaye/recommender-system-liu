@@ -77,6 +77,6 @@ class RecreateModel:
 
 updating = RecreateModel()
 time.sleep(4)
-InsertNewUser.insert_user(age = 22,gender = "mallig")
+InsertNewUser.insert_user(age=22, gender="mallig")
 time.sleep(8)
 updating.terminate()

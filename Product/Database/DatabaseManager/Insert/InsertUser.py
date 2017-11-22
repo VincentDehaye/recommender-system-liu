@@ -31,3 +31,4 @@ class InsertUser(Insert):
         self.session.commit()
         print('commited for user %s' % gender)
         self.session.close()
+

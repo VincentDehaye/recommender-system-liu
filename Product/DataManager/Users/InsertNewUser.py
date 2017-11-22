@@ -1,4 +1,5 @@
 from Product.Database.DatabaseManager.Insert.InsertUser import InsertUser
+from Product.RecommendationManager.model.create_new_model import CreateNewModel
 
 
 class InsertNewUser(object):
@@ -23,3 +24,4 @@ class InsertNewUser(object):
         :type String
         """
         InsertUser().insert_user(age=age, gender=gender,occupation=occupation)
+        # CreateNewModel.create_new_model()

@@ -16,8 +16,8 @@ readonly ROOT_URL = this.apiUrl + '/v1/recommendations';
 readonly ROOT_URLtrending = this.apiUrl + '/v1/trending';
 readonly ROOT_URLyoutube = this.apiUrl + '/v1/youtubetrending';
 readonly ROOT_URLtwitter = this.apiUrl + '/v1/twittertrending';
-readonly ROOT_URLsimple = this.apiUrl + 'v1/simpleSuccess';
-readonly ROOT_URLaverage = this.apiUrl + 'v1/averageSuccess';
+readonly ROOT_URLsimple = this.apiUrl + 'v1/simple-success';
+readonly ROOT_URLaverage = this.apiUrl + 'v1/average-success';
 
   movies: Observable<Movie[]>;
   trendingMovies: Observable<Movie[]>;

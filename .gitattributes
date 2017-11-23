@@ -1,4 +1,4 @@
 # Treat all text files without a CR (as we have Docker)
-* text eol=lf
+*.sh text eol=lf
 
 #Updated to push

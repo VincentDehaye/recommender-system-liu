@@ -25,7 +25,7 @@ class UpdateSuccessRate:
         self.scheduled = BackgroundScheduler()
         if not daemon:
             self.scheduled._daemon = False
-        self.scheduled.add_job(self._run, 'interval', seconds=10, id="3")
+        self.scheduled.add_job(self._run, 'interval', days=1, id="3")
         self.scheduled.start()
         self.scheduled.modify_job(job_id="3", next_run_time=datetime.now())
 

@@ -2,7 +2,7 @@
 Author: Albin Bergvall, Martin Lundberg
 Date: 2017-09-28
 Last update: 2017-11/21
-Purpose: TrendingController runs the API's and calculates a total trending score
+Purpose: TrendingController runs the API's and calculates returns the scores
 """
 from Product.TrendManager.ScoredMovie import ScoredMovie
 from Product.TrendManager.YoutubeAPI import YoutubeAPI
@@ -25,7 +25,7 @@ class TrendingController:
         Date:
         Last update: 2017/11/21 Albin Bergvall
         Purpose: Takes the movie title (keyword) as a parameter and fetches score
-        from the API sources and returns a numeric result.
+        from the API sources and returns an instance of ScoredMovie
         :param keyword: keyword, e.g. movie title
         :return: a scored movie with youtube and twitter score
         """

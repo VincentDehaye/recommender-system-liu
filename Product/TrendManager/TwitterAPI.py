@@ -287,7 +287,11 @@ class StdOutListener(StreamListener):
                 file.close()
         print("Dictionary saved to file! Path:", path)
         print("Removing old dictionaries...")
-        # TwitterAPI.remove_old_dict()
+        try:
+            if os.environ["REMOVETWITTERFILES"] == "1":
+                TwitterAPI.remove_old_dict()
+        except KeyError:
+            pass
 
 
 # For stream testing purposes

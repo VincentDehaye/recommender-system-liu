@@ -8,7 +8,7 @@ from Product.RecommendationManager.run_recommendation_configurations.update_succ
     Date: 2017-11-22
     Last update:
     Purpose: This starts the observer that creates and checks
-    
+
 """
 
 # Be aware that these will run until terminated! Do not forget them running in the background!

@@ -18,6 +18,7 @@ from Product.DataManager.get_top_recommendations import get_top_recommendations
 from Product.DataManager.TopTrending.RetrieveTopTrendingTotal import RetrieveTopTrendingTotal
 from Product.DataManager.TopTrending.RetrieveTopTrendingTwitter import RetrieveTopTrendingTwitter
 from Product.DataManager.TopTrending.RetrieveTopTrendingYoutube import RetrieveTopTrendingYoutube
+from Product.DataManager.Recommendation.GetSuccessRate import GetSuccessRate
 
 MINIMUM_AGE = 0
 MAXIMUM_AGE = 200
@@ -279,14 +280,18 @@ class SuccessRateView(APIView):
         return Response(success_rates)
 class SimpleSuccessView(APIView):
     def get(self, request):
-        simple_success = {"simpleSuccess":[
-            {"time":"Mocked", "noTimesWatched":10, "noTimesNotWatched":20},
-            {"time":"Tuesday", "noTimesWatched":10, "noTimesNotWatched":20},
-            {"time":"Wednesday", "noTimesWatched":10, "noTimesNotWatched":20},
-            {"time":"Thursday", "noTimesWatched":10, "noTimesNotWatched":20},
-            {"time":"Friday", "noTimesWatched":10, "noTimesNotWatched":20},
-            {"time":"Saturday", "noTimesWatched":10, "noTimesNotWatched":20},
-        ]}
+        try:
+            simple_success = {"simpleSuccess": GetSuccessRate.get_simple_success_rate()}
+        except:
+            traceback.print_exc()
+            simple_success = {"simpleSuccess":[
+                {"time":"Mocked", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Tuesday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Wednesday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Thursday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Friday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Saturday", "noTimesWatched":10, "noTimesNotWatched":20},
+            ]}
         return Response(simple_success)
 class AverageSuccessView(APIView):
     def get(self, request):

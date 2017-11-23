@@ -18,9 +18,9 @@ def evolve_model_graph(train_matrix):
     """
     alpha = 1e-3
     # TODO change the constant epochs to be the same as the in generate model
-    epochs = 30
+    epochs = 100
     k = 10
-    stop = 1/100
+    minimum_change = 1 / 100
 
     adagrad_model = generate_model.LightFM(no_components=30,
                                            loss='warp',
@@ -35,21 +35,16 @@ def evolve_model_graph(train_matrix):
                                             item_alpha=alpha)
 
     adagrad_precision_at_k = []
-
+    adadelta_precision_at_k = []
     for i in range(epochs):
         adagrad_model.fit_partial(train_matrix, epochs=1)
         adagrad_precision_at_k.append(generate_model.test_precision(adagrad_model, train_matrix, k))
-        if (i > 1 and adagrad_precision_at_k[i] - adagrad_precision_at_k[i-1] < stop):
-            epochs = i+1
-            break
-
-    adadelta_precision_at_k = []
-
-    for epoch in range(epochs):
         adadelta_model.fit_partial(train_matrix, epochs=1)
-        adadelta_precision_at_k.append(generate_model.test_precision(adadelta_model,
-                                                                     train_matrix,
-                                                                     k))
+        adadelta_precision_at_k.append(generate_model.test_precision(adadelta_model, train_matrix, k))
+
+        if (i > 1 and adagrad_precision_at_k[i] - adagrad_precision_at_k[i - 1] < minimum_change and
+                        adadelta_precision_at_k[i] - adadelta_precision_at_k[i - 1] < minimum_change):
+            break
 
     x_value = np.arange(len(adagrad_precision_at_k))
     plt.plot(x_value, np.array(adagrad_precision_at_k))

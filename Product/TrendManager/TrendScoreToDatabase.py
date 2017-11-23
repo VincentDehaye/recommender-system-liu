@@ -8,6 +8,7 @@ Purpose: Gets movie from database and stores a trending score
 from datetime import datetime
 import threading
 
+import os
 
 from Product.TrendManager.TwitterAPI import TwitterAPI
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -91,8 +92,8 @@ class TrendingToDB(object):
         trend_controller = TrendingController()
         res_movie = self.retrieve_movie.retrieve_movie()
         scored_movies = []
-        twitter_max = 0
-        youtube_max = 0
+        twitter_max = 1
+        youtube_max = 1
 
         for movie in res_movie:
             if self.stop:
@@ -134,7 +135,12 @@ class TrendingToDB(object):
                 # could be moved outside to lower total run time
 
         # Open twitter stream after titles has been scored, to gather new data
-        # TwitterAPI().open_twitter_stream(TIME_LIMIT_TWITTER_STREAM)
+
+        try:
+            if os.environ["TWITTERSTREAM"] == "1":
+                TwitterAPI().open_twitter_stream(TIME_LIMIT_TWITTER_STREAM)
+        except KeyError:
+            pass
 
     # Used to stop the thread if background is false
     # or for any other reason it needs to be stopped.

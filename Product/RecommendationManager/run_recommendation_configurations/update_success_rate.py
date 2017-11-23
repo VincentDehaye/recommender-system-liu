@@ -27,7 +27,7 @@ class UpdateSuccessRate:
         self.scheduled = BackgroundScheduler()
         if not daemon:
             self.scheduled._daemon = False
-        self.scheduled.add_job(self._run, 'interval', days=1, id="3")
+        self.scheduled.add_job(self._run, 'interval', seconds=10, id="3")
         self.scheduled.start()
         self.scheduled.modify_job(job_id="3", next_run_time=datetime.now())
 
@@ -38,6 +38,7 @@ class UpdateSuccessRate:
         Last update: 2017-11-23
         Purpose: The actual process to be ran. Adds the success rate to the database.
         """
+        print("Updating success rate")
         retriever = RetrieveRecommendation()
         InsertSuccessRate().insert_success_rate(retriever.retrieve_watched_ratio(),
                                                 retriever.retrieve_average_user_experience())

@@ -295,12 +295,16 @@ class SimpleSuccessView(APIView):
         return Response(simple_success)
 class AverageSuccessView(APIView):
     def get(self, request):
-        average_success = {"averageSuccess":[
-            {"time":"Mocked", "rate": 15},
-            {"time":"Tuesday", "rate": 25},
-            {"time":"Wednesday", "rate": 45},
-            {"time":"Thursday", "rate": 12},
-            {"time":"Friday", "rate": 5},
-            {"time":"Saturday", "rate": 90},
-        ]}
+        try:
+            average_success = {"averageSuccess": GetSuccessRate.get_average_user_success_rate()}
+        except:
+            traceback.print_exc()
+            average_success = {"averageSuccess":[
+                {"time":"Mocked", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Tuesday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Wednesday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Thursday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Friday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Saturday", "noTimesWatched":10, "noTimesNotWatched":20},
+            ]}
         return Response(average_success)

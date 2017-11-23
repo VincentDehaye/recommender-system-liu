@@ -26,13 +26,10 @@ class RecreateModel:
         terminated properly. Start the scheduler
         :param daemon : Sets daemon, (Optional) Default is False
         """
-        # Get the current state of the content
-        self.number_of_users = len(RetrieveUser().retrieve_all_users())
-        self.number_of_movies = len(RetrieveMovie().retrieve_movie())
-        self.number_of_ratings = len(RetrieveRating().retrieve_ratings())
-        print("Number of users = ", self.number_of_users)
-        print("Number of movies = ", self.number_of_movies)
-        print("Number of rating = ", self.number_of_ratings)
+        # Set the variables to start state
+        self.number_of_users = 0
+        self.number_of_movies = 0
+        self.number_of_ratings = 0
 
         # Set up and start the scheduler
         self.scheduled = BackgroundScheduler()

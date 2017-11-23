@@ -99,14 +99,20 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
         this.movies1 = data.averageSuccess;
         this.dataHandlerService.getSimpleSuccessrate().subscribe((data1) => {
           this.movies = data1.simpleSuccess;
-
+          const timeName = [];
+          const simpleName = [];
+          const averageName = [];
+        for (let i = 0; i < this.movies.length; ++i) {
+          timeName.push(this.movies[i]['time']);
+          simpleName.push(100 * ( this.movies[i]['noTimesWatched'] / ( this.movies[i]['noTimesWatched'] + this.movies[i]
+            ['noTimesNotWatched'] ) ) );
+          averageName.push(this.movies1[i]['rate']);
+        }
           this.data = {
-            labels: [this.movies[0]['time'], this.movies[1]['time'], this.movies[2]['time'],
-              this.movies[3]['time'], this.movies[4]['time'], this.movies[5]['time']],
+            labels: timeName,
             datasets: [{
               label: 'Success over time simple',
-              data: [this.movies[0]['rate'], this.movies[1]['rate'], this.movies[2]['rate'],
-                this.movies[3]['rate'], this.movies[4]['rate'], this.movies[5]['rate']],
+              data: simpleName,
               borderColor: '#FF3DD6',
               backgroundColor: '#ffffff',
               fill: false,
@@ -114,8 +120,7 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
               pointHoverRadius: 10,
             }, {
               label: 'Success over time average',
-              data: [this.movies1[0]['rate'], this.movies1[1]['rate'], this.movies1[2]['rate'],
-                this.movies1[3]['rate'], this.movies1[4]['rate'], this.movies1[5]['rate']],
+              data: averageName,
               borderColor: '#31ff1e',
               backgroundColor: '#ffffff',
               fill: false,

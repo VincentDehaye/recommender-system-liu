@@ -1,4 +1,2 @@
-# Treat all text files without a CR (as we have Docker)
+# Treat all sh text (if on a windows) files a CR (as we have Docker)
 *.sh text eol=lf
-
-#Updated to push

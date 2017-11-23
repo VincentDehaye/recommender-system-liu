@@ -15,7 +15,7 @@
             <ngx-modals [modalHeader]=modalHeader2 [modalContent]=modalContent2></ngx-modals>
              Top recommended content
            </h2></nb-card-header>
-          <nb-card-header *ngFor="let movie of data?.recommendation_list"> {{movie.title}} </nb-card-header>
+          <nb-card-header *ngFor="let movie of data?.recommendation_list"> {{movie.title}} {{movie.successRate}}% </nb-card-header>
         </nb-card>
   </div>
   <div class="col-lg-8">

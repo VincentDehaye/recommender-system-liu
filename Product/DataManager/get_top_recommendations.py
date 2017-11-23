@@ -50,8 +50,8 @@ def get_top_recommendations(age_range, gender_list):
         tmp_dict = {}
         tmp_dict["id"] = k
         tmp_dict["title"] = gets_from_database.get_movie_title(k)
-        tmp_dict["count"] = v
-        tmp_dict["ratio"] = (watched_list[k]/v)*100
+        tmp_dict["timesRecommended"] = v
+        tmp_dict["successRate"] = (watched_list[k]/v)*100
         output_list.append(tmp_dict)
 
     return output_list

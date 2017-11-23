@@ -40,8 +40,8 @@ class RecommendationsView(APIView):
         recommendation doesn't work.
         """
         try:
-            print("=======================")
-            age_range = [request.query_params.get("age_lower", MINIMUM_AGE), request.query_params.get("age_upper", MAXIMUM_AGE)]
+            age_range = [request.query_params.get("age_lower", MINIMUM_AGE), request
+                         .query_params.get("age_upper", MAXIMUM_AGE)]
             gender_list = []
             if request.query_params.get("male", "0") == "1":
                 gender_list.append("Male")
@@ -52,11 +52,7 @@ class RecommendationsView(APIView):
             if not gender_list:
                 gender_list = ["Male", "Female", "Unknown"]
 
-            print("=============== Before ================")
-            print("age_range: ", age_range)
-            print("gender_list", gender_list)
             recommendation_list = get_top_recommendations(age_range, gender_list)
-            print("The list: ", recommendation_list)
             if not recommendation_list:
                 recs = {"recommendation_list": [
                     {"title": "Mocked", "id": 1, "timesRecommended": 2, "successRate": 50},
@@ -66,13 +62,14 @@ class RecommendationsView(APIView):
                     {"title": "Cowman", "id": 5, "timesRecommended": 2, "successRate": 50},
                     {"title": "Snakeman", "id": 6, "timesRecommended": 2, "successRate": 50},
                     {"title": "Butterflyman", "id": 7, "timesRecommended": 2, "successRate": 50},
-                    {"title": "The extremely ordinary man", "id": 8, "timesRecommended": 2, "successRate": 50},
-                    {"title": "Wonderman the movie", "id": 9, "timesRecommended": 2, "successRate": 50},
+                    {"title": "The extremely ordinary man", "id": 8, "timesRecommended": 2,
+                     "successRate": 50},
+                    {"title": "Wonderman the movie", "id": 9, "timesRecommended": 2,
+                     "successRate": 50},
                     {"title": "Manbat", "id": 10, "timesRecommended": 2, "successRate": 50},
                 ]}
             else:
-                print("This happens")
-                recs = {"data": recommendation_list}
+                recs = {"recommendation_list": recommendation_list}
 
         except ValueError:
             traceback.print_exc()

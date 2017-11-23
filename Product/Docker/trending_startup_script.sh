@@ -8,4 +8,5 @@ do
 	res=$?
 done
 
+python Product/Database/DBConn.py
 python Product/TrendManager/RunTrend.py

@@ -176,14 +176,17 @@ class SuccessRate(Base):
     """
     __tablename__ = 'successrate'
     id = Column(Integer, autoincrement=True, primary_key=True)
-    average_total = Column(Float)
-    average_user_experience = Column(Float)
+    watched = Column(Integer)
+    not_watched = Column(Integer)
+    average_user_success_rate = Column(Float)
     timestamp = Column(Date, default=func.now())
 
     def __repr__(self):
-        return "<Recommendation(id id='%s', average_total ='%s', average_user_experience='%s'," \
-               "timestamp='%s')>" % (self.id, self.average_total,
-                                     self.average_user_experience, self.timestamp)
+        return "<Recommendation(id id='%s', watched ='%s', not_watched ='%s'," \
+               "average_user_success_rate='%s', timestamp='%s')>" % (self.id, self.watched,
+                                                                     self.not_watched,
+                                                                     self.average_user_success_rate,
+                                                                     self.timestamp)
 
 
 # DO NOT CHANGE BELOW

@@ -12,10 +12,13 @@ from Product.RecommendationManager.Recommendation.recommendation import Recommen
 class CreateRecommendationsForAllUsers:
 
     @staticmethod
-    def execute():
+    def execute(number_of_users=None):
         USERS = RetrieveUser().retrieve_all_users()
-
+        if not number_of_users:
+            number_of_users=len(USERS)
         # populates the database with all the recommendations for all users
-        for user in USERS:
+        for user,user_number in zip(USERS,range(1,number_of_users)):
             # the Recommendation class will insert it to the database when it is generated
             Recommendation(user.id, 10).generate_recommendation_list()
+
+CreateRecommendationsForAllUsers().execute(10)

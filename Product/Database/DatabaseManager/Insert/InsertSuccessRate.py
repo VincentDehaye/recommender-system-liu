@@ -43,9 +43,14 @@ class InsertSuccessRate(Insert):
                     num_watched += 1
             if num_recommended != 0:
                 ratio_list.append(num_watched/num_recommended)
-        average_user_success_rate = np.mean(ratio_list).item()
+
+        if watched:
+            average_user_success_rate = np.mean(ratio_list).item()
+        else:
+            average_user_success_rate = 0.0
         date_and_time=datetime.now()
         date = date_and_time.date()
+
         success_rate = SuccessRate(watched=watched,
                                    not_watched=not_watched,
                                    average_user_success_rate=average_user_success_rate,
@@ -53,3 +58,5 @@ class InsertSuccessRate(Insert):
         self.session.add(success_rate)
         self.session.commit()
         self.session.close()
+
+InsertSuccessRate().insert_success_rate()

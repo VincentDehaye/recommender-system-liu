@@ -97,8 +97,8 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
     if (this.factor === 1) {
       this.dataHandlerService.getAverageSuccessrate().subscribe((data) => {
         this.movies1 = data.averageSuccess;
-        this.dataHandlerService.getSimpleSuccessrate().subscribe((data) => {
-          this.movies = data.simpleSuccess;
+        this.dataHandlerService.getSimpleSuccessrate().subscribe((data1) => {
+          this.movies = data1.simpleSuccess;
 
           this.data = {
             labels: [this.movies[0]['time'], this.movies[1]['time'], this.movies[2]['time'],

@@ -1,3 +1,6 @@
+"""
+Class for retrieving success rate from database
+"""
 from Product.Database.DatabaseManager.Retrieve.Retrieve import Retrieve
 from Product.Database.DBConn import SuccessRate
 

@@ -1,3 +1,6 @@
+"""
+Class for retrieving recommendations from database
+"""
 from Product.Database.DatabaseManager.Retrieve.Retrieve import Retrieve
 from Product.Database.DBConn import Recommendation
 from Product.Database.DBConn import User
@@ -17,8 +20,8 @@ class RetrieveRecommendation(Retrieve):
         Author: John Andree Lidquist, Alexander Dahl
         Date: 2017-11-20
         Last update: 2017-11-20
-        Purpose: Retrieve data from the recommendation table and count how many of the recommended movies have been
-        watched divided by the number of movies not watched
+        Purpose: Retrieve data from the recommendation table and count how many of the recommended
+        movies have been watched divided by the number of movies not watched
         :return Number of watched movies divided by the number of movies not watched
         """
         number_watched = self.session.query(Recommendation.watched).filter_by(watched=1).count()
@@ -33,9 +36,11 @@ class RetrieveRecommendation(Retrieve):
         Author: John Andree Lidquist, Alexander Dahl
         Date: 2017-11-20
         Last update: 2017-11-20
-        Purpose: Retrieve data from the recommendation table and count how many of the recommended movies have been
-        watched and how many that have not been watched for each user and then the average is returned
-        :return The average of the ratios of movies watched divided by movies not watched by each user
+        Purpose: Retrieve data from the recommendation table and count how many of the recommended
+        movies have been watched and how many that have not been watched for each user and then the
+        average is returned
+        :return The average of the ratios of movies watched divided by movies not watched
+        by each user
         """
         users = self.session.query(User).all()
 

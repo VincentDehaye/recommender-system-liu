@@ -23,7 +23,7 @@ class GetSuccessRate:
         :return List of dictionaries with keys watched, not_watched and timestamp
         """
         success_rate_dict = []
-        all_rates = RetrieveSuccessRate().get_simple_success_rate()
+        all_rates = RetrieveSuccessRate().get_success_rates()
         for rate in all_rates:
             success_rate_dict.append({'watched': rate.watched, 'not_watched': rate.not_watched,
                                       'timestamp': rate.timestamp})
@@ -41,7 +41,7 @@ class GetSuccessRate:
         """
 
         result = []
-        all_rates = RetrieveSuccessRate().get_average_user_success_rate()
+        all_rates = RetrieveSuccessRate().get_success_rates()
         for rate in all_rates:
             result.append({'average_user_success_rate': rate.average_user_success_rate,
                            'timestamp': rate.timestamp})

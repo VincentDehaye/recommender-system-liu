@@ -1,6 +1,5 @@
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
-from Product.Database.DatabaseManager.Retrieve.RetrieveSuccessRate import RetrieveSuccessRate
 from Product.Database.DatabaseManager.Insert.InsertSuccessRate import InsertSuccessRate
 
 

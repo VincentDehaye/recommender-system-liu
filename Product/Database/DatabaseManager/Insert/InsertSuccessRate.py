@@ -12,23 +12,19 @@ class InsertSuccessRate(Insert):
     """
     Author: Alexander Dahl, John Andree Lidquist
     Date: 2017-11-22
-    Last update: 2017-11-22
+    Last update: 2017-11-23
     Purpose: Make Insertions of success rate into the database
     """
     def insert_success_rate(self):
         """
         Author: Alexander Dahl, John Andree Lidquist
         Date: 2017-11-22
-        Last update: 2017-11-22
-        Purpose: Make Insertions of success rate into the database
-        :param average_total: The number of watched movies divided of the number of recommended
-         movies for all users
-        :type average_total: float
-        :param average_user_experience: The average number of watched movies divided by the
-        number of recommended movies for each users
-        :type average_user_experience: float
+        Last update: 2017-11-23
+        Purpose: Make Insertions of success rate into the database. It calculates the watched,
+        not_watched and average_user_experience by querying the database table Recommendation
+        and User
         """
-        # TODO change docstring to match params
+
         # Calculate watched and not watched up until now
         watched = self.session.query(Recommendation.watched).filter_by(watched=1).count()
         not_watched = self.session.query(Recommendation).count() - watched

@@ -1,25 +1,40 @@
-from Product.Database.DBConn import User
-from Product.Database.DBConn import create_session
+"""
+Class to fill the database with users
+"""
 import csv
 import os
 import sys
-'''
-Author: Eric Petersson, Vincent Dehaye
-Date: 21/11/2017
-Last update: 21/11/2017
-Purpose: Adds 700 users with mock metadata to the database.
-'''
+from Product.Database.DBConn import User
+from Product.Database.DBConn import create_session
 
 
 class FillUsers:
+    """
+    Author: Eric Petersson, Vincent Dehaye
+    Date: 21-11-2017
+    Last update: 21-11-2017
+    Purpose: Adds 700 users with mock metadata to the database.
+    """
     def __init__(self):
+        """
+        Author: Eric Petersson, Vincent Dehaye
+        Date: 21-11-2017
+        Last update: 21-11-2017
+        Purpose: Initiates the class and calls the fill method
+        """
         self.session = create_session()
         self.fill()
 
     def fill(self):
-        filepath = (os.path.dirname(sys.modules['__main__'].__file__))
-        filepath += '/MockData/users_with_mock_metadata.csv'
-        with open(filepath) as csvfile_users:
+        """
+        Author: Eric Petersson, Vincent Dehaye
+        Date: 21-11-2017
+        Last update: 21-11-2017
+        Purpose: Adds users by reading csv file with users
+        """
+        file_path = (os.path.dirname(sys.modules['__main__'].__file__))
+        file_path += '/MockData/users_with_mock_metadata.csv'
+        with open(file_path) as csvfile_users:
             reader = csv.reader(csvfile_users)
 
             print("Filling database with mock metadata.")

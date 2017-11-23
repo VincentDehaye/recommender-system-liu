@@ -40,44 +40,44 @@ class RecommendationsView(APIView):
         recommendation doesn't work.
         """
         try:
-            age_range = [request.query_params.get("age_lower", MINIMUM_AGE), request.query_params.get("age_upper", MAXIMUM_AGE)]
-            gender_list = []
-            if request.query_params.get("male", "0") == "1":
-                gender_list.append("Male")
-            if request.query_params.get("female", "0") == "1":
-                gender_list.append("Female")
-            if request.query_params.get("other", "0") == "1":
-                gender_list.append("Unknown")
+            # age_range = [request.query_params.get("age_lower", MINIMUM_AGE), request.query_params.get("age_upper", MAXIMUM_AGE)]
+            # gender_list = []
+            # if request.query_params.get("male", "0") == "1":
+            #     gender_list.append("Male")
+            # if request.query_params.get("female", "0") == "1":
+            #     gender_list.append("Female")
+            # if request.query_params.get("other", "0") == "1":
+            #     gender_list.append("Unknown")
 
             recommendation_list = get_top_recommendations(age_range, gender_list)
             recs = {"data": recommendation_list}
         except ValueError:
             recs = {"recommendation_list": [
-                {"title": "Batman", "id": 1, "score": 10, "timesRecommended": 2},
-                {"title": "Horseman", "id": 2, "score": 8, "timesRecommended": 2},
-                {"title": "Birdperson", "id": 3, "score": 8, "timesRecommended": 2},
-                {"title": "Manman", "id": 4, "score": 8, "timesRecommended": 2},
-                {"title": "Cowman", "id": 5, "score": 8, "timesRecommended": 2},
-                {"title": "Snakeman", "id": 6, "score": 8, "timesRecommended": 2},
-                {"title": "Butterflyman", "id": 7, "score": 8, "timesRecommended": 2},
-                {"title": "The extremely ordinary man", "id": 8, "score": 8, "timesRecommended": 2},
-                {"title": "Wonderman the movie", "id": 9, "score": 8, "timesRecommended": 2},
-                {"title": "Manbat", "id": 10, "score": 8, "timesRecommended": 2},
+                {"title": "Batman", "id": 1, "timesRecommended": 2, "successRate": 50},
+                {"title": "Horseman", "id": 2, "timesRecommended": 2, "successRate": 50},
+                {"title": "Birdperson", "id": 3, "timesRecommended": 2, "successRate": 50},
+                {"title": "Manman", "id": 4, "timesRecommended": 2, "successRate": 50},
+                {"title": "Cowman", "id": 5, "timesRecommended": 2, "successRate": 50},
+                {"title": "Snakeman", "id": 6, "timesRecommended": 2, "successRate": 50},
+                {"title": "Butterflyman", "id": 7, "timesRecommended": 2, "successRate": 50},
+                {"title": "The extremely ordinary man", "id": 8, "timesRecommended": 2, "successRate": 50},
+                {"title": "Wonderman the movie", "id": 9, "timesRecommended": 2, "successRate": 50},
+                {"title": "Manbat", "id": 10, "timesRecommended": 2, "successRate": 50},
             ]}
         except:
             traceback.print_exc()
-            recs = {"recommendation_list":[
-                {"title":"Batman", "id":1, "score":10, "timesRecommended":2},
-                {"title":"Horseman", "id":2, "score":8, "timesRecommended":2},
-                {"title":"Birdperson", "id":3, "score":8, "timesRecommended":2},
-                {"title":"Manman", "id":4, "score":8, "timesRecommended":2},
-                {"title":"Cowman", "id":5, "score":8, "timesRecommended":2},
-                {"title":"Snakeman", "id":6, "score":8, "timesRecommended":2},
-                {"title":"Butterflyman", "id":7, "score":8, "timesRecommended":2},
-                {"title":"The extremely ordinary man", "id":8, "score":8, "timesRecommended":2},
-                {"title":"Wonderman the movie", "id":9, "score":8, "timesRecommended":2},
-                {"title":"Manbat", "id":10, "score":8, "timesRecommended":2},
-                ]}
+            recs = {"recommendation_list": [
+                {"title": "Batman", "id": 1, "timesRecommended": 2, "successRate": 50},
+                {"title": "Horseman", "id": 2, "timesRecommended": 2, "successRate": 50},
+                {"title": "Birdperson", "id": 3, "timesRecommended": 2, "successRate": 50},
+                {"title": "Manman", "id": 4, "timesRecommended": 2, "successRate": 50},
+                {"title": "Cowman", "id": 5, "timesRecommended": 2, "successRate": 50},
+                {"title": "Snakeman", "id": 6, "timesRecommended": 2, "successRate": 50},
+                {"title": "Butterflyman", "id": 7, "timesRecommended": 2, "successRate": 50},
+                {"title": "The extremely ordinary man", "id": 8, "timesRecommended": 2, "successRate": 50},
+                {"title": "Wonderman the movie", "id": 9, "timesRecommended": 2, "successRate": 50},
+                {"title": "Manbat", "id": 10, "timesRecommended": 2, "successRate": 50},
+            ]}
         return Response(recs)
 
 class UserRecommendationsView(APIView):
@@ -253,12 +253,12 @@ class SuccessRateView(APIView):
 class SimpleSuccessView(APIView):
     def get(self, request):
         simple_success = {"simpleSuccess":[
-            {"time":"Monday", "rate":10},
-            {"time":"Tuesday", "rate":20},
-            {"time":"Wednesday", "rate":30},
-            {"time":"Thursday", "rate":40},
-            {"time":"Friday", "rate":50},
-            {"time":"Saturday", "rate":60},
+            {"time":"Monday", "noTimesWatched":10, "noTimesNotWatched":20},
+            {"time":"Tuesday", "noTimesWatched":10, "noTimesNotWatched":20},
+            {"time":"Wednesday", "noTimesWatched":10, "noTimesNotWatched":20},
+            {"time":"Thursday", "noTimesWatched":10, "noTimesNotWatched":20},
+            {"time":"Friday", "noTimesWatched":10, "noTimesNotWatched":20},
+            {"time":"Saturday", "noTimesWatched":10, "noTimesNotWatched":20},
         ]}
         return Response(simple_success)
 class AverageSuccessView(APIView):

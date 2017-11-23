@@ -80,6 +80,7 @@ def get_train_matrix():
 
     :return: training matrix in the form of a numpy matrix
     """
+    #only_good_scores = True
 
     user_list = []
     movie_list = []
@@ -96,11 +97,19 @@ def get_train_matrix():
             rating_list.append(rating.rating)
         counter += 1
 
+
+    #if only_good_scores:
+    #    for i in range(len(rating_list)):
+    #        if rating_list[i] <= 2.5:
+    #            rating_list[i] = 0
+
+
     # Added +1 because else the matrix will be to small
     # TODO Change dimensions to greater than 1 if problem with dimensions
     train_matrix = coo_matrix((rating_list, (user_list, movie_list)),
                               shape=(RetrieveUser().retrieve_largest_user_id()+1,
                                      RetrieveMovie().retrieve_largest_movie_id()+1))
+    #print(train_matrix)
     return train_matrix
 
 

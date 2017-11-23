@@ -75,19 +75,14 @@ class TrendingToDB(object):
         """
 
         # Following steps are done:
-        # 1. Check if there is a twitter data file to score twitter from
-        # 2. If not, open stream for x amount of time before scoring begins
-        # 3. Query movies from database
-        # 4. Get new score for that movie
-        # 5. Save the highest scores from the different trending sources
-        # 6. Iterate though list of scored movies and normalize,
+        # 1. Query movies from database
+        # 2. Get new score for that movie
+        # 3. Save the highest scores from the different trending sources
+        # 4. Iterate though list of scored movies and normalize,
         # weight and add the scores to a total score
         # 5. If current total score is different from the newly
         # fetched score - Update score in database, else go to step 1
-        # 6. Go to step 3
-
-        # if TwitterAPI().get_newest_file() is None:  # Check is file exist for scoring twitter
-        #     TwitterAPI.open_twitter_stream(TIME_LIMIT_TWITTER_STREAM_NO_FILE)
+        # 6. Go to step 1
 
         trend_controller = TrendingController()
         res_movie = self.retrieve_movie.retrieve_movie()
@@ -135,7 +130,9 @@ class TrendingToDB(object):
                 # could be moved outside to lower total run time
 
         # Open twitter stream after titles has been scored, to gather new data
-
+        # The os.environ checks if the run config has a variable named "TWITTERSTREAM"
+        # and only starts stream if it is set to 1. This is to make sure that the stream
+        # isn't opened during testing.
         try:
             if os.environ["TWITTERSTREAM"] == "1":
                 TwitterAPI().open_twitter_stream(TIME_LIMIT_TWITTER_STREAM)

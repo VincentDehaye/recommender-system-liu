@@ -1,7 +1,5 @@
-import time
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
-from Product.Database.DatabaseManager.Retrieve.RetrieveRecommendation import RetrieveRecommendation
 from Product.Database.DatabaseManager.Insert.InsertSuccessRate import InsertSuccessRate
 
 
@@ -39,9 +37,7 @@ class UpdateSuccessRate:
         Purpose: The actual process to be ran. Adds the success rate to the database.
         """
         print("Updating success rate")
-        retriever = RetrieveRecommendation()
-        InsertSuccessRate().insert_success_rate(retriever.retrieve_watched_ratio(),
-                                                retriever.retrieve_average_user_experience())
+        InsertSuccessRate().insert_success_rate()
 
     def terminate(self):
         """

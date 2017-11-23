@@ -53,3 +53,4 @@ services:
     environment:
      - PRODUCTION_DATABASE=1
      - DATA_DATABASE_HOST=data_db
+     - TWITTERSTREAM=${TWITTERSTREAM}

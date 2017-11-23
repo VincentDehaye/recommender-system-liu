@@ -1,12 +1,9 @@
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
-from Product.RecommendationManager.model.create_new_model import CreateNewModel
-from Product.Database.DatabaseManager.Retrieve.RetrieveUser import RetrieveUser
-from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
-from Product.Database.DatabaseManager.Retrieve.RetrieveRating import RetrieveRating
+from Product.Database.DatabaseManager.Retrieve.RetrieveRecommendation import RetrieveRecommendation
+from Product.Database.DatabaseManager.Insert.InsertSuccessRate import InsertSuccessRate
 
 
-# TODO: Remove test in the bottom
 class UpdateSuccessRate:
     """
     Author: Marten Bolin
@@ -35,12 +32,15 @@ class UpdateSuccessRate:
 
     def _run(self):
         """
-        Author: Marten Bolin
+        Author: Marten Bolin, John Andree Lidquist
         Date:2017-11-22
-        Last update:
-        Purpose: The acutal process that will be ran
+        Last update: 2017-11-23
+        Purpose: The actual process to be ran. Adds the success rate to the database.
         """
-        # TODO: This is the actions that will be done in each interval
+
+        retriever = RetrieveRecommendation()
+        InsertSuccessRate().insert_success_rate(retriever.retrieve_watched_ratio(),
+                                                retriever.retrieve_average_user_experience())
 
     def terminate(self):
         """

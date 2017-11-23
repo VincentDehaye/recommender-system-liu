@@ -7,9 +7,10 @@ This module contains all the view classes that handle API requests.
 """
 # from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 # from rest_framework.permissions import IsAuthenticated
+import traceback
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import traceback
 
 from main_app.serializers import RatingSerializer
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation
@@ -17,16 +18,18 @@ from Product.DataManager.get_top_recommendations import get_top_recommendations
 from Product.DataManager.TopTrending.RetrieveTopTrendingTotal import RetrieveTopTrendingTotal
 from Product.DataManager.TopTrending.RetrieveTopTrendingTwitter import RetrieveTopTrendingTwitter
 from Product.DataManager.TopTrending.RetrieveTopTrendingYoutube import RetrieveTopTrendingYoutube
+from Product.DataManager.Recommendation.GetSuccessRate import GetSuccessRate
 
 MINIMUM_AGE = 0
 MAXIMUM_AGE = 200
+NR_OF_MOVIES_RECOMMENDED = 10
 
 class RecommendationsView(APIView):
     """
     Author: Bamse
     Date: 2017-10-04
-    Last update: 2017-11-22 by Bamse
-    This class is used to return the top 10 recommendations from Recommendations team
+    Last update: 2017-11-23 by Bamse
+    This class is used to return the top recommendations from Recommendations module
     """
     # authentication_classes = (SessionAuthentication,)
     # permission_classes = (IsAuthenticated,)
@@ -35,40 +38,49 @@ class RecommendationsView(APIView):
         """
         Author: Bamse
         Date: 2017-11-14
-        Last update: 2017-11-22 by Bamse
+        Last update: 2017-11-23 by Bamse
         Purpose: Handles GET requests to recommendations API. Returns mock data if fetching from
         recommendation doesn't work.
         """
         try:
-            # age_range = [request.query_params.get("age_lower", MINIMUM_AGE), request.query_params.get("age_upper", MAXIMUM_AGE)]
-            # gender_list = []
-            # if request.query_params.get("male", "0") == "1":
-            #     gender_list.append("Male")
-            # if request.query_params.get("female", "0") == "1":
-            #     gender_list.append("Female")
-            # if request.query_params.get("other", "0") == "1":
-            #     gender_list.append("Unknown")
+            age_range = [request.query_params.get("age_lower", MINIMUM_AGE), request
+                         .query_params.get("age_upper", MAXIMUM_AGE)]
+            gender_list = []
+            if request.query_params.get("male", "0") == "1":
+                gender_list.append("Male")
+            if request.query_params.get("female", "0") == "1":
+                gender_list.append("Female")
+            if request.query_params.get("other", "0") == "1":
+                gender_list.append("Unknown")
+            if not gender_list:
+                gender_list = ["Male", "Female", "Unknown"]
 
-            recommendation_list = get_top_recommendations(age_range, gender_list)
+            nr_of_movies = int(request.query_params.get("number_of_movies",
+                                                        NR_OF_MOVIES_RECOMMENDED))
+
+            recommendation_list = get_top_recommendations(age_range, gender_list, nr_of_movies)
             if not recommendation_list:
                 recs = {"recommendation_list": [
-                    {"title": "Batman", "id": 1, "timesRecommended": 2, "successRate": 50},
+                    {"title": "Mocked", "id": 1, "timesRecommended": 2, "successRate": 50},
                     {"title": "Horseman", "id": 2, "timesRecommended": 2, "successRate": 50},
                     {"title": "Birdperson", "id": 3, "timesRecommended": 2, "successRate": 50},
                     {"title": "Manman", "id": 4, "timesRecommended": 2, "successRate": 50},
                     {"title": "Cowman", "id": 5, "timesRecommended": 2, "successRate": 50},
                     {"title": "Snakeman", "id": 6, "timesRecommended": 2, "successRate": 50},
                     {"title": "Butterflyman", "id": 7, "timesRecommended": 2, "successRate": 50},
-                    {"title": "The extremely ordinary man", "id": 8, "timesRecommended": 2, "successRate": 50},
-                    {"title": "Wonderman the movie", "id": 9, "timesRecommended": 2, "successRate": 50},
+                    {"title": "The extremely ordinary man", "id": 8, "timesRecommended": 2,
+                     "successRate": 50},
+                    {"title": "Wonderman the movie", "id": 9, "timesRecommended": 2,
+                     "successRate": 50},
                     {"title": "Manbat", "id": 10, "timesRecommended": 2, "successRate": 50},
                 ]}
             else:
-                recs = {"data": recommendation_list}
+                recs = {"recommendation_list": recommendation_list}
 
         except ValueError:
+            traceback.print_exc()
             recs = {"recommendation_list": [
-                {"title": "Batman", "id": 1, "timesRecommended": 2, "successRate": 50},
+                {"title": "Mocked", "id": 1, "timesRecommended": 2, "successRate": 50},
                 {"title": "Horseman", "id": 2, "timesRecommended": 2, "successRate": 50},
                 {"title": "Birdperson", "id": 3, "timesRecommended": 2, "successRate": 50},
                 {"title": "Manman", "id": 4, "timesRecommended": 2, "successRate": 50},
@@ -82,7 +94,7 @@ class RecommendationsView(APIView):
         except:
             traceback.print_exc()
             recs = {"recommendation_list": [
-                {"title": "Batman", "id": 1, "timesRecommended": 2, "successRate": 50},
+                {"title": "Mocked", "id": 1, "timesRecommended": 2, "successRate": 50},
                 {"title": "Horseman", "id": 2, "timesRecommended": 2, "successRate": 50},
                 {"title": "Birdperson", "id": 3, "timesRecommended": 2, "successRate": 50},
                 {"title": "Manman", "id": 4, "timesRecommended": 2, "successRate": 50},
@@ -116,9 +128,10 @@ class UserRecommendationsView(APIView):
         try:
             recs = Recommendation(user_id, 10).generate_recommendation_list().__dict__
         except ValueError:
+            traceback.print_exc()
             recs = {"recommendation_list":[
-                {"title":"Batman", "id":1, "score":10},
-                {"title":"Horseman", "id":2, "score":10},
+                {"title":"Mocked", "id":1, "score":10},
+                {"title":"Mocked", "id":2, "score":10},
                 {"title":"Birdperson", "id":3, "score":10},
                 {"title":"Manman", "id":4, "score":10},
                 {"title":"Cowman", "id":5, "score":10},
@@ -131,8 +144,8 @@ class UserRecommendationsView(APIView):
         except:
             traceback.print_exc()
             recs = {"recommendation_list":[
-                {"title":"Batman", "id":1, "score":10},
-                {"title":"Horseman", "id":2, "score":10},
+                {"title":"Mocked", "id":1, "score":10},
+                {"title":"Mocked", "id":2, "score":10},
                 {"title":"Birdperson", "id":3, "score":10},
                 {"title":"Manman", "id":4, "score":10},
                 {"title":"Cowman", "id":5, "score":10},
@@ -158,8 +171,8 @@ class TrendingView(APIView):
             recs = {"trendingMovies": trender.get_top_trending(10).list()}
             if len(recs["trendingMovies"]) == 0:
                 recs = {"trendingMovies":[
-                    {"title":"Batmantredning", "score":1},
-                    {"title":"Horseman", "score":2},
+                    {"title":"Mocked", "score":1},
+                    {"title":"Mocked", "score":2},
                     {"title":"Birdperson", "score":3},
                     {"title":"Manman", "score":4},
                     {"title":"Cowman", "score":5},
@@ -172,8 +185,8 @@ class TrendingView(APIView):
 
         except:
             recs = {"trendingMovies":[
-                {"title":"Batmantredning", "score":1},
-                {"title":"Horseman", "score":2},
+                {"title":"Mocked", "score":1},
+                {"title":"Mocked", "score":2},
                 {"title":"Birdperson", "score":3},
                 {"title":"Manman", "score":4},
                 {"title":"Cowman", "score":5},
@@ -194,8 +207,8 @@ class YoutubeTrendingView(APIView):
             recs = {"youtubeMovies": trender.get_top_trending(10).list()}
         except:
             recs = {"youtubeMovies":[
-                {"title":"Batmanyoutubetrending", "score":1},
-                {"title":"Horseman", "score":2},
+                {"title":"Mocked", "score":1},
+                {"title":"Mocked", "score":2},
                 {"title":"Birdperson", "score":3},
                 {"title":"Manman", "score":4},
                 {"title":"Cowman", "score":5},
@@ -215,8 +228,8 @@ class TwitterTrendingView(APIView):
             recs = {"twitterMovies": trender.get_top_trending(10).list()}
         except:
             recs = {"twitterMovies":[
-                {"title":"Batmantwittertrending", "score":1},
-                {"title":"Horseman", "score":2},
+                {"title":"Mocked", "score":1},
+                {"title":"Mocked", "score":2},
                 {"title":"Birdperson", "score":3},
                 {"title":"Manman", "score":4},
                 {"title":"Cowman", "score":5},
@@ -253,8 +266,8 @@ class SuccessRateView(APIView):
         """
 
         success_rates = {"success_rates":[
-            {"title":"Batman", "id":1, "successRate":10},
-            {"title":"Horseman", "id":2, "successRate":9},
+            {"title":"Mocked", "id":1, "successRate":10},
+            {"title":"Mocked", "id":2, "successRate":9},
             {"title":"Birdperson", "id":3, "successRate":8},
             {"title":"Manman", "id":4, "successRate":8},
             {"title":"Cowman", "id":5, "successRate":7},
@@ -267,23 +280,31 @@ class SuccessRateView(APIView):
         return Response(success_rates)
 class SimpleSuccessView(APIView):
     def get(self, request):
-        simple_success = {"simpleSuccess":[
-            {"time":"Monday", "noTimesWatched":10, "noTimesNotWatched":20},
-            {"time":"Tuesday", "noTimesWatched":10, "noTimesNotWatched":20},
-            {"time":"Wednesday", "noTimesWatched":10, "noTimesNotWatched":20},
-            {"time":"Thursday", "noTimesWatched":10, "noTimesNotWatched":20},
-            {"time":"Friday", "noTimesWatched":10, "noTimesNotWatched":20},
-            {"time":"Saturday", "noTimesWatched":10, "noTimesNotWatched":20},
-        ]}
+        try:
+            simple_success = {"simpleSuccess": GetSuccessRate.get_simple_success_rate()}
+        except:
+            traceback.print_exc()
+            simple_success = {"simpleSuccess":[
+                {"time":"Mocked", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Tuesday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Wednesday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Thursday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Friday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Saturday", "noTimesWatched":10, "noTimesNotWatched":20},
+            ]}
         return Response(simple_success)
 class AverageSuccessView(APIView):
     def get(self, request):
-        average_success = {"averageSuccess":[
-            {"time":"Monday", "rate": 15},
-            {"time":"Tuesday", "rate": 25},
-            {"time":"Wednesday", "rate": 45},
-            {"time":"Thursday", "rate": 12},
-            {"time":"Friday", "rate": 5},
-            {"time":"Saturday", "rate": 90},
-        ]}
+        try:
+            average_success = {"averageSuccess": GetSuccessRate.get_average_user_success_rate()}
+        except:
+            traceback.print_exc()
+            average_success = {"averageSuccess":[
+                {"time":"Mocked", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Tuesday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Wednesday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Thursday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Friday", "noTimesWatched":10, "noTimesNotWatched":20},
+                {"time":"Saturday", "noTimesWatched":10, "noTimesNotWatched":20},
+            ]}
         return Response(average_success)

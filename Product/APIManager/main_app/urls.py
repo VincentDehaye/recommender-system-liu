@@ -19,6 +19,6 @@ urlpatterns = [
     url(r'^api/v1/twittertrending/$', views.TwitterTrendingView.as_view(), name='twittertrending'),
     url(r'^api/v1/ratemovie/$', views.RateMovieView.as_view(), name='ratemovie'),
     url(r'^api/v1/success-rate/$', views.SuccessRateView.as_view(), name='success-rate-view'),
-    url(r'^api/v1/simpleSuccess/$', views.SimpleSuccessView.as_view(), name='simpleSuccess'),
-    url(r'^api/v1/averageSuccess/$', views.AverageSuccessView.as_view(), name='averageSuccess'),
+    url(r'^api/v1/simple-success/$', views.SimpleSuccessView.as_view(), name='simpleSuccess'),
+    url(r'^api/v1/average-success/$', views.AverageSuccessView.as_view(), name='averageSuccess'),
 ]

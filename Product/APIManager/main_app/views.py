@@ -20,13 +20,14 @@ from Product.DataManager.TopTrending.RetrieveTopTrendingYoutube import RetrieveT
 
 MINIMUM_AGE = 0
 MAXIMUM_AGE = 200
+NR_OF_MOVIES_RECOMMENDED = 10
 
 class RecommendationsView(APIView):
     """
     Author: Bamse
     Date: 2017-10-04
-    Last update: 2017-11-22 by Bamse
-    This class is used to return the top 10 recommendations from Recommendations team
+    Last update: 2017-11-23 by Bamse
+    This class is used to return the top recommendations from Recommendations module
     """
     # authentication_classes = (SessionAuthentication,)
     # permission_classes = (IsAuthenticated,)
@@ -35,7 +36,7 @@ class RecommendationsView(APIView):
         """
         Author: Bamse
         Date: 2017-11-14
-        Last update: 2017-11-22 by Bamse
+        Last update: 2017-11-23 by Bamse
         Purpose: Handles GET requests to recommendations API. Returns mock data if fetching from
         recommendation doesn't work.
         """
@@ -52,7 +53,10 @@ class RecommendationsView(APIView):
             if not gender_list:
                 gender_list = ["Male", "Female", "Unknown"]
 
-            recommendation_list = get_top_recommendations(age_range, gender_list)
+            nr_of_movies = int(request.query_params.get("number_of_movies",
+                                                        NR_OF_MOVIES_RECOMMENDED))
+
+            recommendation_list = get_top_recommendations(age_range, gender_list, nr_of_movies)
             if not recommendation_list:
                 recs = {"recommendation_list": [
                     {"title": "Mocked", "id": 1, "timesRecommended": 2, "successRate": 50},

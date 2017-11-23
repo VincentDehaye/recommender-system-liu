@@ -7,9 +7,10 @@ This module contains all the view classes that handle API requests.
 """
 # from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 # from rest_framework.permissions import IsAuthenticated
+import traceback
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import traceback
 
 from main_app.serializers import RatingSerializer
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation

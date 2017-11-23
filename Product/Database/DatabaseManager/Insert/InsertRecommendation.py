@@ -1,3 +1,6 @@
+"""
+Class for inserting recommendations to database
+"""
 from Product.Database.DatabaseManager.Insert.Insert import Insert
 from Product.Database.DBConn import Recommendation
 
@@ -18,9 +21,10 @@ class InsertRecommendation(Insert):
         """
 
         for rec in movie_list:
-            if not self.session.query(Recommendation).filter_by(user_id=user_id, movie_id=rec['id']).scalar():
+            if not self.session.query(Recommendation).filter_by(user_id=user_id,
+                                                                movie_id=rec['id']).scalar():
                 new_recommendation = Recommendation(movie_id=rec['id'], user_id=user_id)
                 self.session.add(new_recommendation)
         self.session.commit()
-        print('commited recommendations for user %s' % user_id)
+        print('committed recommendations for user %s' % user_id)
         self.session.close()

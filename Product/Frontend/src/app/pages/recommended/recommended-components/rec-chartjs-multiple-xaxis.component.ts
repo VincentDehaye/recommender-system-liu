@@ -1,5 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
+import { DataHandlerService} from '../../../@core/data/data-handler.service';
 
 @Component({
   selector: 'ngx-chartjs-multiple-xaxis',
@@ -7,22 +8,24 @@ import { NbThemeService } from '@nebular/theme';
     <chart type="line" [data]="data" [options]="options"></chart>
   `,
 })
-export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy {
+export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnInit {
+  @Input() factor: number;
   data: {};
+  movies: string[];
   options: any;
   themeSubscription: any;
 
-  constructor(private theme: NbThemeService) {
+  constructor(private theme: NbThemeService, private dataHandlerService: DataHandlerService) {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
       const colors: any = config.variables;
       const chartjs: any = config.variables.chartjs;
 
       this.data = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        labels: [],
         datasets: [{
           label: 'Success over time',
-          data: [10, 15, 30, 50, 80, 90],
+          data: [],
           borderColor: colors.successLight,
           backgroundColor: colors.successLight,
           fill: false,
@@ -79,6 +82,52 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy {
         },
       };
     });
+  }
+
+  ngOnInit(){
+    this.getData();
+    this.extractData();
+  }
+  getData() {
+    if (this.factor === 1) {
+      this.dataHandlerService.getSimpleSuccessrate().subscribe((data) => {
+        this.movies = data.simpleSuccess;
+
+        this.data = {
+          labels: [this.movies[0]['time'], this.movies[1]['time'], this.movies[2]['time'], this.movies[3]['time'], this.movies[4]['time'], this.movies[5]['time']],
+          datasets: [{
+          label: 'Success over time',
+          data: [this.movies[0]['rate'], this.movies[1]['rate'], this.movies[2]['rate'], this.movies[3]['rate'], this.movies[4]['rate'], this.movies[5]['rate']],
+          borderColor: '#FF3DD6',
+          backgroundColor: '#ffffff',
+          fill: false,
+          pointRadius: 8,
+          pointHoverRadius: 10,
+        }],
+        }
+      });
+    }
+    if (this.factor === 2) {
+      this.dataHandlerService.getAverageSuccessrate().subscribe((data) => {
+        this.movies = data.averageSuccess;
+
+        this.data = {
+          labels: [this.movies[0]['time'], this.movies[1]['time'], this.movies[2]['time'], this.movies[3]['time'], this.movies[4]['time'], this.movies[5]['time']],
+          datasets: [{
+          label: 'Success over time',
+          data: [this.movies[0]['rate'], this.movies[1]['rate'], this.movies[2]['rate'], this.movies[3]['rate'], this.movies[4]['rate'], this.movies[5]['rate']],
+          borderColor: '#31ff1e',
+          backgroundColor: '#ffffff',
+          fill: false,
+          pointRadius: 8,
+          pointHoverRadius: 10,
+        }],
+        }
+      });
+    }
+  }
+  extractData() {
+    return null;
   }
 
   ngOnDestroy(): void {

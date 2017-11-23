@@ -52,31 +52,31 @@ class RecommendationsView(APIView):
             recommendation_list = get_top_recommendations(age_range, gender_list)
             recs = {"data": recommendation_list}
         except ValueError:
-            recs = {"recommendation_list":[
-                {"title":"Batman", "id":1, "score":10},
-                {"title":"Horseman", "id":2, "score":9},
-                {"title":"Birdperson", "id":3, "score":8},
-                {"title":"Manman", "id":4, "score":8},
-                {"title":"Cowman", "id":5, "score":7},
-                {"title":"Snakeman", "id":6, "score":5},
-                {"title":"Butterflyman", "id":7, "score":4},
-                {"title":"The extremely ordinary man", "id":8, "score":4},
-                {"title":"Wonderman the movie", "id":9, "score":3},
-                {"title":"Manbat", "id":10, "score":2},
-                ]}
+            recs = {"recommendation_list": [
+                {"title": "Batman", "id": 1, "score": 10, "timesRecommended": 2},
+                {"title": "Horseman", "id": 2, "score": 8, "timesRecommended": 2},
+                {"title": "Birdperson", "id": 3, "score": 8, "timesRecommended": 2},
+                {"title": "Manman", "id": 4, "score": 8, "timesRecommended": 2},
+                {"title": "Cowman", "id": 5, "score": 8, "timesRecommended": 2},
+                {"title": "Snakeman", "id": 6, "score": 8, "timesRecommended": 2},
+                {"title": "Butterflyman", "id": 7, "score": 8, "timesRecommended": 2},
+                {"title": "The extremely ordinary man", "id": 8, "score": 8, "timesRecommended": 2},
+                {"title": "Wonderman the movie", "id": 9, "score": 8, "timesRecommended": 2},
+                {"title": "Manbat", "id": 10, "score": 8, "timesRecommended": 2},
+            ]}
         except:
             traceback.print_exc()
             recs = {"recommendation_list":[
-                {"title":"Batman", "id":1, "score":10},
-                {"title":"Horseman", "id":2, "score":8},
-                {"title":"Birdperson", "id":3, "score":8},
-                {"title":"Manman", "id":4, "score":8},
-                {"title":"Cowman", "id":5, "score":8},
-                {"title":"Snakeman", "id":6, "score":8},
-                {"title":"Butterflyman", "id":7, "score":8},
-                {"title":"The extremely ordinary man", "id":8, "score":8},
-                {"title":"Wonderman the movie", "id":9, "score":8},
-                {"title":"Manbat", "id":10, "score":8},
+                {"title":"Batman", "id":1, "score":10, "timesRecommended":2},
+                {"title":"Horseman", "id":2, "score":8, "timesRecommended":2},
+                {"title":"Birdperson", "id":3, "score":8, "timesRecommended":2},
+                {"title":"Manman", "id":4, "score":8, "timesRecommended":2},
+                {"title":"Cowman", "id":5, "score":8, "timesRecommended":2},
+                {"title":"Snakeman", "id":6, "score":8, "timesRecommended":2},
+                {"title":"Butterflyman", "id":7, "score":8, "timesRecommended":2},
+                {"title":"The extremely ordinary man", "id":8, "score":8, "timesRecommended":2},
+                {"title":"Wonderman the movie", "id":9, "score":8, "timesRecommended":2},
+                {"title":"Manbat", "id":10, "score":8, "timesRecommended":2},
                 ]}
         return Response(recs)
 
@@ -250,3 +250,25 @@ class SuccessRateView(APIView):
             {"title":"Manbat", "id":10, "successRate":2},
             ]}
         return Response(success_rates)
+class SimpleSuccessView(APIView):
+    def get(self, request):
+        simple_success = {"simpleSuccess":[
+            {"time":"Monday", "rate":10},
+            {"time":"Tuesday", "rate":20},
+            {"time":"Wednesday", "rate":30},
+            {"time":"Thursday", "rate":40},
+            {"time":"Friday", "rate":50},
+            {"time":"Saturday", "rate":60},
+        ]}
+        return Response(simple_success)
+class AverageSuccessView(APIView):
+    def get(self, request):
+        average_success = {"averageSuccess":[
+            {"time":"Monday", "rate": 10},
+            {"time":"Tuesday", "rate": 20},
+            {"time":"Wednesday", "rate": 30},
+            {"time":"Thursday", "rate": 40},
+            {"time":"Friday", "rate": 50},
+            {"time":"Saturday", "rate": 60},
+        ]}
+        return Response(average_success)

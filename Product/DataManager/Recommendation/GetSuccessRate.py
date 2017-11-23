@@ -19,16 +19,13 @@ class GetSuccessRate:
         Purpose: Retrieve the number of recommended movies that have been watched, and the number that
         have not been watched
         """
-        result = []
+        # TODO docstring needs updating.
+        success_rate_dict = []
         all_rates = RetrieveSuccessRate().get_simple_success_rate()
         for rate in all_rates:
-            print("watched: ", rate.watched)
-            print("not_watched: ", rate.not_watched)
-            #print("timestamp :", rate.timestamp)
-            result.append({'watched': rate.watched, 'not_watched': rate.not_watched})#,
-                           #'timestamp': rate.timestamp})
-
-        return result
+            success_rate_dict.append({'watched': rate.watched, 'not_watched': rate.not_watched,
+                                      'timestamp': rate.timestamp})
+        return success_rate_dict
 
     @staticmethod
     def get_average_user_success_rate():
@@ -39,6 +36,11 @@ class GetSuccessRate:
         Purpose: Retrieve the average number of recommended movies that have been watched, and the number that
         have not been watched for each user
         """
-        return RetrieveSuccessRate().get_average_user_success_rate()
+        # TODO update docstring
+        result = []
+        all_rates = RetrieveSuccessRate().get_average_user_success_rate()
+        for rate in all_rates:
+            result.append({'average_user_success_rate': rate.average_user_success_rate,
+                           'timestamp': rate.timestamp})
+        return result
 
-print(GetSuccessRate().get_simple_success_rate())

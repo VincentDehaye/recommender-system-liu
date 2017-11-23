@@ -37,19 +37,4 @@ class RetrieveSuccessRate(Retrieve):
         :return The average of the ratios of movies watched divided by movies not watched
         by each user
         """
-        users = self.session.query(User).all()
-
-        ratio_list = []
-        for user in users:
-            recommendations = self.session.query(Recommendation).filter_by(user_id=user.id).all()
-            num_watched = 0
-            num_recommended = 0
-            for rec in recommendations:
-                num_recommended += 1
-                if rec.watched == 1:
-                    num_watched += 1
-            if num_recommended != 0:
-                ratio_list.append(num_watched/num_recommended)
-        self.session.close()
-
-        return np.mean(ratio_list)
+        return self.session.query(SuccessRate).all()

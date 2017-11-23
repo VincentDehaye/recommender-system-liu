@@ -3,6 +3,7 @@ Class for inserting success rate to database
 """
 from Product.Database.DatabaseManager.Insert.Insert import Insert
 from Product.Database.DBConn import SuccessRate
+from Product.Database.DBConn import Recommendation
 
 
 class InsertSuccessRate(Insert):
@@ -12,7 +13,7 @@ class InsertSuccessRate(Insert):
     Last update: 2017-11-22
     Purpose: Make Insertions of success rate into the database
     """
-    def insert_success_rate(self, average_total, average_user_experience):
+    def insert_success_rate(self, average_user_success_rate):
         """
         Author: Alexander Dahl, John Andree Lidquist
         Date: 2017-11-22
@@ -25,9 +26,14 @@ class InsertSuccessRate(Insert):
         number of recommended movies for each users
         :type average_user_experience: float
         """
+        # TODO change docstring to match params
 
-        success_rate = SuccessRate(average_total=average_total,
-                                   average_user_experience=average_user_experience)
+        watched = self.session.query(Recommendation.watched).filter_by(watched=1).count()
+        not_watched = self.session.query(Recommendation).count() - watched
+
+        success_rate = SuccessRate(watched=watched,
+                                   not_watched=not_watched,
+                                   average_user_success_rate=average_user_success_rate)
         self.session.add(success_rate)
         self.session.commit()
         self.session.close()

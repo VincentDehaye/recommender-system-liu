@@ -25,15 +25,7 @@ class RetrieveSuccessRate(Retrieve):
         :return Number of watched movies divided by the number of movies not watched
         """
         return self.session.query(SuccessRate).all()
-        '''
-        number_watched = self.session.query(Recommendation.watched).filter_by(watched=1).count()
-        number_of_recommended = self.session.query(Recommendation).count()
-        self.session.close()
-        if number_of_recommended == 0:
-            return 0
-        return number_watched/number_of_recommended
-        '''
-    # average ratio
+
     def get_average_user_success_rate(self):
         """
         Author: John Andree Lidquist, Alexander Dahl

@@ -37,10 +37,9 @@ class UpdateSuccessRate:
         Last update: 2017-11-23
         Purpose: The actual process to be ran. Adds the success rate to the database.
         """
-print("Updating success rate")
+        print("Updating success rate")
         retriever = RetrieveSuccessRate()
-        InsertSuccessRate().insert_success_rate(retriever.get_simple_success_rate(),
-                                                retriever.get_average_user_success_rate())
+        InsertSuccessRate().insert_success_rate(retriever.get_average_user_success_rate())
 
     def terminate(self):
         """
@@ -52,3 +51,5 @@ print("Updating success rate")
         print("Shutting down update_success_rate..")
         self.scheduled.shutdown()
         print("Update_success_rate has been shut down.")
+
+UpdateSuccessRate()

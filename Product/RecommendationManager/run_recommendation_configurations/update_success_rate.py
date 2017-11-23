@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 from Product.Database.DatabaseManager.Retrieve.RetrieveRecommendation import RetrieveRecommendation
@@ -25,7 +26,7 @@ class UpdateSuccessRate:
         # Set up and start the scheduler
         self.scheduled = BackgroundScheduler()
         if not daemon:
-            self.scheduled.daemon = False
+            self.scheduled._daemon = False
         self.scheduled.add_job(self._run, 'interval', days=1, id="3")
         self.scheduled.start()
         self.scheduled.modify_job(job_id="3", next_run_time=datetime.now())
@@ -37,7 +38,6 @@ class UpdateSuccessRate:
         Last update: 2017-11-23
         Purpose: The actual process to be ran. Adds the success rate to the database.
         """
-
         retriever = RetrieveRecommendation()
         InsertSuccessRate().insert_success_rate(retriever.retrieve_watched_ratio(),
                                                 retriever.retrieve_average_user_experience())

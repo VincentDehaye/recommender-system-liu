@@ -279,11 +279,11 @@ class SimpleSuccessView(APIView):
 class AverageSuccessView(APIView):
     def get(self, request):
         average_success = {"averageSuccess":[
-            {"time":"Monday", "rate": 10},
-            {"time":"Tuesday", "rate": 20},
-            {"time":"Wednesday", "rate": 30},
-            {"time":"Thursday", "rate": 40},
-            {"time":"Friday", "rate": 50},
-            {"time":"Saturday", "rate": 60},
+            {"time":"Monday", "rate": 15},
+            {"time":"Tuesday", "rate": 25},
+            {"time":"Wednesday", "rate": 45},
+            {"time":"Thursday", "rate": 12},
+            {"time":"Friday", "rate": 5},
+            {"time":"Saturday", "rate": 90},
         ]}
         return Response(average_success)

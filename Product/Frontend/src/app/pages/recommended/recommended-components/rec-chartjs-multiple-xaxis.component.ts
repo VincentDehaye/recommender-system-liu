@@ -12,6 +12,7 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
   @Input() factor: number;
   data: {};
   movies: string[];
+  movies1: string[];
   options: any;
   themeSubscription: any;
 
@@ -89,46 +90,43 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
     this.extractData();
   }
   getData() {
+
+
+
+
     if (this.factor === 1) {
-      this.dataHandlerService.getSimpleSuccessrate().subscribe((data) => {
-        this.movies = data.simpleSuccess;
-
-        this.data = {
-          labels: [this.movies[0]['time'], this.movies[1]['time'], this.movies[2]['time'],
-            this.movies[3]['time'], this.movies[4]['time'], this.movies[5]['time']],
-          datasets: [{
-          label: 'Success over time',
-          data: [this.movies[0]['rate'], this.movies[1]['rate'], this.movies[2]['rate'],
-            this.movies[3]['rate'], this.movies[4]['rate'], this.movies[5]['rate']],
-          borderColor: '#FF3DD6',
-          backgroundColor: '#ffffff',
-          fill: false,
-          pointRadius: 8,
-          pointHoverRadius: 10,
-        }],
-        }
-      });
-    }
-    if (this.factor === 2) {
       this.dataHandlerService.getAverageSuccessrate().subscribe((data) => {
-        this.movies = data.averageSuccess;
+        this.movies1 = data.averageSuccess;
+        this.dataHandlerService.getSimpleSuccessrate().subscribe((data1) => {
+          this.movies = data1.simpleSuccess;
 
-        this.data = {
-          labels: [this.movies[0]['time'], this.movies[1]['time'], this.movies[2]['time'],
-            this.movies[3]['time'], this.movies[4]['time'], this.movies[5]['time']],
-          datasets: [{
-          label: 'Success over time',
-          data: [this.movies[0]['rate'], this.movies[1]['rate'], this.movies[2]['rate'],
-            this.movies[3]['rate'], this.movies[4]['rate'], this.movies[5]['rate']],
-          borderColor: '#31ff1e',
-          backgroundColor: '#ffffff',
-          fill: false,
-          pointRadius: 8,
-          pointHoverRadius: 10,
-        }],
-        }
+          this.data = {
+            labels: [this.movies[0]['time'], this.movies[1]['time'], this.movies[2]['time'],
+              this.movies[3]['time'], this.movies[4]['time'], this.movies[5]['time']],
+            datasets: [{
+              label: 'Success over time simple',
+              data: [this.movies[0]['rate'], this.movies[1]['rate'], this.movies[2]['rate'],
+                this.movies[3]['rate'], this.movies[4]['rate'], this.movies[5]['rate']],
+              borderColor: '#FF3DD6',
+              backgroundColor: '#ffffff',
+              fill: false,
+              pointRadius: 8,
+              pointHoverRadius: 10,
+            }, {
+              label: 'Success over time average',
+              data: [this.movies1[0]['rate'], this.movies1[1]['rate'], this.movies1[2]['rate'],
+                this.movies1[3]['rate'], this.movies1[4]['rate'], this.movies1[5]['rate']],
+              borderColor: '#31ff1e',
+              backgroundColor: '#ffffff',
+              fill: false,
+              pointRadius: 8,
+              pointHoverRadius: 10,
+            }],
+          }
+        });
       });
     }
+
   }
   extractData() {
     return null;

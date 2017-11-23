@@ -37,7 +37,7 @@ class RecreateModel:
         # Set up and start the scheduler
         self.scheduled = BackgroundScheduler()
         if not daemon:
-            self.scheduled.daemon = False
+            self.scheduled._daemon = False
         self.scheduled.add_job(self._run, 'interval', seconds=2, id="2")
         self.scheduled.start()
         self.scheduled.modify_job(job_id="2", next_run_time=datetime.now())
@@ -75,8 +75,3 @@ class RecreateModel:
         self.scheduled.shutdown()
         print("Recreatemodel has been shut down.")
 
-updating = RecreateModel()
-time.sleep(4)
-InsertNewUser.insert_user(age=22, gender="mallig")
-time.sleep(8)
-updating.terminate()

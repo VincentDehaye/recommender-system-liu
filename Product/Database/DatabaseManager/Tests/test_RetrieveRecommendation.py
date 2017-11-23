@@ -1,7 +1,7 @@
 """
 Test file to test RetrieveRecommendation.py
 """
-from Product.Database.DatabaseManager.Retrieve.RetrieveRecommendation import RetrieveRecommendation
+from Product.Database.DatabaseManager.Retrieve.RetrieveSuccessRate import RetrieveSuccessRate
 from Product.Database.DBConn import create_session
 from Product.Database.DBConn import Recommendation
 from Product.Database.DBConn import Movie
@@ -38,7 +38,7 @@ def test_retrieve_watched_and_not_watched():
 
     # OBSERVED OUTPUT
     # We call the method to be tested to get all the ratings
-    observed_watched = RetrieveRecommendation().retrieve_watched_ratio()
+    observed_watched = RetrieveSuccessRate().get_simple_success_rate()
 
     # After adding the dummy movie, the dummy user and the dummy recommendation, we remove
     # them again. We need to commit twice because of foreign key constraints
@@ -84,7 +84,7 @@ def test_retrieve_average_user_experience():
 
     # OBSERVED OUTPUT
     # We call the method to be tested to get all the ratings
-    observed_average = RetrieveRecommendation().retrieve_average_user_experience()
+    observed_average = RetrieveSuccessRate().get_average_user_success_rate()
 
     # After adding the dummy movie, the dummy user and the dummy recommendation, we remove
     # them again. We need to commit twice because of foreign key constraints

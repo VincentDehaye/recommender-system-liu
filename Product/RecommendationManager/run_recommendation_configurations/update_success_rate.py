@@ -1,6 +1,6 @@
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
-from Product.Database.DatabaseManager.Retrieve.RetrieveRecommendation import RetrieveRecommendation
+from Product.Database.DatabaseManager.Retrieve.RetrieveSuccessRate import RetrieveSuccessRate
 from Product.Database.DatabaseManager.Insert.InsertSuccessRate import InsertSuccessRate
 
 
@@ -38,9 +38,9 @@ class UpdateSuccessRate:
         Purpose: The actual process to be ran. Adds the success rate to the database.
         """
 
-        retriever = RetrieveRecommendation()
-        InsertSuccessRate().insert_success_rate(retriever.retrieve_watched_ratio(),
-                                                retriever.retrieve_average_user_experience())
+        retriever = RetrieveSuccessRate()
+        InsertSuccessRate().insert_success_rate(retriever.get_simple_success_rate(),
+                                                retriever.get_average_user_success_rate())
 
     def terminate(self):
         """
@@ -52,3 +52,5 @@ class UpdateSuccessRate:
         print("Shutting down update_success_rate..")
         self.scheduled.shutdown()
         print("Update_success_rate has been shut down.")
+
+UpdateSuccessRate()

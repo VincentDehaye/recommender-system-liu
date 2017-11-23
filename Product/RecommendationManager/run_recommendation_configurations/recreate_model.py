@@ -5,10 +5,8 @@ from Product.RecommendationManager.model.create_new_model import CreateNewModel
 from Product.Database.DatabaseManager.Retrieve.RetrieveUser import RetrieveUser
 from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
 from Product.Database.DatabaseManager.Retrieve.RetrieveRating import RetrieveRating
-from Product.DataManager.Users.InsertNewUser import InsertNewUser
 
 
-# TODO: Remove test in the bottom
 class RecreateModel:
     """
     Author: Marten Bolin

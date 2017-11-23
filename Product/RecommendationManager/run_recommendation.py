@@ -4,7 +4,11 @@ from Product.RecommendationManager.run_recommendation_configurations.recreate_mo
 from Product.RecommendationManager.run_recommendation_configurations.update_success_rate \
     import UpdateSuccessRate
 """
-This script will be used to set up the running of recommendation.
+    Author: Marten Bolin
+    Date: 2017-11-22
+    Last update:
+    Purpose: This starts the observer that creates and checks
+    
 """
 
 # Be aware that these will run until terminated! Do not forget them running in the background!

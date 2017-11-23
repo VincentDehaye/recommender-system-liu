@@ -55,14 +55,13 @@ services:
      - DATA_DATABASE_HOST=data_db
      - TWITTERSTREAM=${TWITTERSTREAM}
 
-  trending:
+  recommendation:
     build: .
     container_name: recommendation
     command: bash Product/Docker/recommendation_startup_script.sh
     depends_on:
      - data_db
      - trending
-    dns: 8.8.8.8
     volumes:
      - .:/src
     environment:

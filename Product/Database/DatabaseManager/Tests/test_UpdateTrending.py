@@ -1,3 +1,6 @@
+"""
+Test file to test UpdateTrending.py
+"""
 from Product.Database.DatabaseManager.Update.UpdateTrending import UpdateTrending
 from Product.Database.DBConn import create_session
 from Product.Database.DBConn import Movie
@@ -23,13 +26,15 @@ def test_update_trend_score():
     session.add(dummy_movie)
     session.commit()
     dummy_score = TrendingScore(movie_id=movie_id, total_score=score_before_update,
-                                youtube_score=score_before_update, twitter_score=score_before_update)
+                                youtube_score=score_before_update,
+                                twitter_score=score_before_update)
     session.add(dummy_score)
     session.commit()
 
     # We use the method to be tested and update to the new score
     UpdateTrending().update_trend_score(movie_id=movie_id, total_score=score_after_update,
-                                        youtube_score=score_after_update, twitter_score=score_after_update)
+                                        youtube_score=score_after_update,
+                                        twitter_score=score_after_update)
 
     # EXPECTED OUTPUT
     expected_score = score_after_update

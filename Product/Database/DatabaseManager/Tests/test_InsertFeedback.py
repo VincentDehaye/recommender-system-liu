@@ -1,3 +1,6 @@
+"""
+Test file to test InsertFeedback.py
+"""
 from Product.Database.DatabaseManager.Insert.InsertFeedback import InsertFeedback
 from Product.Database.DBConn import create_session
 from Product.Database.DBConn import User
@@ -59,7 +62,8 @@ def test_insert_feedback():
     observed_rating_new = observed_1.rating
     observed_movie_id = observed_1.movie_id
     observed_user_id = observed_1.user_id
-    observed_2 = session.query(Recommendation).filter_by(movie_id=movie_id, user_id=user_id_2).first()
+    observed_2 = session.query(Recommendation).filter_by(movie_id=movie_id,
+                                                         user_id=user_id_2).first()
     observed_watched = observed_2.watched
     observed_3 = session.query(Rating).filter_by(movie_id=movie_id, user_id=user_id_3).first()
     observed_rating_update = observed_3.rating

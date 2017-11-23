@@ -1,3 +1,6 @@
+"""
+Test file to test RetrieveRating.py
+"""
 from Product.Database.DatabaseManager.Retrieve.RetrieveRating import RetrieveRating
 from Product.Database.DBConn import create_session
 from Product.Database.DBConn import Movie
@@ -18,7 +21,8 @@ def test_retrieve_rating():
     movie_id = -1
     rating = 10
 
-    # We create a session and add a dummy movie, a dummy user and a dummy rating for that user and movie
+    # We create a session and add a dummy movie, a dummy user and a dummy rating for
+    # that user and movie
     session = create_session()
     dummy_movie = Movie(id=movie_id, title="dummy", year=1111)
     dummy_user = User(id=user_id, age=10, gender='Male', occupation='Student')
@@ -36,8 +40,8 @@ def test_retrieve_rating():
     # We call the method to be tested to get all the ratings
     observed_all_ratings = RetrieveRating().retrieve_ratings()
 
-    # We make sure the dummy rating is part of all those ratings (the for-loop will only run once, because
-    # the rating added will be first in the list
+    # We make sure the dummy rating is part of all those ratings (the for-loop will only run once,
+    # because the rating added will be first in the list
     observed_rating = 0
     for rating in observed_all_ratings:
         if rating.user_id == user_id and rating.movie_id == movie_id:

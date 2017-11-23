@@ -1,3 +1,6 @@
+"""
+Test file to test RetrieveTrending.py
+"""
 from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
 from Product.Database.DBConn import create_session
 from Product.Database.DBConn import TrendingScore

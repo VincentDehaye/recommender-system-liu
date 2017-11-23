@@ -32,7 +32,7 @@ class FillUsers:
         Last update: 21-11-2017
         Purpose: Adds users by reading csv file with users
         """
-        file_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        file_path = (os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         file_path += '/MockData/users_with_mock_metadata.csv'
         with open(file_path) as csvfile_users:
             reader = csv.reader(csvfile_users)

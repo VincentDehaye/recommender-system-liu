@@ -179,7 +179,7 @@ class SuccessRate(Base):
     watched = Column(Integer)
     not_watched = Column(Integer)
     average_user_success_rate = Column(Float)
-    timestamp = Column(Date, default=func.now())
+    timestamp = Column(Date)
 
     def __repr__(self):
         return "<Recommendation(id id='%s', watched ='%s', not_watched ='%s'," \

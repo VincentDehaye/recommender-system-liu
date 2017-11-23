@@ -84,7 +84,7 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.getData();
     this.extractData();
   }
@@ -94,10 +94,12 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
         this.movies = data.simpleSuccess;
 
         this.data = {
-          labels: [this.movies[0]['time'], this.movies[1]['time'], this.movies[2]['time'], this.movies[3]['time'], this.movies[4]['time'], this.movies[5]['time']],
+          labels: [this.movies[0]['time'], this.movies[1]['time'], this.movies[2]['time'],
+            this.movies[3]['time'], this.movies[4]['time'], this.movies[5]['time']],
           datasets: [{
           label: 'Success over time',
-          data: [this.movies[0]['rate'], this.movies[1]['rate'], this.movies[2]['rate'], this.movies[3]['rate'], this.movies[4]['rate'], this.movies[5]['rate']],
+          data: [this.movies[0]['rate'], this.movies[1]['rate'], this.movies[2]['rate'],
+            this.movies[3]['rate'], this.movies[4]['rate'], this.movies[5]['rate']],
           borderColor: '#FF3DD6',
           backgroundColor: '#ffffff',
           fill: false,
@@ -112,10 +114,12 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
         this.movies = data.averageSuccess;
 
         this.data = {
-          labels: [this.movies[0]['time'], this.movies[1]['time'], this.movies[2]['time'], this.movies[3]['time'], this.movies[4]['time'], this.movies[5]['time']],
+          labels: [this.movies[0]['time'], this.movies[1]['time'], this.movies[2]['time'],
+            this.movies[3]['time'], this.movies[4]['time'], this.movies[5]['time']],
           datasets: [{
           label: 'Success over time',
-          data: [this.movies[0]['rate'], this.movies[1]['rate'], this.movies[2]['rate'], this.movies[3]['rate'], this.movies[4]['rate'], this.movies[5]['rate']],
+          data: [this.movies[0]['rate'], this.movies[1]['rate'], this.movies[2]['rate'],
+            this.movies[3]['rate'], this.movies[4]['rate'], this.movies[5]['rate']],
           borderColor: '#31ff1e',
           backgroundColor: '#ffffff',
           fill: false,

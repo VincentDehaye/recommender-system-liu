@@ -52,18 +52,15 @@ export class TrendingD3BarComponent implements OnDestroy, OnInit {
         this.dataHandlerService.getTrendingData().subscribe((data) => {
       this.movies = data.trendingMovies;
 
-      this.results = [
-        { name: this.movies[0]['title'], value: this.movies[0]['score']},
-        { name: this.movies[1]['title'], value: this.movies[1]['score']},
-        { name: this.movies[2]['title'], value: this.movies[2]['score']},
-        { name: this.movies[3]['title'], value: this.movies[3]['score']},
-        { name: this.movies[4]['title'], value: this.movies[4]['score']},
-        { name: this.movies[5]['title'], value: this.movies[5]['score']},
-        { name: this.movies[6]['title'], value: this.movies[6]['score']},
-        { name: this.movies[7]['title'], value: this.movies[7]['score']},
-        { name: this.movies[8]['title'], value: this.movies[8]['score']},
-        { name: this.movies[9]['title'], value: this.movies[9]['score']},
-        ]
+      const realName = [];
+        for (let i = 0; i < this.movies.length; ++i) {
+        const newName = {
+          name: this.movies[i]['title'],
+          value: this.movies[i]['score'],
+        };
+        realName.push(newName);
+      }
+      this.results = realName;
     });
 
       }
@@ -71,18 +68,15 @@ export class TrendingD3BarComponent implements OnDestroy, OnInit {
         this.dataHandlerService.getYoutubeData().subscribe((data) => {
       this.movies = data.youtubeMovies;
 
-      this.results = [
-        { name: this.movies[0]['title'], value: this.movies[0]['score']},
-        { name: this.movies[1]['title'], value: this.movies[1]['score']},
-        { name: this.movies[2]['title'], value: this.movies[2]['score']},
-        { name: this.movies[3]['title'], value: this.movies[3]['score']},
-        { name: this.movies[4]['title'], value: this.movies[4]['score']},
-        { name: this.movies[5]['title'], value: this.movies[5]['score']},
-        { name: this.movies[6]['title'], value: this.movies[6]['score']},
-        { name: this.movies[7]['title'], value: this.movies[7]['score']},
-        { name: this.movies[8]['title'], value: this.movies[8]['score']},
-        { name: this.movies[9]['title'], value: this.movies[9]['score']},
-        ]
+      const realName = [];
+        for (let i = 0; i < this.movies.length; ++i) {
+        const newName = {
+          name: this.movies[i]['title'],
+          value: this.movies[i]['score'],
+        };
+        realName.push(newName);
+      }
+      this.results = realName;
     });
 
       }
@@ -90,18 +84,15 @@ export class TrendingD3BarComponent implements OnDestroy, OnInit {
         this.dataHandlerService.getTwitterData().subscribe((data) => {
       this.movies = data.twitterMovies;
 
-      this.results = [
-        { name: this.movies[0]['title'], value: this.movies[0]['score']},
-        { name: this.movies[1]['title'], value: this.movies[1]['score']},
-        { name: this.movies[2]['title'], value: this.movies[2]['score']},
-        { name: this.movies[3]['title'], value: this.movies[3]['score']},
-        { name: this.movies[4]['title'], value: this.movies[4]['score']},
-        { name: this.movies[5]['title'], value: this.movies[5]['score']},
-        { name: this.movies[6]['title'], value: this.movies[6]['score']},
-        { name: this.movies[7]['title'], value: this.movies[7]['score']},
-        { name: this.movies[8]['title'], value: this.movies[8]['score']},
-        { name: this.movies[9]['title'], value: this.movies[9]['score']},
-        ]
+      const realName = [];
+        for (let i = 0; i < this.movies.length; ++i) {
+        const newName = {
+          name: this.movies[i]['title'],
+          value: this.movies[i]['score'],
+        };
+        realName.push(newName);
+      }
+      this.results = realName;
     });
 
       }

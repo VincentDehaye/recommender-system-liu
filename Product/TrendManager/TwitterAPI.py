@@ -54,7 +54,7 @@ class TwitterAPI:
         auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         stream = Stream(auth, output_stream)
         try:
-            stream.filter(track=[TRACKED_KEYWORDS], languages=['en'])
+            stream.filter(track=[TRACKED_KEYWORDS], languages=['en'], async=True)
         except:
             print("An error occurred. The twitter stream has been terminated.")
 
@@ -107,11 +107,15 @@ class TwitterAPI:
         The file loaded will be the latest modified one.
         :return:
         """
-        latest_file = self.get_newest_file()
         try:
-            with open(latest_file, 'rb') as f:
-                self.all_words_new = pickle.load(f)
-        except (TypeError, FileNotFoundError):
+            latest_file = self.get_newest_file()
+            if os.path.getsize(latest_file) < 1500:
+                os.remove(latest_file)
+                self.load_new_dict()
+            else:
+                with open(latest_file, 'rb') as f:
+                    self.all_words_new = pickle.load(f)
+        except (TypeError, FileNotFoundError, EOFError):
             print("File could not be loaded into dictionary for twitter score calculations.")
 
     @staticmethod

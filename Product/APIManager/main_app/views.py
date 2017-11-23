@@ -50,7 +50,22 @@ class RecommendationsView(APIView):
                 gender_list.append("Unknown")
 
             recommendation_list = get_top_recommendations(age_range, gender_list)
-            recs = {"data": recommendation_list}
+            if not recommendation_list:
+                recs = {"recommendation_list": [
+                    {"title": "Batman", "id": 1, "score": 10, "timesRecommended": 2},
+                    {"title": "Horseman", "id": 2, "score": 8, "timesRecommended": 2},
+                    {"title": "Birdperson", "id": 3, "score": 8, "timesRecommended": 2},
+                    {"title": "Manman", "id": 4, "score": 8, "timesRecommended": 2},
+                    {"title": "Cowman", "id": 5, "score": 8, "timesRecommended": 2},
+                    {"title": "Snakeman", "id": 6, "score": 8, "timesRecommended": 2},
+                    {"title": "Butterflyman", "id": 7, "score": 8, "timesRecommended": 2},
+                    {"title": "The extremely ordinary man", "id": 8, "score": 8, "timesRecommended": 2},
+                    {"title": "Wonderman the movie", "id": 9, "score": 8, "timesRecommended": 2},
+                    {"title": "Manbat", "id": 10, "score": 8, "timesRecommended": 2},
+                ]}
+            else:
+                recs = {"data": recommendation_list}
+
         except ValueError:
             recs = {"recommendation_list": [
                 {"title": "Batman", "id": 1, "score": 10, "timesRecommended": 2},
@@ -264,11 +279,11 @@ class SimpleSuccessView(APIView):
 class AverageSuccessView(APIView):
     def get(self, request):
         average_success = {"averageSuccess":[
-            {"time":"Monday", "rate": 10},
-            {"time":"Tuesday", "rate": 20},
-            {"time":"Wednesday", "rate": 30},
-            {"time":"Thursday", "rate": 40},
-            {"time":"Friday", "rate": 50},
-            {"time":"Saturday", "rate": 60},
+            {"time":"Monday", "rate": 15},
+            {"time":"Tuesday", "rate": 25},
+            {"time":"Wednesday", "rate": 45},
+            {"time":"Thursday", "rate": 12},
+            {"time":"Friday", "rate": 5},
+            {"time":"Saturday", "rate": 90},
         ]}
         return Response(average_success)

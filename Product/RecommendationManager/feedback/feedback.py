@@ -49,3 +49,4 @@ class Feedback(object):
                                         shape=(RetrieveUser().retrieve_largest_user_id()+1,
                                                RetrieveMovie().retrieve_largest_movie_id()+1))
             generate_model.evolve_model(path + '/model/new_model.sav', model, user_matrix)
+

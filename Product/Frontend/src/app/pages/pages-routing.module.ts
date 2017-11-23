@@ -21,16 +21,16 @@ const routes: Routes = [{
   }, {
     path: 'login', component: LoginComponent,
   }, {
+    path: 'performance',
+    component: RecommendedComponent,
+    canActivate: [AuthGuard],
+  }, {
     path: 'recommendations',
     component: UsersComponent,
     canActivate: [AuthGuard],
   }, {
     path: 'user',
     component: UserComponent,
-    canActivate: [AuthGuard],
-  }, {
-    path: 'performance',
-    component: RecommendedComponent,
     canActivate: [AuthGuard],
   }, {
     path: 'trending',

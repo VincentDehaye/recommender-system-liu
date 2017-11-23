@@ -1,3 +1,6 @@
+"""
+The Update super class
+"""
 from Product.Database.DBConn import create_session
 
 

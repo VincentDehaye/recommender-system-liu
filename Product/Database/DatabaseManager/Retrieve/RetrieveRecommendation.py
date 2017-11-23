@@ -1,3 +1,6 @@
+"""
+Class for retrieving recommendations from database
+"""
 from Product.Database.DatabaseManager.Retrieve.Retrieve import Retrieve
 from Product.Database.DBConn import Recommendation
 from Product.Database.DBConn import User
@@ -12,26 +15,32 @@ class RetrieveRecommendation(Retrieve):
     Purpose: Retrieve data from the recommendation table
     """
 
-    def retrieve_watched_and_not_watched(self):
+    def retrieve_watched_ratio(self):
         """
         Author: John Andree Lidquist, Alexander Dahl
         Date: 2017-11-20
         Last update: 2017-11-20
-        Purpose: Retrieve data from the recommendation table and count how many of the recommended movies have been
-        watched and how many that have not been watched
+        Purpose: Retrieve data from the recommendation table and count how many of the recommended
+        movies have been watched divided by the number of movies not watched
+        :return Number of watched movies divided by the number of movies not watched
         """
         number_watched = self.session.query(Recommendation.watched).filter_by(watched=1).count()
-        number_not_watched = self.session.query(Recommendation).count() - number_watched
+        number_of_recommended = self.session.query(Recommendation).count()
         self.session.close()
-        return number_watched, number_not_watched
+        if number_of_recommended == 0:
+            return 0
+        return number_watched/number_of_recommended
 
     def retrieve_average_user_experience(self):
         """
         Author: John Andree Lidquist, Alexander Dahl
         Date: 2017-11-20
         Last update: 2017-11-20
-        Purpose: Retrieve data from the recommendation table and count how many of the recommended movies have been
-        watched and how many that have not been watched for each user and then the average is returned
+        Purpose: Retrieve data from the recommendation table and count how many of the recommended
+        movies have been watched and how many that have not been watched for each user and then the
+        average is returned
+        :return The average of the ratios of movies watched divided by movies not watched
+        by each user
         """
         users = self.session.query(User).all()
 

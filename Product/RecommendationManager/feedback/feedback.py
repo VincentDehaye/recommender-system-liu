@@ -44,7 +44,8 @@ class Feedback(object):
             movie_list = [movie_id]
 
             # Need to define shape so that it is coherent with the previous model
+            # TODO Change dimensions to greater than 1 if problem with dimensions
             user_matrix = sp.coo_matrix((rating_list, (user_list, movie_list)),
-                                        shape=(RetrieveUser().retrieve_largest_user_id(),
+                                        shape=(RetrieveUser().retrieve_largest_user_id()+1,
                                                RetrieveMovie().retrieve_largest_movie_id()+1))
             generate_model.evolve_model(path + '/model/new_model.sav', model, user_matrix)

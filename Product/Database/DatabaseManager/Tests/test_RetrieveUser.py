@@ -1,3 +1,6 @@
+"""
+Test file to test RetrieveUser.py
+"""
 from Product.Database.DatabaseManager.Retrieve.RetrieveUser import RetrieveUser
 from Product.Database.DBConn import create_session
 from Product.Database.DBConn import User
@@ -59,7 +62,7 @@ def test_retrieve_all_users():
 
 
 def test_check_if_user_in_rating():
-    # TODO finish this unit test
+    # TODO finish this unit test, add docstring
     assert True
 
 

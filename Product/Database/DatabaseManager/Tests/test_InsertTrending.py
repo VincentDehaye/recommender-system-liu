@@ -1,3 +1,6 @@
+"""
+Test file to test InsertTrending.py
+"""
 from Product.Database.DatabaseManager.Insert.InsertTrending import InsertTrending
 from Product.Database.DBConn import create_session
 from Product.Database.DBConn import TrendingScore

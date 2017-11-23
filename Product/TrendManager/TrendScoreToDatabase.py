@@ -53,7 +53,7 @@ class TrendingToDB(object):
             self.scheduled = BackgroundScheduler()
             if not daemon:
                 self.scheduled.daemon = False
-            self.scheduled.add_job(self.run, 'interval', seconds=50, id="1")
+            self.scheduled.add_job(self.run, 'interval', days=1, id="1")
             self.scheduled.start()
             self.scheduled.modify_job(job_id="1", next_run_time=datetime.now())
         else:
@@ -85,8 +85,8 @@ class TrendingToDB(object):
         # fetched score - Update score in database, else go to step 1
         # 6. Go to step 3
 
-        if TwitterAPI().get_newest_file() is None:  # Check is file exist for scoring twitter
-            TwitterAPI.open_twitter_stream(TIME_LIMIT_TWITTER_STREAM_NO_FILE)
+        # if TwitterAPI().get_newest_file() is None:  # Check is file exist for scoring twitter
+        #     TwitterAPI.open_twitter_stream(TIME_LIMIT_TWITTER_STREAM_NO_FILE)
 
         trend_controller = TrendingController()
         res_movie = self.retrieve_movie.retrieve_movie()
@@ -134,7 +134,7 @@ class TrendingToDB(object):
                 # could be moved outside to lower total run time
 
         # Open twitter stream after titles has been scored, to gather new data
-        TwitterAPI().open_twitter_stream(TIME_LIMIT_TWITTER_STREAM)
+        # TwitterAPI().open_twitter_stream(TIME_LIMIT_TWITTER_STREAM)
 
     # Used to stop the thread if background is false
     # or for any other reason it needs to be stopped.

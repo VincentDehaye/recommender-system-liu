@@ -13,16 +13,19 @@ import traceback
 
 from main_app.serializers import RatingSerializer
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation
+from Product.DataManager.get_top_recommendations import get_top_recommendations
 from Product.DataManager.TopTrending.RetrieveTopTrendingTotal import RetrieveTopTrendingTotal
 from Product.DataManager.TopTrending.RetrieveTopTrendingTwitter import RetrieveTopTrendingTwitter
 from Product.DataManager.TopTrending.RetrieveTopTrendingYoutube import RetrieveTopTrendingYoutube
 
+MINIMUM_AGE = 0
+MAXIMUM_AGE = 200
 
 class RecommendationsView(APIView):
     """
     Author: Bamse
     Date: 2017-10-04
-    Last update: 2017-11-14 by Bamse
+    Last update: 2017-11-22 by Bamse
     This class is used to return the top 10 recommendations from Recommendations team
     """
     # authentication_classes = (SessionAuthentication,)
@@ -32,38 +35,63 @@ class RecommendationsView(APIView):
         """
         Author: Bamse
         Date: 2017-11-14
-        Last update: 2017-11-14 by Bamse
+        Last update: 2017-11-22 by Bamse
         Purpose: Handles GET requests to recommendations API. Returns mock data if fetching from
         recommendation doesn't work.
         """
         try:
-            recs = Recommendation(55, 10).generate_recommendation_list().__dict__
-        except ValueError:
-            recs = {"recommendation_list":[
-                {"title":"Batman", "id":1, "score":10},
-                {"title":"Horseman", "id":2, "score":9},
-                {"title":"Birdperson", "id":3, "score":8},
-                {"title":"Manman", "id":4, "score":8},
-                {"title":"Cowman", "id":5, "score":7},
-                {"title":"Snakeman", "id":6, "score":5},
-                {"title":"Butterflyman", "id":7, "score":4},
-                {"title":"The extremely ordinary man", "id":8, "score":4},
-                {"title":"Wonderman the movie", "id":9, "score":3},
-                {"title":"Manbat", "id":10, "score":2},
+            age_range = [request.query_params.get("age_lower", MINIMUM_AGE), request.query_params.get("age_upper", MAXIMUM_AGE)]
+            gender_list = []
+            if request.query_params.get("male", "0") == "1":
+                gender_list.append("Male")
+            if request.query_params.get("female", "0") == "1":
+                gender_list.append("Female")
+            if request.query_params.get("other", "0") == "1":
+                gender_list.append("Unknown")
+
+            recommendation_list = get_top_recommendations(age_range, gender_list)
+            if not recommendation_list:
+                recs = {"recommendation_list": [
+                    {"title": "Batman", "id": 1, "score": 10, "timesRecommended": 2},
+                    {"title": "Horseman", "id": 2, "score": 8, "timesRecommended": 2},
+                    {"title": "Birdperson", "id": 3, "score": 8, "timesRecommended": 2},
+                    {"title": "Manman", "id": 4, "score": 8, "timesRecommended": 2},
+                    {"title": "Cowman", "id": 5, "score": 8, "timesRecommended": 2},
+                    {"title": "Snakeman", "id": 6, "score": 8, "timesRecommended": 2},
+                    {"title": "Butterflyman", "id": 7, "score": 8, "timesRecommended": 2},
+                    {"title": "The extremely ordinary man", "id": 8, "score": 8, "timesRecommended": 2},
+                    {"title": "Wonderman the movie", "id": 9, "score": 8, "timesRecommended": 2},
+                    {"title": "Manbat", "id": 10, "score": 8, "timesRecommended": 2},
                 ]}
+            else:
+                recs = {"data": recommendation_list}
+
+        except ValueError:
+            recs = {"recommendation_list": [
+                {"title": "Batman", "id": 1, "score": 10, "timesRecommended": 2},
+                {"title": "Horseman", "id": 2, "score": 8, "timesRecommended": 2},
+                {"title": "Birdperson", "id": 3, "score": 8, "timesRecommended": 2},
+                {"title": "Manman", "id": 4, "score": 8, "timesRecommended": 2},
+                {"title": "Cowman", "id": 5, "score": 8, "timesRecommended": 2},
+                {"title": "Snakeman", "id": 6, "score": 8, "timesRecommended": 2},
+                {"title": "Butterflyman", "id": 7, "score": 8, "timesRecommended": 2},
+                {"title": "The extremely ordinary man", "id": 8, "score": 8, "timesRecommended": 2},
+                {"title": "Wonderman the movie", "id": 9, "score": 8, "timesRecommended": 2},
+                {"title": "Manbat", "id": 10, "score": 8, "timesRecommended": 2},
+            ]}
         except:
             traceback.print_exc()
             recs = {"recommendation_list":[
-                {"title":"Batman", "id":1, "score":10},
-                {"title":"Horseman", "id":2, "score":8},
-                {"title":"Birdperson", "id":3, "score":8},
-                {"title":"Manman", "id":4, "score":8},
-                {"title":"Cowman", "id":5, "score":8},
-                {"title":"Snakeman", "id":6, "score":8},
-                {"title":"Butterflyman", "id":7, "score":8},
-                {"title":"The extremely ordinary man", "id":8, "score":8},
-                {"title":"Wonderman the movie", "id":9, "score":8},
-                {"title":"Manbat", "id":10, "score":8},
+                {"title":"Batman", "id":1, "score":10, "timesRecommended":2},
+                {"title":"Horseman", "id":2, "score":8, "timesRecommended":2},
+                {"title":"Birdperson", "id":3, "score":8, "timesRecommended":2},
+                {"title":"Manman", "id":4, "score":8, "timesRecommended":2},
+                {"title":"Cowman", "id":5, "score":8, "timesRecommended":2},
+                {"title":"Snakeman", "id":6, "score":8, "timesRecommended":2},
+                {"title":"Butterflyman", "id":7, "score":8, "timesRecommended":2},
+                {"title":"The extremely ordinary man", "id":8, "score":8, "timesRecommended":2},
+                {"title":"Wonderman the movie", "id":9, "score":8, "timesRecommended":2},
+                {"title":"Manbat", "id":10, "score":8, "timesRecommended":2},
                 ]}
         return Response(recs)
 
@@ -207,3 +235,55 @@ class RateMovieView(APIView):
         serializer = RatingSerializer(request.data)
         print(serializer.data)
         return Response(serializer.data)
+
+class SuccessRateView(APIView):
+    """
+    Author: Bamse
+    Date: 2017-11-22
+    Last update: 2017-11-22 by Bamse
+    This class is used to get the success rate from the machine learning algorithm.
+    """
+
+    def get(self, request):
+        """
+        Author: Bamse
+        Date: 2017-11-22
+        Last update: 2017-11-22 by Bamse
+        This function handles GET requests for the success rate from the machine learning algorithm.
+        """
+
+        success_rates = {"success_rates":[
+            {"title":"Batman", "id":1, "successRate":10},
+            {"title":"Horseman", "id":2, "successRate":9},
+            {"title":"Birdperson", "id":3, "successRate":8},
+            {"title":"Manman", "id":4, "successRate":8},
+            {"title":"Cowman", "id":5, "successRate":7},
+            {"title":"Snakeman", "id":6, "successRate":5},
+            {"title":"Butterflyman", "id":7, "successRate":4},
+            {"title":"The extremely ordinary man", "id":8, "successRate":4},
+            {"title":"Wonderman the movie", "id":9, "successRate":3},
+            {"title":"Manbat", "id":10, "successRate":2},
+            ]}
+        return Response(success_rates)
+class SimpleSuccessView(APIView):
+    def get(self, request):
+        simple_success = {"simpleSuccess":[
+            {"time":"Monday", "rate":10},
+            {"time":"Tuesday", "rate":20},
+            {"time":"Wednesday", "rate":30},
+            {"time":"Thursday", "rate":40},
+            {"time":"Friday", "rate":50},
+            {"time":"Saturday", "rate":60},
+        ]}
+        return Response(simple_success)
+class AverageSuccessView(APIView):
+    def get(self, request):
+        average_success = {"averageSuccess":[
+            {"time":"Monday", "rate": 15},
+            {"time":"Tuesday", "rate": 25},
+            {"time":"Wednesday", "rate": 45},
+            {"time":"Thursday", "rate": 12},
+            {"time":"Friday", "rate": 5},
+            {"time":"Saturday", "rate": 90},
+        ]}
+        return Response(average_success)

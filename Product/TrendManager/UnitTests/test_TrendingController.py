@@ -11,15 +11,14 @@ def test_get_trending_content_standard_case():
     keyword = 'Frozen'
 
     # Expected output
-    # scoredmovie != null
-    # scoredmovie.score >= 0
+    # twitter_score > 0
+    # youtube_score > 0
 
     # Observed output
     observed = trendingcontroller.get_trending_content(keyword)
 
-    assert observed[0] >= 0
-    assert observed[1] >= 0
-    assert observed[2] >= 0
+    assert observed.twitter_score > 0
+    assert observed.youtube_score > 0
 
 
 def test_get_trending_content_bad_input():
@@ -35,5 +34,6 @@ def test_get_trending_content_bad_input():
     # Observed output
     observed = trendingcontroller.get_trending_content(keyword)
 
-    assert observed[0] is 0
+    assert observed.twitter_score is 0
+    assert observed.youtube_score is 0
 

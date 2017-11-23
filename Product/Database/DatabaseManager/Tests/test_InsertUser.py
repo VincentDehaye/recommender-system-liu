@@ -1,3 +1,6 @@
+"""
+Test file to test InsertUser.py
+"""
 from Product.Database.DatabaseManager.Insert.InsertUser import InsertUser
 from Product.Database.DBConn import create_session
 from Product.Database.DBConn import User

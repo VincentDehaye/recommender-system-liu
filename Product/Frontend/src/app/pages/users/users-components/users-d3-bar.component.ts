@@ -57,16 +57,16 @@ export class UsersD3BarComponent implements OnDestroy, OnInit {
         this.results.push({name: this.movies[1]["name"], value: this.movies[1]['id']});
       }*/
       this.results = [
-        { name: this.movies[0]['title'], value: this.movies[0]['score']},
-        { name: this.movies[1]['title'], value: this.movies[1]['score']},
-        { name: this.movies[2]['title'], value: this.movies[2]['score']},
-        { name: this.movies[3]['title'], value: this.movies[3]['score']},
-        { name: this.movies[4]['title'], value: this.movies[4]['score']},
-        { name: this.movies[5]['title'], value: this.movies[5]['score']},
-        { name: this.movies[6]['title'], value: this.movies[6]['score']},
-        { name: this.movies[7]['title'], value: this.movies[7]['score']},
-        { name: this.movies[8]['title'], value: this.movies[8]['score']},
-        { name: this.movies[9]['title'], value: this.movies[9]['score']},
+        { name: this.movies[0]['title'], value: this.movies[0]['timesRecommended']},
+        { name: this.movies[1]['title'], value: this.movies[1]['timesRecommended']},
+        { name: this.movies[2]['title'], value: this.movies[2]['timesRecommended']},
+        { name: this.movies[3]['title'], value: this.movies[3]['timesRecommended']},
+        { name: this.movies[4]['title'], value: this.movies[4]['timesRecommended']},
+        { name: this.movies[5]['title'], value: this.movies[5]['timesRecommended']},
+        { name: this.movies[6]['title'], value: this.movies[6]['timesRecommended']},
+        { name: this.movies[7]['title'], value: this.movies[7]['timesRecommended']},
+        { name: this.movies[8]['title'], value: this.movies[8]['timesRecommended']},
+        { name: this.movies[9]['title'], value: this.movies[9]['timesRecommended']},
         ]
     }); // Converts the data making it reachable in the htm file
   }

@@ -35,12 +35,3 @@ class CreateRecommendationsForAllUsers:
         for user, user_number in zip(users, range(0, number_of_users)):
             # the Recommendation class will insert it to the database when it is generated
             Recommendation(user.id, 10).generate_recommendation_list()
-
-stop_loop=False
-while not stop_loop:
-    try:
-        CreateRecommendationsForAllUsers.execute(10)
-        stop_loop=True
-    except ValueError:
-        print("Waiting for TrendScore to commit, wait 5 seconds and then try again")
-        time.sleep(5)

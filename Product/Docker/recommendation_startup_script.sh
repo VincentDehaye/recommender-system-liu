@@ -7,6 +7,4 @@ do
 	curl -s $DATA_DATABASE_HOST:3306
 	res=$?
 done
-
 python Product/RecommendationManager/run_recommendation.py
-

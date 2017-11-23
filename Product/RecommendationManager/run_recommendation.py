@@ -3,6 +3,7 @@ from Product.RecommendationManager.run_recommendation_configurations.recreate_mo
     import RecreateModel
 from Product.RecommendationManager.run_recommendation_configurations.update_success_rate \
     import UpdateSuccessRate
+from Product.RecommendationManager.Recommendation.create_recommendations_for_all_users import CreateRecommendationsForAllUsers
 """
     Author: Marten Bolin
     Date: 2017-11-22
@@ -19,3 +20,12 @@ time.sleep(2)
 
 # Instantiate the class that will update the succesrate daily
 success_rate_updater = UpdateSuccessRate()
+
+stop_loop=False
+while not stop_loop:
+    try:
+        CreateRecommendationsForAllUsers.execute(10)
+        stop_loop=True
+    except ValueError:
+        print("Waiting for TrendScore to commit, wait 5 seconds and then try again")
+        time.sleep(5)

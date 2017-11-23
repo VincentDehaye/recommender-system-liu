@@ -7,7 +7,7 @@ import { DataHandlerService} from '../../@core/data/data-handler.service';
   styleUrls: ['./recommended.component.scss'],
   templateUrl: './recommended.component.html',
 })
-export class RecommendedComponent implements OnInit{
+export class RecommendedComponent implements OnInit {
   simpleSuccessrate: string[];
   averageSuccessrate: string[];
   dataSimple: any;

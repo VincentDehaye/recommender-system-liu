@@ -6,8 +6,8 @@ import { DataHandlerService} from '../../../@core/data/data-handler.service';
 
 /*
   Author: Anton Bergström, Ariyan Abdulla, Erik Thörngren
-  Date: 2017-11-24
-  Last update: 2017-11-24 by Ariyan, Erik
+  Date: 2017-10-12
+  Last update: 2017-11-24 by Ariyan & Anton
   This contains the typescript code for the graphs on the overview page.
 */
 
@@ -57,6 +57,12 @@ export class OverviewD3BarComponent implements OnDestroy, OnInit {
 
 
   }
+  /*
+    Author: Anton Bergström, Ariyan Abdulla, Erik Thörngren
+    Date: 2017-11-24
+    Last update: 2017-11-24 by Erik & Ariyan
+    This function gets the required data from the APIManager.
+  */
   private getData() {
     if (this.factor === 1) {
       this.dataHandlerService.getData().subscribe((data) => {

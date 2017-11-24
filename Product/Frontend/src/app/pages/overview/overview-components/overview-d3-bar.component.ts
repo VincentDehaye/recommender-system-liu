@@ -3,6 +3,15 @@ import { NbThemeService } from '@nebular/theme';
 import { OverviewComponent } from '../overview.component'
 import { DataHandlerService} from '../../../@core/data/data-handler.service';
 
+
+/*
+  Author: Anton Bergström, Ariyan Abdulla, Erik Thörngren
+  Date: 2017-11-24
+  Last update: 2017-11-24 by Ariyan, Erik
+  This contains the typescript code for the graphs on the overview page.
+*/
+
+
 @Component({
   selector: 'ngx-d3-bar',
   template: `

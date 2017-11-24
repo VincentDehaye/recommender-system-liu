@@ -3,6 +3,13 @@ import { NbThemeService } from '@nebular/theme';
 import { UsersComponent } from '../users.component'
 import { DataHandlerService} from '../../../@core/data/data-handler.service';
 
+/*
+  Author: Anton Bergström & Ariyan Abdulla
+  Date: 2017-09-30
+  Last update: 2017-11-22 by Ariyan & Anton
+  This contains the typescript code for the graphs on the recommendation page.
+*/
+
 @Component({
   selector: 'ngx-d3-bar',
   template: `
@@ -45,9 +52,15 @@ export class UsersD3BarComponent implements OnDestroy, OnInit {
     this.getData();
     this.extractData();
 
-
-
   }
+
+  /*
+    Author: Anton Bergström, Ariyan Abdulla, Erik Thörngren
+    Date: 2017-10-29
+    Last update: 2017-11-23 by Ariyan, Erik
+    This contains the code which gets the required data from APIManager to the recommendation page.
+  */
+
   public getData() {
       this.dataHandlerService.getData().subscribe((data) => {
       this.movies = data.recommendation_list;

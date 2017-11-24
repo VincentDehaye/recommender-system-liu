@@ -1,6 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataHandlerService} from '../../@core/data/data-handler.service';
 
+/*
+  Author: Anton Bergström, Ariyan Abdulla, David Schutzer, Bamse
+  Date: 2017-09-30
+  Last update: 2017-11-23 by Bamse & David
+  This contains the different components used on the recommendation page.
+*/
 
 @Component({
   selector: 'ngx-users',
@@ -19,14 +25,9 @@ export class UsersComponent implements OnInit {
   movies: string[];
   data: any;
   value: any= '0 - 200';
-
-  // Gender control variables initiates as true;
-  // Modal headers 1-
   modalHeader1 = 'Graph displaying the number of times a movie has been recommended';
   modalHeader2 = 'List for the top recommended content';
   modalHeader3 = 'Demographic settings';
-
-  // Modal content 1-
   modalContent1 = `Each bar shows the number of times a certain movie has been
                     recommended and shows the top recommendations
                     depending on the demographics setting.`;

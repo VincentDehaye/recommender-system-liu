@@ -2,6 +2,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DataHandlerService} from '../../@core/data/data-handler.service';
 
+/*
+  Author: Anton Bergström, Ariyan Abdulla, David Schutzer
+  Date: 2017-09-30
+  Last update: 2017-11-23 by Anton & Ariyan
+  This contains the different components used on the performance page.
+*/
+
 @Component({
   selector: 'ngx-recommended',
   styleUrls: ['./recommended.component.scss'],

@@ -2,6 +2,13 @@ import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { DataHandlerService} from '../../../@core/data/data-handler.service';
 
+/*
+  Author: Anton Bergström, Ariyan Abdulla & Erik Thörngren
+  Date: 2017-09-30
+  Last update: 2017-11-23 by Ariyan, Erik
+  This contains the typescript code for the graph on the performance page.
+*/
+
 @Component({
   selector: 'ngx-chartjs-multiple-xaxis',
   template: `
@@ -89,11 +96,15 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
     this.getData();
     this.extractData();
   }
+
+  /*
+    Author: Anton Bergström, Ariyan Abdulla, Erik Thörngren
+    Date: 2017-11-24
+    Last update: 2017-11-20 by Ariyan & Erik
+    This contains the code which gets the required data from APIManager to the performance page.
+  */
+
   getData() {
-
-
-
-
     if (this.factor === 1) {
       this.dataHandlerService.getAverageSuccessrate().subscribe((data) => {
         this.movies1 = data.averageSuccess;

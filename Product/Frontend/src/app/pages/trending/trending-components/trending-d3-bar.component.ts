@@ -3,6 +3,12 @@ import { NbThemeService } from '@nebular/theme';
 import { TrendingComponent } from '../trending.component'
 import { DataHandlerService} from '../../../@core/data/data-handler.service';
 
+/*
+  Author: Anton Bergström & Ariyan Abdulla
+  Date: 2017-09-30
+  Last update: 2017-11-17 by Ariyan & Anton
+  This contains the typescript code for the graphs on the trending page.
+*/
 
 @Component({
   selector: 'ngx-d3-bar',
@@ -43,10 +49,15 @@ export class TrendingD3BarComponent implements OnDestroy, OnInit {
   ngOnInit() {
     this.getData();
     this.extractData();
-
-
-
   }
+
+  /*
+    Author: Anton Bergström & Ariyan Abdulla
+    Date: 2017-10-29
+    Last update: 2017-11-17 by Ariyan & Anton
+    This contains the code which gets the required data from APIManager to the trending page.
+  */
+
   public getData() {
       if (this.factor === 1) {
         this.dataHandlerService.getTrendingData().subscribe((data) => {

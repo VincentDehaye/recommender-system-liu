@@ -1,27 +1,17 @@
 from rest_framework import serializers
 
+MINIMUM_AGE = 0
+MAXIMUM_AGE = 130
+
 class RatingSerializer(serializers.Serializer):
-    movie_id = serializers.IntegerField()
-    rating = serializers.IntegerField()
+    movie_id = serializers.IntegerField(min_value=0)
+    rating = serializers.IntegerField(min_value=1, max_value=5)
     watched = serializers.BooleanField()
-    def validate_rating(self, value):
-        try:
-            if int(value) not in range(1,5):
-                raise serializers.ValidationError("Rating needs to be a number between 1 and 5")
-            return value
-        except:
-            raise serializers.ValidationError("Rating need to be a number between 1 and 5")
 
 class UserSerializer(serializers.Serializer):
-    age = serializers.IntegerField()
+    age = serializers.IntegerField(min_value=MINIMUM_AGE, max_value=MAXIMUM_AGE)
     gender = serializers.CharField(allow_blank=True)
     occupation = serializers.CharField(allow_blank=True, max_length=30)
-
-    def validate_age(self, value):
-        if value < 0:
-            raise serializers.ValidationError("Age must be positive.")
-        else:
-            return value
 
     def validate_gender(self, value):
         if value in ("Male", "Female", "Unknown"):

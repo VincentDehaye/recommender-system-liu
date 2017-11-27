@@ -11,9 +11,12 @@ import traceback
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from sqlalchemy.exc import IntegrityError
 
-from main_app.serializers import RatingSerializer
+from main_app.serializers import RatingSerializer, UserSerializer
+from Product.DataManager.Users.InsertNewUser import InsertNewUser
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation
+from Product.RecommendationManager.feedback.feedback import Feedback
 from Product.DataManager.get_top_recommendations import get_top_recommendations
 from Product.DataManager.TopTrending.RetrieveTopTrendingTotal import RetrieveTopTrendingTotal
 from Product.DataManager.TopTrending.RetrieveTopTrendingTwitter import RetrieveTopTrendingTwitter
@@ -141,6 +144,8 @@ class UserRecommendationsView(APIView):
                 {"title":"Wonderman the movie", "id":9, "score":10},
                 {"title":"Manbat", "id":10, "score":10},
                 ]}
+        except IntegrityError:
+            return Response("user does not exist.", status=404)
         except:
             traceback.print_exc()
             recs = {"recommendation_list":[
@@ -241,12 +246,23 @@ class TwitterTrendingView(APIView):
                 ]}
         return Response(recs)
 
-class RateMovieView(APIView):
+class FeedbackView(APIView):
     serializer_class = RatingSerializer
 
-    def post(self, request):
-        serializer = RatingSerializer(request.data)
-        print(serializer.data)
+    def get(self, request, user_id):
+        return UserRecommendationsView().get(request, user_id)
+
+    def post(self, request, user_id):
+        serializer = RatingSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                Feedback().insert_feedback(user_id, serializer.validated_data["movie_id"],
+                                           serializer.validated_data["watched"],
+                                           serializer.validated_data["rating"])
+            except ValueError:
+                return Response("user or movie does not exist", status=404)
+        else:
+            return Response(serializer.errors, status=400)
         return Response(serializer.data)
 
 class SuccessRateView(APIView):
@@ -308,3 +324,26 @@ class AverageSuccessView(APIView):
                 {"time":"Saturday", "noTimesWatched":10, "noTimesNotWatched":20},
             ]}
         return Response(average_success)
+
+class AddUserView(APIView):
+    """
+    Author: Bamse
+    Date: 2017-11-27
+    Last update: 2017-11-27 by Bamse
+    Purpose: This class allows adding new users to the database
+    """
+    serializer_class = UserSerializer
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                InsertNewUser().insert_user(serializer.validated_data["age"],
+                                            serializer.validated_data["gender"],
+                                            serializer.validated_data["occupation"])
+            except:
+                traceback.print_exc()
+                return Response("unknown error", status=404)
+        else:
+            return Response(serializer.errors, status=404)
+        return Response(serializer.validated_data, status=201)

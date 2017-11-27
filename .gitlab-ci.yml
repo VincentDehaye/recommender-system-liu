@@ -35,7 +35,7 @@ deploy_script:
   script:
     - echo "deploy_script"
     - pwd
-    - nohup docker-compose up &
+    - nohup docker-compose up -d
   only:
     - master
   stage: deploy

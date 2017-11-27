@@ -241,7 +241,7 @@ class TwitterTrendingView(APIView):
                 ]}
         return Response(recs)
 
-class RateMovieView(APIView):
+class FeedbackView(APIView):
     serializer_class = RatingSerializer
 
     def post(self, request):

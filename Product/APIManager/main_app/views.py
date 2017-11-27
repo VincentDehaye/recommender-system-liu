@@ -13,7 +13,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from sqlalchemy.exc import IntegrityError
 
-from main_app.serializers import RatingSerializer
+from main_app.serializers import RatingSerializer, UserSerializer
+from Product.DataManager.Users.InsertNewUser import InsertNewUser
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation
 from Product.RecommendationManager.feedback.feedback import Feedback
 from Product.DataManager.get_top_recommendations import get_top_recommendations
@@ -322,3 +323,20 @@ class AverageSuccessView(APIView):
                 {"time":"Saturday", "noTimesWatched":10, "noTimesNotWatched":20},
             ]}
         return Response(average_success)
+
+class AddUserView(APIView):
+    """
+    Author: Bamse
+    Date: 2017-11-27
+    Last update: 2017-11-27 by Bamse
+    Purpose: This class allows adding new users to the database
+    """
+    serializer_class = UserSerializer
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            InsertNewUser().insert_user(serializer.validated_data["age"],
+                                        serializer.validated_data["gender"],
+                                        serializer.validated_data["occupation"])
+        return Response(serializer.data)

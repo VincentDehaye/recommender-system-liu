@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^api/v1/success-rate/$', views.SuccessRateView.as_view(), name='success-rate-view'),
     url(r'^api/v1/simple-success/$', views.SimpleSuccessView.as_view(), name='simpleSuccess'),
     url(r'^api/v1/average-success/$', views.AverageSuccessView.as_view(), name='averageSuccess'),
+    url(r'^api/v1/add-user/$', views.AddUserView.as_view(), name='addUser'),
 ]

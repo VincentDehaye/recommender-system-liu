@@ -27,7 +27,7 @@ build_angular:
     - pwd
     - cd ./Product/Frontend/
     - npm install
-    - npm build:prod
+    - npm run build:prod
   stage: build
   only:
     - master

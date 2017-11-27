@@ -18,6 +18,7 @@ done
 cd Product/APIManager &&
 python manage.py makemigrations &&
 python manage.py migrate &&
+python manage.py collectstatic &&
 
 if [ ${PRODUCTION:-0} -eq 1 ]; then
 	gunicorn project_config.wsgi --access-logfile '-' -b 0.0.0.0:8000

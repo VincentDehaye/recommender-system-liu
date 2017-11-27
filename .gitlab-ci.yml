@@ -28,8 +28,7 @@ build_angular:
     - cd ./Product/Frontend/
     - npm install
     - npm build:prod
-  stage:
-    - build
+  stage: build
   only:
     - master
 
@@ -40,9 +39,4 @@ deploy_script:
     - docker-compose up &
   only:
     - master
-  stage:
-    - deploy
-  environment:
-    - PRODUCTION=1
-    - TWITTERSTREAM=1
-    - REMOVETWITTERFILES=1
+  stage: deploy

@@ -262,6 +262,8 @@ class FeedbackView(APIView):
             except ValueError:
                 return Response("user or movie does not exist", status=404)
         print(serializer.data)
+        else:
+            return Response(serializer.errors, status=400)
         return Response(serializer.data)
 
 class SuccessRateView(APIView):

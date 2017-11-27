@@ -34,8 +34,6 @@ class RecommendationsView(APIView):
     Last update: 2017-11-23 by Bamse
     This class is used to return the top recommendations from Recommendations module
     """
-    # authentication_classes = (SessionAuthentication,)
-    # permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         """

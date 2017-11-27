@@ -13,6 +13,7 @@ import { UsersD3AreaStackComponent } from './users-components/users-d3-area-stac
 import { UsersD3PolarComponent } from './users-components/users-d3-polar.component';
 import { UsersD3AdvancedPieComponent } from './users-components/users-d3-advanced-pie.component';
 
+import {ComponentsModule} from '../components/components.module';
 
 
 
@@ -26,7 +27,7 @@ const components = [
 ];
 
 @NgModule({
-  imports: [ThemeModule, UsersRoutingModule, AngularEchartsModule, NgxChartsModule, ChartModule],
+  imports: [ComponentsModule, ThemeModule, UsersRoutingModule, AngularEchartsModule, NgxChartsModule, ChartModule],
   declarations: [...routedComponents, ...components],
 })
 export class UsersModule {}

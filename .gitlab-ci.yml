@@ -1,19 +1,42 @@
 stages:
+  - build
   - test
+  - deploy
+
 before_script:
     - pwd
     - whoami
-    - export PYTHONPATH="${PYTHONPATH}:/home/gitlab-runner/builds/6b21c71b/0/PUM-Company3/Software/"
-    - source /home/gitlab-runner/git_venv/bin/activate
+    - export PYTHONPATH="${PYTHONPATH}:/home/gitlab-runner/builds/da0b8d35/0/PUM-Company3/Software/"
+    - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
     - python --version
     - python ./Product/Database/DBConn.py
     - python ./Product/Database/DBFillSmallSet.py
-    
+    - python ./Product/TrendManager/RunTrend.py
+
 test_script:
   script:
-    - source /home/gitlab-runner/virtualenvs/git_venv/bin/activate
-
+    - echo "test_script"
+    - pwd
+    - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
     - ./test_script
   stage: test
- 
- 
+
+build_angular:
+  script:
+    - echo "build_angular"
+    - pwd
+    - cd ./Product/Frontend/
+    - npm install
+    - npm build:prod
+  stage: build
+  only:
+    - master
+
+deploy_script:
+  script:
+    - echo "deploy_script"
+    - pwd
+    - nohup docker-compose up &
+  only:
+    - master
+  stage: deploy

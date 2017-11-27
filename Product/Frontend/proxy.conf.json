@@ -1,10 +1,10 @@
 {
     "/api": {
-        "target": "http://localhost",
+        "target": "http://192.168.99.100",
         "secure": false
     },
     "/static": {
-        "target": "http://localhost",
+        "target": "http://192.168.99.100",
         "secure": false
     }
 }

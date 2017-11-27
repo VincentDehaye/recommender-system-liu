@@ -1,29 +1,20 @@
-<!-- Performance page-->
+
+  <!--Author: Anton Bergström, Ariyan Abdulla-->
+  <!--Date: 2017-09-30-->
+  <!--Last update: 2017-11-17 by Anton & Ariyan-->
+  <!--This contains the html code for the performance page.-->
+
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-lg-12">
     <nb-card>
-        <nb-card-header>
           <h2 style="padding: 10px">
           <ngx-modals [modalHeader]=modalHeader1 [modalContent]=modalContent1></ngx-modals>
-          Improvement Over Time
+          Improvement Over Time Simple
           </h2>
-        </nb-card-header>
-        <nb-card-body>
-          <ngx-chartjs-multiple-xaxis></ngx-chartjs-multiple-xaxis>
-        </nb-card-body>
-    </nb-card>
-  </div>
-  <div class="col-md-6">
-    <nb-card>
-        <nb-card-header>
-          <h2 style="padding: 10px">
-          <ngx-modals [modalHeader]=modalHeader2 [modalContent]=modalContent2></ngx-modals>
-           Success Rate
-          </h2>
-        </nb-card-header>
-        <nb-card-body>
-        <ngx-chartjs-pie></ngx-chartjs-pie>
-        </nb-card-body>
+          <div class="col-lg-11">
+            <ngx-chartjs-multiple-xaxis [factor] = 1 style="margin-left:5%"></ngx-chartjs-multiple-xaxis>
+          </div>
     </nb-card>
   </div>
 </div>
+

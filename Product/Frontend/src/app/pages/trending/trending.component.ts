@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 
 import { DataHandlerService} from '../../@core/data/data-handler.service';
 
+/*
+  Author: Anton Bergström, Ariyan Abdulla, David Schutzer, Elvin Granat
+  Date: 2017-09-30
+  Last update: 2017-11-17 by Anton & Ariyan
+  This contains the different components used on the trending page.
+*/
+
 @Component({
   selector: 'ngx-trending',
   styleUrls: ['./trending.component.scss'],
@@ -14,16 +21,13 @@ export class TrendingComponent implements OnInit {
   dataTrending: any;
   dataYoutube: any;
   dataTwitter: any;
-  // Modal headers 1-
-  modalHeader1 = 'This is where you decide the modal header';
-  modalHeader2 = 'this is a different modal so it needs a different variable';
-  modalHeader3 = 'this is a different modal so it needs a different variable';
-
-  // Modal content 1-
-  modalContent1 = `this is the content that will be shown in the modal`;
-  modalContent2 = `same goes for this this is for the second modal`;
-  modalContent3 = `same goes for this this is for the second modal`;
-
+  modalHeader1 = 'Graph for the combined trending content';
+  modalHeader2 = 'Graph for the Youtube trending content';
+  modalHeader3 = 'Graph for the Twitter trending content';
+  modalContent1 = `This graph shows the top trending movies and their score produced by Coogl3's algorithm.
+  This score is the sum of the Youtube and Twitter scores.`;
+  modalContent2 = `This graph shows the top Youtube trending movies and their score produced by Coogl3's algorithm.`;
+  modalContent3 = `This graph shows the top Twitter trending movies and their score produced by Coogl3's algorithm.`;
 
     constructor(private dataHandlerService: DataHandlerService) { }
 

@@ -1,5 +1,7 @@
 """
-Search module for the YouTube API
+Author: Karl Lundvall, Albin Bergvall, Linn Pettersson
+Date: 2017-10-12
+Purpose: Search module for the YouTube API
 """
 
 import datetime
@@ -19,7 +21,9 @@ YOUTUBE_API_VERSION = "v3"
 
 class YoutubeAPI:
     """
-    Class responsible for retrieving data from Youtube
+    Author: Karl Lundvall, Albin Bergvall, Linn Pettersson
+    Date: 2017-10-12
+    Purpose: Class responsible for retrieving data from Youtube
     and calculate a trending score based on this data
     """
 
@@ -34,6 +38,7 @@ class YoutubeAPI:
     def get_youtube_data(self, keyword):
         """
         Author: Karl Lundvall
+        Date: 2017-10-12
         Purpose: Getting the the result from the search with keyword
         :param keyword: keyword, e.g. movie-title
         :return: search response from Youtube API
@@ -51,7 +56,7 @@ class YoutubeAPI:
     def get_youtube_score(self, keyword):
         """
         Author: Karl Lundvall, Linn Pettersson
-        Last update: 12/11/2017
+        Date: 2017-11-12
         Purpose: Getting video statistics for the selected videoId´s
         and calculating total trending score
         :param keyword: keyword, e.g. movie-title
@@ -96,7 +101,7 @@ class YoutubeAPI:
     def add_search_words(keyword):
         """
         Author: Linn Pettersson
-        Date: 7/11/2017
+        Date: 2017-11-07
         Purpose: Takes the movie title and adds more words to the search of the API
         :param keyword: keyword e.g. movie-title
         :return: new search term
@@ -108,6 +113,7 @@ class YoutubeAPI:
     def get_view_count(video):
         """
         Author: Karl Lundvall
+        Date: 2017-10-12
         Purpose: Getting view count
         :param video: search result from API response
         :return: number of views
@@ -121,6 +127,7 @@ class YoutubeAPI:
     def get_like_count(video):
         """
         Author: Linn Pettersson
+        Date: 2017-11-03
         Purpose: Getting like and dislike count and calculates the ratio
         :param video: search result from API response
         :return: ratio of dislikes/likes
@@ -147,11 +154,11 @@ class YoutubeAPI:
     def get_total_search_result(self, keyword):
         """
         Author: Linn Pettersson
-        Date: 7/11/2017
+        Date: 2017-11-07
         Purpose: Getting the total number of results for a movie search and then
         dividing it by max result (1 000 000) to get a percentage to use in
         trending calculations
-        :param keyword: kyeword, e.g. movie-title
+        :param keyword: keyword, e.g. movie-title
         :return: totalResult ratio
         """
         total_result = self.get_youtube_data(keyword).get("pageInfo").get("totalResults")
@@ -163,8 +170,7 @@ class YoutubeAPI:
     def get_publication_date(self, video):
         """
         Author: Linn Pettersson
-        Date: 9/11/2017
-        Last update: 10/11/2017
+        Date: 2017-11-10
         Purpose: Getting the date when a video was uploaded
         :param video: search result from API response
         :return: number between 0 and 1 were 1 represents a video updated 0 days ago
@@ -183,6 +189,7 @@ class YoutubeAPI:
     def get_video_id(self, keyword):
         """
         Author: Karl Lundvall
+        Date: 2017-10-12
         Purpose: Getting the videoId´s from the query
         :param keyword: keyword, e.g. movie-title
         :return: a list containing Youtube video id's
@@ -195,27 +202,11 @@ class YoutubeAPI:
 
         return id_list
 
-    def get_channel_id(self, keyword):
-        """
-        Getting the channel id for each video
-        :param keyword: keyword, e.g. movie-title
-        :return: channel for each video in list
-        """
-        search_response = self.youtube.videos().list(
-            part="statistics, snippet",
-            id=self.get_video_id(keyword)
-        ).execute()
-        channel_id_list = ""
-        for video in search_response.get("items", []):
-            channel_id = video.get("snippet").get("channelId")
-            if channel_id:
-                channel_id_list = channel_id + ", " + channel_id_list
-        return channel_id_list
-
     @staticmethod
     def get_date(days):
         """
         Author: Karl Lundvall
+        Date: 2017-10-12
         Purpose: Getting the date for the inputted number of days ago
         :param days: number of days ago
         :return: date from specified number of days ago

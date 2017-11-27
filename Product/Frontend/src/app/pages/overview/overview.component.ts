@@ -5,6 +5,13 @@ import { UserService } from '../authentication/_services/index';
 import { DataHandlerService} from '../../@core/data/data-handler.service';
 
 
+/*
+  Author: Anton Bergström, Ariyan Abdulla, David Schutzer
+  Date: 2017-09-30
+  Last update: 2017-11-23 by Anton & Ariyan
+  This contains the different components used on the overview page.
+*/
+
 @Component({
   selector: 'ngx-overview',
   styleUrls: ['./overview.component.scss'],
@@ -17,21 +24,16 @@ export class OverviewComponent implements OnInit {
   data: any;
   dataTrending: any;
   obj: any;
-  // Modal headers 1-
-  // Modal header for the "top recommended content"
-  modalHeader1 = 'INFORMATION ABOUT THE TOP RECOMMENDED CONTENT';
-  // Modal header for the "top trending content"
-  modalHeader2 = 'INFORMATION ABOUT THE TOP TRENDING CONTENT';
-
-  // Modal content 1-
-  // Modal content for the "top recommended content"
-  modalContent1 = `Here you can find the top recommended movies for you from
-  our high class recommendation algorithm.`;
-  // Modal content for the "top trending content"
-  modalContent2 = `In this list the top trending movies are presented to you.
-  By applicating the trending factor to the result from our recommendation
-  algorithm, we offer you a unique experience with the most relevant movies
-  right now. `;
+  modalHeader1 = 'Graph for the top recommended content';
+  modalHeader2 = 'List for the top recommended content';
+  modalHeader3 = 'Graph for the top trending content';
+  modalHeader4 = 'List for the top trending content';
+  modalContent1 = `This graph shows the top recommended movies and their score produced from Coogl3's algorithm.`;
+  modalContent2 = `This list shows the top recommended movies and their title.
+The first movie in the list is the one with the highest score.`;
+  modalContent3 = `This graph shows the top trending movies and the score produced from Coogl3's algorithm.`;
+  modalContent4 = `This list shows the top trending movies and their title.
+The first movie in the list is the one with the highest score.`;
 
     constructor(private userService: UserService, private dataHandlerService: DataHandlerService) { }
 

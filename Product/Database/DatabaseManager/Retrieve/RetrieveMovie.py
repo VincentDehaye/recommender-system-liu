@@ -3,6 +3,7 @@ The RetrieveMovie Class is supposed to provide data about movies from database
 """
 from Product.Database.DBConn import Movie
 from Product.Database.DatabaseManager.Retrieve.Retrieve import Retrieve
+from sqlalchemy import desc
 
 
 class RetrieveMovie(Retrieve):
@@ -28,3 +29,15 @@ class RetrieveMovie(Retrieve):
             movie = self.session.query(Movie).all()
         self.session.close()
         return movie
+
+    def retrieve_largest_movie_id(self):
+        """
+        Author: Alexander Dahl, Marten Bolin
+        Date: 19/11/2017
+        Last update:
+        Purpose: Supposed to get the movies with the highest id
+        :return Movie : a movie of type Movie with highest id
+        """
+        movie = self.session.query(Movie).order_by(desc(Movie.id)).limit(1).first()
+        self.session.close()
+        return movie.id

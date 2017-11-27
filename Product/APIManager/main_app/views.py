@@ -14,6 +14,7 @@ from rest_framework.views import APIView
 
 from main_app.serializers import RatingSerializer
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation
+from Product.RecommendationManager.feedback.feedback import Feedback
 from Product.DataManager.get_top_recommendations import get_top_recommendations
 from Product.DataManager.TopTrending.RetrieveTopTrendingTotal import RetrieveTopTrendingTotal
 from Product.DataManager.TopTrending.RetrieveTopTrendingTwitter import RetrieveTopTrendingTwitter
@@ -247,10 +248,12 @@ class FeedbackView(APIView):
     def get(self, request, user_id):
         return UserRecommendationsView().get(request, user_id)
 
-    def post(self, request):
-        serializer = RatingSerializer(request.data)
     def post(self, request, user_id):
         serializer = RatingSerializer(data=request.data)
+        if serializer.is_valid():
+            Feedback().insert_feedback(user_id, serializer.validated_data["movie_id"],
+                                       serializer.validated_data["watched"],
+                                       serializer.validated_data["rating"])
         print(serializer.data)
         return Response(serializer.data)
 

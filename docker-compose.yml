@@ -46,8 +46,6 @@ services:
     depends_on:
      - data_db
     dns: 8.8.8.8
-    volumes:
-     - .:/src
     environment:
      - PRODUCTION_DATABASE=1
      - DATA_DATABASE_HOST=data_db

@@ -22,10 +22,12 @@ deploy_script:
     - echo "deploy_script"
     - pwd
     - cd ./Product/Frontend/
-    - npm install -g
+    - npm install
     - npm run build:prod
     - cd ../../
-    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml build web
+    - nohup docker-compose-f docker-compose.yml -f docker-compose.prod.yml build trend
+    - nohup docker-compose-f docker-compose.yml -f docker-compose.prod.yml build recommendation
   only:
     - master
   stage: deploy

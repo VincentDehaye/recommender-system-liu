@@ -13,8 +13,7 @@ from googleapiclient.errors import HttpError
 class TrendingController:
     """""
     Author: Albin Bergvall, Martin Lundberg
-    Date: 2017-09-28
-    Last update: 2017-10-03
+    2017-11-21
     Purpose: Class responsible for fetching the trending score from the API sources.
     """
 
@@ -22,8 +21,7 @@ class TrendingController:
     def get_trending_content(keyword):
         """
         Author: Albin Bergvall, Martin Lundberg
-        Date:
-        Last update: 2017/11/21 Albin Bergvall
+        Date: 2017-11-21
         Purpose: Takes the movie title (keyword) as a parameter and fetches score
         from the API sources and returns an instance of ScoredMovie
         :param keyword: keyword, e.g. movie title

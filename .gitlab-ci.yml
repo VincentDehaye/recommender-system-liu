@@ -1,5 +1,8 @@
 stages:
+  - build
   - test
+  - deploy
+
 before_script:
     - pwd
     - whoami
@@ -9,13 +12,37 @@ before_script:
     - python ./Product/Database/DBConn.py
     - python ./Product/Database/DBFillSmallSet.py
     - python ./Product/TrendManager/RunTrend.py
-    
-    
+
 test_script:
   script:
+    - echo "test_script"
+    - pwd
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
-
     - ./test_script
   stage: test
- 
- 
+
+build_angular:
+  script:
+    - echo "build_angular"
+    - pwd
+    - cd ./Product/Frontend/
+    - npm install
+    - npm build:prod
+  stage:
+    - build
+  only:
+    - master
+
+deploy_script:
+  script:
+    - echo "deploy_script"
+    - pwd
+    - docker-compose up &
+  only:
+    - master
+  stage:
+    - deploy
+  environment:
+    - PRODUCTION=1
+    - TWITTERSTREAM=1
+    - REMOVETWITTERFILES=1

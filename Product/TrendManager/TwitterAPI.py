@@ -126,8 +126,8 @@ class TwitterAPI:
         """
         Author: Albin Bergvall
         Date: 2017-11-13
-        Purpose: The purpose of this function is to load the latest modified file from the trendingdata
-        directory. Used for loading dictionaries and to check if files exist.
+        Purpose: The purpose of this function is to load the latest modified file from
+        the trendingdata directory. Used for loading dictionaries and to check if files exist.
         :return:
         """
         path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata/*.bin'

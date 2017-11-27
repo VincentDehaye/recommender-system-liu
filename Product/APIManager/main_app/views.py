@@ -261,7 +261,6 @@ class FeedbackView(APIView):
                                            serializer.validated_data["rating"])
             except ValueError:
                 return Response("user or movie does not exist", status=404)
-        print(serializer.data)
         else:
             return Response(serializer.errors, status=400)
         return Response(serializer.data)
@@ -338,12 +337,13 @@ class AddUserView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            InsertNewUser().insert_user(serializer.validated_data["age"],
-                                        serializer.validated_data["gender"],
-                                        serializer.validated_data["occupation"])
-             except:
-                 traceback.print_exc()
-                 return Response("unknown error in request", status=404)
+            try:
+                InsertNewUser().insert_user(serializer.validated_data["age"],
+                                            serializer.validated_data["gender"],
+                                            serializer.validated_data["occupation"])
+            except:
+                traceback.print_exc()
+                return Response("unknown error", status=404)
         else:
             return Response(serializer.errors, status=404)
-        return Response(serializer.data)
+        return Response(serializer.validated_data, status=201)

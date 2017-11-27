@@ -341,6 +341,9 @@ class AddUserView(APIView):
             InsertNewUser().insert_user(serializer.validated_data["age"],
                                         serializer.validated_data["gender"],
                                         serializer.validated_data["occupation"])
+             except:
+                 traceback.print_exc()
+                 return Response("unknown error in request", status=404)
         else:
             return Response(serializer.errors, status=404)
         return Response(serializer.data)

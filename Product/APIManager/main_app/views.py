@@ -11,6 +11,7 @@ import traceback
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from sqlalchemy.exc import IntegrityError
 
 from main_app.serializers import RatingSerializer
 from Product.RecommendationManager.Recommendation.recommendation import Recommendation
@@ -142,6 +143,8 @@ class UserRecommendationsView(APIView):
                 {"title":"Wonderman the movie", "id":9, "score":10},
                 {"title":"Manbat", "id":10, "score":10},
                 ]}
+        except IntegrityError:
+            return Response("user does not exist.", status=404)
         except:
             traceback.print_exc()
             recs = {"recommendation_list":[
@@ -251,9 +254,12 @@ class FeedbackView(APIView):
     def post(self, request, user_id):
         serializer = RatingSerializer(data=request.data)
         if serializer.is_valid():
-            Feedback().insert_feedback(user_id, serializer.validated_data["movie_id"],
-                                       serializer.validated_data["watched"],
-                                       serializer.validated_data["rating"])
+            try:
+                Feedback().insert_feedback(user_id, serializer.validated_data["movie_id"],
+                                           serializer.validated_data["watched"],
+                                           serializer.validated_data["rating"])
+            except ValueError:
+                return Response("user or movie does not exist", status=404)
         print(serializer.data)
         return Response(serializer.data)
 

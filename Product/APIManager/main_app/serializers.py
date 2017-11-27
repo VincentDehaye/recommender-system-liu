@@ -14,7 +14,10 @@ class UserSerializer(serializers.Serializer):
     occupation = serializers.CharField(allow_blank=True, max_length=30)
 
     def validate_gender(self, value):
-        if value in ("Male", "Female", "Unknown"):
-            return value
+        if value in ("Male", "Female", "Other" ,""):
+            if value == "":
+                return "Unknown"
+            else:
+                return value
         else:
-            raise serializers.ValidationError("Gender must be Male, Female or Unknown")
+            raise serializers.ValidationError("Gender must be Male, Female, Other or left blank")

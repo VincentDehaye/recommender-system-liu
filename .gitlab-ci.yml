@@ -7,17 +7,16 @@ before_script:
     - pwd
     - whoami
     - export PYTHONPATH="${PYTHONPATH}:/home/gitlab-runner/builds/da0b8d35/0/PUM-Company3/Software/"
-    - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
-    - python --version
-    - python ./Product/Database/DBConn.py
-    - python ./Product/Database/DBFillSmallSet.py
-    - python ./Product/TrendManager/RunTrend.py
 
 test_script:
   script:
     - echo "test_script"
     - pwd
     - source /home/sebbe953/virtualenvs/pum-venv/bin/activate
+    - python --version
+    - python ./Product/Database/DBConn.py
+    - python ./Product/Database/DBFillSmallSet.py
+    - python ./Product/TrendManager/RunTrend.py
     - ./test_script
   stage: test
 
@@ -27,7 +26,7 @@ build_angular:
     - pwd
     - cd ./Product/Frontend/
     - npm install
-    - npm build:prod
+    - npm run build:prod
   stage: build
   only:
     - master

@@ -148,11 +148,11 @@ class TwitterAPI:
         """
         path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata'
         now = time.time()
-        for f in os.listdir(path):
-            f = os.path.join(path, f)
-            if os.stat(f).st_mtime < (now - 7 * 86400):
-                if os.path.isfile(f):
-                    os.remove(f)
+        for file in os.listdir(path):
+            file = os.path.join(path, file)
+            if os.stat(file).st_mtime < (now - 7 * 86400):
+                if os.path.isfile(file):
+                    os.remove(file)
 
     @staticmethod
     def format_word(word):
@@ -216,9 +216,8 @@ class StdOutListener(StreamListener):
                 if word is not None:
                     self.update_count(word)
             return True
-        else:
-            self.store_dict()
-            return False
+        self.store_dict()
+        return False
 
     @staticmethod
     def format_word(word):

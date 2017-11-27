@@ -3,8 +3,6 @@ stages:
   - deploy
 
 before_script:
-    - pwd
-    - whoami
     - export PYTHONPATH="${PYTHONPATH}:/home/gitlab-runner/builds/da0b8d35/0/PUM-Company3/Software/"
 
 test_script:

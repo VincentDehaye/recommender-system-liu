@@ -1,5 +1,4 @@
 stages:
-  - build
   - test
   - deploy
 
@@ -20,21 +19,14 @@ test_script:
     - ./test_script
   stage: test
 
-build_angular:
-  script:
-    - echo "build_angular"
-    - pwd
-    - cd ./Product/Frontend/
-    - npm install
-    - npm run build:prod
-  stage: build
-  only:
-    - master
-
 deploy_script:
   script:
     - echo "deploy_script"
     - pwd
+    - cd ./Product/Frontend/
+    - npm install
+    - npm run build:prod
+    - cd ../../
     - nohup docker-compose up -d
   only:
     - master

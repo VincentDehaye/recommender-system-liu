@@ -29,7 +29,7 @@ build_angular:
     - npm run build:prod
   stage: build
   only:
-    - development
+    - master
 
 deploy_script:
   script:
@@ -37,5 +37,5 @@ deploy_script:
     - pwd
     - nohup docker-compose up &
   only:
-    - development
+    - master
   stage: deploy

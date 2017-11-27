@@ -30,6 +30,7 @@ services:
       - DATA_DATABASE_HOST=data_db
       - WEBSITE_DATABASE_HOST=website_db
       - PRODUCTION=${PRODUCTION}
+      - ZENTERIO_PWD=${ZENTERIO_PWD}
 
   website_db:
     image: postgres:latest

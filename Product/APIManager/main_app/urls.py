@@ -6,6 +6,7 @@ Last update: 2017-11-22
 Purpose: Mapping URL requests to the API.
 """
 from django.conf.urls import include, url
+from rest_framework_jwt.views import obtain_jwt_token
 
 from . import views
 
@@ -22,4 +23,5 @@ urlpatterns = [
     url(r'^api/v1/simple-success/$', views.SimpleSuccessView.as_view(), name='simpleSuccess'),
     url(r'^api/v1/average-success/$', views.AverageSuccessView.as_view(), name='averageSuccess'),
     url(r'^api/v1/add-user/$', views.AddUserView.as_view(), name='addUser'),
+    url(r'^api/v1/authenticate/', obtain_jwt_token),
 ]

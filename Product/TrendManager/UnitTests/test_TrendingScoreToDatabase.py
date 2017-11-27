@@ -1,7 +1,13 @@
+"""
+Unit tests for TrendScoreToDatabase.py
+"""
+
+import time
+
 from Product.TrendManager.TrendScoreToDatabase import TrendingToDB
 from Product.Database.DBConn import create_session
 from Product.Database.DBConn import TrendingScore
-import time
+
 
 def test_TrendingToDB():
     '''
@@ -10,9 +16,11 @@ def test_TrendingToDB():
     Purpose: Assert that the database gets filled/updated with trending scores.
     '''
 
-    # The test will first start to run the class TrendingToDB and then wait (sleep) for 3 seconds before moving on
-    # to make sure that there has been a value stored for the trending score "total_score".
-    session=create_session()
+    # The test will first start to run the class TrendingToDB
+    # and then wait (sleep) for 3 seconds before moving on
+    # to make sure that there has been a value stored for
+    # the trending score "total_score".
+    session = create_session()
     # Pre-conditions
     trend_to_db = TrendingToDB(daily=False)
     time.sleep(3)

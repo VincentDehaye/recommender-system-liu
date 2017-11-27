@@ -7,18 +7,19 @@ Purpose: Gets movie from database and stores a trending score
 
 from datetime import datetime
 import threading
-
 import os
+from apscheduler.schedulers.background import BackgroundScheduler
 
 from Product.TrendManager.TwitterAPI import TwitterAPI
-from apscheduler.schedulers.background import BackgroundScheduler
 from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
 from Product.Database.DatabaseManager.Insert.InsertTrending import InsertTrending
 from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
 from Product.Database.DatabaseManager.Update.UpdateTrending import UpdateTrending
 from Product.TrendManager.TrendingController import TrendingController
+
 TIME_LIMIT_TWITTER_STREAM = 43200  # Time limit for twitter stream uptime in seconds
-TIME_LIMIT_TWITTER_STREAM_NO_FILE = 7200  # Time limit for twitter stream if there is no file to load data from
+# Time limit for twitter stream if there is no file to load data from
+TIME_LIMIT_TWITTER_STREAM_NO_FILE = 7200
 
 
 class TrendingToDB(object):

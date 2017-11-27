@@ -1,3 +1,7 @@
+"""
+Unit tests for TwitterAPI.py
+"""
+
 from ..TwitterAPI import TwitterAPI
 
 
@@ -5,7 +9,8 @@ def test_get_word_score():
     """
     Author: Karl Lundvall
     Date: 2017-11-13
-    Purpose: Assert that it is possible to retrieve a score from the dictionary and that the score is an integer.
+    Purpose: Assert that it is possible to retrieve a score
+    from the dictionary and that the score is an integer.
     """
     # Pre-conditions
     twitter_api = TwitterAPI()
@@ -28,7 +33,8 @@ def test_format_word():
     """
     Author: Karl Lundvall
     Date: 2017-11-13
-    Purpose: Assert that words are in lowercase and that all non alphabetic or numeric characters gets removed.
+    Purpose: Assert that words are in lowercase and that
+    all non alphabetic or numeric characters gets removed.
     """
     # Pre-conditions
     twitter_api = TwitterAPI()

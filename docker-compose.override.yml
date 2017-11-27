@@ -5,6 +5,10 @@ services:
     volumes:
       - .:/src
 
+  trend:
+    volumes:
+     - .:/src
+
   recommendation:
     volumes:
      - .:/src

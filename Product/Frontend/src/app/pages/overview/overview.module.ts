@@ -14,7 +14,7 @@ import { OverviewD3BarComponent } from './overview-components/overview-d3-bar.co
 
 const components = [
     OverviewD3BarComponent,
-    OverviewChartjsPieComponent
+    OverviewChartjsPieComponent,
 ];
 @NgModule({
   imports: [ComponentsModule, ThemeModule, AngularEchartsModule, NgxChartsModule, ChartModule, OverviewRoutingModule,

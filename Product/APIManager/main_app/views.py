@@ -244,6 +244,9 @@ class TwitterTrendingView(APIView):
 class FeedbackView(APIView):
     serializer_class = RatingSerializer
 
+    def get(self, request, user_id):
+        return UserRecommendationsView().get(request, user_id)
+
     def post(self, request):
         serializer = RatingSerializer(request.data)
         print(serializer.data)

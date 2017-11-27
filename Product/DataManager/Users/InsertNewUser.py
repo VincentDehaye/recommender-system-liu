@@ -21,7 +21,7 @@ class InsertNewUser(object):
 
         :param gender : The gender of the user
         :type String
-        :valid Male, Female, Unknown
+        :valid Male, Female, , Other, Unknown
 
         :param occupation : The occupation of the user (Optional)
         :type String

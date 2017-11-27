@@ -341,4 +341,6 @@ class AddUserView(APIView):
             InsertNewUser().insert_user(serializer.validated_data["age"],
                                         serializer.validated_data["gender"],
                                         serializer.validated_data["occupation"])
+        else:
+            return Response(serializer.errors, status=404)
         return Response(serializer.data)

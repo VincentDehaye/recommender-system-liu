@@ -249,6 +249,8 @@ class FeedbackView(APIView):
 
     def post(self, request):
         serializer = RatingSerializer(request.data)
+    def post(self, request, user_id):
+        serializer = RatingSerializer(data=request.data)
         print(serializer.data)
         return Response(serializer.data)
 

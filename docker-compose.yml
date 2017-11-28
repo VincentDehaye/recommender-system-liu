@@ -53,7 +53,7 @@ services:
   recommendation:
     build: .
     container_name: recommendation
-    command: bash Product/Docker/recommendation_startup_script.sh
+    command: bash Docker/recommendation_startup_script.sh
     depends_on:
      - data_db
      - trending

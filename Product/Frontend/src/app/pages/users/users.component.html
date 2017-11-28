@@ -23,7 +23,7 @@
           <nb-card-header>
             <h2 style="padding: 10px">
             <ngx-modals [modalHeader]=modalHeader2 [modalContent]=modalContent2></ngx-modals>
-            Top Recommendations {{tmp1}} ::: {{tmp2}}</h2>
+            Top Recommendations</h2>
           </nb-card-header>
           <nb-card-header *ngFor="let movie of data?.recommendation_list"> {{movie.title}} </nb-card-header>
       </nb-card>
@@ -35,7 +35,7 @@
       <nb-card-header>
         <h2 style="padding: 10px">
         <ngx-modals [modalHeader]=modalHeader3 [modalContent]=modalContent3></ngx-modals>
-        Demographic {{fromAge}} {{toAge}} {{model | json}}
+        Demographic
         </h2>
       </nb-card-header>
       <nb-card-body>

@@ -53,4 +53,4 @@ class InsertFeedback(Insert):
         self.session.commit()
         print('committed for user %s' % user_id)
         self.session.close()
-InsertFeedback().insert_feedback(user_id=1, movie_id=1, rating=2)
+# InsertFeedback().insert_feedback(user_id=1, movie_id=1, rating=2)

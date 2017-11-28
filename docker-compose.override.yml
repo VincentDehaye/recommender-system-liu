@@ -8,6 +8,9 @@ services:
   trend:
     volumes:
      - .:/src
+    environment:
+      - TWITTERSTREAM=${TWITTERSTREAM}
+      - REMOVETWITTERFILES=${REMOVETWITTERFILES}
 
   recommendation:
     volumes:

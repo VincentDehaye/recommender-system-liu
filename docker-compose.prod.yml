@@ -4,3 +4,8 @@ services:
   web:
     environment:
       - PRODUCTION=1
+
+  trending:
+    environment:
+      - TWITTERSTREAM=1
+      - REMOVETWITTERFILES=1

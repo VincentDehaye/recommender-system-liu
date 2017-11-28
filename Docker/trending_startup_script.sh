@@ -9,4 +9,5 @@ do
 done
 
 python Product/Database/DBConn.py
+python Product/Database/DBFillSmallSet.py
 python Product/TrendManager/RunTrend.py

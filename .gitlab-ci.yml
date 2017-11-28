@@ -28,7 +28,7 @@ deploy_script:
     - cd ../../
     - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
     - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml build web
-    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml build trend
+    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml build trending
     - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml build recommendation
   only:
     - master

@@ -5,7 +5,7 @@ services:
     volumes:
       - .:/src
 
-  trend:
+  trending:
     volumes:
      - .:/src
     environment:

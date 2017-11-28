@@ -22,10 +22,11 @@ export class LoginComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private http: HttpClient) {
         // set token if saved in local storage
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        this.token = currentUser && currentUser.token; }
+         }
 
     ngOnInit() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.token = currentUser && currentUser.token;
         // reset login status
         this.authenticationService.logout();
     }

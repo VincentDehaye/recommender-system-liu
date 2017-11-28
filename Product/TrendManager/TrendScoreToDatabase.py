@@ -129,7 +129,7 @@ class TrendingToDB(object):
 
                 # The commit is in the loop for now due to high waiting time but
                 # could be moved outside to lower total run time
-        print("Waiting until next day to update")
+
         # Open twitter stream after titles has been scored, to gather new data
         # The os.environ checks if the run config has a variable named "TWITTERSTREAM"
         # and only starts stream if it is set to 1. This is to make sure that the stream
@@ -137,8 +137,10 @@ class TrendingToDB(object):
         try:
             if os.environ["TWITTERSTREAM"] == "1":
                 TwitterAPI().open_twitter_stream(TIME_LIMIT_TWITTER_STREAM)
+                print("Opened Twitter Stream")
         except KeyError:
             pass
+        print("Waiting until next day to update")
 
     # Used to stop the thread if background is false
     # or for any other reason it needs to be stopped.

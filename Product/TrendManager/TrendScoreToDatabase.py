@@ -54,7 +54,7 @@ class TrendingToDB(object):
             # if set to daily, it creates a scheduler and sets the interval to 1 day
             self.scheduled = BackgroundScheduler()
             if not daemon:
-                self.scheduled.daemon = False
+                self.scheduled._daemon = False
             self.scheduled.add_job(self.run, 'interval', days=1, id="1")
             self.scheduled.start()
             self.scheduled.modify_job(job_id="1", next_run_time=datetime.now())
@@ -129,7 +129,7 @@ class TrendingToDB(object):
 
                 # The commit is in the loop for now due to high waiting time but
                 # could be moved outside to lower total run time
-
+        print("Waiting until next day to update")
         # Open twitter stream after titles has been scored, to gather new data
         # The os.environ checks if the run config has a variable named "TWITTERSTREAM"
         # and only starts stream if it is set to 1. This is to make sure that the stream
@@ -149,7 +149,7 @@ class TrendingToDB(object):
         Last update:
         Purpose: Terminates the process
         """
-        print("Shutting down TrendScoreToDatabase..")
+        print("Shutting down TrendScoreToDatabase")
         self.stop = True
         if self.daily:
             self.scheduled.shutdown()

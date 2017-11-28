@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 import { AuthenticationService } from '../_services/index';
 
@@ -10,13 +12,18 @@ import { AuthenticationService } from '../_services/index';
 })
 
 export class LoginComponent implements OnInit {
+    public token: string;
     model: any = {};
     loading = false;
     error = '';
 
     constructor(
         private router: Router,
-        private authenticationService: AuthenticationService) { }
+        private authenticationService: AuthenticationService,
+        private http: HttpClient) {
+        // set token if saved in local storage
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.token = currentUser && currentUser.token; }
 
     ngOnInit() {
         // reset login status
@@ -25,14 +32,23 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.loading = true;
-        this.authenticationService.login(this.model.username, this.model.password)
-            .subscribe(result => {
-                if (result === true) {
-                  this.router.navigate(['/']);
-                } else {
-                    this.error = 'Username or password is incorrect';
-                    this.loading = false;
+        const body = {'username': this.model.username, 'password': this.model.password}
+        this.http.post(environment.apiUrl + 'v1/authenticate/', body).subscribe(
+            response => {
+                const token = response['token'];
+                if (token) {
+                    // set token property
+                    this.token = token;
+                    // store username and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('currentUser',
+                        JSON.stringify({ username: this.model.username, token: token }));
+                    this.router.navigate(['/']);
                 }
-            });
+            },
+            (err: HttpErrorResponse) => {
+                this.error = 'Username or password is incorrect';
+                this.loading = false;
+            },
+        );
     }
 }

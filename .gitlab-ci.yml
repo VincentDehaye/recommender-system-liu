@@ -21,6 +21,7 @@ deploy_script:
   script:
     - echo "deploy_script"
     - pwd
+    - whoami
     - cd ./Product/Frontend/
     - npm install
     - npm run build:prod

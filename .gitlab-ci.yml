@@ -27,8 +27,8 @@ deploy_script:
     - npm run build:prod
     - cd ../../
     - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml build web
-    - nohup docker-compose-f docker-compose.yml -f docker-compose.prod.yml build trend
-    - nohup docker-compose-f docker-compose.yml -f docker-compose.prod.yml build recommendation
+    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml build trend
+    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml build recommendation
   only:
     - master
   stage: deploy

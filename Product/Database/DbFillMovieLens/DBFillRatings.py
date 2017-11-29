@@ -65,6 +65,7 @@ class FillRatings:
 
         # Commit the added ratings
         self.session.commit()
+        self.session.close()
         print("DONE - Ratings added")
 
         # Close the csv file

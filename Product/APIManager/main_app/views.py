@@ -121,12 +121,12 @@ class UserRecommendationsView(APIView):
         """
         Author: Bamse
         Date: 2017-11-14
-        Last update: 2017-11-14 by Bamse
+        Last update: 2017-11-29 by Alexander Dahl
         Purpose: Handles GET requests to recommendations API. Returns mock data if fetching from
         recommendation doesn't work.
         """
         try:
-            recs = Recommendation(user_id, 10).generate_recommendation_list().__dict__
+            recs = Recommendation(user_id).generate_recommendation_list().__dict__
         except ValueError:
             traceback.print_exc()
             recs = {"recommendation_list":[

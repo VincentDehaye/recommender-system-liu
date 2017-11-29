@@ -23,7 +23,7 @@ class CreateRecommendationsForAllUsers:
         """
         Author: Alexander Dahl, Marten Bolin
         Date: 2017-11-15
-        Last update: 2017-11-13
+        Last update: 2017-11-28 by Alexander Dahl
         Purpose:
         This fucntion populates the database with recommendations for all users.
         :param number_of_users : how many users to create recommendations for
@@ -34,4 +34,4 @@ class CreateRecommendationsForAllUsers:
         # populates the database with all the recommendations for all users
         for user, user_number in zip(users, range(0, number_of_users)):
             # the Recommendation class will insert it to the database when it is generated
-            Recommendation(user.id, 10).generate_recommendation_list()
+            Recommendation(user.id).generate_recommendation_list()

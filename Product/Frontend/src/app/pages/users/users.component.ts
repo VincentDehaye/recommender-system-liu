@@ -15,13 +15,15 @@ import { DataHandlerService} from '../../@core/data/data-handler.service';
 })
 
 export class UsersComponent implements OnInit {
+
   model = {
     male: true,
     other: true,
     female: true,
+    fromAge: 0 ,
+    toAge: 200 ,
   };
-  fromAge: number= 0;
-  toAge: number= 200;
+
   movies: string[];
   data: any;
   value: any= '0 - 200';
@@ -43,8 +45,6 @@ export class UsersComponent implements OnInit {
     one: false,
     two: false,
   };
-  tmp1: any;
-  tmp2: any;
   constructor(private dataHandlerService: DataHandlerService) { }
 
   ngOnInit() {
@@ -58,18 +58,15 @@ export class UsersComponent implements OnInit {
   }
   getDemoData() {
     this.dataHandlerService.getMetaRecommendationsData(
-      this.fromAge, this.toAge, this.model.male,
+      this.model.fromAge, this.model.toAge, this.model.male,
       this.model.female, this.model.other,
     ).subscribe((data) => {
        this.data = data;
     });
-    this.tmp1 = this.model.male;
-    this.tmp2 = this.model.female;
-
   }
    setAge(fromAge: any, toAge: any) {
-    this.fromAge = fromAge;
-    this.toAge = toAge;
+    this.model.fromAge = fromAge;
+    this.model.toAge = toAge;
     this.getDemoData();
   }
    enableGender() {

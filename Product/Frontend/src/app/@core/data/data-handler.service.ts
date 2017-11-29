@@ -51,7 +51,8 @@ readonly ROOT_URLaverage = this.apiUrl + 'v1/average-success';
   getAverageSuccessrate(): any {
     return this.http.get(this.ROOT_URLaverage,  {headers: this.headers}).map((res: Response) => res);
   }
-  getMetaRecommendationsData(age_lower = 0, age_upper = 200, male = true, female = true, other = true): any {
+  getMetaRecommendationsData(age_lower: number, age_upper: number,
+                            male: boolean, female: boolean, other: boolean): any {
     let filter: string = '';
     filter += 'age_lower=' + age_lower.toString() + '&age_upper=' + age_upper.toString();
     if (male) { filter += '&male=1'; }

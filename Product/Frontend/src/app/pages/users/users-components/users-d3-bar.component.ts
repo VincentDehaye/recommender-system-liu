@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, EventEmitter } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { UsersComponent } from '../users.component'
 import { DataHandlerService} from '../../../@core/data/data-handler.service';
@@ -25,7 +25,6 @@ import { DataHandlerService} from '../../../@core/data/data-handler.service';
   `,
 })
 export class UsersD3BarComponent implements OnDestroy, OnInit {
-
   movies: string[];
   movies1: string[];
   data: any;
@@ -38,7 +37,13 @@ export class UsersD3BarComponent implements OnDestroy, OnInit {
   yAxisLabel = 'recomended';
   colorScheme: any;
   themeSubscription: any;
-  @Input() args: any;
+  @Input() args: any = {
+    male: true,
+    other: true,
+    female: true,
+    fromAge: 0 ,
+    toAge: 200 ,
+  };
 
   constructor(private theme: NbThemeService, private dataHandlerService: DataHandlerService) {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
@@ -51,8 +56,6 @@ export class UsersD3BarComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.getData();
-    this.extractData();
-
   }
 
   /*
@@ -79,12 +82,20 @@ export class UsersD3BarComponent implements OnDestroy, OnInit {
       this.results = realName;
     }); // Converts the data making it reachable in the htm file
   }
-   extractData() {
-    return null;
-  }
-
 
   ngOnDestroy(): void {
     this.themeSubscription.unsubscribe();
+  }
+  public setData(data: any) {
+    this.movies = data.recommendation_list;
+      const realName = [];
+      for (let i = 0; i < this.movies.length; ++i) {
+      const newName = {
+        name: this.movies[i]['title'],
+        value: this.movies[i]['timesRecommended'],
+      };
+      realName.push(newName);
+    }
+    this.results = realName;
   }
 }

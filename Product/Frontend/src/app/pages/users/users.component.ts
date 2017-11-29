@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, ViewChild } from '@angular/core';
 import { DataHandlerService} from '../../@core/data/data-handler.service';
-
+import { UsersD3BarComponent } from './users-components/users-d3-bar.component'
 /*
   Author: Anton Bergström, Ariyan Abdulla, David Schutzer, Bamse
   Date: 2017-09-30
@@ -16,6 +16,7 @@ import { DataHandlerService} from '../../@core/data/data-handler.service';
 
 export class UsersComponent implements OnInit {
 
+  @ViewChild( UsersD3BarComponent ) usersD3BarComponent: any;
   model = {
     male: true,
     other: true,
@@ -45,7 +46,7 @@ export class UsersComponent implements OnInit {
     one: false,
     two: false,
   };
-  constructor(private dataHandlerService: DataHandlerService) { }
+  constructor(private dataHandlerService: DataHandlerService) {}
 
   ngOnInit() {
     this.getDemoData();
@@ -63,8 +64,9 @@ export class UsersComponent implements OnInit {
     ).subscribe((data) => {
        this.data = data;
     });
+    this.usersD3BarComponent.getData();
   }
-   setAge(fromAge: any, toAge: any) {
+   setAge(fromAge: number, toAge: number) {
     this.model.fromAge = fromAge;
     this.model.toAge = toAge;
     this.getDemoData();

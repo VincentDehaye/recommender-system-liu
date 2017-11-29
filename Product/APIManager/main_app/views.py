@@ -40,7 +40,7 @@ class RecommendationsView(APIView):
         Date: 2017-11-14
         Last update: 2017-11-23 by Bamse
         Purpose: Handles GET requests to recommendations API. Returns mock data if fetching from
-        recommendation doesn't work.
+        recommendation doesn't work or if it's empty.
         """
         try:
             age_range = [request.query_params.get("age_lower", MINIMUM_AGE), request

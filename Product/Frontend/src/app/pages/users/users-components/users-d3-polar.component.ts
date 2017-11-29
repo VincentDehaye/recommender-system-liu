@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 
+
 @Component({
   selector: 'ngx-d3-polar',
   template: `

@@ -9,6 +9,8 @@
 
 * [Run development server](https://gitlab.ida.liu.se/PUM-Company3/Software/wikis/run-development-server)
 
+* [Run production server](https://gitlab.ida.liu.se/PUM-Company3/Software/wikis/run-production-server) 
+
 ## Guidelines
 
 * [GitLab](https://drive.google.com/open?id=0B0-_5NZyjrIgNnNJb3FqOW5XVTQ)

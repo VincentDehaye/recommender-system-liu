@@ -24,7 +24,7 @@ deploy_script:
     - whoami
     - cd ./Product/Frontend/
     - npm --unsafe-perm install
-    - npm --unsafe-perm run build:prod
+    - npm run build:prod
     - cd ../../
     - docker-compose down
     - docker rmi -f $(docker images -a -q)

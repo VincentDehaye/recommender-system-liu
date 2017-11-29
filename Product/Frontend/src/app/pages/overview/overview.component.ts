@@ -5,6 +5,13 @@ import { UserService } from '../authentication/_services/index';
 import { DataHandlerService} from '../../@core/data/data-handler.service';
 
 
+/*
+  Author: Anton Bergström, Ariyan Abdulla, David Schutzer
+  Date: 2017-09-30
+  Last update: 2017-11-23 by Anton & Ariyan
+  This contains the different components used on the overview page.
+*/
+
 @Component({
   selector: 'ngx-overview',
   styleUrls: ['./overview.component.scss'],
@@ -17,17 +24,11 @@ export class OverviewComponent implements OnInit {
   data: any;
   dataTrending: any;
   obj: any;
-  // Modal headers 1-
-  // Modal header for the "top recommended content"
   modalHeader1 = 'Graph for the top recommended content';
-  // Modal header for the "top trending content"
   modalHeader2 = 'List for the top recommended content';
   modalHeader3 = 'Graph for the top trending content';
   modalHeader4 = 'List for the top trending content';
-  // Modal content 1-
-  // Modal content for the "top recommended content"
   modalContent1 = `This graph shows the top recommended movies and their score produced from Coogl3's algorithm.`;
-  // Modal content for the "top trending content"
   modalContent2 = `This list shows the top recommended movies and their title.
 The first movie in the list is the one with the highest score.`;
   modalContent3 = `This graph shows the top trending movies and the score produced from Coogl3's algorithm.`;

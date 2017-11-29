@@ -1,4 +1,5 @@
 from Product.Database.DatabaseManager.Insert.InsertUser import InsertUser
+from Product.RecommendationManager.model.create_new_model import CreateNewModel
 
 
 class InsertNewUser(object):
@@ -17,9 +18,14 @@ class InsertNewUser(object):
         Purpose: Make Feedback inserts to the database
         :param age : The age of the user
         :type int
+
         :param gender : The gender of the user
         :type String
+        :valid Male, Female, , Other, Unknown
+
         :param occupation : The occupation of the user (Optional)
         :type String
+
         """
         InsertUser().insert_user(age=age, gender=gender,occupation=occupation)
+        # CreateNewModel.create_new_model()

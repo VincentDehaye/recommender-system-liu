@@ -1,13 +1,18 @@
+"""
+Test file to test RetrieveUser.py
+"""
 from Product.Database.DatabaseManager.Retrieve.RetrieveUser import RetrieveUser
 from Product.Database.DBConn import create_session
 from Product.Database.DBConn import User
+from Product.Database.DBConn import Rating
+from Product.Database.DBConn import Movie
 
 
 def test_retrieve_all_users():
     """
     Author: John Andrée Lidquist
     Date: 2017-11-16
-    Latest Update: 2017-11-20
+    Latest Update: 2017-11-28
     Purpose: Assert that users are retrieved from the database correctly
     """
 
@@ -50,6 +55,7 @@ def test_retrieve_all_users():
     # After adding the dummy user we remove them again.
     session.delete(dummy_user)
     session.commit()
+    session.close()
 
     assert observed_all_users
     assert observed_user_id == expected_user_id
@@ -59,8 +65,54 @@ def test_retrieve_all_users():
 
 
 def test_check_if_user_in_rating():
-    # TODO finish this unit test
-    assert True
+    """
+    Author: John Andrée Lidquist
+    Date: 2017-11-28
+    Latest Update: 2017-11-28
+    Purpose: Assert boolean if user has rated or not
+    """
+    # PRE-CONDITIONS
+    # We create a session and add a dummy user and a dummy movie
+    user_id = -1
+
+    session = create_session()
+    dummy_user = User(id=user_id, age=20, gender="Female", occupation="Student")
+    dummy_movie = Movie(id=-1, title="a title", year=1111)
+    session.add(dummy_movie)
+    session.add(dummy_user)
+    session.commit()
+
+    # EXPECTED OUTPUT
+    expected_before = False
+    expected_after = True
+
+    # OBSERVED OUTPUT
+    observed_before = RetrieveUser().check_if_user_in_rating(user_id=user_id)
+    if observed_before:
+        observed_before = True
+    else:
+        observed_before = False
+
+    dummy_rating = Rating(user_id=-1, movie_id=20, rating=1)
+    session.add(dummy_rating)
+    session.commit()
+
+    observed_after = RetrieveUser().check_if_user_in_rating(user_id=user_id)
+    if observed_after:
+        observed_after = True
+    else:
+        observed_after = False
+
+    # After adding the dummy user we remove them again.
+    session.delete(dummy_rating)
+    session.commit()
+    session.delete(dummy_user)
+    session.delete(dummy_movie)
+    session.commit()
+    session.close()
+
+    assert observed_before == expected_before
+    assert observed_after == expected_after
 
 
 def test_retrieve_largest_user_id():
@@ -90,5 +142,6 @@ def test_retrieve_largest_user_id():
     # After adding the dummy user we remove them again.
     session.delete(dummy_user)
     session.commit()
+    session.close()
 
     assert observed_user_user_id == expected_user_id

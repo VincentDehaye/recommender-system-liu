@@ -1,35 +1,35 @@
-<!-- Trending page-->
+
+  <!--Author: Anton Bergström, Ariyan Abdulla-->
+  <!--Date: 2017-09-30-->
+  <!--Last update: 2017-11-17 by Anton & Ariyan-->
+  <!--This contains the html code for the trending page.-->
+
 <div class ="row">
-  <div class="col-md-12">
+  <div class="col-lg-10">
     <nb-card>
-        <h2 style="padding: 10px">
+      <h2 style="padding: 10px">
         <ngx-modals [modalHeader]=modalHeader1 [modalContent]=modalContent1></ngx-modals>
         Total trending score
       </h2>
-
       <ngx-d3-bar style="height: 660px; width: auto" [factor] = 1></ngx-d3-bar>
-
-      <!--<nb-card-header *ngFor="let movie of dataTrending?.trendingMovies"> {{movie.title}} </nb-card-header>-->
     </nb-card>
   </div>
-  <div class="col-md-6">
-      <nb-card>
-        <h2 style="padding: 10px">
+  <div class="col-lg-5">
+    <nb-card>
+      <h2 style="padding: 10px">
         <ngx-modals [modalHeader]=modalHeader2 [modalContent]=modalContent2></ngx-modals>
         YouTube Score
-        </h2>
-        <ngx-d3-bar style="height: 660px; width: auto" [factor] = 2></ngx-d3-bar>
-        <!--<nb-card-header *ngFor="let movie of dataYoutube?.youtubeMovies"> {{movie.title}} </nb-card-header>-->
-      </nb-card>
+      </h2>
+      <ngx-d3-bar style="height: 660px; width: auto" [factor] = 2></ngx-d3-bar>
+    </nb-card>
   </div>
-  <div class="col-md-6">
-      <nb-card>
-        <h2 style="padding: 10px">
+  <div class="col-lg-5">
+    <nb-card>
+      <h2 style="padding: 10px">
         <ngx-modals [modalHeader]=modalHeader3 [modalContent]=modalContent3></ngx-modals>
         Twitter Score
-        </h2>
-        <ngx-d3-bar style="height: 660px; width: auto" [factor] = 3></ngx-d3-bar>
-        <!--<nb-card-header *ngFor="let movie of dataTwitter?.twitterMovies"> {{movie.title}} </nb-card-header>-->
-      </nb-card>
+      </h2>
+      <ngx-d3-bar style="height: 660px; width: auto" [factor] = 3></ngx-d3-bar>
+    </nb-card>
   </div>
 </div>

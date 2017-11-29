@@ -23,7 +23,8 @@ class InsertTrending(Insert):
         :param youtube_score : the youtube score
         :param twitter_score : the twitter score
         """
-        movie = TrendingScore(movie_id=movie_id, total_score=total_score, youtube_score=youtube_score,
+        movie = TrendingScore(movie_id=movie_id, total_score=total_score,
+                              youtube_score=youtube_score,
                               twitter_score=twitter_score)
         self.session.add(movie)
         self.session.commit()

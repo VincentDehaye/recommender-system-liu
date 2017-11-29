@@ -1,19 +1,19 @@
-from Product.Database.DBConn import session, User, Movie, Recommendation
-from restrict import get_restricted_match
+from Product.Database.DBConn import create_session, Recommendation
+from Product.DataManager.restrict import get_restricted_match
 from Product.RecommendationManager import gets_from_database as gets_from_database
 
 """
 Author: Eric Petersson
 Date: 2017-11-15
 Last update:
-Purpose: Illustarte how restrict.py can be used to generate output for visualization
+Purpose: Illustrate how restrict.py can be used to generate output for visualization
 """
-
+session = create_session()
 # Defines what columns in the User table to restrict on.  Will be a parameter
 feature_list = ['gender', 'occupation']
 
 # Defines what is considered a match for gender
-matching_strings_list_gender = ['Male']
+matching_strings_list_gender = ['Male', 'Female']
 
 # Defines what is considered a match for occupation
 matching_strings_list_occupation = ['engineer', 'student']
@@ -29,12 +29,12 @@ toplist = {}
 
 # Populates toplist.
 for user in list_of_matching_users:
-    recommended_to_user = session.query(Recommendation).filter(Recommendation.user_id==user)
+    recommended_to_user = session.query(Recommendation).filter(Recommendation.user_id == user)
     for recommendation in recommended_to_user:
-        if not recommendation.movie_id in toplist:
+        if recommendation.movie_id not in toplist:
             toplist[recommendation.movie_id] = 1
         else:
-            toplist[recommendation.movie_id] = toplist.get(recommendation.movie_id) + 1
+            toplist[recommendation.movie_id] += 1
 
 # Prints toplist
 for k, v in toplist.items():

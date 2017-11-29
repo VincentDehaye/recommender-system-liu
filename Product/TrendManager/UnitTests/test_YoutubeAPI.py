@@ -1,3 +1,7 @@
+"""
+Unit tests for YoutubeAPI.py
+"""
+
 from ..YoutubeAPI import YoutubeAPI
 
 
@@ -102,7 +106,8 @@ def test_get_youtube_score_standard_case():
     """
     Author: Linn Pettersson
     Date: 2017-10-30
-    Purpose: Assert that get_youtube_score calculates a total score based on view count and likes ratio
+    Purpose: Assert that get_youtube_score calculates
+    a total score based on view count and likes ratio
     """
     # Pre-conditions
     youtube = YoutubeAPI()

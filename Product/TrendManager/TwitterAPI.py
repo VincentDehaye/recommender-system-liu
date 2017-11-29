@@ -29,8 +29,7 @@ TRACKED_KEYWORDS = 'trailer,movie,film,dvd,cinema,episode'  # format is 'keyword
 class TwitterAPI:
     """
     Author: Albin Bergvall
-    Date: 2017-10-06
-    Last update: 2017-11-20
+    Date: 2017-11-20
     Purpose: Class responsible for saving twitter data to the file system
     via a stream, and also calculating a twitter trending score
     based on the data from the stream.
@@ -43,6 +42,7 @@ class TwitterAPI:
     def open_twitter_stream(time_limit):
         """
         Author: Albin Bergvall, Karl Lundvall
+        Date: 2017-11-03
         Purpose: To initiate a stream against the twitter API which listens for
         new tweets corresponding to a set of movie/series related keywords.
         The stream runs on a separate thread, and the duration of the stream as well
@@ -54,13 +54,14 @@ class TwitterAPI:
         auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         stream = Stream(auth, output_stream)
         try:
-            stream.filter(track=[TRACKED_KEYWORDS], languages=['en'])
+            stream.filter(track=[TRACKED_KEYWORDS], languages=['en'], async=True)
         except:
             print("An error occurred. The twitter stream has been terminated.")
 
     def get_twitter_score(self, title):
         """
         Author: Albin Bergvall, Karl Lundvall
+        Date: 2017-11-05
         Purpose: To score a movie/series title based on the number of times each word
         in the title is mentioned in tweets. This method does not require a background model.
         :param title:
@@ -80,6 +81,7 @@ class TwitterAPI:
     def get_word_score(word, score, word_dict):
         """
         Author: Albin Bergvall, Karl Lundvall
+        Date: 2017-11-05
         Purpose: This function is used to determine how many times
         a certain word has been mentioned.
         It will also compare the score to an already set score,
@@ -103,23 +105,29 @@ class TwitterAPI:
     def load_new_dict(self):
         """
         Author: Albin Bergvall, Karl Lundvall
+        Date: 2017-11-13
         Purpose: The purpose of this function is to load a saved dictionary from the file system.
         The file loaded will be the latest modified one.
         :return:
         """
-        latest_file = self.get_newest_file()
         try:
-            with open(latest_file, 'rb') as f:
-                self.all_words_new = pickle.load(f)
-        except (TypeError, FileNotFoundError):
+            latest_file = self.get_newest_file()
+            if os.path.getsize(latest_file) < 1500:
+                os.remove(latest_file)
+                self.load_new_dict()
+            else:
+                with open(latest_file, 'rb') as f:
+                    self.all_words_new = pickle.load(f)
+        except (TypeError, FileNotFoundError, EOFError):
             print("File could not be loaded into dictionary for twitter score calculations.")
 
     @staticmethod
     def get_newest_file():
         """
         Author: Albin Bergvall
-        Purpose: The purpose of this function is to load the latest modified file from the trendingdata
-        directory. Used for loading dictionaries and to check if files exist.
+        Date: 2017-11-13
+        Purpose: The purpose of this function is to load the latest modified file from
+        the trendingdata directory. Used for loading dictionaries and to check if files exist.
         :return:
         """
         path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata/*.bin'
@@ -132,32 +140,25 @@ class TwitterAPI:
 
     @staticmethod
     def remove_old_dict():
-        path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata'
-        now = time.time()
-        for f in os.listdir(path):
-            f = os.path.join(path, f)
-            if os.stat(f).st_mtime < (now - 7 * 86400):
-                if os.path.isfile(f):
-                    os.remove(f)
-
-    def print_dict(self):
         """
         Author: Albin Bergvall, Karl Lundvall
-        Purpose: To print the contents of a dictionary saved yesterday,
-        descending from the key with highest value.
+        Date: 2017-11-20
+        Purpose: Remove datafiles in Trending data folder that are older than seven days.
         :return:
         """
-        if not self.all_words_new:
-            self.load_new_dict()
-        all_words_view = [(v, k) for k, v in self.all_words_new.items()]
-        all_words_view.sort(reverse=True)
-        for v, k in all_words_view:
-            print(k, ": ", v)
+        path = os.path.dirname(os.path.abspath(__file__)) + '/trendingdata'
+        now = time.time()
+        for file in os.listdir(path):
+            file = os.path.join(path, file)
+            if os.stat(file).st_mtime < (now - 7 * 86400):
+                if os.path.isfile(file):
+                    os.remove(file)
 
     @staticmethod
     def format_word(word):
         """
         Author: Albin Bergvall, Karl Lundvall
+        Date: 2017-11-13
         Purpose: To take a word as a parameter, format and return it
         so that it will be of same format as words stored from twitter stream.
         :param word:
@@ -175,8 +176,7 @@ class TwitterAPI:
 class StdOutListener(StreamListener):
     """
     Author: Albin Bergvall, Karl Lundvall
-    Date: 2017-10-06
-    Last update: 2017-11-20
+    Date: 2017-11-20
     Listener class used for twitter stream. Function on_status is called
     each time a tweet corresponding to a set of keywords is picked up by stream.
     Also contains functions for formatting words, saving them to a dictionary and
@@ -186,6 +186,7 @@ class StdOutListener(StreamListener):
     def __init__(self, limit):
         """
         Author: Albin Bergvall, Karl Lundvall
+        Date: 2017-11-13
         Purpose: Constructor for the stream class.
         Takes time limit for the stream as parameter
         for when it should be terminated.
@@ -200,6 +201,7 @@ class StdOutListener(StreamListener):
     def on_status(self, status):
         """
         Author: Albin Bergvall, Karl Lundvall
+        Date: 2017-11-13
         Purpose: This function is called each time a tweet is picked up by the filter.
         It checks if time limits has been exceeded for saving to file,
         and also takes the tweet text, splits it, and then calls other functions for
@@ -214,14 +216,14 @@ class StdOutListener(StreamListener):
                 if word is not None:
                     self.update_count(word)
             return True
-        else:
-            self.store_dict()
-            return False
+        self.store_dict()
+        return False
 
     @staticmethod
     def format_word(word):
         """
         Author: Albin Bergvall, Karl Lundvall
+        Date: 2017-11-13
         Purpose: To take a word as a parameter, format it and return the word
         if there is anything left after doing a regex check over the characters of the word.
         Otherwise, return None.
@@ -238,6 +240,8 @@ class StdOutListener(StreamListener):
 
     def on_error(self, status):
         """
+        Author: Albin Bervall, Karl Lundvall
+        Date: 2017-11-13
         Purpose: Function which is called if there was an error with the stream.
         Saves the dictionary and closes stream.
         :param status:
@@ -249,6 +253,7 @@ class StdOutListener(StreamListener):
     def update_count(self, word):
         """
         Author: Albin Bergvall, Karl Lundvall
+        Date: 2017-11-13
         Purpose: To save a word to the dictionary if it hasn't been mentioned yet,
         otherwise increase the count of an already mentioned word.
         :param word:
@@ -264,6 +269,7 @@ class StdOutListener(StreamListener):
     def store_dict(self):
         """
         Author: Albin Bergvall, Karl Lundvall
+        Date: 2017-11-13
         Purpose: To save a dictionary to a file in the trendingdata folder.
         The name of the file will include the date of when it was saved.
         This way, we will know from which day data was stored.
@@ -283,11 +289,8 @@ class StdOutListener(StreamListener):
                 file.close()
         print("Dictionary saved to file! Path:", path)
         print("Removing old dictionaries...")
-        TwitterAPI.remove_old_dict()
-
-
-# For stream testing purposes
-if __name__ == "__main__":
-    tw = TwitterAPI()
-    # tw.open_twitter_stream(43200)
-    # print(tw.get_twitter_score("rt"))
+        try:
+            if os.environ["REMOVETWITTERFILES"] == "1":
+                TwitterAPI.remove_old_dict()
+        except KeyError:
+            pass

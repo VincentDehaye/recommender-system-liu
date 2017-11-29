@@ -1,3 +1,9 @@
+
+  <!--Author: Anton Bergström, Ariyan Abdulla, Bamse, David Schutzer-->
+  <!--Date: 2017-09-30-->
+  <!--Last update: 2017-11-23 by Bamse & David-->
+  <!--This contains the html code for the recommendation page.-->
+
 <div class="row">
   <div class="col-lg-8">
     <nb-card>
@@ -29,7 +35,7 @@
       <nb-card-header>
         <h2 style="padding: 10px">
         <ngx-modals [modalHeader]=modalHeader3 [modalContent]=modalContent3></ngx-modals>
-        Demographic {{value}} {{model | json}}
+        Demographic
         </h2>
       </nb-card-header>
       <nb-card-body>
@@ -56,13 +62,13 @@
         </div>
         <div class="btn-group btn-toggle-group" data-toggle="buttons">
           <label ngbButtonLabel class="btn btn-success" [class.active]="model.male">
-            <input ngbButton type="checkbox" [(ngModel)]="model.male"> Male
+            <input (click)="getDemoData()" ngbButton type="checkbox" [(ngModel)]="model.male"> Male
           </label>
           <label ngbButtonLabel class="btn btn-success" [class.active]=model.other>
-            <input ngbButton type="checkbox" [(ngModel)]="model.other"> Other
+            <input (click)="getDemoData()" ngbButton type="checkbox" [(ngModel)]="model.other"> Other
           </label>
           <label ngbButtonLabel class="btn btn-success" [class.active]="model.female">
-            <input ngbButton type="checkbox" [(ngModel)]="model.female"> Female
+            <input (click)="getDemoData()" ngbButton type="checkbox" [(ngModel)]="model.female"> Female
           </label>
         </div>
       </nb-card-body>

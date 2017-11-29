@@ -1,3 +1,6 @@
+"""
+Test file to test InsertRecommendation.py
+"""
 from Product.Database.DatabaseManager.Insert.InsertRecommendation import InsertRecommendation
 from Product.Database.DBConn import create_session
 from Product.Database.DBConn import User
@@ -7,7 +10,7 @@ from Product.Database.DBConn import Recommendation
 
 def test_insert_recommendation():
     """
-    Author: John Andrée Lidquist
+    Author: John Andree Lidquist
     Date: 2017-11-15
     Last Updated: 2017-11-16
     Purpose: Assert that recommendations are inserted to the database
@@ -37,11 +40,13 @@ def test_insert_recommendation():
 
     # OBSERVED OUTPUT
     # We query the recommendations to get an observed output
-    observed_1 = session.query(Recommendation).filter_by(movie_id=movie_id_1, user_id=user_id).first()
-    observed_2 = session.query(Recommendation).filter_by(movie_id=movie_id_2, user_id=user_id).first()
+    observed_1 = session.query(Recommendation).filter_by(movie_id=movie_id_1,
+                                                         user_id=user_id).first()
+    observed_2 = session.query(Recommendation).filter_by(movie_id=movie_id_2,
+                                                         user_id=user_id).first()
 
-    # After adding the dummy movies, the dummy user and the dummy recommendation, we remove them again.
-    # We need to commit twice because of foreign key constraints
+    # After adding the dummy movies, the dummy user and the dummy recommendation,
+    # we remove them again. We need to commit twice because of foreign key constraints
     session.delete(observed_1)
     session.delete(observed_2)
     session.commit()

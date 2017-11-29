@@ -2,6 +2,13 @@ import { Component, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 
 
+/*
+  Author: Anton Bergström & Ariyan Abdulla
+  Date: 2017-10-08
+  Last update: 2017-11-24 by Anton & Ariyan
+  This contains the typescript code for the piechart on the overview page.
+*/
+
 @Component({
   selector: 'ngx-chartjs-pie',
   template: `

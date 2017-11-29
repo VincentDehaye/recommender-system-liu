@@ -1,22 +1,25 @@
 """
 Author: John Andree Lidquist, Marten Bolin
 Date:
-Last update:
+Last update: 2017/11/21 Albin Bergvall
 Purpose: Gets movie from database and stores a trending score
 """
 
 from datetime import datetime
 import threading
-from Product.TrendManager.TwitterAPI import TwitterAPI
-
+import os
 from apscheduler.schedulers.background import BackgroundScheduler
+
+from Product.TrendManager.TwitterAPI import TwitterAPI
 from Product.Database.DatabaseManager.Retrieve.RetrieveMovie import RetrieveMovie
 from Product.Database.DatabaseManager.Insert.InsertTrending import InsertTrending
 from Product.Database.DatabaseManager.Retrieve.RetrieveTrending import RetrieveTrending
 from Product.Database.DatabaseManager.Update.UpdateTrending import UpdateTrending
 from Product.TrendManager.TrendingController import TrendingController
+
 TIME_LIMIT_TWITTER_STREAM = 43200  # Time limit for twitter stream uptime in seconds
-TIME_LIMIT_TWITTER_STREAM_NO_FILE = 7200  # Time limit for twitter stream if there is no file to load data from
+# Time limit for twitter stream if there is no file to load data from
+TIME_LIMIT_TWITTER_STREAM_NO_FILE = 7200
 
 
 class TrendingToDB(object):
@@ -51,8 +54,8 @@ class TrendingToDB(object):
             # if set to daily, it creates a scheduler and sets the interval to 1 day
             self.scheduled = BackgroundScheduler()
             if not daemon:
-                self.scheduled.daemon = False
-            self.scheduled.add_job(self.run, 'interval', seconds=50, id="1")
+                self.scheduled._daemon = False
+            self.scheduled.add_job(self.run, 'interval', days=1, id="1")
             self.scheduled.start()
             self.scheduled.modify_job(job_id="1", next_run_time=datetime.now())
         else:
@@ -67,60 +70,77 @@ class TrendingToDB(object):
         """
         Author: John Andree Lidquist, Marten Bolin
         Date: 2017-10-28
-        Last update:2017-11-17
+        Last update:2017-11-21 Albin Bergvall
         Purpose: The method where which will fetch all the scores by the
         TrendingController which communicate with the Youtube and Twitter API.
         """
 
-        # Fllowing steps are done:
+        # Following steps are done:
         # 1. Query movies from database
         # 2. Get new score for that movie
-        # 3. If current trend score is different from the newly
+        # 3. Save the highest scores from the different trending sources
+        # 4. Iterate though list of scored movies and normalize,
+        # weight and add the scores to a total score
+        # 5. If current total score is different from the newly
         # fetched score - Update score in database, else go to step 1
-        # 4. Go to step 1
-        if TwitterAPI().get_newest_file() is None:  # Check is file exist for scoring twitter
-            TwitterAPI.open_twitter_stream(TIME_LIMIT_TWITTER_STREAM_NO_FILE)  # time limit parameter in seconds
+        # 6. Go to step 1
 
         trend_controller = TrendingController()
         res_movie = self.retrieve_movie.retrieve_movie()
+        scored_movies = []
+        twitter_max = 1
+        youtube_max = 1
 
         for movie in res_movie:
             if self.stop:
                 break
 
-            res_score = self.retrieve_trend.retrieve_trend_score(movie.id)
+            scored_movie = trend_controller.get_trending_content(movie.title)
+            scored_movie.id = movie.id
 
-            scores = trend_controller.get_trending_content(movie.title)
-            new_tot_score = scores[0]  # Gets total score
-            new_youtube_score = scores[1]  # Gets Youtube score
-            new_twitter_score = scores[2]  # Gets Twitter score
+            if scored_movie.youtube_score > youtube_max:
+                youtube_max = scored_movie.youtube_score
+            if scored_movie.twitter_score > twitter_max:
+                twitter_max = scored_movie.twitter_score
 
-            print("Movie ID:", movie.id)
+            scored_movies.append(scored_movie)
+            print("Movie ID:", scored_movie.id)
 
+        print("Inserting scored movies into database...")
+        for scored_movie in scored_movies:
+            res_score = self.retrieve_trend.retrieve_trend_score(scored_movie.id)
+
+            scored_movie.total_score = (scored_movie.youtube_score * 0.7 / youtube_max) + \
+                                       (scored_movie.twitter_score * 0.3 / twitter_max)
             if res_score:
 
-                if new_tot_score != res_score.total_score:
+                if scored_movie.total_score != res_score.total_score:
                     # If score is new
-                    res_score.total_score = new_tot_score
-                    self.alter_trend.update_trend_score(movie_id=movie.id,
-                                                        total_score=new_tot_score,
-                                                        youtube_score=new_youtube_score,
-                                                        twitter_score=new_twitter_score)
+                    self.alter_trend.update_trend_score(movie_id=scored_movie.id,
+                                                        total_score=scored_movie.total_score,
+                                                        youtube_score=scored_movie.youtube_score,
+                                                        twitter_score=scored_movie.twitter_score)
             else:
                 # If movie is not in TrendingScore table
-                self.insert_trend.add_trend_score(movie_id=movie.id,
-                                                  total_score=new_tot_score,
-                                                  youtube_score=new_youtube_score,
-                                                  twitter_score=new_twitter_score)
+                self.insert_trend.add_trend_score(movie_id=scored_movie.id,
+                                                  total_score=scored_movie.total_score,
+                                                  youtube_score=scored_movie.youtube_score,
+                                                  twitter_score=scored_movie.twitter_score)
 
                 # The commit is in the loop for now due to high waiting time but
                 # could be moved outside to lower total run time
 
-        # twitter_max = self.retrieve_trend.get_twitter_max()
-        # youtube_max = self.retrieve_trend.get_youtube_max()
-
-        #  Open twitter stream after titles has been scored, to gather new data
-        TwitterAPI().open_twitter_stream(TIME_LIMIT_TWITTER_STREAM)
+        # Open twitter stream after titles has been scored, to gather new data
+        # The os.environ checks if the run config has a variable named "TWITTERSTREAM"
+        # and only starts stream if it is set to 1. This is to make sure that the stream
+        # isn't opened during testing.
+        try:
+            if os.environ["TWITTERSTREAM"] == "1":
+                TwitterAPI().open_twitter_stream(TIME_LIMIT_TWITTER_STREAM)
+                print("Opened Twitter Stream")
+        except KeyError:
+            pass
+        print("Waiting until next day to update")
 
     # Used to stop the thread if background is false
     # or for any other reason it needs to be stopped.
@@ -131,7 +151,7 @@ class TrendingToDB(object):
         Last update:
         Purpose: Terminates the process
         """
-        print("Shutting down TrendScoreToDatabase..")
+        print("Shutting down TrendScoreToDatabase")
         self.stop = True
         if self.daily:
             self.scheduled.shutdown()

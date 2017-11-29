@@ -10,6 +10,7 @@ from Product.Database.DatabaseManager.Retrieve.RetrieveUser import RetrieveUser
 from Product.RecommendationManager import gets_from_database as gets_from_database
 from Product.RecommendationManager.Recommendation.recommendation_list import RecommendationList
 from Product.RecommendationManager.model import generate_model as generate_model
+from Product.Database.DatabaseManager.Insert.InsertRecommendation import InsertRecommendation
 
 
 # At this point we assume that there is a file named new_model.sav
@@ -21,7 +22,7 @@ class Recommendation(object):
     Purpose:
     creates a recommendation class
     """
-    def __init__(self, user_id, size):
+    def __init__(self, user_id):
         """
         Author: Sebastian Maghsoudi / Alexander Dahl
         Date: 2017-11-01
@@ -42,12 +43,13 @@ class Recommendation(object):
         self.user_id = user_id
         # right now lim is hard coded to number of movies to be recommended times 3
         # TODO create some logic for how big the limit should be
-        self.lim = size*3
-        self.size = size
+        # limit is now just 30 movies.
+        self.lim = 30
+        self.size = 10
         # this instantiates RetrieveTrending() class in the database manager and
         # gets limit number of TrendingScore classes.
         self.trending_content_meta = RetrieveTrending().\
-            retrieve_trend_score(number_of_titles=self.lim)
+            retrieve_trend_score(number_of_titles=self.lim, user_id=self.user_id)
 
     @staticmethod
     def normalize_user_scores(scores):
@@ -71,7 +73,7 @@ class Recommendation(object):
         """
         Author: Sebastian Maghsoudi / Alexander Dahl
         Date: 2017-11-01
-        Last update: 2017-11-13
+        Last update: 2017-11-29 by Alexander Dahl
         Purpose: Generates a recommendation list of size length for a given user.
 
         :return: a dictionary with user_id and a recommendation_list for that user
@@ -80,7 +82,7 @@ class Recommendation(object):
         [{'title': 'It', 'score': 1.586134233975164, 'id': 24}]}
         """
         trending_id = [id.movie_id for id in self.trending_content_meta]
-        # print(np.array(trending_id))
+        # print(np.array(trending_id
         trending_score = [score.total_score for score in self.trending_content_meta]
         # normalize trending score
         norm_trending_score = self.normalize_user_scores(trending_score)
@@ -96,7 +98,7 @@ class Recommendation(object):
         if RetrieveUser().check_if_user_in_rating(self.user_id):
             rec_list_score = self.model.predict(self.user_id, np.array(trending_id))
             norm_rec_list_score = self.normalize_user_scores(rec_list_score).tolist()
-
+            # print(norm_rec_list_score)
             final_rec_list_score = [rec+trending_weight*trend for rec, trend
                                     in zip(norm_rec_list_score, norm_trending_score)]
         else:
@@ -116,7 +118,11 @@ class Recommendation(object):
             sorted_complete_rec_list.append({'id': item[0],
                                              'title': item[1],
                                              'score': item[2]})
-        # print(sorted_complete_rec_list)
+        # Creates an instance of InsertRecommendation that handles database insertions.
+        # Calls the insert_recommendation method in it and makes the db insertion
+        # This will not remove old recommendations and will add new ones.
+        InsertRecommendation().insert_recommendation(user_id=self.user_id,
+                                                     movie_list=sorted_complete_rec_list)
         return RecommendationList(self.user_id, sorted_complete_rec_list)
 
-# print(Recommendation(55, 10).generate_recommendation_list().__dict__)
+# print(Recommendation(55).generate_recommendation_list().__dict__)

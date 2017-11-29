@@ -28,6 +28,7 @@ deploy_script:
     - cd ../../
     - docker-compose down
     - docker rmi -f $(docker images -a -q)
+    - docker volume rm -f $(docker volume ls -q)
     - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
   only:
     - master

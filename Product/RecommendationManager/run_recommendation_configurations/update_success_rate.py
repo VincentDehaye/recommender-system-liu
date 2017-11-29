@@ -1,3 +1,7 @@
+"""
+Class for updating the success rate
+"""
+
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 from Product.Database.DatabaseManager.Insert.InsertSuccessRate import InsertSuccessRate
@@ -24,12 +28,15 @@ class UpdateSuccessRate:
         # Set up and start the scheduler
         self.scheduled = BackgroundScheduler()
         if not daemon:
+            # TODO Should use a good method that doesnt change a protected member
+            # TODO of a class directly
             self.scheduled._daemon = False
         self.scheduled.add_job(self._run, 'interval', days=1, id="3")
         self.scheduled.start()
         self.scheduled.modify_job(job_id="3", next_run_time=datetime.now())
 
-    def _run(self):
+    @staticmethod
+    def _run():
         """
         Author: Marten Bolin, John Andree Lidquist
         Date:2017-11-22

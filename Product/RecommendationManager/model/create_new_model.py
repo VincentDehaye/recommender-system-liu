@@ -29,6 +29,6 @@ class CreateNewModel:
         Purpose:
         Call this function to retrain the model
         """
-        PATH = os.path.dirname(os.path.abspath(__file__))
-        generate_model.train_model(PATH + '/new_model.sav')
+        path = os.path.dirname(os.path.abspath(__file__))
+        generate_model.train_model(path + '/new_model.sav')
         print("Model adjusted.")

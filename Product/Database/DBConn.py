@@ -139,21 +139,6 @@ class MovieInGenre(Base):
             self.movie_id, self.genre)
 
 
-class MovieLinks(Base):
-    """
-    Author: John Andree Lidquist, Marten Bolin
-    Purpose: The table for linking ids between the data set, imdb and tmdb
-    """
-    __tablename__ = 'movielinks'
-    movie_id = Column(Integer, ForeignKey(Movie.id), primary_key=True)
-    imdb_id = Column(Integer)
-    tmdb_id = Column(Integer)
-
-    def __repr__(self):
-        return "<Genre(movie_id id='%s', imdb id='%s', tmdb id='%s')>" % (
-            self.movie_id, self.imdb_id, self.tmdb_id)
-
-
 class Recommendation(Base):
     """
     Author: John Andree Lidquist, Marten Bolin

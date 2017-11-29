@@ -38,6 +38,7 @@ def get_restricted_ids(table, feature, min, max):
     objects_list = session.query(sqltable).\
         filter((getattr(sqltable, feature) >= min) & (getattr(sqltable, feature) <= max)).all()
     output_list = []
+    session.close()
     for object in objects_list:
         output_list.append(object.id)
     return output_list
@@ -72,7 +73,7 @@ def get_restricted_match(table, feature_list, list_of_matching_strings_list):
 
     if table == "User":
         basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-    
+
         if "gender" in feature_list:
             index = feature_list.index("gender")
             if len(list_of_matching_strings_list[index]) == 0:
@@ -115,6 +116,7 @@ def get_restricted_match(table, feature_list, list_of_matching_strings_list):
     query += filters + ").all()"
 
     result = eval(query)
+    session.close()
 
     for object in result:
         output_list.append(object.id)

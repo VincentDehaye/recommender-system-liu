@@ -20,12 +20,10 @@ export class RecommendedComponent implements OnInit {
   dataSimple: any;
   dataAverage: any;
   modalHeader1 = 'Graph that displays the improvement over time for the Coogl3 algorithm.';
-  // Modal content 1-
   modalContent1 = `Each dot on the graph is connected to a certain time and success rate
   for the algorithm. The success rate is
-based on the end-users reaction to watching content,
-this is determined by whether they liked or disliked a movie from the generated
-recommendations list.`;
+based on the end-users reaction to watching content
+from movies that have been recommended for them.`;
 
   constructor(private dataHandlerService: DataHandlerService) { }
   ngOnInit() {

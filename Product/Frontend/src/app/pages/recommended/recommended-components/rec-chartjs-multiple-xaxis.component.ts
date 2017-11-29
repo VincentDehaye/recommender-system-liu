@@ -60,7 +60,7 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
               display: true,
               scaleLabel: {
                 display: true,
-                labelString: 'Month',
+                labelString: 'Date',
               },
               gridLines: {
                 display: true,
@@ -76,7 +76,7 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
               display: true,
               scaleLabel: {
                 display: true,
-                labelString: 'Value(%)',
+                labelString: 'Rate(%)',
               },
               gridLines: {
                 display: true,

@@ -35,7 +35,7 @@ export class OverviewD3BarComponent implements OnDestroy, OnInit {
   showXAxis = true;
   showYAxis = true;
   xAxisLabel = 'movies';
-  yAxisLabel = 'recomended';
+  yAxisLabel = 'recommended';
   colorScheme: any;
   themeSubscription: any;
 

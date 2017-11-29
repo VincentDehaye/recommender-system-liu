@@ -28,9 +28,9 @@ export class OverviewComponent implements OnInit {
   modalHeader2 = 'List for the top recommended content';
   modalHeader3 = 'Graph for the top trending content';
   modalHeader4 = 'List for the top trending content';
-  modalContent1 = `This graph shows the top recommended movies and their score produced from Coogl3's algorithm.`;
+  modalContent1 = `This graph shows the number of times a movie has been recommended in total from Coogl3's algorithm.`;
   modalContent2 = `This list shows the top recommended movies and their title.
-The first movie in the list is the one with the highest score.`;
+The first movie in the list is the movie that has been recommended the most.`;
   modalContent3 = `This graph shows the top trending movies and the score produced from Coogl3's algorithm.`;
   modalContent4 = `This list shows the top trending movies and their title.
 The first movie in the list is the one with the highest score.`;

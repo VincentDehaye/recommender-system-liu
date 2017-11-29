@@ -93,6 +93,7 @@ class FillMovies:
 
         # Commit the added link between movies and their genres
         self.session.commit()
+        self.session.close()
         print("DONE - Movies added")
 
         # Close the csv file

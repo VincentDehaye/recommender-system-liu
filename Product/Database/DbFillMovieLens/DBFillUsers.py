@@ -42,4 +42,5 @@ class FillUsers:
                 new_user = User(age=int(line[0]), gender=line[1], occupation=line[2])
                 self.session.add(new_user)
             self.session.commit()
+            self.session.close()
             print("DONE - Users added")

@@ -22,7 +22,7 @@ class Recommendation(object):
     Purpose:
     creates a recommendation class
     """
-    def __init__(self, user_id, size):
+    def __init__(self, user_id):
         """
         Author: Sebastian Maghsoudi / Alexander Dahl
         Date: 2017-11-01
@@ -43,8 +43,9 @@ class Recommendation(object):
         self.user_id = user_id
         # right now lim is hard coded to number of movies to be recommended times 3
         # TODO create some logic for how big the limit should be
-        self.lim = size*3
-        self.size = size
+        # limit is now just 30 movies.
+        self.lim = 30
+        self.size = 10
         # this instantiates RetrieveTrending() class in the database manager and
         # gets limit number of TrendingScore classes.
         self.trending_content_meta = RetrieveTrending().\
@@ -72,7 +73,7 @@ class Recommendation(object):
         """
         Author: Sebastian Maghsoudi / Alexander Dahl
         Date: 2017-11-01
-        Last update: 2017-11-13
+        Last update: 2017-11-29 by Alexander Dahl
         Purpose: Generates a recommendation list of size length for a given user.
 
         :return: a dictionary with user_id and a recommendation_list for that user
@@ -124,4 +125,4 @@ class Recommendation(object):
                                                      movie_list=sorted_complete_rec_list)
         return RecommendationList(self.user_id, sorted_complete_rec_list)
 
-# print(Recommendation(55, 10).generate_recommendation_list().__dict__)
+# print(Recommendation(55).generate_recommendation_list().__dict__)

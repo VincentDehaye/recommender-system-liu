@@ -54,7 +54,7 @@ class TrendingToDB(object):
             # if set to daily, it creates a scheduler and sets the interval to 1 day
             self.scheduled = BackgroundScheduler()
             if not daemon:
-                self.scheduled.daemon = False
+                self.scheduled._daemon = False
             self.scheduled.add_job(self.run, 'interval', days=1, id="1")
             self.scheduled.start()
             self.scheduled.modify_job(job_id="1", next_run_time=datetime.now())
@@ -137,8 +137,10 @@ class TrendingToDB(object):
         try:
             if os.environ["TWITTERSTREAM"] == "1":
                 TwitterAPI().open_twitter_stream(TIME_LIMIT_TWITTER_STREAM)
+                print("Opened Twitter Stream")
         except KeyError:
             pass
+        print("Waiting until next day to update")
 
     # Used to stop the thread if background is false
     # or for any other reason it needs to be stopped.
@@ -149,7 +151,7 @@ class TrendingToDB(object):
         Last update:
         Purpose: Terminates the process
         """
-        print("Shutting down TrendScoreToDatabase..")
+        print("Shutting down TrendScoreToDatabase")
         self.stop = True
         if self.daily:
             self.scheduled.shutdown()

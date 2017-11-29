@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { UsersComponent } from '../users.component'
 import { DataHandlerService} from '../../../@core/data/data-handler.service';
@@ -38,6 +38,7 @@ export class UsersD3BarComponent implements OnDestroy, OnInit {
   yAxisLabel = 'recomended';
   colorScheme: any;
   themeSubscription: any;
+  @Input() args: any;
 
   constructor(private theme: NbThemeService, private dataHandlerService: DataHandlerService) {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
@@ -62,7 +63,10 @@ export class UsersD3BarComponent implements OnDestroy, OnInit {
   */
 
   public getData() {
-      this.dataHandlerService.getData().subscribe((data) => {
+      this.dataHandlerService.getMetaRecommendationsData(
+        this.args.fromAge, this.args.toAge, this.args.male,
+        this.args.female, this.args.other,
+      ).subscribe((data) => {
       this.movies = data.recommendation_list;
         const realName = [];
         for (let i = 0; i < this.movies.length; ++i) {

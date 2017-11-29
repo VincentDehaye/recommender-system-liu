@@ -26,10 +26,9 @@ deploy_script:
     - npm --unsafe-perm install
     - npm --unsafe-perm run build:prod
     - cd ../../
+    - docker-compose down
+    - docker rmi -f $(docker images -a -q)
     - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml build web
-    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml build trending
-    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml build recommendation
   only:
     - master
   stage: deploy

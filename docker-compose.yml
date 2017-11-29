@@ -48,6 +48,7 @@ services:
     dns: 8.8.8.8
     environment:
      - PRODUCTION_DATABASE=1
+     - RUN_TREND_CONT=1
      - DATA_DATABASE_HOST=data_db
 
   recommendation:

@@ -114,10 +114,10 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
           const simpleName = [];
           const averageName = [];
         for (let i = 0; i < this.movies.length; ++i) {
-          timeName.push(this.movies[i]['time']);
-          simpleName.push(100 * ( this.movies[i]['noTimesWatched'] / ( this.movies[i]['noTimesWatched'] + this.movies[i]
-            ['noTimesNotWatched'] ) ) );
-          averageName.push(this.movies1[i]['rate']);
+          timeName.push(this.movies[i]['timestamp']);
+          simpleName.push(100 * ( this.movies[i]['watched'] / ( this.movies[i]['watched'] + this.movies[i]
+            ['not_watched'] ) ) );
+          averageName.push(this.movies1[i]['average_user_success_rate']);
         }
           this.data = {
             labels: timeName,

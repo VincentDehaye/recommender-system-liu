@@ -26,10 +26,8 @@ import { DataHandlerService} from '../../../@core/data/data-handler.service';
 })
 export class UsersD3BarComponent implements OnDestroy, OnInit {
   movies: string[];
-  movies1: string[];
   data: any;
   results = [];
-  results1 = [];
   showLegend = false;
   showXAxis = true;
   showYAxis = true;

@@ -1,4 +1,6 @@
-import time
+"""
+Class for recreating the model.
+"""
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 from Product.RecommendationManager.model.create_new_model import CreateNewModel
@@ -69,4 +71,3 @@ class RecreateModel:
         print("Shutting down update_recommendations..")
         self.scheduled.shutdown()
         print("Recreatemodel has been shut down.")
-

@@ -25,9 +25,16 @@ export class TrendingComponent implements OnInit {
   modalHeader2 = 'Graph for the Youtube trending content';
   modalHeader3 = 'Graph for the Twitter trending content';
   modalContent1 = `This graph shows the top trending movies and their score produced by Coogl3's algorithm.
-  This score is the sum of the normalized Youtube and Twitter scores.`;
-  modalContent2 = `This graph shows the top Youtube trending movies and their score produced by Coogl3's algorithm.`;
-  modalContent3 = `This graph shows the top Twitter trending movies and their score produced by Coogl3's algorithm.`;
+  This score is the sum of the normalized Youtube and Twitter scores. This score is normalized from 0 to
+  1 where 1 is the most trending movie. Each bar shows the score for a specific movie
+  which means that the higher the score a movie has the more trending it is.
+  Basically this graphs shows what movies are trending the most.`;
+  modalContent2 = `This graph shows the top Youtube trending movies and their score produced by Coogl3's algorithm.
+  These values are not normalized but shows how much a movie is trending according to Youtube. By looking at this graph one
+  can determine how much a movie is trending on Youtube.`;
+  modalContent3 = `This graph shows the top Twitter trending movies and their score produced by Coogl3's algorithm.
+  These values are not normalized but shows how much a movie is trending according to Twitter. By looking at this graph one
+  can determine how much a movie is trending on Twitter.`;
 
     constructor(private dataHandlerService: DataHandlerService) { }
 

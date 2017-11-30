@@ -31,9 +31,14 @@ export class OverviewComponent implements OnInit {
   modalContent1 = `This graph shows the number of times a movie has been recommended in total from Coogl3's algorithm.
   Each bar represent the number of times a specific movie has been recommended to all users.
   The movie that has been recommended the most is represented by the highest bar.
-  This graph reveals the movies that have been recommended the most for all the users.`;
+  This graph reveals the movies that have been recommended the most for all the users. A user
+  will be recommended to a certain movie based on personal references and earlier watched movies
+  and based on what content that is trending.`;
   modalContent2 = `This list shows the top recommended movies and their title.
 The first movie in the list is the movie that has been recommended the most.
+A user
+  will be recommended to a certain movie based on personal references and earlier watched movies
+  and based on what content that is trending.
 The percentage value shows the rate of success for each movie,
 meaning how many times a movie has been watched when recommended.
 The higher the percentage movie the higher the success rate is for that specific movie.

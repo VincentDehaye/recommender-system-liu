@@ -23,7 +23,12 @@ deploy_script:
     - pwd
     - whoami
     - docker-compose -f docker-compose.yml -f docker-compose.prod.yml build web
-    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d web
+    - docker-compose -f docker-compose.yml -f docker-compose.prod.yml build recommendation
+    - docker-compose -f docker-compose.yml -f docker-compose.prod.yml build trending
+    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+    - cd Product/Frontend
+    - npm install
+    - npm run build:prod
   only:
     - master
   stage: deploy

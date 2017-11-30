@@ -31,14 +31,19 @@ export class UsersComponent implements OnInit {
   modalHeader1 = 'Graph displaying the number of times a movie has been recommended';
   modalHeader2 = 'List for the top recommended content';
   modalHeader3 = 'Demographic settings';
-  modalContent1 = `Each bar shows the number of times a certain movie has been
-                    recommended and shows the top recommendations
-                    depending on the demographics setting.`;
+  modalContent1 = `This graph shows the number of times a movie has been recommended in total from Coogl3's algorithm.
+  Each bar represent the number of times a specific movie has been recommended to all users.
+  The movie that has been recommended the most is represented by the highest bar.
+  This graph reveals the movies that have been recommended the most for all users
+  based on the demographic settings that have been set.`;
   modalContent2 = `This list shows the top recommended movies and their title.
-  The first movie in the list is the movie that has been recommended the most.`;
+  The first movie in the list is the movie that has been recommended the most according
+  to the demographic settings that have been set.`;
   modalContent3 = `Default setting: all users in the database are taken into consideration.
  Use the numbered buttons to change the age interval.
- Use the gender buttons to change the gender demographic.`;
+ Use the gender buttons to change the gender demographic.
+ By toggling between different ages and genders one can see which movies are
+ recommended to different users based on these factors.`;
 
   paginationModel = 1;
 

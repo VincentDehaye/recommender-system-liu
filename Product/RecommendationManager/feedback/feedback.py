@@ -36,9 +36,9 @@ class Feedback(object):
         InsertFeedback().insert_feedback(user_id, movie_id, watched, rating)
 
         if rating:
-            path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            model = generate_model.load_model(path + '/model/new_model.sav')
+            model = generate_model.load_model(generate_model.get_path())
             # Converting to lists because of coo_matrix
+            print(model)
             rating_list = [rating]
             user_list = [user_id]
             movie_list = [movie_id]
@@ -48,4 +48,6 @@ class Feedback(object):
             user_matrix = sp.coo_matrix((rating_list, (user_list, movie_list)),
                                         shape=(RetrieveUser().retrieve_largest_user_id()+1,
                                                RetrieveMovie().retrieve_largest_movie_id()+1))
-            generate_model.evolve_model(path + '/model/new_model.sav', model, user_matrix)
+            generate_model.evolve_model(generate_model.get_path(), model, user_matrix)
+
+Feedback.insert_feedback(user_id=1, movie_id=1,watched=1,rating=5)

@@ -293,33 +293,33 @@ class SuccessRateView(APIView):
         return Response(success_rates)
 class SimpleSuccessView(APIView):
     def get(self, request):
-        try:
-            simple_success = {"simpleSuccess": GetSuccessRate.get_simple_success_rate()}
-        except:
-            traceback.print_exc()
-            simple_success = {"simpleSuccess":[
-                {"timestamp":"Mocked", "watched":10, "not_watched":20},
-                {"timestamp":"Tuesday", "watched":10, "not_watched":20},
-                {"timestamp":"Wednesday", "watched":10, "not_watched":20},
-                {"timestamp":"Thursday", "watched":10, "not_watched":20},
-                {"timestamp":"Friday", "watched":10, "not_watched":20},
-                {"timestamp":"Saturday", "watched":10, "not_watched":20},
-            ]}
+        # try:
+        #     simple_success = {"simpleSuccess": GetSuccessRate.get_simple_success_rate()}
+        # except:
+        #     traceback.print_exc()
+        simple_success = {"simpleSuccess":[
+            {"timestamp":"Mocked", "watched":10, "not_watched":20},
+            {"timestamp":"Tuesday", "watched":10, "not_watched":20},
+            {"timestamp":"Wednesday", "watched":10, "not_watched":20},
+            {"timestamp":"Thursday", "watched":10, "not_watched":20},
+            {"timestamp":"Friday", "watched":10, "not_watched":20},
+            {"timestamp":"Saturday", "watched":10, "not_watched":20},
+        ]}
         return Response(simple_success)
 class AverageSuccessView(APIView):
     def get(self, request):
-        try:
-            average_success = {"averageSuccess": GetSuccessRate.get_average_user_success_rate()}
-        except:
-            traceback.print_exc()
-            average_success = {"averageSuccess":[
-                {"timestamp":"Mocked",  "average_user_success_rate":0.2},
-                {"timestamp":"Tuesday",  "average_user_success_rate":0.2},
-                {"timestamp":"Wednesday",  "average_user_success_rate":0.2},
-                {"timestamp":"Thursday",  "average_user_success_rate":0.2},
-                {"timestamp":"Friday",  "average_user_success_rate":0.2},
-                {"timestamp":"Saturday",  "average_user_success_rate":0.2},
-            ]}
+        # try:
+        #     average_success = {"averageSuccess": GetSuccessRate.get_average_user_success_rate()}
+        # except:
+        #     traceback.print_exc()
+        average_success = {"averageSuccess":[
+            {"timestamp":"Mocked",  "average_user_success_rate":0.2},
+            {"timestamp":"Tuesday",  "average_user_success_rate":0.2},
+            {"timestamp":"Wednesday",  "average_user_success_rate":0.2},
+            {"timestamp":"Thursday",  "average_user_success_rate":0.2},
+            {"timestamp":"Friday",  "average_user_success_rate":0.2},
+            {"timestamp":"Saturday",  "average_user_success_rate":0.2},
+        ]}
         return Response(average_success)
 
 class AddUserView(APIView):

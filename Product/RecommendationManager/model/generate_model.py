@@ -4,6 +4,7 @@ Training and saving a lightFM model
 Loading a lightFM model
 Testing the precision@k for a lightFM model
 """
+import os
 import pickle
 from lightfm import LightFM
 from lightfm.evaluation import precision_at_k
@@ -105,3 +106,8 @@ def show_evolvement():
     precision_after = test_precision(model, train_matrix + new_users_matrix, k)
     print("Precision after re-training of model")
     print(precision_after)
+
+
+def get_path():
+    path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return path + '/model/new_model.sav'

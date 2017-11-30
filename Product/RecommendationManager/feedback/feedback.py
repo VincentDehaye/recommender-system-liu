@@ -37,8 +37,8 @@ class Feedback(object):
 
         if rating:
             model = generate_model.load_model(generate_model.get_path())
-            # Converting to lists because of coo_matrix
-            print(model)
+            # Converting to lists because otherwise it is not possible to convert them to
+            # coo matrices
             rating_list = [rating]
             user_list = [user_id]
             movie_list = [movie_id]

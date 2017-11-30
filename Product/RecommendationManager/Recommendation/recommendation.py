@@ -89,16 +89,12 @@ class Recommendation(object):
         # trending_weight is 0.5 at the moment
         # TODO document why trending weight is 0.5
         trending_weight = 0.5
-        # Here is the formula that can be altered at some point
-
         # checks if the user has ratings in the database
         # if there are no ratings the user preferences does not matter and
         # the user only gets the trendings as recommendations
-
         if RetrieveUser().check_if_user_in_rating(self.user_id):
             rec_list_score = self.model.predict(self.user_id, np.array(trending_id))
             norm_rec_list_score = self.normalize_user_scores(rec_list_score).tolist()
-            # print(norm_rec_list_score)
             final_rec_list_score = [rec+trending_weight*trend for rec, trend
                                     in zip(norm_rec_list_score, norm_trending_score)]
         else:

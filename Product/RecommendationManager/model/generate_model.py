@@ -109,5 +109,11 @@ def show_evolvement():
 
 
 def get_path():
+    """
+    Author: Marten Bolin
+    Date: 2017-11-30
+    Purpose: returns the path to where the model is located.
+    :return: string
+    """
     path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     return path + '/model/new_model.sav'

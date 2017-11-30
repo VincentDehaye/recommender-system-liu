@@ -28,14 +28,24 @@ export class OverviewComponent implements OnInit {
   modalHeader2 = 'List for the top recommended content';
   modalHeader3 = 'Graph for the top trending content';
   modalHeader4 = 'List for the top trending content';
-  modalContent1 = `This graph shows the number of times a movie has been recommended in total from Coogl3's algorithm.`;
+  modalContent1 = `This graph shows the number of times a movie has been recommended in total from Coogl3's algorithm.
+  Each bar represent the number of times a specific movie has been recommended to all users.
+  The movie that has been recommended the most is represented by the highest bar.
+  This graph reveals the movies that have been recommended the most for all the users.`;
   modalContent2 = `This list shows the top recommended movies and their title.
 The first movie in the list is the movie that has been recommended the most.
 The percentage value shows the rate of success for each movie,
-meaning how many times a movie has been watched when recommended`;
-  modalContent3 = `This graph shows the top trending movies and the score produced from Coogl3's algorithm.`;
+meaning how many times a movie has been watched when recommended.
+The higher the percentage movie the higher the success rate is for that specific movie.
+This can be of interest since it shows whether a recommended movie has successfully been watched.`;
+  modalContent3 = `This graph shows the top trending movies and the score produced from Coogl3's algorithm.
+  This score is normalized from 0 to 1 where 1 is the most trending movie. Each bar shows the score for a specific movie
+  which means that the higher the score a movie has the more trending it is.
+  Basically this graphs shows what movies are trending the most.`;
   modalContent4 = `This list shows the top trending movies and their title.
-The first movie in the list is the one with the highest score.`;
+The first movie in the list is the one with the highest score. This list is represented
+on the graph but visualized in a different way. The first movie on this list has the highest
+trending score.`;
 
     constructor(private userService: UserService, private dataHandlerService: DataHandlerService) { }
 

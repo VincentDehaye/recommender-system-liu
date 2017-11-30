@@ -15,7 +15,7 @@ class CreateRecommendationsForAllUsers:
     Date: 2017-11-15
     Last update: 2017-11-15
     Purpose:
-    This module populates the database with recommendations for all users
+    This class populates the database with recommendations for all users
     """
     @staticmethod
     def execute(number_of_users=None):
@@ -24,7 +24,7 @@ class CreateRecommendationsForAllUsers:
         Date: 2017-11-15
         Last update: 2017-11-28 by Alexander Dahl
         Purpose:
-        This fucntion populates the database with recommendations for all users.
+        This method populates the database with recommendations for all users.
         :param number_of_users : how many users to create recommendations for
         """
         # TODO only retrieve users that are needed and not all of them from number_of_users.

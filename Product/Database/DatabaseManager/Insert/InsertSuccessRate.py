@@ -26,11 +26,14 @@ class InsertSuccessRate(Insert):
         and User
         """
 
-        # Calculate watched and not watched up until now
+        # Calculate watched and not watched up until now.
+        # Counts the rows in the Recommendation table that has been watched.
         watched = self.session.query(Recommendation.watched).filter_by(watched=1).count()
+
+        # Counts all the rows minus the ones that are watched
         not_watched = self.session.query(Recommendation).count() - watched
 
-        # Calculate average user success rate up until now
+        # Calculate average user success rate up until now for each user
         users = self.session.query(User).all()
         ratio_list = []
         for user in users:
@@ -48,9 +51,12 @@ class InsertSuccessRate(Insert):
             average_user_success_rate = np.mean(ratio_list).item()
         else:
             average_user_success_rate = 0.0
+
+        # Get todays date
         date_and_time = datetime.now()
         date = date_and_time.date()
 
+        # Make the insertion to the database
         success_rate = SuccessRate(watched=watched,
                                    not_watched=not_watched,
                                    average_user_success_rate=average_user_success_rate,

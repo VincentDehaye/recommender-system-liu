@@ -18,6 +18,8 @@ class InsertRecommendation(Insert):
         Date: 2017-11-15
         Last update: 2017-11-16
         Purpose: Make Inserts to the recommendation table in the database
+        :param movie_list: the movies that the user has been recommended
+        :param user_id: the id of the user the recommendations are made to
         """
 
         for rec in movie_list:

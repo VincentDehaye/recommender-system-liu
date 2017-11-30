@@ -30,13 +30,14 @@ export class TrendingComponent implements OnInit {
   which means that the higher the score a movie has the more trending it is.
   Basically this graphs shows what movies are trending the most.`;
   modalContent2 = `This graph shows the top Youtube trending movies and their score produced by Coogl3's algorithm.
-  These values are not normalized but shows how much a movie is trending according to Youtube.
   By looking at this graph one
-  can determine how much a movie is trending on Youtube.`;
+  can determine how much a movie is trending on Youtube
+  however these values are not normalized.
+  `;
   modalContent3 = `This graph shows the top Twitter trending movies and their score produced by Coogl3's algorithm.
-  These values are not normalized but shows how much a movie is trending according to Twitter.
   By looking at this graph one
-  can determine how much a movie is trending on Twitter.`;
+  can determine how much a movie is trending on Twitter
+  however these values are not normalized.`;
 
     constructor(private dataHandlerService: DataHandlerService) { }
 

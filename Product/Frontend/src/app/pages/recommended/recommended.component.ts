@@ -26,7 +26,8 @@ based on the end-users reaction to watching content
 from movies that have been recommended for them.
 The green line represents the simple success rate where
 each dot shows the percentage of recommended movies watched against the total of movies
-recommended, in other words the total success rate for the algorithm. The purple line represents the average success rate where
+recommended, in other words the total success rate for the algorithm. The purple line
+represents the average success rate where
 each dot shows the average success rate for all the users. Firstly the success rate for each
 user is calculated and then an average value of these values are gathered.`;
 

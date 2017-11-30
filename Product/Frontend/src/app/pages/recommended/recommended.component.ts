@@ -28,7 +28,7 @@ The green line represents the simple success rate where
 each dot shows the percentage of recommended movies watched against the total of movies
 recommended, in other words the total success rate for the algorithm. The purple line
 represents the average success rate where
-each dot shows the average success rate for all the users. Firstly the success rate for each
+each dot shows the average success rate for all the users. The success rate for each
 user is calculated and then an average value of these values are gathered.`;
 
   constructor(private dataHandlerService: DataHandlerService) { }

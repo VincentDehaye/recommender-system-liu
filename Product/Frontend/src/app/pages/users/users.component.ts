@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
   The movie that has been recommended the most is represented by the highest bar.
   This graph reveals the movies that have been recommended the most for all users
   based on the demographic settings that have been set.`;
-  modalContent2 = `This list shows the top recommended movies and their title.
+  modalContent2 = `This list shows the top recommended movies and their titles.
   The first movie in the list is the movie that has been recommended the most according
   to the demographic settings that have been set.`;
   modalContent3 = `Default setting: all users in the database are taken into consideration.

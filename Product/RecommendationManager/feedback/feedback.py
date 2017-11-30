@@ -49,5 +49,3 @@ class Feedback(object):
                                         shape=(RetrieveUser().retrieve_largest_user_id()+1,
                                                RetrieveMovie().retrieve_largest_movie_id()+1))
             generate_model.evolve_model(generate_model.get_path(), model, user_matrix)
-
-Feedback.insert_feedback(user_id=1, movie_id=1,watched=1,rating=5)

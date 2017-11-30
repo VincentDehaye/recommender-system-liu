@@ -22,14 +22,7 @@ deploy_script:
     - echo "deploy_script"
     - pwd
     - whoami
-    - cd ./Product/Frontend/
-    - npm --unsafe-perm install
-    - npm run build:prod
-    - cd ../../
-    - docker-compose down
-    - docker rmi -f $(docker images -a -q)
-    - docker volume rm -f $(docker volume ls -q)
-    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+    - nohup docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d web
   only:
     - master
   stage: deploy

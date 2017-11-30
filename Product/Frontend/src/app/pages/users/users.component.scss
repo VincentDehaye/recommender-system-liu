@@ -1,6 +1,24 @@
 @import '../../@theme/styles/themes';
 
 @include nb-install-component() {
+  label.btn.btn-outline-success.active {
+    background-color: #008000;
+  }
+  label.btn.btn-outline-success:hover {
+    background-color: #008000;
+  }
+  label.btn.btn-outline-success {
+    border: 2px solid #008000;
+  }
+  label.btn.btn-success.active {
+    background-color: #008000;
+  }
+  label.btn.btn-success:hover {
+    background-color: #008000;
+  }
+  label.btn.btn-success {
+    border: 2px solid #008000;
+  }
   ngx-d3-bar,
   ngx-d3-pie,
   ngx-d3-advanced-pie,

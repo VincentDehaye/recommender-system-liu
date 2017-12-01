@@ -12,6 +12,7 @@ import { AuthenticationService } from '../../pages/authentication/_services';
 
 @Injectable()
 export class DataHandlerService {
+  authService: AuthenticationService;
   headers: HttpHeaders;
   apiUrl: any = environment.apiUrl;
 readonly ROOT_URL = this.apiUrl + '/v1/recommendations';
@@ -29,30 +30,39 @@ readonly ROOT_URLaverage = this.apiUrl + 'v1/average-success';
   averageSuccess: Observable<Movie[]>;
 
   constructor(private http: HttpClient, authService: AuthenticationService) {
-    const token = authService.token;
     this.headers = new HttpHeaders();
-    this.headers = this.headers.set('Authorization', 'JWT ' + token);
+    this.authService = authService;
+  }
+  setHeaders() {
+    this.headers = this.headers.set('Authorization', 'JWT ' + this.authService.token);
   }
   getData(): any {
+    this.setHeaders();
     return this.http.get(this.ROOT_URL, {headers: this.headers}).map((res: Response) => res);
   }
   getTrendingData(): any {
+    this.setHeaders();
     return this.http.get(this.ROOT_URLtrending,  {headers: this.headers}).map((res: Response) => res);
   }
   getYoutubeData(): any {
+    this.setHeaders();
     return this.http.get(this.ROOT_URLyoutube,  {headers: this.headers}).map((res: Response) => res);
   }
   getTwitterData(): any {
+    this.setHeaders();
     return this.http.get(this.ROOT_URLtwitter,  {headers: this.headers}).map((res: Response) => res);
   }
   getSimpleSuccessrate(): any {
+    this.setHeaders();
     return this.http.get(this.ROOT_URLsimple,  {headers: this.headers}).map((res: Response) => res);
   }
   getAverageSuccessrate(): any {
+    this.setHeaders();
     return this.http.get(this.ROOT_URLaverage,  {headers: this.headers}).map((res: Response) => res);
   }
   getMetaRecommendationsData(age_lower: number, age_upper: number,
                             male: boolean, female: boolean, other: boolean): any {
+    this.setHeaders();
     let filter: string = '';
     filter += 'age_lower=' + age_lower.toString() + '&age_upper=' + age_upper.toString();
     if (male) { filter += '&male=1'; }

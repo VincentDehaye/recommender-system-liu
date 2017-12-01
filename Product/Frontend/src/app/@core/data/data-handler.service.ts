@@ -12,7 +12,7 @@ import { AuthenticationService } from '../../pages/authentication/_services';
 
 @Injectable()
 export class DataHandlerService {
-  headers: any;
+  headers: HttpHeaders;
   apiUrl: any = environment.apiUrl;
 readonly ROOT_URL = this.apiUrl + '/v1/recommendations';
 readonly ROOT_URLtrending = this.apiUrl + '/v1/trending';
@@ -31,7 +31,7 @@ readonly ROOT_URLaverage = this.apiUrl + 'v1/average-success';
   constructor(private http: HttpClient, authService: AuthenticationService) {
     const token = authService.token;
     this.headers = new HttpHeaders();
-    this.headers.set('Authorization', token);
+    this.headers = this.headers.set('Authorization', 'JWT ' + token);
   }
   getData(): any {
     return this.http.get(this.ROOT_URL, {headers: this.headers}).map((res: Response) => res);

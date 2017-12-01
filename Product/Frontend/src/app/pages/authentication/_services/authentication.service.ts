@@ -34,6 +34,10 @@ export class AuthenticationService {
             });
     }
 
+    setToken(token: string) {
+      this.token = token;
+    }
+
     logout(): void {
         // clear token remove user from local storage to log user out
         this.token = null;

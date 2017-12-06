@@ -240,3 +240,6 @@ testem.log
 
 #pickles
 .sav
+
+# nohup
+nohup.out

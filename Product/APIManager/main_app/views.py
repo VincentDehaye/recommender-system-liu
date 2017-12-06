@@ -298,7 +298,7 @@ class SimpleSuccessView(APIView):
         # except:
         #     traceback.print_exc()
         simple_success = {"simpleSuccess":[
-            {"timestamp":"Mocked", "watched":10, "not_watched":25},
+            {"timestamp":"Monday", "watched":10, "not_watched":25},
             {"timestamp":"Tuesday", "watched":20, "not_watched":30},
             {"timestamp":"Wednesday", "watched":22, "not_watched":40},
             {"timestamp":"Thursday", "watched":60, "not_watched":100},
@@ -313,7 +313,7 @@ class AverageSuccessView(APIView):
         # except:
         #     traceback.print_exc()
         average_success = {"averageSuccess":[
-            {"timestamp":"Mocked",  "average_user_success_rate":20},
+            {"timestamp":"Monday",  "average_user_success_rate":20},
             {"timestamp":"Tuesday",  "average_user_success_rate":10},
             {"timestamp":"Wednesday",  "average_user_success_rate":40},
             {"timestamp":"Thursday",  "average_user_success_rate":35},

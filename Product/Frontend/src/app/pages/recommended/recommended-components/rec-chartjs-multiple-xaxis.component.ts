@@ -98,7 +98,7 @@ export class RecommendedChartjsMultipleXaxisComponent implements OnDestroy, OnIn
   }
 
   /*
-    Author: Anton Bergström, Ariyan Abdulla, Erik Thörngren
+    Author: Anton Bergström, Ariyan Abdulla, Erik Törngren
     Date: 2017-11-24
     Last update: 2017-11-20 by Ariyan & Erik
     This contains the code which gets the required data from APIManager to the performance page.

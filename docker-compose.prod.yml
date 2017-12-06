@@ -8,4 +8,5 @@ services:
   trending:
     environment:
       - TWITTERSTREAM=1
-      - REMOVETWITTERFILES=1
+      # - REMOVETWITTERFILES=1
+      - RUN_TREND_CONT=1

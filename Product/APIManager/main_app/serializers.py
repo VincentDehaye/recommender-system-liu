@@ -5,8 +5,8 @@ MAXIMUM_AGE = 130
 
 class RatingSerializer(serializers.Serializer):
     movie_id = serializers.IntegerField(min_value=0)
-    rating = serializers.IntegerField(min_value=1, max_value=5)
-    watched = serializers.BooleanField()
+    rating = serializers.IntegerField(min_value=1, max_value=5, required=False)
+    watched = serializers.BooleanField(required=False)
 
 class UserSerializer(serializers.Serializer):
     age = serializers.IntegerField(min_value=MINIMUM_AGE, max_value=MAXIMUM_AGE)

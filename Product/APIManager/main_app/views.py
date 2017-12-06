@@ -254,8 +254,8 @@ class FeedbackView(APIView):
         if serializer.is_valid():
             try:
                 Feedback().insert_feedback(user_id, serializer.validated_data["movie_id"],
-                                           serializer.validated_data["watched"],
-                                           serializer.validated_data["rating"])
+                                           serializer.validated_data.get("watched", None),
+                                           serializer.validated_data.get("rating", None))
             except ValueError:
                 return Response("user or movie does not exist", status=404)
         else:

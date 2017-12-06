@@ -22,6 +22,8 @@ services:
       - data_db
     expose:
       - "8000"
+    volumes:
+      - .:/src
     environment:
       - DOCKER=1
       - PRODUCTION_DATABASE=1
@@ -44,20 +46,24 @@ services:
     container_name: trend
     command: bash Docker/trending_startup_script.sh
     depends_on:
-     - data_db
+      - data_db
     dns: 8.8.8.8
+    volumes:
+      - .:/src
     environment:
-     - PRODUCTION_DATABASE=1
-     - RUN_TREND_CONT=1
-     - DATA_DATABASE_HOST=data_db
+      - PRODUCTION_DATABASE=1
+      - RUN_TREND_CONT=1
+      - DATA_DATABASE_HOST=data_db
 
   recommendation:
     build: .
     container_name: recommendation
     command: bash Docker/recommendation_startup_script.sh
     depends_on:
-     - data_db
-     - trending
+      - data_db
+      - trending
+    volumes:
+      - .:/src
     environment:
-     - PRODUCTION_DATABASE=1
-     - DATA_DATABASE_HOST=data_db
+      - PRODUCTION_DATABASE=1
+      - DATA_DATABASE_HOST=data_db

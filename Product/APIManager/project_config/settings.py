@@ -117,7 +117,7 @@ REST_FRAMEWORK = {
 }
 
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=2),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=24),
 }
 
 # Internationalization

@@ -298,12 +298,12 @@ class SimpleSuccessView(APIView):
         # except:
         #     traceback.print_exc()
         simple_success = {"simpleSuccess":[
-            {"timestamp":"Mocked", "watched":10, "not_watched":25},
-            {"timestamp":"Tuesday", "watched":20, "not_watched":30},
-            {"timestamp":"Wednesday", "watched":22, "not_watched":40},
-            {"timestamp":"Thursday", "watched":60, "not_watched":100},
-            {"timestamp":"Friday", "watched":62, "not_watched":140},
-            {"timestamp":"Saturday", "watched":188, "not_watched":200},
+            {"timestamp": "Saturday", "average_user_success_rate": 20},
+            {"timestamp": "Sunday", "average_user_success_rate": 10},
+            {"timestamp": "Monday", "average_user_success_rate": 40},
+            {"timestamp": "Tuesday", "average_user_success_rate": 35},
+            {"timestamp": "Wednesday", "average_user_success_rate": 45},
+            {"timestamp": "Thursday", "average_user_success_rate": 88},
         ]}
         return Response(simple_success)
 class AverageSuccessView(APIView):
@@ -313,12 +313,12 @@ class AverageSuccessView(APIView):
         # except:
         #     traceback.print_exc()
         average_success = {"averageSuccess":[
-            {"timestamp":"Mocked",  "average_user_success_rate":20},
-            {"timestamp":"Tuesday",  "average_user_success_rate":10},
-            {"timestamp":"Wednesday",  "average_user_success_rate":40},
-            {"timestamp":"Thursday",  "average_user_success_rate":35},
-            {"timestamp":"Friday",  "average_user_success_rate":45},
-            {"timestamp":"Saturday",  "average_user_success_rate":88},
+            {"timestamp": "Saturday", "watched": 10, "not_watched": 25},
+            {"timestamp": "Sunday", "watched": 20, "not_watched": 30},
+            {"timestamp": "Monday", "watched": 22, "not_watched": 40},
+            {"timestamp": "Tuesday", "watched": 60, "not_watched": 100},
+            {"timestamp": "Wednesday", "watched": 62, "not_watched": 140},
+            {"timestamp": "Thursday", "watched": 120, "not_watched": 200},
         ]}
         return Response(average_success)
 
